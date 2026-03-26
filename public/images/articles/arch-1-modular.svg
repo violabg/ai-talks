@@ -1,0 +1,20 @@
+<svg width="800" height="450" xmlns="http://www.w3.org/2000/svg">
+  <rect width="800" height="450" fill="#f1f5f9"/>
+  <rect x="50" y="50" width="200" height="150" rx="8" fill="#e2e8f0" stroke="#94a3b8" stroke-width="2"/>
+  <text x="150" y="110" text-anchor="middle" font-family="monospace" font-size="14" fill="#475569">auth/</text>
+  <text x="150" y="135" text-anchor="middle" font-family="monospace" font-size="12" fill="#64748b">login.ts</text>
+  <text x="150" y="155" text-anchor="middle" font-family="monospace" font-size="12" fill="#64748b">session.ts</text>
+  <text x="150" y="175" text-anchor="middle" font-family="monospace" font-size="12" fill="#64748b">index.ts</text>
+  <rect x="300" y="50" width="200" height="150" rx="8" fill="#e2e8f0" stroke="#94a3b8" stroke-width="2"/>
+  <text x="400" y="110" text-anchor="middle" font-family="monospace" font-size="14" fill="#475569">api/</text>
+  <text x="400" y="135" text-anchor="middle" font-family="monospace" font-size="12" fill="#64748b">users.ts</text>
+  <text x="400" y="155" text-anchor="middle" font-family="monospace" font-size="12" fill="#64748b">posts.ts</text>
+  <text x="400" y="175" text-anchor="middle" font-family="monospace" font-size="12" fill="#64748b">index.ts</text>
+  <rect x="550" y="50" width="200" height="150" rx="8" fill="#e2e8f0" stroke="#94a3b8" stroke-width="2"/>
+  <text x="650" y="110" text-anchor="middle" font-family="monospace" font-size="14" fill="#475569">db/</text>
+  <text x="650" y="135" text-anchor="middle" font-family="monospace" font-size="12" fill="#64748b">schema.ts</text>
+  <text x="650" y="155" text-anchor="middle" font-family="monospace" font-size="12" fill="#64748b">queries.ts</text>
+  <text x="650" y="175" text-anchor="middle" font-family="monospace" font-size="12" fill="#64748b">index.ts</text>
+  <text x="400" y="280" text-anchor="middle" font-family="sans-serif" font-size="16" fill="#334155" font-weight="bold">Struttura modulare della codebase</text>
+  <text x="400" y="310" text-anchor="middle" font-family="sans-serif" font-size="13" fill="#64748b">Ogni modulo ha una responsabilità chiara e un'interfaccia esplicita</text>
+</svg>

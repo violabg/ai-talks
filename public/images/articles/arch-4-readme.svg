@@ -1,0 +1,16 @@
+<svg width="800" height="450" xmlns="http://www.w3.org/2000/svg">
+  <rect width="800" height="450" fill="#f1f5f9"/>
+  <rect x="60" y="50" width="680" height="300" rx="8" fill="#1e293b" stroke="#334155" stroke-width="2"/>
+  <text x="80" y="85" font-family="monospace" font-size="14" fill="#f8fafc"># auth/README.md</text>
+  <text x="80" y="115" font-family="monospace" font-size="12" fill="#94a3b8">## Scopo</text>
+  <text x="80" y="138" font-family="monospace" font-size="12" fill="#cbd5e1">Gestisce autenticazione e sessioni utente via JWT.</text>
+  <text x="80" y="170" font-family="monospace" font-size="12" fill="#94a3b8">## Dipendenze principali</text>
+  <text x="80" y="193" font-family="monospace" font-size="12" fill="#cbd5e1">- jose (JWT signing/verification)</text>
+  <text x="80" y="213" font-family="monospace" font-size="12" fill="#cbd5e1">- bcrypt (password hashing)</text>
+  <text x="80" y="245" font-family="monospace" font-size="12" fill="#94a3b8">## Decisioni architetturali</text>
+  <text x="80" y="268" font-family="monospace" font-size="12" fill="#cbd5e1">Usiamo refresh token rotation. Scartato OAuth perché</text>
+  <text x="80" y="288" font-family="monospace" font-size="12" fill="#cbd5e1">il client non supporta redirect flows.</text>
+  <text x="80" y="320" font-family="monospace" font-size="12" fill="#94a3b8">## Utilizzo</text>
+  <text x="80" y="343" font-family="monospace" font-size="12" fill="#7dd3fc">import &#123; createSession &#125; from &apos;@/auth&apos;</text>
+  <text x="400" y="400" text-anchor="middle" font-family="sans-serif" font-size="16" fill="#334155" font-weight="bold">README di modulo — contesto per l&apos;AI</text>
+</svg>

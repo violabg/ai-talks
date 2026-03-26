@@ -1,0 +1,25 @@
+<svg width="800" height="450" xmlns="http://www.w3.org/2000/svg">
+  <rect width="800" height="450" fill="#f1f5f9"/>
+  <rect x="60" y="60" width="220" height="250" rx="8" fill="#fee2e2" stroke="#fca5a5" stroke-width="2"/>
+  <text x="170" y="90" text-anchor="middle" font-family="monospace" font-size="13" fill="#991b1b">utils.ts — 850 righe</text>
+  <text x="170" y="120" text-anchor="middle" font-family="monospace" font-size="11" fill="#7f1d1d">formatDate()</text>
+  <text x="170" y="140" text-anchor="middle" font-family="monospace" font-size="11" fill="#7f1d1d">validateEmail()</text>
+  <text x="170" y="160" text-anchor="middle" font-family="monospace" font-size="11" fill="#7f1d1d">parseCSV()</text>
+  <text x="170" y="180" text-anchor="middle" font-family="monospace" font-size="11" fill="#7f1d1d">fetchUser()</text>
+  <text x="170" y="200" text-anchor="middle" font-family="monospace" font-size="11" fill="#7f1d1d">hashPassword()</text>
+  <text x="170" y="220" text-anchor="middle" font-family="monospace" font-size="11" fill="#7f1d1d">sendEmail()</text>
+  <text x="170" y="240" text-anchor="middle" font-family="monospace" font-size="11" fill="#7f1d1d">generateToken()</text>
+  <text x="170" y="260" text-anchor="middle" font-family="monospace" font-size="11" fill="#7f1d1d">... +40 funzioni</text>
+  <text x="170" y="295" text-anchor="middle" font-family="sans-serif" font-size="13" fill="#991b1b">❌ Tutto mischiato</text>
+  <rect x="340" y="60" width="170" height="70" rx="6" fill="#dcfce7" stroke="#86efac" stroke-width="2"/>
+  <text x="425" y="85" text-anchor="middle" font-family="monospace" font-size="12" fill="#14532d">formatDate.ts</text>
+  <text x="425" y="110" text-anchor="middle" font-family="monospace" font-size="11" fill="#166534">25 righe</text>
+  <rect x="340" y="145" width="170" height="70" rx="6" fill="#dcfce7" stroke="#86efac" stroke-width="2"/>
+  <text x="425" y="170" text-anchor="middle" font-family="monospace" font-size="12" fill="#14532d">validateEmail.ts</text>
+  <text x="425" y="195" text-anchor="middle" font-family="monospace" font-size="11" fill="#166534">30 righe</text>
+  <rect x="340" y="230" width="170" height="70" rx="6" fill="#dcfce7" stroke="#86efac" stroke-width="2"/>
+  <text x="425" y="255" text-anchor="middle" font-family="monospace" font-size="12" fill="#14532d">parseCSV.ts</text>
+  <text x="425" y="280" text-anchor="middle" font-family="monospace" font-size="11" fill="#166534">45 righe</text>
+  <text x="425" y="340" text-anchor="middle" font-family="sans-serif" font-size="13" fill="#166534">✅ Separati per responsabilità</text>
+  <text x="400" y="390" text-anchor="middle" font-family="sans-serif" font-size="16" fill="#334155" font-weight="bold">Single Responsibility nei file</text>
+</svg>
