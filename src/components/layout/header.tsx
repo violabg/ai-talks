@@ -1,16 +1,21 @@
-import Link from "next/link"
-import { ThemeToggle } from "@/components/theme-toggle"
+import { ThemeToggle } from "@/components/theme-toggle";
+import Link from "next/link";
 
 export function Header() {
   return (
-    <header className="sticky top-0 z-50 w-full border-b border-[--border] bg-[--background]/95 backdrop-blur-sm">
-      <div className="mx-auto max-w-6xl px-4 h-16 flex items-center justify-between">
-        <Link href="/" className="flex items-center gap-2 font-bold text-lg hover:opacity-80 transition-opacity">
-          <span className="text-[--primary]">AI</span>
-          <span>Course</span>
+    <header className="top-0 z-50 sticky bg-[--background]/90 backdrop-blur-md border-[--border] border-b w-full">
+      <div className="flex justify-between items-center mx-auto px-6 max-w-6xl h-14">
+        <Link
+          href="/"
+          className="flex items-center gap-1.5 hover:opacity-70 transition-opacity"
+        >
+          <span className="font-display text-xl tracking-tight">
+            <span className="text-[--primary]">AI</span>{" "}
+            <span className="text-[--foreground]">Course</span>
+          </span>
         </Link>
 
-        <nav className="hidden md:flex items-center gap-6 text-sm">
+        <nav className="hidden sm:flex items-center gap-8 text-sm">
           <Link
             href="/"
             className="text-[--muted-foreground] hover:text-[--foreground] transition-colors"
@@ -25,10 +30,10 @@ export function Header() {
           </Link>
         </nav>
 
-        <div className="flex items-center gap-2">
+        <div className="flex items-center">
           <ThemeToggle />
         </div>
       </div>
     </header>
-  )
+  );
 }

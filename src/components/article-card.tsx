@@ -1,5 +1,4 @@
 import Link from "next/link"
-import { Card, CardContent, CardFooter, CardHeader, CardTitle, CardDescription } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import type { Article } from "@/types/article"
 
@@ -16,34 +15,52 @@ export function ArticleCard({ article }: ArticleCardProps) {
   })
 
   return (
-    <Link href={`/articles/${slug}`} className="group block h-full">
-      <Card className="h-full flex flex-col transition-shadow hover:shadow-md">
-        <CardHeader className="flex-1">
-          <div className="flex items-center gap-2 mb-2">
-            {frontmatter.featured && (
-              <Badge variant="secondary">In evidenza</Badge>
-            )}
-          </div>
-          <CardTitle className="group-hover:text-[--primary] transition-colors line-clamp-2">
-            {frontmatter.title}
-          </CardTitle>
-          <CardDescription className="mt-2 line-clamp-3">
-            {frontmatter.description}
-          </CardDescription>
-        </CardHeader>
-        <CardContent>
-          <div className="flex flex-wrap gap-1.5">
-            {frontmatter.tags?.map((tag) => (
-              <Badge key={tag} variant="outline" className="text-xs">
-                {tag}
-              </Badge>
-            ))}
-          </div>
-        </CardContent>
-        <CardFooter>
+    <Link
+      href={`/articles/${slug}`}
+      className="group flex flex-col justify-between bg-[--card] p-6 transition-colors hover:bg-[--accent]"
+    >
+      <div>
+        {/* Meta row */}
+        <div className="mb-4 flex items-center gap-2">
           <time className="text-xs text-[--muted-foreground]">{date}</time>
-        </CardFooter>
-      </Card>
+          {frontmatter.featured && (
+            <>
+              <span className="text-[--border]">&middot;</span>
+              <span className="text-xs font-medium text-[--primary]">
+                In evidenza
+              </span>
+            </>
+          )}
+        </div>
+
+        {/* Title */}
+        <h3 className="mb-3 font-display text-xl leading-snug tracking-tight transition-colors group-hover:text-[--primary]">
+          {frontmatter.title}
+        </h3>
+
+        {/* Description */}
+        <p className="mb-6 text-sm leading-relaxed text-[--muted-foreground] line-clamp-3">
+          {frontmatter.description}
+        </p>
+      </div>
+
+      {/* Tags */}
+      <div className="flex flex-wrap gap-1.5">
+        {frontmatter.tags?.slice(0, 3).map((tag) => (
+          <Badge
+            key={tag}
+            variant="outline"
+            className="text-[10px] font-normal uppercase tracking-wider"
+          >
+            {tag}
+          </Badge>
+        ))}
+        {(frontmatter.tags?.length ?? 0) > 3 && (
+          <span className="text-[10px] text-[--muted-foreground] self-center">
+            +{(frontmatter.tags?.length ?? 0) - 3}
+          </span>
+        )}
+      </div>
     </Link>
   )
 }
