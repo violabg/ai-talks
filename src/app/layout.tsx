@@ -1,11 +1,11 @@
+import { Footer } from "@/components/layout/footer"
+import { Header } from "@/components/layout/header"
+import { ThemeProvider } from "@/components/theme-provider"
+import { cn } from "@/lib/utils"
 import type { Metadata } from "next"
+import { Noto_Sans } from "next/font/google"
 import localFont from "next/font/local"
 import "./globals.css"
-import { ThemeProvider } from "@/components/theme-provider"
-import { Header } from "@/components/layout/header"
-import { Footer } from "@/components/layout/footer"
-import { Noto_Sans } from "next/font/google";
-import { cn } from "@/lib/utils";
 
 const notoSans = Noto_Sans({subsets:['latin'],variable:'--font-sans'});
 
@@ -41,13 +41,8 @@ export default function RootLayout({
       suppressHydrationWarning
       className={cn(geistSans.variable, geistMono.variable, "font-sans", notoSans.variable)}
     >
-      <body className="min-h-screen flex flex-col antialiased">
-        <ThemeProvider
-          attribute="class"
-          defaultTheme="system"
-          enableSystem
-          disableTransitionOnChange
-        >
+      <body className="flex flex-col min-h-screen antialiased">
+        <ThemeProvider>
           <Header />
           <main className="flex-1">{children}</main>
           <Footer />

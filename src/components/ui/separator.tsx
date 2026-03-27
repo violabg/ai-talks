@@ -1,25 +1,25 @@
-import * as React from "react"
+"use client"
+
+import { Separator as SeparatorPrimitive } from "@base-ui/react/separator"
+
 import { cn } from "@/lib/utils"
 
-interface SeparatorProps extends React.HTMLAttributes<HTMLHRElement> {
-  orientation?: "horizontal" | "vertical"
-  decorative?: boolean
-}
-
-const Separator = React.forwardRef<HTMLHRElement, SeparatorProps>(
-  ({ className, orientation = "horizontal", decorative = true, ...props }, ref) => (
-    <hr
-      ref={ref}
-      aria-hidden={decorative}
+function Separator({
+  className,
+  orientation = "horizontal",
+  ...props
+}: SeparatorPrimitive.Props) {
+  return (
+    <SeparatorPrimitive
+      data-slot="separator"
+      orientation={orientation}
       className={cn(
-        "shrink-0 border-[--border]",
-        orientation === "horizontal" ? "h-px w-full border-t" : "h-full w-px border-l",
+        "shrink-0 bg-border data-horizontal:h-px data-horizontal:w-full data-vertical:w-px data-vertical:self-stretch",
         className
       )}
       {...props}
     />
   )
-)
-Separator.displayName = "Separator"
+}
 
 export { Separator }

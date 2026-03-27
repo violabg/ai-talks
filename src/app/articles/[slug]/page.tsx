@@ -1,73 +1,76 @@
-import { compileMDX } from "next-mdx-remote/rsc"
-import { notFound } from "next/navigation"
-import Link from "next/link"
-import { getAllArticleSlugs, getArticleSource } from "@/lib/articles"
-import { mdxComponents } from "@/components/mdx-components"
-import { Badge } from "@/components/ui/badge"
-import { Button } from "@/components/ui/button"
-import type { ArticleFrontmatter } from "@/types/article"
-import type { Metadata } from "next"
+import { mdxComponents } from "@/components/mdx-components";
+import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
+import { getAllArticleSlugs, getArticleSource } from "@/lib/articles";
+import type { ArticleFrontmatter } from "@/types/article";
+import type { Metadata } from "next";
+import { compileMDX } from "next-mdx-remote/rsc";
+import Link from "next/link";
+import { notFound } from "next/navigation";
 
 export async function generateStaticParams() {
-  return getAllArticleSlugs().map((slug) => ({ slug }))
+  return getAllArticleSlugs().map((slug) => ({ slug }));
 }
 
-export const dynamicParams = false
+export const dynamicParams = false;
 
 export async function generateMetadata({
   params,
 }: {
-  params: Promise<{ slug: string }>
+  params: Promise<{ slug: string }>;
 }): Promise<Metadata> {
-  const { slug } = await params
+  const { slug } = await params;
   try {
-    const source = getArticleSource(slug)
+    const source = getArticleSource(slug);
     const { frontmatter } = await compileMDX<ArticleFrontmatter>({
       source,
       options: { parseFrontmatter: true },
-    })
+    });
     return {
       title: frontmatter.title,
       description: frontmatter.description,
-    }
+    };
   } catch {
-    return { title: "Articolo non trovato" }
+    return { title: "Articolo non trovato" };
   }
 }
 
 export default async function ArticlePage({
   params,
 }: {
-  params: Promise<{ slug: string }>
+  params: Promise<{ slug: string }>;
 }) {
-  const { slug } = await params
+  const { slug } = await params;
 
-  let source: string
+  let source: string;
   try {
-    source = getArticleSource(slug)
+    source = getArticleSource(slug);
   } catch {
-    notFound()
+    notFound();
   }
 
   const { content, frontmatter } = await compileMDX<ArticleFrontmatter>({
     source,
     options: { parseFrontmatter: true },
     components: mdxComponents,
-  })
+  });
 
   const date = new Date(frontmatter.date).toLocaleDateString("it-IT", {
     year: "numeric",
     month: "long",
     day: "numeric",
-  })
+  });
 
   return (
-    <div className="mx-auto max-w-3xl px-4 py-16">
+    <div className="mx-auto px-4 py-16 max-w-3xl">
       {/* Back link */}
       <div className="mb-8">
-        <Button variant="ghost" size="sm" asChild>
-          <Link href="/articles">← Tutti gli articoli</Link>
-        </Button>
+        <Button
+          variant="outline"
+          size="sm"
+          nativeButton={false}
+          render={<Link href="/articles">← Tutti gli articoli</Link>}
+        />
       </div>
 
       {/* Article header */}
@@ -79,22 +82,22 @@ export default async function ArticlePage({
             </Badge>
           ))}
         </div>
-        <h1 className="text-4xl font-bold tracking-tight leading-tight mb-4">
+        <h1 className="mb-4 font-bold text-4xl leading-tight tracking-tight">
           {frontmatter.title}
         </h1>
-        <p className="text-[--muted-foreground] text-lg leading-relaxed mb-4">
+        <p className="mb-4 text-[--muted-foreground] text-lg leading-relaxed">
           {frontmatter.description}
         </p>
-        <div className="flex items-center gap-4 text-sm text-[--muted-foreground]">
+        <div className="flex items-center gap-4 text-[--muted-foreground] text-sm">
           {frontmatter.author && <span>{frontmatter.author}</span>}
           <time>{date}</time>
         </div>
       </header>
 
-      <hr className="border-[--border] mb-10" />
+      <hr className="mb-10 border-[--border]" />
 
       {/* Article content */}
       <article>{content}</article>
     </div>
-  )
+  );
 }
