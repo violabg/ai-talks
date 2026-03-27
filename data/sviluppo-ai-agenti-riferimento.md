@@ -1,0 +1,369 @@
+# Sviluppo con Agenti AI: Guida di Riferimento per Ingegneri
+
+> Questa guida è rivolta agli ingegneri che credono che i fondamentali contino ancora nell'era dell'IA. Non è per i "vibe coder": è per chi prende seriamente l'ingegneria assistita dall'IA e vuole costruire applicazioni destinate a durare.
+
+---
+
+## 1. Il Problema Fondamentale: L'IA come Nuovo Assunto senza Memoria
+
+L'IA non è uno sviluppatore dai superpoteri. È un **nuovo assunto senza memoria**. Ogni volta che avvii un agente, è come se il protagonista di *Memento* entrasse nella tua codebase dicendo: "Ok, sono qui, cosa devo fare?".
+
+Questo ha una conseguenza diretta: hai bisogno di **processi estremamente rigorosi e ben definiti** per fargli fare un lavoro utile. Come sviluppatore, devi guidare costantemente i tuoi agenti, mantenendoli sulla strada giusta.
+
+Immagina di avere accesso a una flotta di ingegneri di livello medio-buono che puoi schierare in qualsiasi momento — ma che non ricordano nulla di ciò che hanno fatto in precedenza, e ne lanci più di 20 al giorno sulla tua codebase. Per loro, la tua codebase deve essere amichevole e facilmente navigabile.
+
+---
+
+## 2. I 5 Errori più Comuni nell'Uso degli Agenti di Coding
+
+I punti di fallimento più frequenti non dipendono dai limiti degli strumenti, ma dal **modo in cui le persone li usano**. Ogni errore è un problema di processo, non di intelligenza.
+
+### Errore #1 — Perdere traccia della finestra di contesto
+
+Succede quando l'IA inizia a dimenticare decisioni o fatti già discussi, contraddicendosi e producendo codice disordinato o incoerente.
+
+Pensa alla finestra di contesto come al parlare con un collega:
+- Se gli dai **troppo poco**, deve tirare a indovinare e commette errori.
+- Se gli dai **troppo**, fatica a ricordare le parti giuste al momento giusto.
+
+Cause comuni di overflow del contesto:
+- Riversare troppe informazioni in chat all'inizio di una sessione.
+- Collegare server MCP inutilizzati o non ottimizzati.
+- Caricare un'intera codebase prima di lavorare su una singola funzionalità.
+
+**Capire come funziona il contesto e gestirlo deliberatamente è lo sblocco più grande che la maggior parte degli sviluppatori manca.**
+
+### Errore #2 — Passare direttamente al codice senza un piano
+
+Se costringi l'agente a iniziare a programmare prima di aver analizzato un intero albero decisionale, otterrai un codice che risolve il problema sbagliato — e lo farà velocemente. Questa modalità di fallimento affligge i team software da decenni, con o senza IA.
+
+La soluzione è imporre una riflessione profonda **prima** che venga scritta una sola riga di codice, attraverso strumenti come la skill `/grill-me` combinata con `/write-a-prd`.
+
+### Errore #3 — Lavorare in una codebase che l'IA non può navigare
+
+Se la tua codebase è difficile da navigare per un neoassunto nel suo primo giorno di lavoro, sarà difficile anche per l'IA — anzi, è peggio, perché l'IA non impara le tue convenzioni nel tempo come farebbe una persona. Non può costruire quella "conoscenza istituzionale".
+
+Le convenzioni, le decisioni architetturali e i pattern devono emergere **esplicitamente** attraverso la documentazione, una struttura chiara e un buon naming.
+
+> La buona notizia: rendere la tua codebase "AI-friendly" la rende migliore anche per gli esseri umani.
+
+### Errore #4 — Cercare di fare troppo in una singola sessione
+
+Ogni giorno si vedono sviluppatori cercare di affrontare una funzionalità enorme in una singola sessione: descrivere l'obiettivo, esplorare la codebase, generare codice, rivedere funzionalità, correggere bug... Prima ancora di aver finito il primo passo, il contesto si riempie e la qualità dell'output crolla.
+
+La soluzione è suddividere **tutto** il lavoro in compiti focalizzati, con scope attentamente definito, su cui l'agente può lavorare in modo incrementale.
+
+### Errore #5 — Non avere cicli di feedback affidabili e deterministici
+
+Senza feedback dal suo ambiente, l'agente opera essenzialmente al buio. I **test** non sono solo una buona idea — sono assolutamente essenziali.
+
+I cicli di feedback sono il moltiplicatore di forza che porta la qualità del codice IA da inaffidabile a realmente pronta per la produzione. I buoni test danno all'agente gli "occhi" per osservare il proprio lavoro e auto-correggersi. Puoi usare:
+- Il tuo framework di testing preferito.
+- Un controllo dei tipi coerente.
+- Un browser collegato all'agente per screenshot o click automatizzati.
+
+> Nota: non tutti i test sono uguali. Bisogna sapere quali tipi di test aiutano effettivamente l'agente ad auto-correggersi.
+
+### Lo Schema Comune
+
+Ognuna di queste modalità di fallimento è un **problema di processo**, non un problema di intelligenza. Gli agenti di coding sono straordinariamente capaci e migliorano con ogni rilascio. Il pezzo mancante è il processo di ingegneria professionale che ci sta intorno.
+
+Evitare anche solo uno di questi errori aiuta — ma è quando li usi **tutti insieme come sistema interconnesso** che ottieni i veri risultati.
+
+---
+
+## 3. Come Progettare una Codebase "Agent-Friendly"
+
+La tua codebase, molto più del tuo prompt o del tuo file `AGENTS.md`, è l'elemento che influenza maggiormente l'output dell'IA. Se è progettata male, ti costa in tre modi:
+
+- **Cicli di feedback scarsi**: l'IA non riceve feedback abbastanza velocemente e non sa se le sue modifiche hanno avuto l'effetto desiderato.
+- **Difficoltà di navigazione**: l'IA fatica a dare un senso alle cose, trovare i file e capire come testarli.
+- **Burnout cognitivo**: finisci per tenere insieme manualmente l'IA e la codebase.
+
+### Cosa vede davvero l'IA nella tua codebase
+
+Immagina di avere questa codebase — tu la conosci, hai la tua mappa mentale dei raggruppamenti (editor di miniature, editor video, autenticazione, moduli CRUD):
+
+![Codebase come la vede lo sviluppatore — moduli organizzati per dominio](image1.png)
+
+Ma l'IA vede questo:
+
+![Codebase come la vede l'IA — moduli disparati senza raggruppamento](image2.png)
+
+Un insieme di moduli disparati che possono importarsi a vicenda. Nessun raggruppamento, nessuna relazione evidente. Il file system non aiuta: è tutto mescolato.
+
+### La Soluzione: Deep Modules (Moduli Profondi)
+
+Il concetto di **moduli profondi** deriva dal libro *"A Philosophy of Software Design"*. L'idea è semplice: avere una **grande quantità di implementazione controllata da un'interfaccia semplice**.
+
+Invece di avere molti moduli piccoli e superficiali:
+
+![Molti moduli piccoli e superficiali — difficile da navigare](image3.png)
+
+Si ottengono grandi blocchi di funzionalità con interfacce semplici e controllabili. Qualsiasi esportazione deve passare obbligatoriamente attraverso quell'interfaccia.
+
+#### Moduli "Grey Box" (Scatola Grigia)
+
+I moduli profondi creano delle "cuciture" naturali nella codebase. La responsabilità si divide così:
+
+- **Tu** sei il proprietario dell'**interfaccia** — la progetti e controlli attentamente.
+- **L'IA** è la proprietaria dell'**implementazione** — delega a lei ciò che si trova dentro.
+- I **test** garantiscono che tutto funzioni onestamente.
+
+Scrivi test che blindino il comportamento del modulo. A quel punto, non hai più bisogno di guardare cosa c'è dentro — finché i test passano, puoi fidarti.
+
+#### Vantaggi pratici
+
+**Migliore navigabilità**: ogni modulo ha la propria cartella con una chiara interfaccia pubblica. L'agente AI può vedere tutti i servizi nel file system, leggere i loro tipi e capire cosa fanno, senza dover scavare nell'implementazione. La complessità si rivela progressivamente: l'interfaccia spiega cosa fa il modulo, e se necessario si può sbirciare dentro.
+
+**Riduzione del burnout cognitivo**: invece di tenere a mente centinaia di moduli interconnessi, ti limiti a gestire sette o otto grandi blocchi. L'AI gestisce ciò che si trova all'interno di ciascuno. Tu ti preoccupi solo di progettare le interfacce e di capire come si incastrano.
+
+#### Codebase non pronta per l'IA vs. codebase pronta
+
+Una codebase non ottimizzata per l'IA è una ragnatela di moduli superficiali interconnessi:
+
+![Ragnatela di moduli superficiali — difficile da navigare, testare e tenere a mente](image4.png)
+
+Questi sono difficili da navigare, difficili da testare e difficili da tenere a mente.
+
+La soluzione: **moduli profondi, interfacce chiare, test robusti**. Ragiona sui confini dei moduli fin dalla stesura dei PRD, fino alle issue di implementazione.
+
+> **Nota su TypeScript**: non è facile forzare in maniera rigida questi confini. Una libreria come *Effect* semplifica molto la modularizzazione.
+
+> **Le buone pratiche rimangono buone pratiche.** Tutto questo non è una novità: è esattamente il modo in cui le buone codebase vengono progettate da 20 anni. Ciò che funziona bene per gli esseri umani è ottimo anche per l'IA.
+
+---
+
+## 4. Le 7 Fasi dello Sviluppo con Agenti AI
+
+Questo framework si applica sia che tu stia usando Ralph loops, GSD, Spec Kit o qualsiasi altro approccio di coding assistito dall'IA. L'implementazione specifica spetta a te, ma queste sette fasi rappresentano un pattern comune in tutti i flussi di sviluppo assistito da IA di successo.
+
+---
+
+### Fase 1: L'Idea
+
+Ogni progetto inizia con un'idea: il motivo per cui stai attivando questo processo. Può essere:
+- Un'intera app da costruire.
+- Una funzionalità specifica o la correzione di un bug.
+- Il refactoring di una codebase.
+
+L'idea può essere grande o piccola: il processo scala da progetti enormi a task circoscritti e mirati.
+
+**Affinare l'idea prima di procedere** è cruciale. Utilizza la skill `/grill-me` per porre domande iterative che diano corpo al concetto e lo rendano più concreto. Questo aiuta a chiarire i requisiti e a far emergere eventuali supposizioni prima di investire tempo in ricerche o prototipi.
+
+---
+
+### Fase 2: Ricerca *(Opzionale)*
+
+Se l'idea coinvolge dipendenze esterne o fasi di esplorazione difficili, includi una fase di ricerca. Crea un asset `RESEARCH.md` nella repo, dove gli agenti possano accedervi.
+
+**Perché è importante**: gli agenti lavorano spesso in context window pulite. Se l'esplorazione è difficile (API esterne, documentazione di difficile accesso), salvare le informazioni in un file evita esplorazioni ripetute e migliora le prestazioni dell'agente.
+
+> **Attenzione**: gli asset di ricerca tipicamente vivono solo per la durata di quello sprint o di quella feature. La ricerca può diventare obsoleta o portare gli agenti fuori strada se conservata troppo a lungo.
+
+---
+
+### Fase 3: Prototipazione *(Opzionale)*
+
+La prototipazione è essenziale quando devi imporre il tuo gusto sul risultato finale. In questa fase stai ancora esplorando cosa stai costruendo e come dovrebbe funzionare.
+
+Crea diverse variazioni su una rotta usa-e-getta, lasciando che l'LLM mostri diversi approcci. Itera attraverso qualche sessione per trovare l'opzione migliore.
+
+Si applica a:
+- Design della UI e comportamento.
+- Decisioni sull'architettura software.
+- Test di integrazioni con servizi esterni.
+
+Prototipare precocemente permette di integrare il design vincente nella codebase. Quando si scrive il PRD, **gli esempi concreti valgono più delle descrizioni astratte**.
+
+---
+
+### Fase 4: Product Requirements Document (PRD)
+
+Con ricerca e prototipazione completate, è il momento di descrivere correttamente la destinazione.
+
+**Concentrati su cosa gli utenti vedranno e come si comporterà il sistema** — non sui dettagli implementativi. Il PRD descrive lo stato finale, non il percorso per arrivarci.
+
+Durante la creazione del PRD, chiedi all'agente di "tormentarti" (`/grill-me`) su ogni punto decisionale, percorrendo tutto l'albero decisionale per scoprire casi limite e requisiti. La skill `/write-a-prd` automatizza questo processo includendo:
+
+1. Chiedere all'utente una descrizione dettagliata.
+2. Esplorare la repo per verificare le affermazioni.
+3. Intervistare l'utente senza sosta (usando `/grill-me`).
+4. Abbozzare i moduli principali necessari.
+5. Scrivere il PRD con un template e inviarlo come issue su GitHub.
+
+La parte più importante del PRD sono le **user story**: descrivono il comportamento desiderato del sistema in linguaggio naturale, attingendo alla metodologia Agile.
+
+---
+
+### Fase 5: Pianificazione dell'Implementazione (Kanban Board)
+
+Scomponi il PRD in un piano di implementazione. Una Kanban board è una lista di ticket con **relazioni di blocco** che descrive tutto il lavoro necessario.
+
+Le Kanban board permettono una parallelizzazione efficace: identifica tutti i ticket non bloccanti e avvia un agente per ciascuno. La skill `/prd-to-issues` automatizza questa scomposizione tramite i cosiddetti **"vertical slices"**: ogni issue è una sottile fetta verticale che attraversa tutti i livelli di integrazione (non una fetta orizzontale di un singolo livello), in modo da far emergere rapidamente le incognite sconosciute.
+
+> *GitHub Issues* funziona bene per PRD e Kanban board, anche se manca di relazioni di blocco integrate. *Linear* è un'opzione migliore se hai bisogno di quella funzione.
+
+---
+
+### Fase 6: Esecuzione
+
+Avvia un agente di coding per eseguire tutti i ticket sulla Kanban board. Qui viene effettivamente scritto il codice.
+
+Nella maggior parte dei casi, un agente sequenziale che lavora su ogni ticket è sufficiente. Con una Kanban board ben strutturata, è possibile parallelizzare il lavoro eseguendo più agenti contemporaneamente sui ticket non bloccanti.
+
+**Lavorare "Away From Keyboard" (AFK)**: con una configurazione corretta — ricerca, prototipo, Kanban board e PRD — è possibile far girare il loop di esecuzione mentre si è lontani dalla tastiera e ottenere risultati eccellenti. Gli elementi necessari per farlo in sicurezza sono:
+- Test affidabili e cicli di feedback.
+- PRD chiaro per i requisiti.
+- Ticket ben definiti con criteri di accettazione.
+
+Quando questi elementi sono al loro posto, gli agenti possono prendere decisioni informate senza un costante intervento umano.
+
+---
+
+### Fase 7: Quality Assurance (QA)
+
+Una volta completata l'esecuzione, chiedi all'agente di creare un **piano di QA** per la revisione umana. Il piano deve delineare scenari di test specifici, casi limite e criteri di accettazione da verificare.
+
+La QA tipicamente fa emergere problemi o opportunità di miglioramento, che generano altri ticket Kanban e un altro loop di esecuzione. Questo è previsto e salutare: si itera attraverso le fasi 5–7 più volte fino a raggiungere un prodotto rifinito.
+
+**Ciclo tipico:**
+1. L'agente crea il piano di QA.
+2. L'umano revisiona e testa l'implementazione.
+3. L'umano identifica bug, problemi di UX o miglioramenti.
+4. Vengono creati nuovi ticket.
+5. Si torna alla fase di esecuzione.
+
+**Code Review e coinvolgimento umano**: la QA prevede che gli umani leggano il codice generato per garantirne qualità, manutenibilità e correttezza. È un gate di qualità importante per i sistemi di produzione. Si cercano:
+- Errori logici o casi limite.
+- Vulnerabilità di sicurezza.
+- Problemi di performance.
+- Manutenibilità e leggibilità del codice.
+- Rispetto dei pattern del progetto.
+
+---
+
+### Riepilogo delle 7 Fasi
+
+| Fase | Scopo | Deliverable Chiave |
+|---|---|---|
+| 1. Idea | Definire cosa vuoi costruire | Definizione del problema |
+| 2. Ricerca *(opzionale)* | Esplorare dipendenze esterne | Asset `RESEARCH.md` |
+| 3. Prototipo *(opzionale)* | Testare idee di design e UX | Prototipo funzionante |
+| 4. PRD | Documentare lo stato finale | Requisiti del prodotto |
+| 5. Kanban Board | Scomporre il lavoro in ticket | Lista task con dipendenze |
+| 6. Esecuzione | Costruire l'implementazione | Codice funzionante |
+| 7. QA | Verificare il lavoro completato | Piano QA e feedback |
+
+---
+
+## 5. Le 5 Skill per Agenti più Utili
+
+Le **skill** sono processi codificati in modo che l'IA abbia un percorso rigoroso da seguire ogni singola volta. Il risultato è un aumento drastico della qualità del codice prodotto.
+
+> Il repository delle skill è disponibile su: `https://github.com/mattpocock/skills`
+
+---
+
+### 1. `/grill-me` — Dare corpo a un'idea
+
+```
+npx skills@latest add mattpocock/skills/grill-me
+```
+
+Questa è la skill più efficace. Lunga solo tre frasi, ma incredibilmente potente:
+
+> *"Intervistami senza sosta su ogni aspetto di questo piano finché non raggiungeremo una comprensione condivisa. Percorri ogni ramo dell'albero del design, risolvendo le dipendenze tra le decisioni una per una. Infine, se una domanda può trovare risposta esplorando la codebase, esplora la codebase invece di chiedere."*
+
+Il concetto di **"albero del design"** deriva da *The Design of Design* di Frederick P. Brooks: mentre si progetta qualcosa, bisogna percorrere tutti i rami di un albero decisionale prima di passare al codice.
+
+Questa skill forza la conversazione che Claude Code tende a saltare: senza di essa, l'agente produce un piano molto in fretta, creando un documento prima ancora di aver capito davvero cosa si vuole. Una sessione `/grill-me` su una funzionalità complessa può generare 30, 40 o anche 50 domande.
+
+**Il principio chiave: le skill non devono essere lunghe per essere efficaci. Bisogna scegliere le parole giuste al momento giusto.**
+
+---
+
+### 2. `/write-a-prd` — Dalla conversazione al documento
+
+```
+npx skills@latest add mattpocock/skills/write-a-prd
+```
+
+Una volta raggiunta una comprensione condivisa con l'LLM (tramite `/grill-me`), questa skill guida la creazione di un Product Requirements Document. Il workflow include:
+
+1. Chiedere all'utente una descrizione dettagliata.
+2. Esplorare la repo per verificare le affermazioni.
+3. Intervistare l'utente senza sosta (usando `/grill-me`).
+4. Abbozzare i moduli principali necessari.
+5. Scrivere il PRD con template e inviarlo come issue su GitHub.
+
+La parte più importante del PRD sono le **user story**, che descrivono il comportamento desiderato del sistema in linguaggio naturale.
+
+---
+
+### 3. `/prd-to-issues` — Scomporre la destinazione in un viaggio
+
+```
+npx skills@latest add mattpocock/skills/prd-to-issues
+```
+
+Il PRD descrive la destinazione. Questa skill lo trasforma in una **Kanban board di issue** che possono essere affrontate indipendentemente.
+
+Il processo:
+1. Individuare il PRD (scaricarlo se necessario).
+2. Esplorare la codebase.
+3. Abbozzare i "vertical slices" — task che fanno emergere rapidamente le incognite sconosciute.
+
+Ogni issue è come un **"tracer bullet"** (proiettile tracciante): una sottile fetta verticale che attraversa tutti i livelli di integrazione. La skill stabilisce anche relazioni di blocco tra i task, utili per configurazioni con più agenti in parallelo.
+
+---
+
+### 4. `/tdd` — Aumentare la qualità del codice
+
+```
+npx skills@latest add mattpocock/skills/tdd
+```
+
+Questa skill forza l'agente a seguire il ciclo **red-green-refactor** del Test-Driven Development. È consistente: include filosofia sul refactoring, sul mocking e sui "deep modules".
+
+**Fare un buon TDD è stato il modo più costante per migliorare l'output degli agenti.**
+
+Il workflow:
+1. Confermare quali modifiche all'interfaccia sono necessarie.
+2. Confermare quali comportamenti testare.
+3. Progettare interfacce orientate alla testabilità.
+4. Scrivere un test alla volta (*test first*).
+5. Implementare il codice per far passare il test.
+6. Cercare candidati per il refactoring.
+
+Il ciclo red-green-refactor con gli agenti è potente: crea un loop che continua fino al completamento, con l'agente che osserva il proprio lavoro tramite i test e si auto-corregge.
+
+---
+
+### 5. `/improve-codebase-architecture` — Rendere il codice "Agent-Friendly"
+
+```
+npx skills@latest add mattpocock/skills/improve-codebase-architecture
+```
+
+Il TDD esige molto dalla codebase. In una struttura mal progettata, i confini dei test non sono chiari. Questa skill esplora la codebase cercando punti di confusione:
+
+- Dove la comprensione di un concetto richiede di saltare tra molti piccoli file?
+- Dove sono state estratte funzioni pure solo per testabilità, ma i veri bug si nascondono nel modo in cui vengono chiamate?
+- Dove moduli strettamente accoppiati creano rischi di integrazione?
+
+Quindi presenta **candidati per il "deepening"**: opportunità di trasformare moduli superficiali in moduli più profondi e strutturati.
+
+Esegui questa skill **una volta alla settimana** o dopo un'ondata di sviluppo. Man mano che raffini la codebase, la qualità dell'output dell'agente aumenterà progressivamente.
+
+> **Se hai una codebase spazzatura, l'IA produrrà spazzatura all'interno di quella codebase.**
+
+---
+
+## Conclusione
+
+Il modo più efficace per aumentare la qualità del codice degli agenti è **trattarli come esseri umani** — umani con vincoli particolari (senza memoria, clonati e messi subito al lavoro), ma pur sempre umani.
+
+Gli ingegneri risolvono difficili problemi di pensiero e di processo da decenni. Imparare dai loro successi — *The Pragmatic Programmer*, *Domain-Driven Design*, *A Philosophy of Software Design* — ci rende pensatori migliori, sviluppatori migliori, e ci aiuta a usare gli strumenti di coding IA nel modo più intelligente ed efficace.
+
+Non importa quanto diventino innovativi i nostri strumenti: la **"Vera Ingegneria"** è la via da seguire.

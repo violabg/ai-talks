@@ -62,7 +62,7 @@ export default async function ArticlePage({
   });
 
   return (
-    <div className="mx-auto px-4 py-16 max-w-3xl">
+    <div className="mx-auto px-4 py-16 max-w-6xl">
       {/* Back link */}
       <div className="mb-8">
         <Button
