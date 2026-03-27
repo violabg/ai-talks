@@ -1,21 +1,43 @@
-"use client"
+"use client";
 
-import { useTheme } from "next-themes"
-import { Moon, Sun } from "lucide-react"
-import { Button } from "@/components/ui/button"
+import { Button } from "@/components/ui/button";
+import { Moon, Sun, Zap } from "lucide-react";
+import { useTheme } from "next-themes";
+import { useEffect, useState } from "react";
+
+const themeOrder = ["light", "dark", "brutalist"] as const;
+type Theme = (typeof themeOrder)[number];
+
+const themeConfig: Record<Theme, { icon: typeof Sun; label: string }> = {
+  light: { icon: Sun, label: "Chiaro" },
+  dark: { icon: Moon, label: "Scuro" },
+  brutalist: { icon: Zap, label: "Brutalist" },
+};
 
 export function ThemeToggle() {
-  const { theme, setTheme } = useTheme()
+  const { theme, setTheme } = useTheme();
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  const currentTheme = (mounted ? theme : "light") as Theme;
+  const currentIndex = themeOrder.indexOf(currentTheme);
+  const nextTheme = themeOrder[(currentIndex + 1) % themeOrder.length];
+
+  const { icon: Icon } = themeConfig[currentTheme] ?? themeConfig.light;
+  const nextLabel = themeConfig[nextTheme].label;
 
   return (
     <Button
       variant="ghost"
       size="icon"
-      onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
-      aria-label="Cambia tema"
+      onClick={() => setTheme(nextTheme)}
+      aria-label={`Passa al tema ${nextLabel}`}
+      title={`Tema attuale: ${themeConfig[currentTheme]?.label ?? "Sistema"} → ${nextLabel}`}
     >
-      <Sun className="h-5 w-5 rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0" />
-      <Moon className="absolute h-5 w-5 rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100" />
+      <Icon className="w-5 h-5" />
     </Button>
-  )
+  );
 }

@@ -1,0 +1,280 @@
+---
+title: "Deep Modules in React/TypeScript: pattern per codebase navigabili dagli agenti AI"
+description: "Come applicare il pattern dei Deep Modules in React e TypeScript per ridurre l'accoppiamento, migliorare la navigabilità della codebase e permettere agli agenti AI di lavorare in modo più autonomo ed efficace."
+date: "2026-03-27"
+author: "AI Course"
+tags: ["React", "TypeScript", "architettura", "agenti AI", "deep modules", "pattern"]
+featured: false
+---
+
+# Deep Modules in React/TypeScript: pattern per codebase navigabili dagli agenti AI
+
+Il concetto di Deep Modules applicato a React/TypeScript è uno dei pattern più potenti — e meno discussi — per tenere una codebase navigabile dagli agenti AI (e dagli umani).
+
+Partiamo dal problema concreto, poi costruiamo esempi reali.
+
+---
+
+## Il problema: Shallow Modules in React
+
+Una codebase React tipica tende ad esplodere in tanti piccoli file con interfacce ampie:
+
+```
+src/
+  hooks/
+    useAuthToken.ts
+    useAuthUser.ts
+    useAuthRefresh.ts
+    useAuthPermissions.ts
+    useAuthLogout.ts
+  components/
+    LoginForm.tsx
+    LogoutButton.tsx
+    AuthGuard.tsx
+  utils/
+    parseToken.ts
+    validateToken.ts
+    storeToken.ts
+    clearToken.ts
+  context/
+    AuthContext.tsx
+    AuthProvider.tsx
+```
+
+Ogni file è piccolo e fa una cosa sola — sembra "clean architecture", ma per un agente AI (o un nuovo developer) che entra nella codebase è una ragnatela: per capire come funziona l'autenticazione deve leggere 12+ file e ricostruire la mappa mentale nella sua testa.
+
+---
+
+## La soluzione: raggruppare dietro un'interfaccia unica
+
+Un Deep Module raggruppa tutta quella complessità dietro **un'unica interfaccia pubblica controllata**:
+
+```
+src/
+  modules/
+    auth/
+      index.ts          ← l'unica cosa che il resto del mondo vede
+      _internal/
+        token.ts
+        permissions.ts
+        refresh.ts
+        AuthContext.tsx
+        AuthProvider.tsx
+```
+
+**`src/modules/auth/index.ts`** — l'interfaccia pubblica:
+
+```typescript
+// Tutto quello che il resto dell'app può usare di "auth"
+// Niente altro è importabile direttamente
+
+export { AuthProvider } from './_internal/AuthProvider';
+export { useAuth } from './_internal/hooks';
+export type { AuthUser, AuthPermission } from './_internal/types';
+```
+
+Il file `index.ts` è la **cucitura** del modulo. L'implementazione dentro `_internal/` può essere riscritta, refactored, o delegata a un agente AI — finché l'interfaccia pubblica rimane stabile, il resto dell'app non se ne accorge.
+
+---
+
+## Esempio 1: `useAuth` come interfaccia unica
+
+Invece di esporre 5 hook separati, uno solo con forma ricca:
+
+```typescript
+// modules/auth/index.ts — quello che vedi dall'esterno
+export { useAuth } from './_internal/hooks';
+
+// Utilizzo in qualsiasi componente:
+import { useAuth } from '@/modules/auth';
+
+function ProfilePage() {
+  const { user, isLoading, logout, can } = useAuth();
+
+  if (isLoading) return <Spinner />;
+  if (!user) return <Redirect to="/login" />;
+
+  return (
+    <div>
+      <h1>Ciao {user.name}</h1>
+      {can('edit:profile') && <EditButton />}
+      <button onClick={logout}>Esci</button>
+    </div>
+  );
+}
+```
+
+L'implementazione dentro `_internal/hooks.ts` può essere complessa — gestione del refresh token, persistenza, sincronizzazione tra tab — ma il componente non lo sa e non gli importa.
+
+---
+
+## Esempio 2: modulo `video-editor`
+
+Scenario reale: un editor video con timeline, thumbnails e preview. La versione shallow:
+
+```typescript
+// ❌ Shallow — il componente deve sapere tutto
+import { useTimeline } from '@/hooks/useTimeline';
+import { useThumbnails } from '@/hooks/useThumbnails';
+import { usePlayback } from '@/hooks/usePlayback';
+import { formatTime } from '@/utils/formatTime';
+import { clampFrame } from '@/utils/clampFrame';
+import { ThumbnailCache } from '@/services/ThumbnailCache';
+
+function VideoEditor() {
+  const timeline = useTimeline();
+  const thumbnails = useThumbnails(timeline.frames);
+  const playback = usePlayback(timeline.currentFrame);
+  // ... 50 righe di orchestrazione che il componente non dovrebbe fare
+}
+```
+
+La versione Deep Module:
+
+```typescript
+// modules/video-editor/index.ts
+export { VideoEditorProvider, useVideoEditor } from './_internal/context';
+export { Timeline } from './_internal/Timeline';
+export { PreviewPanel } from './_internal/PreviewPanel';
+export type { VideoEditorState, VideoClip } from './_internal/types';
+
+// ✅ Il componente consumer è pulito
+import { VideoEditorProvider, Timeline, PreviewPanel } from '@/modules/video-editor';
+
+function App() {
+  return (
+    <VideoEditorProvider>
+      <Timeline />
+      <PreviewPanel />
+    </VideoEditorProvider>
+  );
+}
+```
+
+L'orchestrazione tra timeline, thumbnails e playback è incapsulata dentro il Provider — non trapela verso l'esterno.
+
+---
+
+## Esempio 3: interfaccia orientata al comportamento, non all'implementazione
+
+Uno degli errori più comuni in React è esporre **stato e setter** invece di **azioni con significato**:
+
+```typescript
+// ❌ Interfaccia che espone i dettagli implementativi
+const { 
+  items, 
+  setItems,           // ← chi chiama questo deve sapere come funziona la lista
+  selectedId, 
+  setSelectedId,      // ← accoppiamento con la struttura interna
+  isLoading, 
+  setIsLoading        // ← stato sincronizzato? asincrono? non si sa
+} = useProductList();
+
+// ✅ Interfaccia orientata al comportamento (Deep Module)
+const { 
+  items,
+  selectedItem,
+  isLoading,
+  selectItem,         // ← azione con significato
+  removeItem,         // ← azione con significato
+  refreshList         // ← azione con significato
+} = useProductList();
+```
+
+La differenza è cruciale per gli agenti AI: con la seconda versione, l'AI può capire *cosa può fare* leggendo solo l'interfaccia, senza scavare nell'implementazione.
+
+---
+
+## Esempio 4: Grey Box con test come contratto
+
+Il pattern Grey Box diventa concreto quando usi i test come **specifica dell'interfaccia pubblica**, non dei dettagli interni:
+
+```typescript
+// modules/cart/__tests__/cart.test.ts
+// Testa SOLO l'interfaccia pubblica — non i dettagli interni
+
+describe('useCart', () => {
+  it('aggiunge un prodotto al carrello', () => {
+    const { result } = renderHook(() => useCart());
+    
+    act(() => result.current.addItem({ id: '1', price: 10, quantity: 1 }));
+    
+    expect(result.current.items).toHaveLength(1);
+    expect(result.current.total).toBe(10);
+  });
+
+  it('applica uno sconto percentuale', () => {
+    const { result } = renderHook(() => useCart());
+    
+    act(() => {
+      result.current.addItem({ id: '1', price: 100, quantity: 2 });
+      result.current.applyDiscount({ type: 'percentage', value: 20 });
+    });
+
+    expect(result.current.total).toBe(160); // 200 - 20%
+  });
+});
+```
+
+Questi test descrivono il **contratto del modulo**. L'agente AI può riscrivere completamente `_internal/` — cambiare la struttura dati, ottimizzare i calcoli, aggiungere memoization — e finché i test passano, sai che il contratto è rispettato. Non hai bisogno di guardare il codice generato.
+
+---
+
+## Struttura di progetto consigliata
+
+```
+src/
+  modules/
+    auth/
+      index.ts              ← interfaccia pubblica
+      _internal/
+        hooks.ts
+        AuthProvider.tsx
+        token.ts
+        __tests__/
+          auth.test.ts      ← testa solo l'interfaccia pubblica
+    
+    cart/
+      index.ts
+      _internal/
+        useCart.ts
+        CartProvider.tsx
+        discount.ts
+        __tests__/
+          cart.test.ts
+    
+    video-editor/
+      index.ts
+      _internal/
+        context.tsx
+        Timeline.tsx
+        PreviewPanel.tsx
+        ThumbnailCache.ts
+        __tests__/
+          video-editor.test.ts
+  
+  app/
+    App.tsx                 ← importa solo da modules/*/index.ts
+    router.tsx
+```
+
+La regola di enforcement in TypeScript può essere fatta con ESLint:
+
+```json
+// .eslintrc
+{
+  "rules": {
+    "no-restricted-imports": ["error", {
+      "patterns": ["*/modules/*/_internal/*"]
+    }]
+  }
+}
+```
+
+Con questa regola, qualsiasi import che bypassa `index.ts` e va direttamente in `_internal/` fallisce il lint — sia per un developer umano che per un agente AI che genera codice.
+
+---
+
+## Conclusione
+
+In React/TypeScript, Deep Modules non significa "componenti grandi" — significa che la **superficie di accoppiamento** tra moduli è piccola e intenzionale. L'agente AI può lavorare dentro un modulo sapendo esattamente cosa può toccare e cosa non deve toccare, e i test gli dicono se ha fatto bene il suo lavoro.

@@ -3,11 +3,26 @@ import { Header } from "@/components/layout/header";
 import { ThemeProvider } from "@/components/theme-provider";
 import { cn } from "@/lib/utils";
 import type { Metadata } from "next";
-import { Noto_Sans } from "next/font/google";
+import { Bebas_Neue, Courier_Prime, Noto_Sans } from "next/font/google";
 import localFont from "next/font/local";
 import "./globals.css";
 
 const notoSans = Noto_Sans({ subsets: ["latin"], variable: "--font-sans" });
+
+const bebasNeue = Bebas_Neue({
+  weight: "400",
+  subsets: ["latin"],
+  variable: "--font-bebas-neue",
+  display: "swap",
+});
+
+const courierPrime = Courier_Prime({
+  weight: ["400", "700"],
+  style: ["normal", "italic"],
+  subsets: ["latin"],
+  variable: "--font-courier-prime",
+  display: "swap",
+});
 
 const geistSans = localFont({
   src: "../../node_modules/geist/dist/fonts/geist-sans/Geist-Variable.woff2",
@@ -42,6 +57,8 @@ export default function RootLayout({
       className={cn(
         geistSans.variable,
         geistMono.variable,
+        bebasNeue.variable,
+        courierPrime.variable,
         "font-sans",
         notoSans.variable,
       )}

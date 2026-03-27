@@ -1,47 +1,54 @@
-import type { MDXComponents } from "mdx/types"
-import Image from "next/image"
+import { cn } from "@/lib/utils";
+import type { MDXComponents } from "mdx/types";
+import Image from "next/image";
 
 export const mdxComponents: MDXComponents = {
   img: ({ src, alt }) => (
-    <span className="my-10 block not-prose">
+    <span className="block my-10 not-prose">
       <Image
         src={src ?? ""}
         alt={alt ?? ""}
         width={800}
         height={450}
-        className="w-full rounded-[--radius-lg] object-cover ring-1 ring-[--border]"
+        className="rounded-[--radius-lg] ring-[--border] ring-1 w-full object-cover"
       />
       {alt && (
-        <span className="mt-3 block text-center text-sm italic text-[--muted-foreground]">
+        <span className="block mt-3 text-[--muted-foreground] text-sm text-center italic">
           {alt}
         </span>
       )}
     </span>
   ),
   blockquote: ({ children }) => (
-    <blockquote className="border-l-[3px] border-[--primary] pl-6 not-italic font-medium text-[1.1em] leading-relaxed text-[--foreground]/80">
+    <blockquote className="pl-6 border-[--primary] border-l-[3px] font-medium text-[--foreground]/80 text-[1.1em] not-italic leading-relaxed">
       {children}
     </blockquote>
   ),
-  pre: ({ children }) => (
-    <pre className="rounded-[--radius-lg] border border-[--border] bg-[--muted] p-5 overflow-x-auto text-sm font-mono leading-relaxed">
+  pre: ({ children, className, ...props }) => (
+    <pre
+      {...props}
+      className={cn(
+        "bg-[--muted] p-5 border border-[--border] rounded-[--radius-lg] overflow-x-auto font-mono text-sm leading-relaxed",
+        className,
+      )}
+    >
       {children}
     </pre>
   ),
   table: ({ children }) => (
-    <div className="my-6 overflow-x-auto rounded-[--radius-lg] border border-[--border]">
-      <table className="w-full border-collapse text-sm">{children}</table>
+    <div className="my-6 border border-[--border] rounded-[--radius-lg] overflow-x-auto">
+      <table className="w-full text-sm border-collapse">{children}</table>
     </div>
   ),
   th: ({ children }) => (
-    <th className="border-b border-[--border] bg-[--muted] px-4 py-2.5 text-left text-xs font-semibold uppercase tracking-wider">
+    <th className="bg-[--muted] px-4 py-2.5 border-[--border] border-b font-semibold text-xs text-left uppercase tracking-wider">
       {children}
     </th>
   ),
   td: ({ children }) => (
-    <td className="border-b border-[--border] px-4 py-2.5">{children}</td>
+    <td className="px-4 py-2.5 border-[--border] border-b">{children}</td>
   ),
   hr: () => (
-    <hr className="my-12 border-none h-px bg-linear-to-r from-transparent via-[--border] to-transparent" />
+    <hr className="bg-linear-to-r from-transparent via-[--border] to-transparent my-12 border-none h-px" />
   ),
-}
+};

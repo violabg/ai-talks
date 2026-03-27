@@ -6,6 +6,15 @@ import type { Metadata } from "next";
 import { compileMDX } from "next-mdx-remote/rsc";
 import Link from "next/link";
 import { notFound } from "next/navigation";
+import rehypePrettyCode from "rehype-pretty-code";
+
+const prettyCodeOptions = {
+  theme: {
+    dark: "github-dark",
+    light: "github-light",
+  },
+  keepBackground: false,
+};
 
 export async function generateStaticParams() {
   return getAllArticleSlugs().map((slug) => ({ slug }));
@@ -50,7 +59,12 @@ export default async function ArticlePage({
 
   const { content, frontmatter } = await compileMDX<ArticleFrontmatter>({
     source,
-    options: { parseFrontmatter: true },
+    options: {
+      parseFrontmatter: true,
+      mdxOptions: {
+        rehypePlugins: [[rehypePrettyCode, prettyCodeOptions]],
+      },
+    },
     components: mdxComponents,
   });
 
