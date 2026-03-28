@@ -11,7 +11,7 @@ export function Header() {
         >
           <span className="font-display text-xl tracking-tight">
             <span className="text-[--primary]">AI</span>{" "}
-            <span className="text-[--foreground]">Course</span>
+            <span className="text-[--foreground]">Talks</span>
           </span>
         </Link>
 

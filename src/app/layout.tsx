@@ -38,8 +38,8 @@ const geistMono = localFont({
 
 export const metadata: Metadata = {
   title: {
-    default: "AI Course",
-    template: "%s | AI Course",
+    default: "AI Talks",
+    template: "%s | AI Talks",
   },
   description:
     "Idee e best practice per sviluppare con l'intelligenza artificiale.",
