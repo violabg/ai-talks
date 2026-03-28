@@ -16,7 +16,7 @@
   --card-foreground: #0A0A0A;
   --popover: #F0EDE5;
   --popover-foreground: #0A0A0A;
-  --primary: #FF2200;
+  --primary: #7300ff;
   --primary-foreground: #F0EDE5;
   --secondary: #0A0A0A;
   --secondary-foreground: #F0EDE5;
@@ -27,7 +27,7 @@
   --destructive: #FF2200;
   --border: #0A0A0A;
   --input: #E2DED5;
-  --ring: #FF2200;
+  --ring: #7300ff;
   --radius: 0rem;
 
   --font-display: var(--font-bebas-neue), 'Bebas Neue', Impact, sans-serif;
@@ -44,12 +44,12 @@
 
   --sidebar: #E8E4DC;
   --sidebar-foreground: #0A0A0A;
-  --sidebar-primary: #FF2200;
+  --sidebar-primary: #7300ff;
   --sidebar-primary-foreground: #F0EDE5;
   --sidebar-accent: #0A0A0A;
   --sidebar-accent-foreground: #F0EDE5;
   --sidebar-border: #0A0A0A;
-  --sidebar-ring: #FF2200;
+  --sidebar-ring: #7300ff;
 }
 
 /* ═══════════════════════════════════════════════
@@ -63,7 +63,7 @@
   --card-foreground: #F0EDE5;
   --popover: #0F0F0D;
   --popover-foreground: #F0EDE5;
-  --primary: #FF2200;
+  --primary: #7300ff;
   --primary-foreground: #F0EDE5;
   --secondary: #F0EDE5;
   --secondary-foreground: #0F0F0D;
@@ -74,7 +74,7 @@
   --destructive: #FF2200;
   --border: rgba(240, 237, 229, 0.2);
   --input: #1E1E1A;
-  --ring: #FF2200;
+  --ring: #7300ff;
   --radius: 0rem;
 
   --font-display: var(--font-bebas-neue), 'Bebas Neue', Impact, sans-serif;
@@ -91,12 +91,12 @@
 
   --sidebar: #0A0A08;
   --sidebar-foreground: #F0EDE5;
-  --sidebar-primary: #FF2200;
+  --sidebar-primary: #7300ff;
   --sidebar-primary-foreground: #F0EDE5;
   --sidebar-accent: #F0EDE5;
   --sidebar-accent-foreground: #0F0F0D;
   --sidebar-border: rgba(240, 237, 229, 0.2);
-  --sidebar-ring: #FF2200;
+  --sidebar-ring: #7300ff;
 }
 
 
@@ -395,7 +395,7 @@ header > * {
   --card-foreground: #F0EDE5;
   --foreground: #F0EDE5;
   --muted-foreground: #A8A5A0;
-  --primary: #FF6644;
+  --primary: #9933ff;
   --border: rgba(240, 237, 229, 0.25);
 }
 
@@ -403,7 +403,7 @@ header > * {
   --card-foreground: #0F0F0D;
   --foreground: #0F0F0D;
   --muted-foreground: #4A4640;
-  --primary: #FF6644;
+  --primary: #9933ff;
   --border: rgba(10, 10, 8, 0.25);
 }
 
