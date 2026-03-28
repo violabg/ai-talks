@@ -1,0 +1,15 @@
+{
+  "hooks": {
+    "PostToolUse": [
+      {
+        "matcher": "Edit|Write",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "cd /Users/paolo/Sites/ai/ai-course && pnpm lint --fix 2>&1 | tail -20"
+          }
+        ]
+      }
+    ]
+  }
+}

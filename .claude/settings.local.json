@@ -3,7 +3,10 @@
     "allow": [
       "Bash(npm install:*)",
       "Bash(npm view:*)",
-      "Bash(npm run:*)"
+      "Bash(npm run:*)",
+      "Bash(cat /Users/paolo/Sites/ai/ai-course/.eslintrc*)",
+      "Bash(ls /Users/paolo/Sites/ai/ai-course/eslint.config*)",
+      "Bash(claude mcp:*)"
     ]
   }
 }
