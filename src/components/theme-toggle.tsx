@@ -1,17 +1,16 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
-import { Moon, Sun, Zap } from "lucide-react";
+import { Moon, Sun } from "lucide-react";
 import { useTheme } from "next-themes";
 import { useEffect, useState } from "react";
 
-const themeOrder = ["light", "dark", "brutalist"] as const;
+const themeOrder = ["light", "dark"] as const;
 type Theme = (typeof themeOrder)[number];
 
 const themeConfig: Record<Theme, { icon: typeof Sun; label: string }> = {
   light: { icon: Sun, label: "Chiaro" },
   dark: { icon: Moon, label: "Scuro" },
-  brutalist: { icon: Zap, label: "Brutalist" },
 };
 
 export function ThemeToggle() {

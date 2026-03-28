@@ -9,7 +9,7 @@ export function ThemeProvider({ children }: { children: ReactNode }) {
       attribute="class"
       defaultTheme="system"
       enableSystem
-      themes={["light", "dark", "brutalist"]}
+      themes={["light", "dark"]}
       disableTransitionOnChange
       storageKey="theme"
     >
