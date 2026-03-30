@@ -12,9 +12,9 @@ featured: false
 
 Refactorare codice legacy non significa riscrivere tutto da zero. Significa **migliorare la struttura interna di un sistema che ha gia valore in produzione**, riducendo il rischio mentre continui a consegnare cambiamenti utili.
 
-Questo e il punto in cui molti team sbagliano approccio. Vedono un modulo disordinato, pieno di condizioni, dipendenze implicite e nomi ambigui, e concludono che la soluzione sia una riscrittura completa. Nella pratica, la riscrittura totale e spesso il modo piu veloce per perdere comportamento, introdurre regressioni e allungare i tempi.
+Questo è il punto in cui molti team sbagliano approccio. Vedono un modulo disordinato, pieno di condizioni, dipendenze implicite e nomi ambigui, e concludono che la soluzione sia una riscrittura completa. Nella pratica, la riscrittura totale e spesso il modo piu veloce per perdere comportamento, introdurre regressioni e allungare i tempi.
 
-L'alternativa piu solida e trattare il refactoring come un processo incrementale: prima rendi osservabile il comportamento attuale, poi crei margine di manovra, infine migliori il design una parte alla volta.
+L'alternativa piu solida è trattare il refactoring come un processo incrementale: prima rendi osservabile il comportamento attuale, poi crei margine di manovra, infine migliori il design una parte alla volta.
 
 In questo articolo vediamo come farlo in modo pragmatico.
 
@@ -29,9 +29,9 @@ Codice legacy non vuol dire necessariamente codice scritto anni fa. Un file puo 
 - quali comportamenti sono deliberati e quali accidentali
 - come cambiarlo senza rompere parti lontane del sistema
 
-Il problema centrale del codice legacy non e l'eta. E la **bassa confidenza nel cambiamento**.
+Il problema centrale del codice legacy non è l'eta. E la **bassa confidenza nel cambiamento**.
 
-Se ogni modifica genera paura, tempi lunghi e verifiche manuali, hai un problema di legacy anche se il codice e recente.
+Se ogni modifica genera paura, tempi lunghi e verifiche manuali, hai un problema di legacy anche se il codice è recente.
 
 Per questo il refactoring non parte dalla pulizia estetica. Parte dalla domanda giusta:
 
