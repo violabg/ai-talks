@@ -1,13 +1,27 @@
 "use client";
 
+import {
+  InputGroup,
+  InputGroupAddon,
+  InputGroupButton,
+  InputGroupInput,
+} from "@/components/ui/input-group";
+import { Search, X } from "lucide-react";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
-import { useTransition } from "react";
+import { useEffect, useRef, useState, useTransition } from "react";
 
 export function ArticleSearch() {
   const router = useRouter();
   const pathname = usePathname();
   const searchParams = useSearchParams();
   const [isPending, startTransition] = useTransition();
+  const inputRef = useRef<HTMLInputElement>(null);
+  const query = searchParams.get("q") ?? "";
+  const [term, setTerm] = useState(query);
+
+  useEffect(() => {
+    setTerm(query);
+  }, [query]);
 
   function handleSearch(term: string) {
     const params = new URLSearchParams(searchParams.toString());
@@ -21,30 +35,40 @@ export function ArticleSearch() {
     });
   }
 
+  function clearSearch() {
+    setTerm("");
+    handleSearch("");
+    inputRef.current?.focus();
+  }
+
   return (
-    <div className="relative">
-      <svg
-        className="absolute left-3 top-1/2 -translate-y-1/2 size-4 text-[--muted-foreground] pointer-events-none"
-        xmlns="http://www.w3.org/2000/svg"
-        fill="none"
-        viewBox="0 0 24 24"
-        stroke="currentColor"
-        strokeWidth={2}
-      >
-        <path
-          strokeLinecap="round"
-          strokeLinejoin="round"
-          d="m21 21-4.35-4.35M17 11A6 6 0 1 1 5 11a6 6 0 0 1 12 0Z"
-        />
-      </svg>
-      <input
-        type="search"
+    <InputGroup className="max-w-xs">
+      <InputGroupAddon>
+        <Search />
+      </InputGroupAddon>
+      <InputGroupInput
+        ref={inputRef}
         placeholder="Cerca per titolo, descrizione o tag…"
-        defaultValue={searchParams.get("q") ?? ""}
-        onChange={(e) => handleSearch(e.target.value)}
+        value={term}
+        onChange={(e) => {
+          const nextTerm = e.target.value;
+          setTerm(nextTerm);
+          handleSearch(nextTerm);
+        }}
         data-pending={isPending ? "" : undefined}
-        className="w-full rounded-lg border border-[--border] bg-[--card] py-2.5 pl-9 pr-4 text-sm text-[--foreground] placeholder:text-[--muted-foreground] outline-none transition-colors focus:border-[--primary] focus:ring-2 focus:ring-[--primary]/20 data-[pending]:opacity-60 sm:max-w-sm"
       />
-    </div>
+      {term ? (
+        <InputGroupAddon align="inline-end">
+          <InputGroupButton
+            size="icon-xs"
+            variant="ghost"
+            aria-label="Cancella ricerca"
+            onClick={clearSearch}
+          >
+            <X />
+          </InputGroupButton>
+        </InputGroupAddon>
+      ) : null}
+    </InputGroup>
   );
 }
