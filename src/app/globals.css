@@ -9,6 +9,7 @@
    LIGHT THEME — clean white, indigo accent
    ═══════════════════════════════════════════════ */
 :root {
+  --header-height: 4rem;
   --background: oklch(99% 0.003 250);
   --foreground: oklch(11% 0.02 260);
   --card: oklch(100% 0 0);
@@ -172,6 +173,10 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
+html {
+  scroll-behavior: smooth;
+}
+
 h1,
 h2,
 h3,
@@ -236,6 +241,28 @@ body::before {
   font-family: var(--font-fraunces), "Georgia", serif;
   font-weight: 500;
   letter-spacing: -0.02em;
+  scroll-margin-top: calc(var(--header-height) + 1.5rem);
+}
+
+.prose :where(h2, h3, h4):not(:where([class~="not-prose"], [class~="not-prose"] *)) {
+  position: relative;
+}
+
+.article-heading-anchor {
+  margin-left: 0.5rem;
+  color: color-mix(in oklch, var(--muted-foreground) 80%, transparent);
+  text-decoration: none;
+  opacity: 0;
+  transition:
+    opacity 0.18s ease,
+    color 0.18s ease;
+}
+
+.article-heading-anchor:hover,
+.prose :where(h2, h3, h4):hover .article-heading-anchor,
+.article-heading-anchor:focus-visible {
+  opacity: 1;
+  color: var(--primary);
 }
 
 .prose :where(h2):not(:where([class~="not-prose"], [class~="not-prose"] *)) {

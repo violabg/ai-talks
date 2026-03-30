@@ -13,3 +13,8 @@ export interface Article {
   slug: string
   frontmatter: ArticleFrontmatter
 }
+
+export interface ArticleSection {
+  id: string
+  title: string
+}
