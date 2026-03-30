@@ -1,0 +1,299 @@
+---
+title: "Migrare librerie obsolete con l'AI: strumenti, workflow e prompt efficaci"
+description: "Come usare strumenti deterministici e agenti AI per aggiornare le dipendenze di una codebase in modo sicuro, incrementale e verificabile."
+date: "2026-03-30T20:00:00+02:00"
+author: "AI Talks"
+tags: ["refactoring", "agenti AI", "workflow", "migrazione", "TypeScript"]
+published: false
+featured: false
+---
+
+# Migrare librerie obsolete con l'AI: strumenti, workflow e prompt efficaci
+
+Ogni codebase accumula debito di dipendenze. Le librerie escono nuove versioni, deprecano API, cambiano comportamenti, correggono vulnerabilità. Il codice che hai scritto sei mesi fa funziona ancora — ma si appoggia su versioni che il loro ecosistema ha già abbandonato.
+
+Il problema non è sapere che bisogna aggiornare. Il problema è che farlo manualmente su una codebase reale è lento, rischioso e spesso rimandato fino a quando la situazione diventa critica.
+
+L'AI può accelerare questo processo in modo significativo. Ma richiede disciplina. Un agente a cui chiedi "aggiorna tutte le dipendenze" senza struttura produrrà cambiamenti opachi, difficili da verificare e potenzialmente rotti in modi sottili. L'approccio corretto è diverso: si lavora per fasi, si combinano strumenti deterministici con l'intelligenza dell'agente, e si valida dopo ogni passo.
+
+In questo articolo vediamo come farlo in modo pragmatico.
+
+---
+
+## 1. Perché le migrazioni di librerie sono difficili
+
+Aggiornare una dipendenza non è mai solo cambiare un numero in `package.json`. Le difficoltà reali sono tre.
+
+**Breaking changes non documentati.** Le note di rilascio dicono cosa è cambiato formalmente. Non dicono sempre quali comportamenti impliciti si sono modificati, quali edge case si comportano diversamente, quali assunzioni della versione precedente non reggono più.
+
+**La superficie del problema.** Una libreria usata in 50 file richiede di toccare 50 file. Se il pattern da aggiornare ha varianti — API chiamate in modi leggermente diversi, wrapper custom, integrazioni non standard — la variabilità cresce velocemente.
+
+**La coerenza dell'insieme.** Il rischio principale non è il singolo file. È che dopo la migrazione il sistema sembri funzionare, ma una combinazione di casi reali si comporti in modo diverso da prima. Questo tipo di regressione è invisibile ai test che non coprono esattamente quel percorso.
+
+> Il vero costo di una migrazione disordinata non emerge subito. Emerge in produzione, settimane dopo, in un caso che nessuno aveva testato.
+
+---
+
+## 2. Il principio guida: approccio ibrido deterministico + AI
+
+La strategia più affidabile per migrare librerie con l'AI non è affidarsi solo all'AI. È combinarla con strumenti deterministici.
+
+**Strumenti deterministici** — codemods basati su AST, tool di analisi statica — gestiscono le trasformazioni meccaniche: rinominare API, aggiornare import, adattare firme. Producono diff verificabili e prevedibili.
+
+**L'AI** gestisce le trasformazioni semanticamente complesse: edge case, logica accoppiata al comportamento della libreria, pattern non standard che un codemod non può generalizzare.
+
+Questa divisione del lavoro ha un vantaggio decisivo: riduce la superficie che l'AI deve coprire. Meno la macchina deve capire, meno rischio di allucinazioni o cambiamenti non dichiarati.
+
+| Tipo di trasformazione | Strumento consigliato |
+|---|---|
+| Rinominare API, aggiornare import | Codemod / jscodeshift / ast-grep |
+| Aggiornare firme con pattern uniformi | Codemod ufficiale della libreria |
+| Edge case con logica variabile | Agente AI con prompt mirato |
+| Comportamenti semanticamente cambiati | AI + revisione umana obbligatoria |
+| Sostituire una libreria con un'altra | AI + test di caratterizzazione prima |
+
+---
+
+## 3. Gli strumenti: da Renovate a Codemod
+
+Prima di coinvolgere l'AI, vale la pena conoscere gli strumenti che automatizzano la parte meccanica.
+
+**Renovate e Dependabot** aprono automaticamente PR quando le dipendenze hanno nuove versioni. Non migrano il codice, ma rendono visibile il debito in modo continuo invece di lasciarlo accumulare. Se configurati bene, possono gestire autonomamente gli aggiornamenti patch e minor con test che passano, riservando l'intervento umano ai major bump.
+
+**jscodeshift** è il toolkit di trasformazione AST più usato nell'ecosistema JavaScript e TypeScript. Meta lo usa internamente su larga scala. Permette di scrivere codemods come funzioni JavaScript che ricevono l'AST del file e restituiscono l'AST modificato. Molte librerie pubblicano codemods ufficiali per le proprie migrazioni major.
+
+```ts
+// Esempio: codemod jscodeshift per migrare da libreria v1 a v2
+// Cambia: import { oldName } from 'lib' → import { newName } from 'lib'
+export default function transform(file, api) {
+  const j = api.jscodeshift
+  return j(file.source)
+    .find(j.ImportSpecifier, { imported: { name: "oldName" } })
+    .replaceWith(() =>
+      j.importSpecifier(j.identifier("newName"))
+    )
+    .toSource()
+}
+```
+
+**ast-grep** è uno strumento più recente per il pattern matching strutturale su AST. Permette di cercare e sostituire pattern di codice usando una sintassi simile al codice stesso, senza dover scrivere trasformazioni imperative. È utile come foundation per codemods leggeri.
+
+**OpenRewrite** è pensato principalmente per Java e Kotlin. Usa strutture chiamate Lossless Semantic Trees (LST) — più ricche degli AST tradizionali perché catturano sia la sintassi che la semantica. Il suo ecosistema ha ricette pre-costruite per migrare tra versioni di Spring Boot, Java, e altri framework enterprise.
+
+**Codemod.com** è una piattaforma che combina codemods deterministici con AI. Mette a disposizione una libreria di trasformazioni pre-costruite per le migrazioni più comuni (React, Next.js, TypeScript) e permette di comporre pipeline di migrazione.
+
+---
+
+## 4. Preparare la migrazione: capire il perimetro
+
+Prima di eseguire qualsiasi trasformazione, devi sapere cosa stai affrontando.
+
+**Leggi il changelog e il migration guide ufficiale.** Non in diagonale — completamente. Le breaking changes dichiarate sono il punto di partenza. Annota quelle che potrebbero impattare la tua codebase.
+
+**Usa l'AI per creare un inventario.** Questo è uno degli usi più efficaci dell'AI nelle migrazioni: non modificare il codice, ma analizzarlo.
+
+```text
+Analizza questa codebase TypeScript e restituisci soltanto:
+
+1. Tutti i file che importano da [nome-libreria]
+2. Quali API o metodi vengono usati in ogni file
+3. Quali di questi corrispondono a breaking changes nella v3 (allego il changelog)
+4. Un ordinamento per priorità di intervento (quanti file toccano, quanto sono critici)
+
+Non modificare nulla. Restituisci solo l'inventario.
+```
+
+Questo prompt restituisce una mappa del lavoro da fare prima ancora di toccare il codice. Se l'agente trova 8 file con un pattern uniforme e 3 con varianti, sai già dove concentrarti.
+
+**Crea un branch dedicato e committare lo stato iniziale.** Ogni trasformazione deve essere verificabile in un diff pulito. Se cominci con uno stato uncommitted, il diff diventa rumore.
+
+---
+
+## 5. Fase 1 — Trasformazioni meccaniche con codemods
+
+Il primo passo è applicare tutto ciò che può essere automatizzato in modo deterministico.
+
+Se la libreria fornisce un codemod ufficiale, inizia da quello. Next.js, React, TypeScript e molte altre librerie pubblicano tool di migrazione per i loro major bump.
+
+```bash
+# Migrazione ufficiale Next.js (eseguire sempre in dry-run prima)
+npx @next/codemod@latest next-image-to-legacy-image .
+
+# React 17 → 18: ReactDOM.render → createRoot
+npx @next/codemod@latest react-root-to-create-root .
+```
+
+La regola critica è sempre **dry-run prima di applicare**. Guarda il diff che il codemod propone su un campione di file. Se il pattern è corretto, applica. Se ci sono anomalie, capita cosa sta succedendo prima di propagare l'errore a 50 file.
+
+Dopo ogni batch di trasformazioni deterministiche, esegui typecheck e test:
+
+```bash
+pnpm tsc --noEmit
+pnpm test
+```
+
+Se il typecheck passa e i test reggono, fai un commit. Questo è il punto di ancoraggio da cui partire per la fase successiva. Se non passi, non andare avanti — diagnostica prima.
+
+> Ogni commit dopo una trasformazione è un oracolo. Se qualcosa si rompe nei passi successivi, sai esattamente dove tornare.
+
+---
+
+## 6. Fase 2 — L'AI per le trasformazioni semantiche
+
+Dopo i codemods rimane inevitabilmente qualcosa che richiede giudizio: edge case, pattern non standard, logica accoppiata a comportamenti della versione precedente che non si traduce meccanicamente.
+
+Qui entra l'AI. Ma non con un prompt generico.
+
+**Fornisci contesto strutturato.** L'AI deve sapere:
+
+- Qual è la libreria e quale versione stai targettando
+- Qual è il breaking change specifico che stai risolvendo
+- Un esempio del pattern vecchio e del pattern nuovo atteso
+- Quali vincoli non toccare (nomi pubblici, firme di funzioni usate altrove, gestione errori)
+
+Esempio di prompt efficace per migrare un pattern di state management:
+
+```text
+Contesto:
+- Stiamo migrando da Zustand v4 a Zustand v5
+- Breaking change: `set` non supporta più il merge implicito, bisogna usare `set((state) => ({ ...state, campo: valore }))`
+
+Pattern vecchio (v4):
+  store.set({ utente: nuovoUtente })
+
+Pattern nuovo (v5):
+  store.set((state) => ({ ...state, utente: nuovoUtente }))
+
+File da migrare: [allega il file]
+
+Istruzioni:
+- Applica solo questa trasformazione
+- Non cambiare nomi di variabili, tipi, o altri pattern non correlati
+- Se trovi un caso ambiguo, segnalalo invece di procedere
+- Mostra prima i punti da modificare, poi applica
+```
+
+**Non mischiare trasformazioni diverse nello stesso prompt.** Se devi aggiornare sia le API di state sia i tipi, fallo in due passi separati. Ogni passo deve avere un unico obiettivo verificabile.
+
+---
+
+## 7. Prompt efficaci: struttura e pattern
+
+La qualità dei risultati dell'AI nelle migrazioni dipende quasi interamente dalla qualità del prompt. Alcuni template che funzionano bene nella pratica.
+
+**Prompt di analisi (prima di modificare):**
+
+```text
+Analizza il file [X] e dimmi:
+1. Quali API di [libreria] vengono usate
+2. Quali di queste corrispondono a breaking changes nella v[N] (vedi changelog allegato)
+3. La complessità stimata di ogni migrazione (bassa/media/alta)
+4. Dipendenze tra le modifiche (se A deve cambiare prima di B)
+
+Non modificare nulla.
+```
+
+**Prompt per migrazione di un pattern specifico:**
+
+```text
+Migra questo file da [libreria] v[N-1] a v[N].
+
+Breaking change da applicare: [descrizione precisa]
+
+Esempio del pattern atteso dopo la migrazione:
+[mostra un file già migrato, o un prima/dopo esplicito]
+
+Vincoli:
+- Non cambiare la firma pubblica delle funzioni esportate
+- Non modificare la gestione degli errori
+- Se non sei sicuro su un caso, fermati e segnala
+
+Applica solo questa trasformazione.
+```
+
+**Prompt per validazione dopo la migrazione:**
+
+```text
+Verifica che questo file sia conforme al nuovo pattern di [libreria] v[N].
+
+Pattern corretto: [descrizione o esempio]
+
+Segnala ogni punto che ancora usa il pattern vecchio o che potrebbe essere ambiguo.
+Non modificare — solo analizza.
+```
+
+Airbnb ha documentato pubblicamente un caso emblematico: la migrazione di 3.500 file di test in 6 settimane, contro una stima manuale di 1,5 anni. Il risultato è stato ottenuto costruendo una pipeline in cui ogni fallimento della migrazione veniva reimmesso nell'agente con un prompt affinato, fino a convergenza. Il segreto non era il prompt perfetto al primo tentativo, ma il loop di feedback stretto.
+
+---
+
+## 8. Il loop di validazione
+
+Ogni iterazione con l'AI deve chiudersi con una verifica prima di aprire la successiva.
+
+Il ciclo corretto è:
+
+1. applica la trasformazione (codemod o AI) su un batch limitato di file
+2. esegui typecheck
+3. esegui i test rilevanti
+4. rivedi il diff
+5. se tutto passa, commit e passa al batch successivo
+6. se qualcosa si rompe, diagnostica prima di andare avanti
+
+Il punto critico è il passo 6. L'errore più comune è continuare ad accumulare modifiche sperando che il quadro si chiarisca. Non si chiarisce. Più modifiche non verificate si accumulano, più diventa difficile isolare la causa di ogni problema.
+
+Un errore TypeScript è un segnale prezioso da dare all'AI:
+
+```text
+Dopo la tua modifica, il typecheck produce questo errore:
+
+  src/store/user.ts:42:5 - error TS2345:
+  Argument of type '{ utente: User }' is not assignable to parameter of type '(state: State) => Partial<State>'.
+
+Correggi solo questo errore, senza introdurre altre modifiche.
+```
+
+Questo tipo di feedback deterministico — un errore preciso, un file preciso, un'istruzione precisa — è esattamente ciò per cui l'AI è più affidabile.
+
+> Il loop stretto non è una buona pratica opzionale. È la differenza tra una migrazione che converge e una che si accumula in un diff incomprensibile.
+
+---
+
+## 9. Quando rallentare o fermarsi
+
+Non tutte le migrazioni si prestano allo stesso approccio.
+
+**Migrazioni di UI component library.** Aggiornare da una versione di Material UI, Chakra o Radix a un'altra può sembrare meccanico ma spesso produce cambiamenti visivi che i test non catturano. Qui serve verifica visuale sistematica — screenshot comparativi, storybook, review manuale. L'AI può migrare il codice correttamente ma il layout risultante essere diverso da quello atteso.
+
+**Breaking changes semantici nascosti.** Alcune librerie cambiano comportamenti in modo non immediatamente visibile: ordine di esecuzione, gestione degli errori, timing di aggiornamenti di stato. Questi cambiamenti non si rompono nei test unit ma emergono in contesti di integrazione. Se la libreria ha note di rilascio che menzionano "behavior change" o "breaking change in edge cases", trattali come zone ad alto rischio.
+
+**Sostituzione di libreria (lib A → lib B).** Migrare da Moment.js a date-fns, da Axios a fetch nativo, da Redux a Zustand — queste non sono migrazioni di versione. Sono riscritture parziali che richiedono test di caratterizzazione sul comportamento esistente prima di iniziare, e una strategia di rollout graduale. Non delegare queste decisioni all'AI senza una specifica molto precisa.
+
+**Quando l'AI non sa rispondere con certezza.** Se chiedi a un agente "questo cambiamento preserva il comportamento?" e la risposta è vaga o condizionale, non procedere. Fermati, scrivi un test che catturi il comportamento attuale, poi decidi.
+
+---
+
+## 10. Una strategia concreta in 7 passi
+
+Se devi affrontare una migrazione domani, questa è una sequenza che funziona:
+
+1. **Leggi il changelog completo** della versione target. Identifica i breaking changes che impattano la tua codebase.
+2. **Usa l'AI per fare l'inventario**: chiedi di mappare tutti gli usi della libreria nei file rilevanti, senza modificare nulla.
+3. **Applica i codemods ufficiali** (se esistono) in dry-run, verifica il diff, poi applica e committa.
+4. **Per ogni breaking change rimanente**: scrivi un prompt mirato con contesto, esempio del pattern nuovo, e vincoli. Applica su un batch piccolo (3-5 file), verifica, committa.
+5. **Esegui typecheck e test dopo ogni batch.** Se qualcosa si rompe, torna indietro e diagnostica. Non procedere oltre.
+6. **Usa l'output del typecheck come feedback all'AI** per le correzioni. Un errore preciso con file e riga è il miglior input possibile.
+7. **Fai una review del diff completo** prima del merge. Non guardare solo se i test passano — guarda se il diff è comprensibile, coerente e privo di cambiamenti non dichiarati.
+
+> L'AI accelera le migrazioni. La disciplina le rende sicure. Senza struttura, quello che guadagni in velocità lo perdi in regressioni nascoste.
+
+---
+
+## Conclusione
+
+Migrare librerie obsolete con l'AI non è diverso dal refactoring in generale: l'automazione è potente quando è incanalata, pericolosa quando è vaga.
+
+L'approccio che funziona combina tre elementi. Gli strumenti deterministici gestiscono il lavoro meccanico in modo verificabile. L'AI gestisce ciò che richiede giudizio semantico, guidata da prompt precisi e contesto esplicito. Il loop di validazione — typecheck, test, review del diff, commit — garantisce che ogni passo sia ancorabile e reversibile.
+
+Il punto finale è semplice: l'AI non sostituisce la comprensione del sistema. La accelera. Se non sai bene cosa fa una libreria nella tua codebase, l'AI non lo sa al posto tuo. Ma se sai cosa cercare, sai come formulare il problema e sai come verificare il risultato — allora l'AI diventa un moltiplicatore reale.
+
+Per il contesto più ampio sul refactoring incrementale e su come preparare il codice a essere modificabile in sicurezza, vale la pena leggere anche [Refactoring del codice legacy](/articles/refactoring-codice-legacy). Le stesse regole si applicano: osserva prima di cambiare, cattura il comportamento prima di migliorarlo, lavora in batch piccoli.
