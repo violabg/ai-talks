@@ -10,11 +10,11 @@ featured: false
 
 # Refactoring del codice legacy: come migliorarlo senza rompere il sistema
 
-Refactorare codice legacy non significa riscrivere tutto da zero. Significa **migliorare la struttura interna di un sistema che ha gia valore in produzione**, riducendo il rischio mentre continui a consegnare cambiamenti utili.
+Refactorare codice legacy non significa riscrivere tutto da zero. Significa **migliorare la struttura interna di un sistema che ha già valore in produzione**, riducendo il rischio mentre continui a consegnare cambiamenti utili.
 
-Questo è il punto in cui molti team sbagliano approccio. Vedono un modulo disordinato, pieno di condizioni, dipendenze implicite e nomi ambigui, e concludono che la soluzione sia una riscrittura completa. Nella pratica, la riscrittura totale e spesso il modo piu veloce per perdere comportamento, introdurre regressioni e allungare i tempi.
+Questo è il punto in cui molti team sbagliano approccio. Vedono un modulo disordinato, pieno di condizioni, dipendenze implicite e nomi ambigui, e concludono che la soluzione sia una riscrittura completa. Nella pratica, la riscrittura totale è spesso il modo più veloce per perdere comportamento, introdurre regressioni e allungare i tempi.
 
-L'alternativa piu solida è trattare il refactoring come un processo incrementale: prima rendi osservabile il comportamento attuale, poi crei margine di manovra, infine migliori il design una parte alla volta.
+L'alternativa più solida è trattare il refactoring come un processo incrementale: prima rendi osservabile il comportamento attuale, poi crei margine di manovra, infine migliori il design una parte alla volta.
 
 In questo articolo vediamo come farlo in modo pragmatico.
 
@@ -22,20 +22,20 @@ In questo articolo vediamo come farlo in modo pragmatico.
 
 ## 1. Il primo errore: confondere codice legacy con codice vecchio
 
-Codice legacy non vuol dire necessariamente codice scritto anni fa. Un file puo diventare legacy anche la settimana dopo essere stato introdotto, se nessuno capisce piu bene:
+Codice legacy non vuol dire necessariamente codice scritto anni fa. Un file può diventare legacy anche la settimana dopo essere stato introdotto, se nessuno capisce più bene:
 
 - quali invarianti deve rispettare
 - quali dipendenze reali usa
 - quali comportamenti sono deliberati e quali accidentali
 - come cambiarlo senza rompere parti lontane del sistema
 
-Il problema centrale del codice legacy non è l'eta. E la **bassa confidenza nel cambiamento**.
+Il problema centrale del codice legacy non è l'età. È la **bassa confidenza nel cambiamento**.
 
 Se ogni modifica genera paura, tempi lunghi e verifiche manuali, hai un problema di legacy anche se il codice è recente.
 
 Per questo il refactoring non parte dalla pulizia estetica. Parte dalla domanda giusta:
 
-> Come posso aumentare la mia capacita di cambiare questo modulo in sicurezza?
+> Come posso aumentare la mia capacità di cambiare questo modulo in sicurezza?
 
 ---
 
@@ -49,7 +49,7 @@ Non quello che il nome promette. Quello che fa oggi in produzione, con i dati e 
 
 ### Dove sono i confini
 
-Un modulo legacy raramente e isolato. Spesso parla con:
+Un modulo legacy raramente è isolato. Spesso parla con:
 
 - database
 - file system
@@ -61,7 +61,7 @@ Se non distingui subito il cuore logico dalle integrazioni laterali, ogni refact
 
 ### Dove si concentra il rischio
 
-I segnali piu utili sono quasi sempre questi:
+I segnali più utili sono quasi sempre questi:
 
 - funzioni troppo lunghe
 - branching annidato
@@ -76,11 +76,11 @@ In questa fase non stai ancora migliorando il design. Stai costruendo una mappa 
 
 ## 3. Il primo passo tecnico: scrivere test di caratterizzazione
 
-Quando il codice e fragile, il primo obiettivo non e renderlo bello. E rendere visibile il comportamento attuale.
+Quando il codice è fragile, il primo obiettivo non è renderlo bello. È rendere visibile il comportamento attuale.
 
-Qui entrano in gioco i **test di caratterizzazione**. Non servono a dire che il comportamento attuale e ideale. Servono a dire: "questo e cio che il sistema fa oggi".
+Qui entrano in gioco i **test di caratterizzazione**. Non servono a dire che il comportamento attuale è ideale. Servono a dire: "questo è ciò che il sistema fa oggi".
 
-Finche non catturi quel comportamento, ogni refactor e una scommessa.
+Finché non catturi quel comportamento, ogni refactor è una scommessa.
 
 Immagina una funzione come questa:
 
@@ -128,15 +128,15 @@ describe("calculateDiscount", () => {
 
 Questi test non stanno ancora migliorando il dominio. Ti stanno dando una base da cui partire.
 
-Se durante il refactor uno di questi comportamenti cambia, almeno lo vedrai subito e potrai decidere se e una correzione voluta o una regressione.
+Se durante il refactor uno di questi comportamenti cambia, almeno lo vedrai subito e potrai decidere se è una correzione voluta o una regressione.
 
 ---
 
 ## 4. Crea una seam prima di riprogettare
 
-Uno dei principi piu utili nel refactoring del legacy e questo: **prima crea un punto di separazione, poi cambia il design**.
+Uno dei principi più utili nel refactoring del legacy è questo: **prima crea un punto di separazione, poi cambia il design**.
 
-Una seam e un confine che ti permette di intervenire su una parte del sistema senza dover trascinare tutto il resto.
+Una seam è un confine che ti permette di intervenire su una parte del sistema senza dover trascinare tutto il resto.
 
 Nel codice legacy le dipendenze sono spesso incorporate direttamente:
 
@@ -151,9 +151,9 @@ export async function createInvoice(orderId: string) {
 }
 ```
 
-Qui il problema non e solo la leggibilita. E che logica di dominio e I/O sono accoppiati nello stesso punto.
+Qui il problema non è solo la leggibilità. È che logica di dominio e I/O sono accoppiati nello stesso punto.
 
-Un primo refactor utile non e riscrivere tutto. E introdurre un confine esplicito:
+Un primo refactor utile non è riscrivere tutto. È introdurre un confine esplicito:
 
 ```ts
 type OrderRepository = {
@@ -178,13 +178,13 @@ export async function createInvoice(
 }
 ```
 
-Adesso il modulo e piu testabile, piu leggibile e soprattutto piu modificabile. Hai creato spazio per i passi successivi.
+Adesso il modulo è più testabile, più leggibile e soprattutto più modificabile. Hai creato spazio per i passi successivi.
 
 ---
 
 ## 5. Refactor in piccoli batch, non in grandi campagne
 
-Il refactoring del legacy fallisce spesso per motivi organizzativi, non tecnici. Si apre un "epic di pulizia", si accumulano cambiamenti trasversali e dopo poco nessuno sa piu distinguere:
+Il refactoring del legacy fallisce spesso per motivi organizzativi, non tecnici. Si apre un "epic di pulizia", si accumulano cambiamenti trasversali e dopo poco nessuno sa più distinguere:
 
 - il cambiamento di comportamento desiderato
 - il miglioramento strutturale
@@ -195,7 +195,7 @@ Molto meglio lavorare in batch piccoli e con uno scopo singolo.
 Esempi di batch buoni:
 
 - estrarre una funzione con nome di dominio chiaro
-- sostituire un booleano ambiguo con un enum o un type piu esplicito
+- sostituire un booleano ambiguo con un enum o un type più esplicito
 - introdurre un adapter per isolare una dipendenza esterna
 - spostare validazioni duplicate in un punto centrale
 - aggiungere test sui casi limite prima di cambiare un algoritmo
@@ -204,9 +204,9 @@ Esempi di batch cattivi:
 
 - rinominare decine di file, spostare cartelle e cambiare comportamento nello stesso branch
 - rifare tutta la gerarchia dei service prima di avere test affidabili
-- riscrivere un modulo "perche tanto e brutto"
+- riscrivere un modulo "perché tanto è brutto"
 
-Una regola utile e questa:
+Una regola utile è questa:
 
 > Se non riesci a spiegare il refactor in una frase semplice, probabilmente stai cambiando troppe cose insieme.
 
@@ -214,14 +214,14 @@ Una regola utile e questa:
 
 ## 6. Separa refactor e feature, ma non sempre nello stesso momento
 
-Un'altra falsa dicotomia comune e pensare che si debba scegliere tra:
+Un'altra falsa dicotomia comune è pensare che si debba scegliere tra:
 
 - fare feature
 - fare refactoring
 
-In realta, il refactoring migliore nasce spesso **nel percorso di una modifica funzionale reale**.
+In realtà, il refactoring migliore nasce spesso **nel percorso di una modifica funzionale reale**.
 
-Supponiamo che tu debba aggiungere una nuova regola di pricing a un modulo disordinato. Il flusso sano di lavoro e:
+Supponiamo che tu debba aggiungere una nuova regola di pricing a un modulo disordinato. Il flusso sano di lavoro è:
 
 1. catturare con test il comportamento esistente
 2. creare il minimo seam necessario per intervenire in sicurezza
@@ -232,20 +232,20 @@ Supponiamo che tu debba aggiungere una nuova regola di pricing a un modulo disor
 Questo approccio evita due estremi poco utili:
 
 - il refactor infinito senza outcome di prodotto
-- la feature aggiunta sopra codice sempre piu fragile
+- la feature aggiunta sopra codice sempre più fragile
 
-Il punto non e "prima tutte le pulizie, poi il business". Il punto e far si che ogni cambiamento lasci il modulo in condizioni leggermente migliori di prima.
+Il punto non è "prima tutte le pulizie, poi il business". Il punto è far sì che ogni cambiamento lasci il modulo in condizioni leggermente migliori di prima.
 
 ---
 
 ## 7. I segnali che stai refactorando bene
 
-Non sempre il refactor produce subito meno righe di codice. A volte, all'inizio, produce piu struttura. Il criterio corretto non e la brevita. E la **riduzione del costo di cambiamento**.
+Non sempre il refactor produce subito meno righe di codice. A volte, all'inizio, produce più struttura. Il criterio corretto non è la brevità. È la **riduzione del costo di cambiamento**.
 
 Segnali buoni:
 
 - i test spiegano meglio il comportamento del modulo
-- le dipendenze sono piu esplicite
+- le dipendenze sono più esplicite
 - i nomi raccontano il dominio invece dei dettagli tecnici
 - i casi limite sono visibili in un punto chiaro
 - aggiungere una nuova variante richiede toccare meno punti
@@ -254,34 +254,34 @@ Segnali buoni:
 Segnali sospetti:
 
 - hai introdotto nuove astrazioni che nessuno sa motivare
-- i test passano, ma il flusso reale e piu difficile da seguire
+- i test passano, ma il flusso reale è più difficile da seguire
 - hai spezzato tutto in classi o factory senza ridurre il coupling
 - il refactor richiede spiegazioni lunghe per giustificarsi
 
-Il legacy non migliora perche diventa "piu enterprise". Migliora quando diventa piu comprensibile e meno costoso da cambiare.
+Il legacy non migliora perché diventa "più enterprise". Migliora quando diventa più comprensibile e meno costoso da cambiare.
 
 ---
 
 ## 8. Una strategia concreta in 6 passi
 
-Se devi intervenire su un modulo legacy domani, una sequenza pragmatica puo essere questa:
+Se devi intervenire su un modulo legacy domani, una sequenza pragmatica può essere questa:
 
 1. identifica il comportamento da preservare
 2. scrivi test di caratterizzazione sui casi principali e sui casi limite
-3. isola una dipendenza o estrai una funzione che crei un confine piu chiaro
+3. isola una dipendenza o estrai una funzione che crei un confine più chiaro
 4. rinomina e semplifica la parte toccata senza cambiare ancora il comportamento
 5. applica la modifica funzionale richiesta
-6. riesegui test locali, integrazione e verifiche piu ampie
+6. riesegui test locali, integrazione e verifiche più ampie
 
 Questa sequenza ha un vantaggio decisivo: ogni passo produce un aumento concreto di confidenza.
 
-Se lavori con agenti AI, questo diventa ancora piu importante. Un agente e molto piu efficace quando trova confini chiari, test leggibili e cambiamenti piccoli, come discusso anche in [Testing e feedback loop](/articles/testing-feedback-loop-agenti-ai). Il refactoring del legacy non e quindi solo una pratica di design: e anche un modo per rendere il codice piu trattabile da strumenti automatici.
+Se lavori con agenti AI, questo diventa ancora più importante. Un agente è molto più efficace quando trova confini chiari, test leggibili e cambiamenti piccoli, come discusso anche in [Testing e feedback loop](/articles/testing-feedback-loop-agenti-ai). Il refactoring del legacy non è quindi solo una pratica di design: è anche un modo per rendere il codice più trattabile da strumenti automatici.
 
 ---
 
 ## 9. Come usare l'AI nel refactoring senza peggiorare il legacy
 
-La ricerca esterna su refactoring e AI-assisted engineering converge su un punto semplice: l'AI non sostituisce la disciplina del refactoring, la rende solo piu veloce quando il lavoro e ben incanalato.
+La ricerca esterna su refactoring e AI-assisted engineering converge su un punto semplice: l'AI non sostituisce la disciplina del refactoring, la rende solo più veloce quando il lavoro è ben incanalato.
 
 Se dai a un agente un prompt vago come:
 
@@ -289,14 +289,14 @@ Se dai a un agente un prompt vago come:
 Ripulisci questo service legacy.
 ```
 
-stai quasi chiedendo una riscrittura cosmetica. Il risultato tipico e una combinazione pericolosa di:
+stai quasi chiedendo una riscrittura cosmetica. Il risultato tipico è una combinazione pericolosa di:
 
 - rinomine ampie
 - estrazioni premature
 - cambi di comportamento non dichiarati
 - patch difficili da rivedere
 
-Un approccio piu efficace e usare l'AI in fasi separate.
+Un approccio più efficace è usare l'AI in fasi separate.
 
 ### Fase 1: analisi, non modifica
 
@@ -317,9 +317,9 @@ Questo tipo di richiesta sfrutta bene l'AI: sintesi, clustering dei problemi, pr
 
 ### Fase 2: un solo refactor strutturale per volta
 
-Le fonti sul refactoring incrementale insistono su un principio che con l'AI diventa ancora piu importante: **non mischiare cambi strutturali e cambi comportamentali nello stesso passo**.
+Le fonti sul refactoring incrementale insistono su un principio che con l'AI diventa ancora più importante: **non mischiare cambi strutturali e cambi comportamentali nello stesso passo**.
 
-Quindi e meglio chiedere:
+Quindi è meglio chiedere:
 
 ```text
 Esegui solo l'estrazione di una funzione pura da questa funzione lunga.
@@ -333,11 +333,11 @@ oppure:
 Fai solo move/rename in questo batch. Nessun cambiamento di logica.
 ```
 
-Questo riduce molto il rischio di diff opachi. E rende la review umana molto piu economica.
+Questo riduce molto il rischio di diff opachi. E rende la review umana molto più economica.
 
 ### Fase 3: feedback deterministico dopo ogni batch
 
-L'AI refactora bene quando il loop e stretto:
+L'AI refactora bene quando il loop è stretto:
 
 1. piccolo cambiamento
 2. typecheck
@@ -345,25 +345,25 @@ L'AI refactora bene quando il loop e stretto:
 4. review del diff
 5. passo successivo
 
-Questo conferma una dinamica ormai chiara anche nei workflow di AI-native engineering: piu il feedback e deterministico, piu il sistema converge bene. Se invece l'agente accumula 15 modifiche prima della prima verifica, il costo di recupero sale rapidamente.
+Questo conferma una dinamica ormai chiara anche nei workflow di AI-native engineering: più il feedback è deterministico, più il sistema converge bene. Se invece l'agente accumula 15 modifiche prima della prima verifica, il costo di recupero sale rapidamente.
 
 ### Fase 4: usare l'AI per preparare il cambiamento
 
-Uno degli usi migliori dell'AI nel legacy non e la modifica finale, ma il **preparatory refactoring**.
+Uno degli usi migliori dell'AI nel legacy non è la modifica finale, ma il **preparatory refactoring**.
 
 In pratica, puoi usarla per:
 
 - proporre test di caratterizzazione mancanti
 - individuare dipendenze da iniettare
 - trovare punti in cui inserire wrapper o adapter temporanei
-- suggerire una decomposizione in trasformazioni piu piccole
+- suggerire una decomposizione in trasformazioni più piccole
 - riscrivere nomi ambigui in termini di dominio
 
-Questo e spesso il punto in cui l'AI ha il massimo rapporto valore/rischio: ti aiuta a creare il contesto che rendera semplice la modifica vera.
+Questo è spesso il punto in cui l'AI ha il massimo rapporto valore/rischio: ti aiuta a creare il contesto che renderà semplice la modifica vera.
 
 ### Fase 5: chiedere sempre un output verificabile
 
-Se vuoi avere piu successo, il prompt deve vincolare anche il formato della risposta. Per esempio:
+Se vuoi avere più successo, il prompt deve vincolare anche il formato della risposta. Per esempio:
 
 ```text
 Lavora in questo ordine:
@@ -381,7 +381,7 @@ Se non riesci a garantire che il comportamento resti invariato, fermati e indica
 
 L'AI tende a completare il task anche quando le premesse non sono abbastanza solide. Conviene quindi progettare prompt che la autorizzino a fermarsi.
 
-La regola pratica finale e questa:
+La regola pratica finale è questa:
 
 > Usa l'AI per capire, isolare, proporre e automatizzare piccoli passi. Non usarla come licenza per una riscrittura ampia senza oracoli.
 
@@ -389,24 +389,24 @@ La regola pratica finale e questa:
 
 ## 10. Quando serve fermarsi e non refactorare
 
-Non ogni bruttezza merita intervento immediato. A volte il costo di toccare un'area e maggiore del beneficio, almeno nel breve periodo.
+Non ogni bruttezza merita intervento immediato. A volte il costo di toccare un'area è maggiore del beneficio, almeno nel breve periodo.
 
 Puoi rimandare se:
 
 - il modulo non cambia quasi mai
-- il rischio operativo e altissimo e non hai ancora abbastanza osservabilita
+- il rischio operativo è altissimo e non hai ancora abbastanza osservabilità
 - manca il tempo per costruire anche solo il minimo set di test necessario
 - stai lavorando in una parte destinata a essere dismessa davvero a breve
 
-In questi casi la scelta sana non e fingere che il problema non esista. E registrare esplicitamente il debito e aspettare il momento giusto, invece di improvvisare una mezza riscrittura sotto pressione.
+In questi casi la scelta sana non è fingere che il problema non esista. È registrare esplicitamente il debito e aspettare il momento giusto, invece di improvvisare una mezza riscrittura sotto pressione.
 
 ---
 
 ## Conclusione
 
-Refactorare codice legacy non e un atto di pulizia morale. E un investimento sulla capacita del team di cambiare il sistema senza paura.
+Refactorare codice legacy non è un atto di pulizia morale. È un investimento sulla capacità del team di cambiare il sistema senza paura.
 
-Il principio guida e semplice:
+Il principio guida è semplice:
 
 - osserva prima di cambiare
 - cattura il comportamento prima di migliorarlo
@@ -414,4 +414,4 @@ Il principio guida e semplice:
 - lavora in batch piccoli
 - misura il successo in termini di confidenza, non di eleganza percepita
 
-Se applichi questa disciplina con costanza, il legacy smette di essere un blocco monolitico e torna a essere cio che dovrebbe sempre essere: codice che puo evolvere.
+Se applichi questa disciplina con costanza, il legacy smette di essere un blocco monolitico e torna a essere ciò che dovrebbe sempre essere: codice che può evolvere.
