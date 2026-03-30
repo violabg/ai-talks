@@ -1,18 +1,36 @@
 import { ArticleCard } from "@/components/article-card";
+import { ArticleSearch } from "@/components/article-search";
 import { getAllArticles } from "@/lib/articles";
 import type { Metadata } from "next";
+import { Suspense } from "react";
 
 export const metadata: Metadata = {
   title: "Articoli",
   description: "Tutti gli articoli su AI, sviluppo e best practice.",
 };
 
-export default function ArticlesPage() {
-  const articles = getAllArticles();
+type Props = {
+  searchParams: Promise<{ q?: string }>;
+};
+
+export default async function ArticlesPage({ searchParams }: Props) {
+  const { q } = await searchParams;
+  const allArticles = getAllArticles();
+
+  const articles = q
+    ? allArticles.filter(({ frontmatter }) => {
+        const query = q.toLowerCase();
+        return (
+          frontmatter.title.toLowerCase().includes(query) ||
+          frontmatter.description.toLowerCase().includes(query) ||
+          frontmatter.tags?.some((tag) => tag.toLowerCase().includes(query))
+        );
+      })
+    : allArticles;
 
   return (
     <div className="mx-auto px-6 py-20 max-w-6xl">
-      <div className="mb-14">
+      <div className="mb-10">
         <p className="mb-2 font-medium text-[--primary] text-xs uppercase tracking-[0.2em]">
           Archivio
         </p>
@@ -25,6 +43,12 @@ export default function ArticlesPage() {
         </p>
       </div>
 
+      <div className="mb-8">
+        <Suspense fallback={null}>
+          <ArticleSearch />
+        </Suspense>
+      </div>
+
       {articles.length > 0 ? (
         <div className="gap-px grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 bg-[--border] border border-[--border] rounded-xl overflow-hidden">
           {articles.map((article) => (
@@ -33,8 +57,21 @@ export default function ArticlesPage() {
         </div>
       ) : (
         <div className="py-20 text-[--muted-foreground] text-center">
-          <p className="text-lg italic">Nessun articolo ancora pubblicato.</p>
-          <p className="mt-2 text-sm">Torna presto!</p>
+          {q ? (
+            <>
+              <p className="text-lg italic">
+                Nessun articolo trovato per &ldquo;{q}&rdquo;.
+              </p>
+              <p className="mt-2 text-sm">Prova con un termine diverso.</p>
+            </>
+          ) : (
+            <>
+              <p className="text-lg italic">
+                Nessun articolo ancora pubblicato.
+              </p>
+              <p className="mt-2 text-sm">Torna presto!</p>
+            </>
+          )}
         </div>
       )}
     </div>

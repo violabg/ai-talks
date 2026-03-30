@@ -368,15 +368,6 @@ body::after {
   background-image: radial-gradient(oklch(94.73% 0.0084 94.69) 1px, transparent 1px);
 }
 
-/* — TRANSITIONS: None. Everything is instant. Raw. — */
-a,
-button,
-[role="button"],
-.group,
-header {
-  transition: none;
-}
-
 /* — HEADER: Thick border, no blur, full opacity — */
 header {
   backdrop-filter: none;
