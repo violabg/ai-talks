@@ -17,16 +17,16 @@ export function ArticleCard({ article }: ArticleCardProps) {
   return (
     <Link
       href={`/articles/${slug}`}
-      className="group flex flex-col justify-between bg-card p-6 !transition-all !duration-300 !ease-out hover:bg-accent"
+      className="group flex flex-col justify-between bg-card border border-border rounded-xl p-6 transition-all duration-200 hover:border-primary/40 hover:shadow-md"
     >
       <div>
         {/* Meta row */}
         <div className="mb-4 flex items-center gap-2">
-          <time className="text-xs text-muted-foreground">{date}</time>
+          <time className="font-sans text-xs text-muted-foreground">{date}</time>
           {frontmatter.featured && (
             <>
-              <span className="text-border">&middot;</span>
-              <span className="text-xs font-medium text-primary">
+              <span className="text-border">·</span>
+              <span className="font-sans text-xs font-medium text-primary">
                 In evidenza
               </span>
             </>
@@ -34,12 +34,12 @@ export function ArticleCard({ article }: ArticleCardProps) {
         </div>
 
         {/* Title */}
-        <h3 className="mb-3 font-display text-xl leading-snug tracking-tight !transition-colors !duration-300 !ease-out group-hover:text-primary">
+        <h3 className="mb-3 font-display font-medium text-xl leading-snug tracking-tight transition-colors duration-200 group-hover:text-primary">
           {frontmatter.title}
         </h3>
 
         {/* Description */}
-        <p className="mb-6 text-sm leading-relaxed text-muted-foreground line-clamp-3">
+        <p className="mb-6 font-sans text-sm leading-relaxed text-muted-foreground line-clamp-3">
           {frontmatter.description}
         </p>
       </div>
@@ -50,13 +50,13 @@ export function ArticleCard({ article }: ArticleCardProps) {
           <Badge
             key={tag}
             variant="outline"
-            className="text-[10px] font-normal uppercase tracking-wider !transition-colors !duration-300 !ease-out group-hover:border-accent-foreground/40 group-hover:text-accent-foreground"
+            className="font-sans text-[10px] font-medium uppercase tracking-wider"
           >
             {tag}
           </Badge>
         ))}
         {(frontmatter.tags?.length ?? 0) > 3 && (
-          <span className="text-[10px] text-muted-foreground self-center !transition-colors !duration-300 !ease-out group-hover:text-accent-foreground/80">
+          <span className="font-sans text-[10px] text-muted-foreground self-center">
             +{(frontmatter.tags?.length ?? 0) - 3}
           </span>
         )}

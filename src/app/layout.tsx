@@ -3,31 +3,21 @@ import { Header } from "@/components/layout/header";
 import { ThemeProvider } from "@/components/theme-provider";
 import { cn } from "@/lib/utils";
 import type { Metadata } from "next";
-import { Bebas_Neue, Courier_Prime, Noto_Sans } from "next/font/google";
+import { Fraunces, Instrument_Sans } from "next/font/google";
 import localFont from "next/font/local";
 import "./globals.css";
 
-const notoSans = Noto_Sans({ subsets: ["latin"], variable: "--font-sans" });
-
-const bebasNeue = Bebas_Neue({
-  weight: "400",
+const fraunces = Fraunces({
   subsets: ["latin"],
-  variable: "--font-bebas-neue",
+  variable: "--font-fraunces",
   display: "swap",
 });
 
-const courierPrime = Courier_Prime({
-  weight: ["400", "700"],
-  style: ["normal", "italic"],
+const instrumentSans = Instrument_Sans({
   subsets: ["latin"],
-  variable: "--font-courier-prime",
+  variable: "--font-instrument-sans",
   display: "swap",
-});
-
-const geistSans = localFont({
-  src: "../../node_modules/geist/dist/fonts/geist-sans/Geist-Variable.woff2",
-  variable: "--font-geist-sans",
-  display: "swap",
+  weight: ["400", "500", "600"],
 });
 
 const geistMono = localFont({
@@ -55,12 +45,10 @@ export default function RootLayout({
       lang="it"
       suppressHydrationWarning
       className={cn(
-        geistSans.variable,
+        fraunces.variable,
+        instrumentSans.variable,
         geistMono.variable,
-        bebasNeue.variable,
-        courierPrime.variable,
         "font-sans",
-        notoSans.variable,
       )}
     >
       <body className="flex flex-col min-h-screen font-sans antialiased">

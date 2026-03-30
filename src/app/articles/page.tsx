@@ -30,14 +30,14 @@ export default async function ArticlesPage({ searchParams }: Props) {
 
   return (
     <div className="mx-auto px-6 py-20 max-w-6xl">
-      <div className="mb-10">
-        <p className="mb-2 font-medium text-[--primary] text-xs uppercase tracking-[0.2em]">
+      <div className="mb-12">
+        <p className="mb-3 font-sans font-medium text-primary text-xs uppercase tracking-[0.18em]">
           Archivio
         </p>
-        <h1 className="mb-4 font-display text-4xl sm:text-5xl tracking-tight">
+        <h1 className="mb-4 font-display font-medium text-4xl sm:text-5xl tracking-tight">
           Articoli
         </h1>
-        <p className="max-w-lg text-[--muted-foreground] text-lg">
+        <p className="max-w-xl font-sans text-muted-foreground text-lg leading-relaxed">
           Guide pratiche, best practice e idee per sviluppare con
           l&apos;intelligenza artificiale.
         </p>
@@ -50,25 +50,23 @@ export default async function ArticlesPage({ searchParams }: Props) {
       </div>
 
       {articles.length > 0 ? (
-        <div className="gap-px grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 bg-[--border] border border-[--border] rounded-xl overflow-hidden">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
           {articles.map((article) => (
             <ArticleCard key={article.slug} article={article} />
           ))}
         </div>
       ) : (
-        <div className="py-20 text-[--muted-foreground] text-center">
+        <div className="py-20 text-muted-foreground text-center font-sans">
           {q ? (
             <>
-              <p className="text-lg italic">
+              <p className="text-lg">
                 Nessun articolo trovato per &ldquo;{q}&rdquo;.
               </p>
               <p className="mt-2 text-sm">Prova con un termine diverso.</p>
             </>
           ) : (
             <>
-              <p className="text-lg italic">
-                Nessun articolo ancora pubblicato.
-              </p>
+              <p className="text-lg">Nessun articolo ancora pubblicato.</p>
               <p className="mt-2 text-sm">Torna presto!</p>
             </>
           )}

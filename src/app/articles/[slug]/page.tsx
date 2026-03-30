@@ -78,16 +78,16 @@ export default async function ArticlePage({
 
   return (
     <div className="relative">
-      {/* Article header — full width with editorial feel */}
-      <header className="bg-[--card] border-[--border] border-b">
-        <div className="mx-auto px-6 pt-16 pb-12 max-w-6xl">
+      {/* Article header */}
+      <div className="border-b border-border bg-muted">
+        <div className="mx-auto px-6 pt-14 pb-12 max-w-3xl">
           {/* Back link */}
           <Link
             href="/articles"
-            className="group inline-flex items-center gap-2 mb-10 text-[--muted-foreground] hover:text-[--foreground] text-sm transition-colors"
+            className="group inline-flex items-center gap-2 mb-10 font-sans text-sm text-muted-foreground hover:text-foreground transition-colors"
           >
             <span className="transition-transform group-hover:-translate-x-0.5">
-              &larr;
+              ←
             </span>
             Tutti gli articoli
           </Link>
@@ -98,59 +98,59 @@ export default async function ArticlePage({
               <Badge
                 key={tag}
                 variant="outline"
-                className="font-normal text-xs uppercase tracking-wide"
+                className="font-sans font-medium text-xs uppercase tracking-wide"
               >
                 {tag}
               </Badge>
             ))}
           </div>
 
-          {/* Title — serif, editorial */}
-          <h1 className="mb-6 font-display font-bold text-4xl sm:text-5xl leading-[1.1] tracking-tight">
+          {/* Title */}
+          <h1 className="mb-5 font-display font-medium text-4xl sm:text-5xl leading-[1.08] tracking-tight">
             {frontmatter.title}
           </h1>
 
           {/* Description */}
-          <p className="mb-8 max-w-2xl text-[--muted-foreground] text-lg leading-relaxed">
+          <p className="mb-8 font-sans text-muted-foreground text-lg leading-relaxed">
             {frontmatter.description}
           </p>
 
           {/* Meta line */}
-          <div className="flex items-center gap-3 text-[--muted-foreground] text-sm">
+          <div className="flex items-center gap-3 font-sans text-sm text-muted-foreground">
             {frontmatter.author && (
               <>
-                <span className="font-medium text-[--foreground]">
+                <span className="font-medium text-foreground">
                   {frontmatter.author}
                 </span>
-                <span className="text-[--border]">/</span>
+                <span className="text-border">·</span>
               </>
             )}
             <time>{date}</time>
-            <span className="text-[--border]">/</span>
+            <span className="text-border">·</span>
             <span>{readingTime} min di lettura</span>
           </div>
         </div>
-      </header>
+      </div>
 
       {/* Article body */}
-      <article className="mx-auto px-6 py-14 max-w-6xl">
-        <div className="max-w-none font-prose prose prose-lg">{content}</div>
+      <article className="mx-auto px-6 py-14 max-w-3xl">
+        <div className="prose prose-lg max-w-none">{content}</div>
       </article>
 
       {/* Article footer */}
-      <footer className="mx-auto px-6 pb-20 max-w-6xl">
-        <div className="pt-8 border-[--border] border-t">
+      <div className="mx-auto px-6 pb-20 max-w-3xl">
+        <div className="pt-8 border-t border-border">
           <Link
             href="/articles"
-            className="group inline-flex items-center gap-2 font-medium text-[--primary] hover:text-[--foreground] text-sm transition-colors"
+            className="group inline-flex items-center gap-2 font-sans font-medium text-sm text-primary hover:text-foreground transition-colors"
           >
             <span className="transition-transform group-hover:-translate-x-0.5">
-              &larr;
+              ←
             </span>
             Torna agli articoli
           </Link>
         </div>
-      </footer>
+      </div>
     </div>
   );
 }
