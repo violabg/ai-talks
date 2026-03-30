@@ -3,14 +3,14 @@ title: "Testing e feedback loop: far lavorare meglio gli agenti AI sul codice"
 description: "Come usare test, typecheck e verifiche incrementali per dare agli agenti AI un segnale affidabile durante lo sviluppo software."
 date: "2026-03-30T16:30:00+02:00"
 author: "AI Talks"
-tags: ["testing", "workflow", "agenti AI", "TypeScript", "qualita"]
+tags: ["testing", "workflow", "agenti AI", "TypeScript", "qualità"]
 published: true
 featured: false
 ---
 
 # Testing e feedback loop: far lavorare meglio gli agenti AI sul codice
 
-Se usi agenti AI per scrivere codice, il problema non e soltanto ottenere una buona implementazione iniziale. Il problema vero e capire **quando l'agente sta andando nella direzione giusta** e quando invece sta accumulando errori che scoprirai troppo tardi.
+Se usi agenti AI per scrivere codice, il problema non è soltanto ottenere una buona implementazione iniziale. Il problema vero è capire **quando l'agente sta andando nella direzione giusta** e quando invece sta accumulando errori che scoprirai troppo tardi.
 
 Qui entra in gioco il testing. Non come rituale da eseguire a fine giornata, ma come **sistema di feedback** che accompagna l'agente durante il lavoro.
 
@@ -36,14 +36,14 @@ Se gli chiedi:
 Aggiungi la validazione all'endpoint di checkout e mantieni tutto compatibile.
 ```
 
-senza dargli una forma di verifica, l'agente puo:
+senza dargli una forma di verifica, l'agente può:
 
 - introdurre una regressione in un altro endpoint
 - cambiare il contratto di ritorno senza accorgersene
 - spostare logica dove non dovrebbe stare
-- dichiarare il task completato solo perche il codice "sembra plausibile"
+- dichiarare il task completato solo perché il codice "sembra plausibile"
 
-Il punto critico e questo: gli agenti non hanno bisogno solo di istruzioni. Hanno bisogno di un **oracolo**.
+Il punto critico è questo: gli agenti non hanno bisogno solo di istruzioni. Hanno bisogno di un **oracolo**.
 
 Un buon test suite, un typecheck ben configurato e un paio di verifiche mirate svolgono esattamente questa funzione.
 
@@ -53,19 +53,19 @@ Un buon test suite, un typecheck ben configurato e un paio di verifiche mirate s
 
 ## 2. Che cosa rende utile un feedback per un agente
 
-Non tutte le verifiche sono ugualmente utili. Un feedback efficace per un agente ha quattro proprieta.
+Non tutte le verifiche sono ugualmente utili. Un feedback efficace per un agente ha quattro proprietà.
 
 ### Deterministico
 
-Lo stesso input deve produrre lo stesso risultato. Se un test fallisce una volta su tre, per l'agente non e un segnale: e rumore.
+Lo stesso input deve produrre lo stesso risultato. Se un test fallisce una volta su tre, per l'agente non è un segnale: è rumore.
 
 ### Locale
 
-Il messaggio di errore deve essere collegabile con chiarezza alla modifica appena fatta. Se tocchi un parser e falliscono 70 test end-to-end non correlati, il feedback e troppo dispersivo.
+Il messaggio di errore deve essere collegabile con chiarezza alla modifica appena fatta. Se tocchi un parser e falliscono 70 test end-to-end non correlati, il feedback è troppo dispersivo.
 
 ### Rapido
 
-Se ogni ciclo modifica-verifica richiede minuti, l'agente accumula piu cambiamenti prima di fermarsi. A quel punto il costo della correzione sale troppo.
+Se ogni ciclo modifica-verifica richiede minuti, l'agente accumula più cambiamenti prima di fermarsi. A quel punto il costo della correzione sale troppo.
 
 ### Azionabile
 
@@ -75,14 +75,14 @@ Un errore come:
 Something went wrong during application startup.
 ```
 
-e quasi inutile. Un errore come:
+è quasi inutile. Un errore come:
 
 ```text
 Expected response body.status to be "confirmed"
 Received "pending"
 ```
 
-e invece un segnale chiaro: il contratto si e rotto in un punto preciso.
+è invece un segnale chiaro: il contratto si è rotto in un punto preciso.
 
 ---
 
@@ -92,28 +92,28 @@ Quando un agente modifica il codice, non tutte le verifiche hanno lo stesso rapp
 
 ### Primo strato: typecheck e lint mirato
 
-Il typecheck e spesso il feedback piu economico che puoi dare a un agente TypeScript.
+Il typecheck è spesso il feedback più economico che puoi dare a un agente TypeScript.
 
 ```bash
 pnpm tsc --noEmit
 pnpm eslint src/features/checkout
 ```
 
-Se il task rompe tipi, import o firme pubbliche, vuoi scoprirlo subito. Questo evita che l'agente costruisca altre modifiche sopra una base gia incoerente.
+Se il task rompe tipi, import o firme pubbliche, vuoi scoprirlo subito. Questo evita che l'agente costruisca altre modifiche sopra una base già incoerente.
 
 ### Secondo strato: test locali del modulo toccato
 
-Subito dopo il typecheck, fai eseguire all'agente i test piu vicini alla modifica.
+Subito dopo il typecheck, fai eseguire all'agente i test più vicini alla modifica.
 
 ```bash
 pnpm vitest run src/features/checkout/checkout.service.test.ts
 ```
 
-Questo e il punto in cui il feedback e piu denso di informazione e meno costoso da interpretare.
+Questo è il punto in cui il feedback è più denso di informazione e meno costoso da interpretare.
 
 ### Terzo strato: integrazione mirata
 
-Se la modifica attraversa piu moduli, servono test che verifichino il comportamento di confine.
+Se la modifica attraversa più moduli, servono test che verifichino il comportamento di confine.
 
 ```bash
 pnpm vitest run src/features/checkout/checkout.integration.test.ts
@@ -123,7 +123,7 @@ pnpm vitest run src/features/checkout/checkout.integration.test.ts
 
 Gli end-to-end restano utili, ma non devono essere il primo feedback. Sono costosi, lenti e spesso troppo rumorosi per guidare l'iterazione iniziale dell'agente.
 
-La regola pratica e semplice:
+La regola pratica è semplice:
 
 1. prima i segnali rapidi
 2. poi i segnali locali
@@ -135,7 +135,7 @@ La regola pratica e semplice:
 
 ### Test di contratto
 
-Sono i piu importanti quando vuoi che un agente modifichi un modulo senza rompere il resto della codebase.
+Sono i più importanti quando vuoi che un agente modifichi un modulo senza rompere il resto della codebase.
 
 Se una funzione pubblica promette una certa forma di input/output, il test deve codificare quel contratto.
 
@@ -165,12 +165,12 @@ Sono essenziali quando il task attraversa repository, service, route handler o a
 
 ### Test sui casi limite
 
-Gli agenti sono forti sul caso felice. Cadono molto piu spesso su input vuoti, stati intermedi, errori di rete, timeout e dati parziali.
+Gli agenti sono forti sul caso felice. Cadono molto più spesso su input vuoti, stati intermedi, errori di rete, timeout e dati parziali.
 
 Se questi casi non sono catturati nei test, l'agente spesso li tratta come dettagli secondari.
 
 ```ts
-it("fallisce con errore di dominio se il carrello e vuoto", async () => {
+it("fallisce con errore di dominio se il carrello è vuoto", async () => {
   await expect(
     createCheckout({ customerId: "cust_123", items: [] })
   ).rejects.toThrow("Cart is empty")
@@ -179,9 +179,9 @@ it("fallisce con errore di dominio se il carrello e vuoto", async () => {
 
 ### Test di regressione nati da bug reali
 
-Ogni volta che l'agente o un umano introduce un bug, il modo migliore per evitare il ritorno dello stesso problema non e scrivere una nota nel PR. E aggiungere un test specifico.
+Ogni volta che l'agente o un umano introduce un bug, il modo migliore per evitare il ritorno dello stesso problema non è scrivere una nota nel PR. È aggiungere un test specifico.
 
-Nel tempo, questi test costruiscono una memoria esterna che l'agente puo consultare a ogni esecuzione.
+Nel tempo, questi test costruiscono una memoria esterna che l'agente può consultare a ogni esecuzione.
 
 ---
 
@@ -191,7 +191,7 @@ Non significa che siano inutili in assoluto. Significa che sono meno efficaci co
 
 ### Snapshot enormi e opachi
 
-Se un test fallisce con cento righe di snapshot modificate, l'agente ha un segnale poco leggibile. Potra forse aggiornare lo snapshot, ma non avra capito davvero il comportamento rotto.
+Se un test fallisce con cento righe di snapshot modificate, l'agente ha un segnale poco leggibile. Potrà forse aggiornare lo snapshot, ma non avrà capito davvero il comportamento rotto.
 
 ### End-to-end troppo larghi come primo controllo
 
@@ -203,13 +203,13 @@ Flakiness e agenti AI non vanno d'accordo. Un agente non ha il buon senso contes
 
 ### Messaggi di assert generici
 
-Una assertion vaga e una richiesta di interpretazione. L'agente rende meglio quando puo associare fallimento e correzione in modo quasi meccanico.
+Una assertion vaga è una richiesta di interpretazione. L'agente rende meglio quando può associare fallimento e correzione in modo quasi meccanico.
 
 ---
 
 ## 6. Test come contratto, non come archivio di implementation details
 
-Uno degli errori piu comuni e scrivere test che inchiodano la struttura interna invece del comportamento.
+Uno degli errori più comuni è scrivere test che inchiodano la struttura interna invece del comportamento.
 
 Questo danneggia anche il lavoro degli agenti. Se il test verifica dettagli irrilevanti dell'implementazione, ogni refactor legittimo sembra una regressione.
 
@@ -226,12 +226,12 @@ it("chiama prima validateCart e poi persistOrder", async () => {
 })
 ```
 
-Questo test puo essere utile in casi rari, ma spesso blocca refactor innocui.
+Questo test può essere utile in casi rari, ma spesso blocca refactor innocui.
 
 Molto meglio esprimere il contratto osservabile:
 
 ```ts
-it("persiste un ordine solo se il carrello e valido", async () => {
+it("persiste un ordine solo se il carrello è valido", async () => {
   const persistOrder = vi.fn()
 
   await expect(
@@ -242,13 +242,13 @@ it("persiste un ordine solo se il carrello e valido", async () => {
 })
 ```
 
-Il principio e lo stesso che vale per i moduli profondi: interfacce piccole, comportamento ben difeso. Quando i test proteggono il contratto e non i dettagli accidentali, l'agente ha piu spazio per migliorare il codice senza rompere l'architettura.
+Il principio è lo stesso che vale per i moduli profondi: interfacce piccole, comportamento ben difeso. Quando i test proteggono il contratto e non i dettagli accidentali, l'agente ha più spazio per migliorare il codice senza rompere l'architettura.
 
 ---
 
 ## 7. Come strutturare un workflow agent-friendly
 
-Il modo piu semplice per peggiorare la qualita dell'output e chiedere a un agente di fare troppe cose prima di verificare qualcosa.
+Il modo più semplice per peggiorare la qualità dell'output è chiedere a un agente di fare troppe cose prima di verificare qualcosa.
 
 Meglio un workflow esplicito come questo:
 
@@ -272,7 +272,7 @@ Questa sequenza fa due cose importanti:
 - limita la dimensione del contesto attivo
 - impedisce all'agente di dichiarare vittoria prima di aver verificato il comportamento
 
-Una variante molto efficace e chiedere output strutturati dopo ogni fase:
+Una variante molto efficace è chiedere output strutturati dopo ogni fase:
 
 ```text
 Rispondi dopo ogni step con:
@@ -282,22 +282,22 @@ Rispondi dopo ogni step con:
 - eventuale prossimo blocco
 ```
 
-Non e burocrazia. E compressione del contesto. Ogni checkpoint produce un artefatto leggibile sia da te sia da un eventuale agente successivo.
+Non è burocrazia. È compressione del contesto. Ogni checkpoint produce un artefatto leggibile sia da te sia da un eventuale agente successivo.
 
 ---
 
-## 8. Il typecheck e gia un test, se lo tratti come tale
+## 8. Il typecheck è già un test, se lo tratti come tale
 
-Molti team separano mentalmente i test dal type system. Con gli agenti e una distinzione poco utile.
+Molti team separano mentalmente i test dal type system. Con gli agenti è una distinzione poco utile.
 
-Per una codebase TypeScript ben mantenuta, il typecheck e uno dei migliori feedback loop disponibili perche:
+Per una codebase TypeScript ben mantenuta, il typecheck è uno dei migliori feedback loop disponibili perché:
 
-- e veloce
-- e preciso
+- è veloce
+- è preciso
 - punisce subito le interfacce incoerenti
 - costringe l'agente a rispettare i contratti pubblici
 
-Se vuoi che gli agenti lavorino bene, investi in tipi espliciti e firme stabili. Un progetto con tipi vaghi o `any` diffusi produce agenti piu "creativi" proprio dove non dovrebbero esserlo.
+Se vuoi che gli agenti lavorino bene, investi in tipi espliciti e firme stabili. Un progetto con tipi vaghi o `any` diffusi produce agenti più "creativi" proprio dove non dovrebbero esserlo.
 
 ```ts
 type CheckoutResult =
@@ -323,15 +323,15 @@ Meglio spezzare:
 
 ### Errore 2: accettare test verdi ma deboli
 
-Un agente puo far passare i test anche rendendoli meno espressivi, allentando le assertion o coprendo solo il happy path. Verde non significa forte.
+Un agente può far passare i test anche rendendoli meno espressivi, allentando le assertion o coprendo solo il happy path. Verde non significa forte.
 
-### Errore 3: non controllare la qualita dei messaggi di fallimento
+### Errore 3: non controllare la qualità dei messaggi di fallimento
 
-Se il test fallisce in modo opaco, l'agente compira tentativi piu casuali. Vale la pena curare anche il testo degli errori piu importanti.
+Se il test fallisce in modo opaco, l'agente compirà tentativi più casuali. Vale la pena curare anche il testo degli errori più importanti.
 
 ### Errore 4: lasciare zone critiche senza verifiche locali
 
-Se auth, checkout, billing o sincronizzazione dati non hanno test rapidi e vicini al dominio, l'agente dovra orientarsi con troppo poco segnale.
+Se auth, checkout, billing o sincronizzazione dati non hanno test rapidi e vicini al dominio, l'agente dovrà orientarsi con troppo poco segnale.
 
 ---
 
@@ -344,24 +344,24 @@ Prima di affidare un task a un agente, chiediti:
 - i test descrivono comportamento o dettagli interni?
 - i casi limite importanti sono coperti?
 - i messaggi di errore sono leggibili e specifici?
-- i test sono abbastanza veloci da poter essere eseguiti piu volte nello stesso task?
+- i test sono abbastanza veloci da poter essere eseguiti più volte nello stesso task?
 - il workflow impone una verifica tra una fase e la successiva?
 
-Se la risposta e no a piu di un punto, il problema non e l'agente: e il sistema di feedback che gli stai dando.
+Se la risposta è no a più di un punto, il problema non è l'agente: è il sistema di feedback che gli stai dando.
 
 ---
 
 ## Conclusione
 
-L'idea centrale e semplice: gli agenti AI non migliorano per intuizione, migliorano per **iterazione guidata da segnali affidabili**.
+L'idea centrale è semplice: gli agenti AI non migliorano per intuizione, migliorano per **iterazione guidata da segnali affidabili**.
 
 Per questo, in una codebase agent-friendly, i test non arrivano alla fine. Sono parte del prompt operativo. Sono parte del workflow. Sono parte dell'architettura.
 
-Se vuoi aumentare l'autonomia di un agente senza perdere controllo, non partire da prompt piu lunghi. Parti da feedback migliori:
+Se vuoi aumentare l'autonomia di un agente senza perdere controllo, non partire da prompt più lunghi. Parti da feedback migliori:
 
 1. typecheck pulito
 2. test di contratto chiari
 3. integrazioni mirate
 4. checkpoint frequenti
 
-Il risultato non e solo codice piu corretto. E un processo in cui agente e sviluppatore riescono finalmente a lavorare sulla stessa mappa.
+Il risultato non è solo codice più corretto. È un processo in cui agente e sviluppatore riescono finalmente a lavorare sulla stessa mappa.
