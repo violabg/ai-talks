@@ -215,7 +215,7 @@ export default async function ArticlePage({
           </article>
 
           {hasSections && (
-            <aside className="hidden lg:block lg:top-[var(--header-height)] lg:sticky lg:self-start pt-8">
+            <aside className="hidden lg:block lg:top-[var(--header-height)] lg:sticky lg:self-start lg:max-h-[calc(100vh-var(--header-height))] pt-8 overflow-y-auto">
               <ArticleToc sections={sections} />
             </aside>
           )}
