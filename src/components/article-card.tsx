@@ -1,4 +1,6 @@
+import { DraftBadge } from "@/components/draft-badge";
 import { Badge } from "@/components/ui/badge";
+import { formatArticleDateTime, shouldShowDraftBadge } from "@/lib/articles";
 import type { Article } from "@/types/article";
 import Link from "next/link";
 
@@ -8,25 +10,25 @@ interface ArticleCardProps {
 
 export function ArticleCard({ article }: ArticleCardProps) {
   const { slug, frontmatter } = article;
-  const date = new Date(frontmatter.date).toLocaleDateString("it-IT", {
-    year: "numeric",
-    month: "long",
-    day: "numeric",
-  });
+  const date = formatArticleDateTime(frontmatter.date);
+  const showDraftBadge = shouldShowDraftBadge(frontmatter);
 
   return (
     <Link
       href={`/articles/${slug}`}
-      className="group flex flex-col justify-between bg-card border border-border rounded-xl p-6 transition-all duration-200 hover:border-primary/40 hover:shadow-md"
+      className="group flex flex-col justify-between bg-card hover:shadow-md p-6 border border-border hover:border-primary/40 rounded-xl transition-all duration-200"
     >
       <div>
         {/* Meta row */}
-        <div className="mb-4 flex items-center gap-2">
-          <time className="font-sans text-xs text-muted-foreground">{date}</time>
+        <div className="flex flex-wrap items-center gap-2 mb-4">
+          <time className="font-sans text-muted-foreground text-xs">
+            {date}
+          </time>
+          {showDraftBadge && <DraftBadge compact />}
           {frontmatter.featured && (
             <>
               <span className="text-border">·</span>
-              <span className="font-sans text-xs font-medium text-primary">
+              <span className="font-sans font-medium text-primary text-xs">
                 In evidenza
               </span>
             </>
@@ -34,12 +36,12 @@ export function ArticleCard({ article }: ArticleCardProps) {
         </div>
 
         {/* Title */}
-        <h3 className="mb-3 font-display font-medium text-xl leading-snug tracking-tight transition-colors duration-200 group-hover:text-primary">
+        <h3 className="mb-3 font-display font-medium group-hover:text-primary text-xl leading-snug tracking-tight transition-colors duration-200">
           {frontmatter.title}
         </h3>
 
         {/* Description */}
-        <p className="mb-6 font-sans text-sm leading-relaxed text-muted-foreground line-clamp-3">
+        <p className="mb-6 font-sans text-muted-foreground text-sm line-clamp-3 leading-relaxed">
           {frontmatter.description}
         </p>
       </div>
@@ -50,13 +52,13 @@ export function ArticleCard({ article }: ArticleCardProps) {
           <Badge
             key={tag}
             variant="outline"
-            className="font-sans text-[10px] font-medium uppercase tracking-wider"
+            className="font-sans font-medium text-[10px] uppercase tracking-wider"
           >
             {tag}
           </Badge>
         ))}
         {(frontmatter.tags?.length ?? 0) > 3 && (
-          <span className="font-sans text-[10px] text-muted-foreground self-center">
+          <span className="self-center font-sans text-[10px] text-muted-foreground">
             +{(frontmatter.tags?.length ?? 0) - 3}
           </span>
         )}

@@ -10,12 +10,19 @@ Create a new MDX article at `content/articles/<slug>.mdx` with this frontmatter 
 ---
 title: ""
 description: ""
-date: "YYYY-MM-DD"
+date: "YYYY-MM-DDTHH:mm:ss+01:00"
 author: ""
 tags: []
+published: false
 featured: false
-coverImage: ""
 ---
 ```
 
-Ask the user for: title, slug (kebab-case filename), description, tags (comma-separated), whether it's featured, and an optional coverImage path. Use today's date for the `date` field. Leave `coverImage` out entirely if not provided.
+Ask the user for: title, slug (kebab-case filename), description, tags (comma-separated), whether it's featured, whether it should be published immediately, and an optional coverImage path.
+
+Guidelines:
+
+- Use today's date and include an explicit local time in ISO format for the `date` field.
+- Set `published: false` by default unless the user explicitly wants the article visible in production.
+- In development, articles with `published: false` are still visible and show a Draft badge.
+- Leave `coverImage` out entirely if not provided.

@@ -1,6 +1,12 @@
+import { DraftBadge } from "@/components/draft-badge";
 import { mdxComponents } from "@/components/mdx-components";
 import { Badge } from "@/components/ui/badge";
-import { getAllArticleSlugs, getArticleSource } from "@/lib/articles";
+import {
+  formatArticleDateTime,
+  getAllArticleSlugs,
+  getArticleSource,
+  shouldShowDraftBadge,
+} from "@/lib/articles";
 import type { ArticleFrontmatter } from "@/types/article";
 import type { Metadata } from "next";
 import { compileMDX } from "next-mdx-remote/rsc";
@@ -68,29 +74,32 @@ export default async function ArticlePage({
     components: mdxComponents,
   });
 
-  const date = new Date(frontmatter.date).toLocaleDateString("it-IT", {
-    year: "numeric",
-    month: "long",
-    day: "numeric",
-  });
+  const date = formatArticleDateTime(frontmatter.date);
+  const showDraftBadge = shouldShowDraftBadge(frontmatter);
 
   const readingTime = Math.max(1, Math.ceil(source.split(/\s+/).length / 200));
 
   return (
     <div className="relative">
       {/* Article header */}
-      <div className="border-b border-border bg-muted">
+      <div className="bg-muted border-border border-b">
         <div className="mx-auto px-6 pt-14 pb-12 max-w-3xl">
           {/* Back link */}
           <Link
             href="/articles"
-            className="group inline-flex items-center gap-2 mb-10 font-sans text-sm text-muted-foreground hover:text-foreground transition-colors"
+            className="group inline-flex items-center gap-2 mb-10 font-sans text-muted-foreground hover:text-foreground text-sm transition-colors"
           >
             <span className="transition-transform group-hover:-translate-x-0.5">
               ←
             </span>
             Tutti gli articoli
           </Link>
+
+          {showDraftBadge && (
+            <div className="mb-6">
+              <DraftBadge />
+            </div>
+          )}
 
           {/* Tags */}
           <div className="flex flex-wrap gap-2 mb-6">
@@ -116,7 +125,7 @@ export default async function ArticlePage({
           </p>
 
           {/* Meta line */}
-          <div className="flex items-center gap-3 font-sans text-sm text-muted-foreground">
+          <div className="flex items-center gap-3 font-sans text-muted-foreground text-sm">
             {frontmatter.author && (
               <>
                 <span className="font-medium text-foreground">
@@ -134,15 +143,15 @@ export default async function ArticlePage({
 
       {/* Article body */}
       <article className="mx-auto px-6 py-14 max-w-3xl">
-        <div className="prose prose-lg max-w-none">{content}</div>
+        <div className="max-w-none prose prose-lg">{content}</div>
       </article>
 
       {/* Article footer */}
       <div className="mx-auto px-6 pb-20 max-w-3xl">
-        <div className="pt-8 border-t border-border">
+        <div className="pt-8 border-border border-t">
           <Link
             href="/articles"
-            className="group inline-flex items-center gap-2 font-sans font-medium text-sm text-primary hover:text-foreground transition-colors"
+            className="group inline-flex items-center gap-2 font-sans font-medium text-primary hover:text-foreground text-sm transition-colors"
           >
             <span className="transition-transform group-hover:-translate-x-0.5">
               ←

@@ -4,6 +4,7 @@ export interface ArticleFrontmatter {
   date: string
   author: string
   tags: string[]
+  published?: boolean
   featured?: boolean
   coverImage?: string
 }
