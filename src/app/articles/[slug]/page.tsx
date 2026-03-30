@@ -18,6 +18,7 @@ import { notFound } from "next/navigation";
 import rehypeAutolinkHeadings from "rehype-autolink-headings";
 import rehypePrettyCode from "rehype-pretty-code";
 import rehypeSlug from "rehype-slug";
+import remarkGfm from "remark-gfm";
 
 const prettyCodeOptions = {
   theme: {
@@ -109,6 +110,7 @@ export default async function ArticlePage({
     options: {
       parseFrontmatter: true,
       mdxOptions: {
+        remarkPlugins: [remarkGfm],
         rehypePlugins: [
           rehypeSlug,
           [
