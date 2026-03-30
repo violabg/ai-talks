@@ -1,0 +1,362 @@
+---
+title: "Prompting e workflow: orchestrare agenti per task di ingegneria"
+description: "Tecniche e pattern per progettare prompt e orchestrare workflow di agenti AI affidabili nello sviluppo software."
+date: "2026-03-30"
+author: ""
+tags: ["prompt", "workflow", "agents"]
+featured: false
+coverImage: "prompting"
+---
+
+# Prompting e workflow: orchestrare agenti per task di ingegneria
+
+Un agente AI non è migliore del prompt che lo guida. Ma il prompt da solo non basta: il vero salto di qualità avviene quando si progetta un **workflow** — una sequenza strutturata di passi in cui l'agente sa cosa fare, in che ordine, e come verificare il risultato.
+
+Questo articolo esplora tecniche pratiche per progettare prompt efficaci e costruire workflow affidabili per task di ingegneria software.
+
+---
+
+## 1. Anatomia di un prompt efficace
+
+Un prompt per un agente di coding non è una richiesta generica. È più simile a una **specifica tecnica**: deve definire il contesto, l'obiettivo, i vincoli e i criteri di successo.
+
+### I quattro elementi fondamentali
+
+```
+[CONTESTO]
+Stai lavorando su un'API REST in Express.js. Il file principale è src/routes/users.ts.
+I test sono in src/__tests__/users.test.ts e usano Vitest.
+
+[OBIETTIVO]
+Aggiungi un endpoint GET /users/:id che restituisce l'utente dal database.
+Usa il repository pattern già presente in src/repositories/userRepository.ts.
+
+[VINCOLI]
+- Non modificare le interfacce esistenti in src/types/user.ts
+- Gestisci il caso 404 con il middleware errorHandler già configurato
+- Aggiungi i test corrispondenti
+
+[CRITERIO DI SUCCESSO]
+I test esistenti passano ancora. Il nuovo test per GET /users/:id passa.
+```
+
+Senza questi quattro elementi, l'agente riempie i buchi con assunzioni — spesso sbagliate.
+
+### Contesto implicito vs. esplicito
+
+La trappola più comune: dare per scontato che l'agente "sappia" cose che non gli hai detto.
+
+```
+# ❌ Prompt ambiguo
+"Aggiungi la validazione all'endpoint di registrazione"
+
+# ✅ Prompt contestualizzato
+"Aggiungi la validazione all'endpoint POST /auth/register in src/routes/auth.ts.
+Usa la libreria zod già installata nel progetto. Lo schema deve validare:
+- email: formato email valido, obbligatoria
+- password: min 8 caratteri, almeno un numero
+- name: stringa, 2-50 caratteri
+
+In caso di errore, restituisci 400 con il formato { errors: ZodIssue[] }
+già usato nell'endpoint POST /auth/login per coerenza."
+```
+
+Il secondo prompt non è più lungo "perché è meglio essere prolissi": è più preciso perché elimina ogni spazio per l'interpretazione libera.
+
+---
+
+## 2. Pattern di prompting per l'ingegneria
+
+### Pattern 1: Step-by-step obbligato
+
+Forza l'agente a ragionare prima di scrivere codice:
+
+```
+Prima di scrivere qualsiasi codice:
+1. Elenca i file che dovrai modificare e perché
+2. Descrivi l'approccio che seguirai
+3. Identifica i possibili casi limite
+4. Poi procedi con l'implementazione
+
+Task: refactora il sistema di notifiche in src/services/notifications/
+per supportare sia email che push notification, mantenendo l'interfaccia
+pubblica in src/services/notifications/index.ts invariata.
+```
+
+Questo pattern riduce drasticamente gli errori sui task complessi. L'agente che "pianifica ad alta voce" produce output molto più coerenti.
+
+### Pattern 2: Riferimento esplicito al codice esistente
+
+```
+Implementa la funzione fetchUserOrders seguendo lo stesso pattern
+di fetchUserProfile già presente in src/services/userService.ts (riga ~45).
+
+- Stessa gestione degli errori
+- Stessa struttura del tipo di ritorno (Promise<Result<T, AppError>>)
+- Stessa nomenclatura dei parametri
+```
+
+Ancorarsi al codice esistente è potente: l'agente non deve inventare pattern, li replica. Questo produce codebase coerenti e riduce la quantità di revisione manuale.
+
+### Pattern 3: Output format vincolato
+
+```
+Rispondi SOLO con:
+1. Il diff delle modifiche (formato unified diff)
+2. Il comando per eseguire i test
+3. L'output atteso dei test
+
+Non includere spiegazioni, commenti o testo aggiuntivo.
+```
+
+Utile quando si costruisce un pipeline dove l'output di un agente è l'input del passo successivo. Un formato prevedibile è essenziale per l'automazione.
+
+### Pattern 4: Fail-fast esplicito
+
+```
+Se non riesci a trovare il file src/config/database.ts o se la struttura
+del progetto è diversa da quella descritta, FERMATI e descrivimi cosa vedi
+invece di procedere con assunzioni.
+```
+
+Gli agenti tendono a continuare anche quando mancano informazioni fondamentali, producendo output che sembrano corretti ma sono basati su premesse false. Il fail-fast esplicito forza una pausa utile.
+
+---
+
+## 3. Orchestrare workflow multi-agente
+
+Un singolo prompt non basta per task complessi. Il vero potere emerge quando si costruiscono **workflow** — sequenze di passi in cui ogni agente ha un ruolo ben definito.
+
+### Il principio di singola responsabilità per i prompt
+
+Ogni step del workflow deve avere un obiettivo unico e verificabile:
+
+```
+Workflow: implementa una nuova feature
+
+Step 1 — Research Agent
+"Analizza la codebase e produci un file RESEARCH.md con:
+- I file rilevanti per questa feature
+- I pattern esistenti da seguire
+- Le dipendenze già installate utili"
+
+Step 2 — Planning Agent (input: RESEARCH.md)
+"Basandoti su RESEARCH.md, crea un piano di implementazione in PLAN.md:
+- Lista ordinata dei file da modificare
+- Per ogni file: cosa aggiungere/cambiare e perché
+- Stima della complessità (1-5)"
+
+Step 3 — Implementation Agent (input: PLAN.md, RESEARCH.md)
+"Implementa il piano in PLAN.md, un file alla volta.
+Dopo ogni file, esegui i test relativi prima di procedere al successivo."
+
+Step 4 — Review Agent
+"Verifica che l'implementazione rispetti il piano in PLAN.md.
+Segnala ogni discrepanza e proponi correzioni."
+```
+
+Ogni step produce un artefatto verificabile: RESEARCH.md, PLAN.md, codice, report di review. Questo rende il workflow **ispezionabile e correggibile** — puoi interrompere dopo ogni step, controllare l'output, e procedere o correggere.
+
+### Orchestrazione con checkpoint umani
+
+Non tutto deve essere automatico. I checkpoint umani nei punti critici migliorano la qualità dell'output finale:
+
+```
+[HUMAN CHECKPOINT] dopo Step 2
+"Leggi PLAN.md. Se il piano è corretto, digita PROCEED.
+Se vuoi modifiche, descrivile e rilancia Step 2."
+```
+
+Questo approccio ibrido — agenti per l'esecuzione, umani per le decisioni architetturali — è più robusto di qualsiasi pipeline completamente automatica.
+
+### Context isolation tra step
+
+Una trappola comune nell'orchestrazione: passare tutto il contesto accumulato da ogni step al successivo. Il context window si riempie, la qualità degrada.
+
+La soluzione: ogni agente riceve **solo quello che gli serve**:
+
+```
+# ❌ Passa tutto a tutti
+agent_3.prompt = previous_conversations + research + plan + ...
+
+# ✅ Passa solo l'input rilevante
+agent_3.prompt = """
+Hai a disposizione:
+- PLAN.md: il piano di implementazione (allegato)
+- RESEARCH.md: il contesto tecnico (allegato)
+
+Il tuo unico compito: implementa Step 3 di PLAN.md.
+Non hai bisogno di altro contesto.
+"""
+```
+
+---
+
+## 4. Cicli di feedback affidabili
+
+Un agente senza feedback opera al buio. Il feedback deve essere **deterministico** — lo stesso input produce sempre lo stesso segnale — e **immediato** — l'agente lo riceve prima di procedere al passo successivo.
+
+### Test come oracolo
+
+I test automatici sono il meccanismo di feedback più potente. Non perché "i test sono una buona pratica" in astratto, ma perché danno all'agente un segnale binario e non ambiguo:
+
+```
+Dopo ogni modifica, esegui:
+  pnpm test src/__tests__/[file-modificato].test.ts
+
+Se i test passano: procedi al prossimo file del piano.
+Se i test falliscono: analizza l'errore, correggi, riprova.
+Non procedere finché tutti i test non passano.
+```
+
+Questo loop — modifica → test → correggi — è il cuore di qualsiasi workflow di coding con agenti AI. Senza di esso, gli errori si accumulano e il costo di correzione cresce esponenzialmente.
+
+### TypeScript come feedback in tempo reale
+
+Il type checker di TypeScript è un oracolo gratuito e istantaneo. Includilo esplicitamente nel workflow:
+
+```
+Dopo ogni modifica, esegui:
+  pnpm tsc --noEmit
+
+Assicurati che non ci siano errori di tipo prima di procedere.
+Tratta gli errori TypeScript con la stessa priorità degli errori di runtime.
+```
+
+Un agente che lavora in una codebase TypeScript rigorosa commette meno errori logici: il type system lo costringe a ragionare correttamente sulle interfacce.
+
+### Lint e formatting
+
+```
+Prima di chiudere ogni task:
+  pnpm lint && pnpm format
+
+Non consegnare codice con warning di lint irrisolti.
+```
+
+Piccolo dettaglio, grande impatto: un agente che produce codice già formattato e privo di warning riduce il lavoro di review manuale.
+
+---
+
+## 5. Strutturare i file di istruzioni
+
+Per task ricorrenti, è più efficiente definire le istruzioni in file strutturati che ogni agente può leggere, piuttosto che riscriverle ogni volta nel prompt.
+
+### AGENTS.md — le regole del progetto
+
+```markdown
+# Regole per gli agenti AI
+
+## Stack
+
+- Next.js 15, App Router
+- TypeScript strict mode
+- Tailwind CSS v4
+- Vitest per i test
+
+## Convenzioni
+
+- Usa il path alias @/ per src/
+- I componenti sono Server Components di default
+- Usa "use client" solo se strettamente necessario
+- I nomi dei file usano kebab-case
+
+## Workflow obbligatorio
+
+1. Leggi prima i file rilevanti, poi scrivi codice
+2. Esegui `pnpm tsc --noEmit` dopo ogni modifica significativa
+3. Esegui i test prima di dichiarare il task completato
+```
+
+### Task file — istruzioni specifiche per feature
+
+Per task complessi, crea un file temporaneo `TASK.md` nella root:
+
+```markdown
+# Task: Aggiungere il sistema di commenti
+
+## Obiettivo
+
+Implementare commenti sugli articoli con moderazione.
+
+## File da creare
+
+- src/components/comments/CommentList.tsx
+- src/components/comments/CommentForm.tsx
+- src/lib/comments.ts
+- content/schema/comment.ts
+
+## File da modificare
+
+- src/app/articles/[slug]/page.tsx (aggiungere sezione commenti)
+- src/types/article.ts (aggiungere campo comments)
+
+## Non toccare
+
+- src/lib/articles.ts (logica articoli esistente)
+- src/app/globals.css (stili globali)
+
+## Criterio di completamento
+
+- I commenti vengono visualizzati sotto l'articolo
+- Il form di invio funziona con validazione client-side
+- pnpm build passa senza errori
+```
+
+Un file di task ben scritto vale più di dieci prompt improvvisati.
+
+---
+
+## 6. Anti-pattern da evitare
+
+### Anti-pattern 1: il prompt vago con aspettative alte
+
+```
+# ❌
+"Migliora le performance dell'app"
+
+# ✅
+"Il componente ArticleList in src/components/article-list.tsx
+fa una fetch per ogni articolo in modo sequenziale (riga 34).
+Riscrivilo per usare Promise.all() e ridurre i tempi di caricamento.
+Non modificare l'interfaccia del componente."
+```
+
+### Anti-pattern 2: task troppo grandi in una sola sessione
+
+Se il task richiede modifiche a più di 5-6 file, spezzalo. Un agente che lavora su un task enorme perde il filo — e tu perdi il controllo.
+
+```
+# ❌ Un solo prompt per tutta la feature
+"Implementa il sistema di autenticazione con JWT,
+refresh token, protezione delle route e UI di login/logout"
+
+# ✅ Step separati e verificabili
+Step 1: "Implementa solo il middleware di autenticazione JWT in src/middleware.ts"
+Step 2: "Aggiungi le route /auth/login e /auth/logout in src/routes/auth.ts"
+Step 3: "Implementa il refresh token in src/services/tokenService.ts"
+Step 4: "Crea il componente LoginForm in src/components/auth/LoginForm.tsx"
+```
+
+### Anti-pattern 3: ignorare i segnali di incertezza
+
+Quando un agente scrive frasi come "presumo che...", "non sono sicuro di...", "potrebbe essere...", non ignorarle. Sono segnali che mancano informazioni fondamentali. Fermati, fornisci il contesto mancante, e rilancia il task.
+
+### Anti-pattern 4: non versionare i file di istruzioni
+
+`AGENTS.md`, `TASK.md`, le istruzioni ricorrenti: committali nel repository. Sono parte dell'infrastruttura del progetto tanto quanto il codice. Se non sono nel repo, scompaiono e ogni sessione riparte da zero.
+
+---
+
+## Conclusione
+
+Progettare prompt efficaci e workflow strutturati non è un optional: è quello che separa un uso occasionale e frustrante degli agenti AI da un uso sistematico e ad alta produttività.
+
+I principi sono semplici:
+
+- **Contesto esplicito** — non dare nulla per scontato
+- **Step verificabili** — ogni passo produce un artefatto controllabile
+- **Feedback deterministico** — test, type check, lint
+- **Granularità giusta** — task piccoli abbastanza da essere corretti al primo tentativo
+
+Il resto è pratica. Ogni workflow che costruisci ti insegna cosa funziona per il tuo stack e il tuo team.
