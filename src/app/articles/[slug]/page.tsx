@@ -15,6 +15,7 @@ import type { Metadata } from "next";
 import { compileMDX } from "next-mdx-remote/rsc";
 import Link from "next/link";
 import { notFound } from "next/navigation";
+import { ViewTransition } from "react";
 import rehypeAutolinkHeadings from "rehype-autolink-headings";
 import rehypePrettyCode from "rehype-pretty-code";
 import rehypeSlug from "rehype-slug";
@@ -168,27 +169,33 @@ export default async function ArticlePage({
               )}
 
               {/* Tags */}
-              <div className="flex flex-wrap gap-2 mb-6">
-                {frontmatter.tags?.map((tag) => (
-                  <Badge
-                    key={tag}
-                    variant="outline"
-                    className="font-sans font-medium text-xs uppercase tracking-wide"
-                  >
-                    {tag}
-                  </Badge>
-                ))}
-              </div>
+              <ViewTransition name={`article-tags-${slug}`}>
+                <div className="flex flex-wrap gap-2 mb-6">
+                  {frontmatter.tags?.map((tag) => (
+                    <Badge
+                      key={tag}
+                      variant="outline"
+                      className="font-sans font-medium text-xs uppercase tracking-wide"
+                    >
+                      {tag}
+                    </Badge>
+                  ))}
+                </div>
+              </ViewTransition>
 
               {/* Title */}
-              <h1 className="mb-5 font-display font-medium text-4xl sm:text-5xl leading-[1.08] tracking-tight">
-                {frontmatter.title}
-              </h1>
+              <ViewTransition name={`article-title-${slug}`}>
+                <h1 className="mb-5 font-display font-medium text-4xl sm:text-5xl leading-[1.08] tracking-tight">
+                  {frontmatter.title}
+                </h1>
+              </ViewTransition>
 
               {/* Description */}
-              <p className="mb-8 max-w-2xl font-sans text-muted-foreground text-lg leading-relaxed">
-                {frontmatter.description}
-              </p>
+              <ViewTransition name={`article-desc-${slug}`}>
+                <p className="mb-8 max-w-2xl font-sans text-muted-foreground text-lg leading-relaxed">
+                  {frontmatter.description}
+                </p>
+              </ViewTransition>
 
               {/* Meta line */}
               <div className="flex flex-wrap items-center gap-x-3 gap-y-1 font-sans text-muted-foreground text-sm">
@@ -200,7 +207,9 @@ export default async function ArticlePage({
                     <span className="text-border">·</span>
                   </>
                 )}
-                <time>{date}</time>
+                <ViewTransition name={`article-date-${slug}`}>
+                  <time>{date}</time>
+                </ViewTransition>
                 <span className="text-border">·</span>
                 <span>{readingTime} min di lettura</span>
               </div>
@@ -217,7 +226,7 @@ export default async function ArticlePage({
           </article>
 
           {hasSections && (
-            <aside className="hidden lg:block lg:top-[var(--header-height)] lg:sticky lg:self-start lg:max-h-[calc(100vh-var(--header-height))] pt-8 overflow-y-auto">
+            <aside className="hidden lg:block lg:top-[var(--header-height)] lg:sticky lg:self-start pt-8 lg:max-h-[calc(100vh-var(--header-height))] overflow-y-auto">
               <ArticleToc sections={sections} />
             </aside>
           )}
