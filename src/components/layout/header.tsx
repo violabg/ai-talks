@@ -33,7 +33,7 @@ export function Header() {
   };
 
   return (
-    <header className="top-0 z-50 sticky pt-[env(safe-area-inset-top)] bg-background/75 backdrop-blur-md border-border border-b w-full">
+    <header className="top-0 z-50 sticky bg-background/75 backdrop-blur-md border-border border-b w-full">
       <div className="flex justify-between items-center mx-auto px-6 max-w-6xl h-16">
         <Link
           href="/"

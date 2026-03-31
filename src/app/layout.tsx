@@ -28,10 +28,9 @@ const geistMono = localFont({
 
 export const viewport: Viewport = {
   themeColor: [
-    { media: "(prefers-color-scheme: light)", color: "#ffffff" },
-    { media: "(prefers-color-scheme: dark)", color: "#161618" },
+    { media: "(prefers-color-scheme: light)", color: "#fcfcfd" },
+    { media: "(prefers-color-scheme: dark)", color: "#151521" },
   ],
-  viewportFit: "cover",
 };
 
 export const metadata: Metadata = {
