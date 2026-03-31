@@ -44,6 +44,7 @@ export default function RootLayout({
     <html
       lang="it"
       suppressHydrationWarning
+      data-scroll-behavior="smooth"
       className={cn(
         fraunces.variable,
         instrumentSans.variable,
