@@ -78,7 +78,7 @@ export function ArticleToc({ sections }: ArticleTocProps) {
   return (
     <nav
       aria-label="In questa pagina"
-      className="bg-card/85 supports-backdrop-filter:bg-card/75 shadow-[0_24px_60px_-48px_color-mix(in_oklch,var(--foreground)_35%,transparent)] backdrop-blur-sm p-5 border border-border/80 rounded-xl"
+      className="bg-card/85 supports-backdrop-filter:bg-card/75 shadow-[0_24px_60px_-48px_color-mix(in_oklch,var(--foreground)_35%,transparent)] backdrop-blur-sm p-5 border border-border/80 rounded-xl lg:max-h-[calc(100lvh-var(--header-height)-4rem)] overflow-y-auto"
     >
       <p className="mb-4 font-sans font-medium text-foreground text-sm uppercase tracking-[0.18em]">
         In questa pagina
