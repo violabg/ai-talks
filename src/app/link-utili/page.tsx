@@ -1,5 +1,8 @@
+import { FadeIn } from "@/components/fade-in";
+import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { ExternalLink } from "lucide-react";
+import { cn } from "@/lib/utils";
+import { ExternalLink, Star } from "lucide-react";
 import type { Metadata } from "next";
 import Link from "next/link";
 
@@ -9,11 +12,13 @@ export const metadata: Metadata = {
     "Una selezione curata di documentazione, tool, raccolte e riferimenti utili per lavorare con agenti AI e coding assistant.",
 };
 
+type ResourceKind = "Ufficiale" | "Tool" | "Community" | "Esperimento";
+
 type Resource = {
   title: string;
   description: string;
   url: string;
-  kind: "Ufficiale" | "Tool" | "Community" | "Esperimento";
+  kind: ResourceKind;
   featured?: boolean;
 };
 
@@ -23,6 +28,13 @@ type ResourceCategory = {
   title: string;
   description: string;
   resources: Resource[];
+};
+
+const kindVariant: Record<ResourceKind, "default" | "secondary" | "outline"> = {
+  Ufficiale: "default",
+  Tool: "secondary",
+  Community: "outline",
+  Esperimento: "secondary",
 };
 
 const resourceCategories: ResourceCategory[] = [
@@ -151,24 +163,63 @@ const resourceCategories: ResourceCategory[] = [
   },
 ];
 
-const featuredResources = resourceCategories.flatMap((category) =>
-  category.resources
-    .filter((resource) => resource.featured)
-    .map((resource) => ({
-      ...resource,
-      categoryId: category.id,
-      categoryTitle: category.title,
-    })),
-);
-
 const totalResources = resourceCategories.reduce(
   (count, category) => count + category.resources.length,
   0,
 );
 
+function ResourceCard({ resource }: { resource: Resource }) {
+  return (
+    <article
+      className={cn(
+        "group relative flex flex-col bg-card hover:shadow-md p-6 border rounded-xl h-full transition-all duration-200",
+        resource.featured
+          ? "border-primary/30 shadow-sm ring-1 ring-primary/10"
+          : "border-border hover:border-primary/40",
+      )}
+    >
+      {/* Fully-clickable card overlay */}
+      <a
+        href={resource.url}
+        target="_blank"
+        rel="noreferrer"
+        className="z-10 absolute inset-0 rounded-xl"
+        aria-label={`${resource.title} — apri in una nuova scheda`}
+      />
+
+      <div className="flex items-center gap-2 mb-4">
+        <Badge variant={kindVariant[resource.kind]}>{resource.kind}</Badge>
+        {resource.featured && (
+          <Star
+            aria-hidden="true"
+            className="fill-primary size-3.5 text-primary"
+          />
+        )}
+      </div>
+
+      <h3 className="mb-3 font-display font-medium group-hover:text-primary text-xl leading-snug tracking-tight transition-colors duration-200">
+        {resource.title}
+      </h3>
+
+      <p className="flex-1 mb-6 font-sans text-muted-foreground text-sm leading-relaxed">
+        {resource.description}
+      </p>
+
+      <span
+        aria-hidden="true"
+        className="inline-flex items-center self-end gap-2 font-sans text-foreground group-hover:text-primary text-sm transition-colors"
+      >
+        Visita il sito
+        <ExternalLink className="size-3.5 text-primary transition-transform group-hover:translate-x-0.5" />
+      </span>
+    </article>
+  );
+}
+
 export default function UsefulLinksPage() {
   return (
     <>
+      {/* ── Hero ── */}
       <section className="relative border-border border-b overflow-hidden">
         <div
           className="absolute inset-0 pointer-events-none"
@@ -179,52 +230,69 @@ export default function UsefulLinksPage() {
         />
 
         <div className="relative mx-auto px-6 py-24 sm:py-32 max-w-6xl">
-          <p className="inline-flex items-center gap-2 mb-5 font-sans font-medium text-primary text-xs uppercase tracking-[0.18em]">
+          <FadeIn
+            as="p"
+            className="inline-flex items-center gap-2 mb-5 font-sans font-medium text-primary text-xs uppercase tracking-[0.18em]"
+          >
             <span className="inline-block bg-primary w-5 h-px" />
-            Riferimenti selezionati
-          </p>
-          <h1 className="mb-7 font-display font-medium text-5xl sm:text-6xl lg:text-7xl leading-[1.02] tracking-tight">
-            Link utili
-            <br />
-            <em className="text-primary not-italic">per lavorare meglio</em>
-          </h1>
-          <p className="mb-10 max-w-2xl font-sans text-muted-foreground text-lg sm:text-xl leading-relaxed">
+            {totalResources} riferimenti selezionati
+          </FadeIn>
+          <FadeIn delay={80}>
+            <h1 className="mb-7 font-display font-medium text-5xl sm:text-6xl lg:text-7xl leading-[1.02] tracking-tight">
+              Link utili
+              <br />
+              <em className="text-primary not-italic">per lavorare meglio</em>
+            </h1>
+          </FadeIn>
+          <FadeIn
+            as="p"
+            delay={160}
+            className="mb-10 max-w-2xl font-sans text-muted-foreground text-lg sm:text-xl leading-relaxed"
+          >
             Una raccolta ragionata di documentazione, tool, raccolte ed esempi
             per orientarti tra coding assistant, agenti AI e workflow di
             sviluppo piu strutturati.
-          </p>
+          </FadeIn>
 
           <div className="gap-4 grid grid-cols-1 md:grid-cols-2">
             {resourceCategories.map((category, index) => (
-              <a
-                key={category.id}
-                href={`#${category.id}`}
-                className="group block bg-background hover:shadow-md p-5 border border-border hover:border-primary/40 rounded-xl transition-all duration-200"
-              >
-                <span className="block mb-4 font-mono font-medium text-primary text-xs">
-                  0{index + 1}
-                </span>
-                <h3 className="mb-2 font-display font-medium group-hover:text-primary text-xl tracking-tight transition-colors duration-200">
-                  {category.title}
-                </h3>
-                <p className="font-sans text-muted-foreground text-sm leading-relaxed">
-                  {category.description}
-                </p>
-              </a>
+              <FadeIn key={category.id} delay={240 + index * 60}>
+                <a
+                  href={`#${category.id}`}
+                  className="group block bg-background hover:shadow-md p-5 border border-border hover:border-primary/40 rounded-xl h-full transition-all duration-200"
+                >
+                  <div className="flex justify-between items-center mb-4">
+                    <span className="font-mono font-medium text-primary text-xs">
+                      0{index + 1}
+                    </span>
+                    <span className="font-mono text-muted-foreground text-xs">
+                      {category.resources.length}{" "}
+                      {category.resources.length === 1 ? "risorsa" : "risorse"}
+                    </span>
+                  </div>
+                  <h3 className="mb-2 font-display font-medium group-hover:text-primary text-xl tracking-tight transition-colors duration-200">
+                    {category.title}
+                  </h3>
+                  <p className="font-sans text-muted-foreground text-sm leading-relaxed">
+                    {category.description}
+                  </p>
+                </a>
+              </FadeIn>
             ))}
           </div>
         </div>
       </section>
 
+      {/* ── Resource sections ── */}
       <div className="mx-auto px-6 py-20 max-w-6xl">
-        <div className="space-y-16">
-          {resourceCategories.map((category) => (
+        <div className="space-y-20">
+          {resourceCategories.map((category, catIdx) => (
             <section
               key={category.id}
               id={category.id}
               className="scroll-mt-28"
             >
-              <div className="mb-8 max-w-3xl">
+              <FadeIn className="mb-8 max-w-3xl">
                 <p className="mb-2 font-sans font-medium text-primary text-xs uppercase tracking-[0.18em]">
                   {category.eyebrow}
                 </p>
@@ -234,54 +302,43 @@ export default function UsefulLinksPage() {
                 <p className="font-sans text-muted-foreground text-lg leading-relaxed">
                   {category.description}
                 </p>
-              </div>
+              </FadeIn>
 
-              <div className="gap-5 grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3">
-                {category.resources.map((resource) => (
-                  <article
-                    key={resource.url}
-                    className="group flex flex-col justify-between items-end bg-card hover:shadow-md p-6 border border-border hover:border-primary/40 rounded-xl h-full transition-all duration-200"
-                  >
-                    <div>
-                      <h3 className="mb-3 font-display font-medium group-hover:text-primary text-xl leading-snug tracking-tight transition-colors duration-200">
-                        {resource.title}
-                      </h3>
-
-                      <p className="mb-6 font-sans text-muted-foreground text-sm leading-relaxed">
-                        {resource.description}
-                      </p>
-                    </div>
-
-                    <Button
-                      size="sm"
-                      variant="ghost"
-                      nativeButton={false}
-                      render={
-                        <a
-                          href={resource.url}
-                          target="_blank"
-                          rel="noreferrer"
-                          className="inline-flex items-center gap-2 font-sans text-foreground hover:text-primary text-sm transition-colors"
-                        >
-                          Visita il sito
-                          <ExternalLink
-                            aria-hidden="true"
-                            data-icon="inline-end"
-                            className="text-primary transition-transform group-hover:translate-x-0.5"
-                          />
-                        </a>
-                      }
-                    />
-                  </article>
+              <div
+                className={cn(
+                  "gap-5 grid grid-cols-1",
+                  category.resources.length === 1
+                    ? "md:grid-cols-1 max-w-xl"
+                    : category.resources.length === 2
+                      ? "md:grid-cols-2"
+                      : "md:grid-cols-2 xl:grid-cols-3",
+                )}
+              >
+                {category.resources.map((resource, i) => (
+                  <FadeIn key={resource.url} delay={i * 80}>
+                    <ResourceCard resource={resource} />
+                  </FadeIn>
                 ))}
               </div>
+
+              {/* Subtle divider between sections (not after the last one) */}
+              {catIdx < resourceCategories.length - 1 && (
+                <div className="flex items-center gap-4 mt-20">
+                  <span className="flex-1 bg-border h-px" />
+                  <span className="font-mono text-muted-foreground/40 text-xs select-none">
+                    ·
+                  </span>
+                  <span className="flex-1 bg-border h-px" />
+                </div>
+              )}
             </section>
           ))}
         </div>
       </div>
 
+      {/* ── CTA footer ── */}
       <section className="border-border border-t">
-        <div className="flex sm:flex-row flex-col justify-between items-start sm:items-end gap-6 mx-auto px-6 py-16 max-w-6xl">
+        <FadeIn className="flex sm:flex-row flex-col justify-between items-start sm:items-end gap-6 mx-auto px-6 py-16 max-w-6xl">
           <div className="max-w-2xl">
             <p className="mb-2 font-sans font-medium text-primary text-xs uppercase tracking-[0.18em]">
               Continua a esplorare
@@ -301,7 +358,7 @@ export default function UsefulLinksPage() {
             nativeButton={false}
             render={<Link href="/articles">Esplora gli articoli</Link>}
           />
-        </div>
+        </FadeIn>
       </section>
     </>
   );
