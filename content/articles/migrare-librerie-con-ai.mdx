@@ -151,18 +151,24 @@ Qui entra l'AI. Ma non con un prompt generico.
 - Un esempio del pattern vecchio e del pattern nuovo atteso
 - Quali vincoli non toccare (nomi pubblici, firme di funzioni usate altrove, gestione errori)
 
-Esempio di prompt efficace per migrare un pattern di state management:
+Esempio di prompt efficace per migrare un pattern di routing:
 
 ```text
 Contesto:
-- Stiamo migrando da Zustand v4 a Zustand v5
-- Breaking change: `set` non supporta più il merge implicito, bisogna usare `set((state) => ({ ...state, campo: valore }))`
+- Stiamo migrando da React Router v5 a React Router v6
+- Breaking change: `<Switch>` è stato sostituito da `<Routes>`, e `<Route>` richiede `element` invece di `component` o render prop
 
-Pattern vecchio (v4):
-  store.set({ utente: nuovoUtente })
+Pattern vecchio (v5):
+  <Switch>
+    <Route path="/users" component={UsersPage} />
+    <Route path="/settings" render={() => <Settings admin />} />
+  </Switch>
 
-Pattern nuovo (v5):
-  store.set((state) => ({ ...state, utente: nuovoUtente }))
+Pattern nuovo (v6):
+  <Routes>
+    <Route path="/users" element={<UsersPage />} />
+    <Route path="/settings" element={<Settings admin />} />
+  </Routes>
 
 File da migrare: [allega il file]
 
@@ -173,7 +179,7 @@ Istruzioni:
 - Mostra prima i punti da modificare, poi applica
 ```
 
-**Non mischiare trasformazioni diverse nello stesso prompt.** Se devi aggiornare sia le API di state sia i tipi, fallo in due passi separati. Ogni passo deve avere un unico obiettivo verificabile.
+**Non mischiare trasformazioni diverse nello stesso prompt.** Se devi aggiornare sia i pattern di routing sia i tipi, fallo in due passi separati. Ogni passo deve avere un unico obiettivo verificabile.
 
 ---
 

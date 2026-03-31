@@ -7,7 +7,12 @@
       "Bash(cat /Users/paolo/Sites/ai/ai-course/.eslintrc*)",
       "Bash(ls /Users/paolo/Sites/ai/ai-course/eslint.config*)",
       "Bash(claude mcp:*)",
-      "Bash(grep -E \"\\\\.tsx$\")"
+      "Bash(grep -E \"\\\\.tsx$\")",
+      "Bash(gh api:*)",
+      "WebFetch(domain:github.com)",
+      "WebFetch(domain:zustand.docs.pmnd.rs)",
+      "Bash(gh search:*)",
+      "WebFetch(domain:raw.githubusercontent.com)"
     ]
   }
 }
