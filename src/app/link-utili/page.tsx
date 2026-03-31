@@ -2,7 +2,7 @@ import { FadeIn } from "@/components/fade-in";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
-import { ExternalLink, Star } from "lucide-react";
+import { ExternalLink } from "lucide-react";
 import type { Metadata } from "next";
 import Link from "next/link";
 
@@ -19,7 +19,6 @@ type Resource = {
   description: string;
   url: string;
   kind: ResourceKind;
-  featured?: boolean;
 };
 
 type ResourceCategory = {
@@ -51,7 +50,6 @@ const resourceCategories: ResourceCategory[] = [
           "Panoramica completa delle funzionalita di Copilot dentro VS Code, dai suggerimenti inline alla chat e ai flussi agentici.",
         url: "https://code.visualstudio.com/docs/copilot/overview",
         kind: "Ufficiale",
-        featured: true,
       },
       {
         title: "VS Code Copilot customization",
@@ -73,7 +71,6 @@ const resourceCategories: ResourceCategory[] = [
           "Documentazione del tool di Anthropic per coding agent e sviluppo assistito, con esempi di uso da terminale e workflow pratici.",
         url: "https://code.claude.com/docs",
         kind: "Ufficiale",
-        featured: true,
       },
       {
         title: "GitHub Copilot docs",
@@ -88,7 +85,6 @@ const resourceCategories: ResourceCategory[] = [
           "Introduzione al protocollo MCP, utile per capire come collegare agenti, tool esterni e contesto strutturato.",
         url: "https://modelcontextprotocol.io/introduction",
         kind: "Ufficiale",
-        featured: true,
       },
     ],
   },
@@ -173,9 +169,7 @@ function ResourceCard({ resource }: { resource: Resource }) {
     <article
       className={cn(
         "group relative flex flex-col bg-card hover:shadow-md p-6 border rounded-xl h-full transition-all duration-200",
-        resource.featured
-          ? "border-primary/30 shadow-sm ring-1 ring-primary/10"
-          : "border-border hover:border-primary/40",
+        "border-border hover:border-primary/40",
       )}
     >
       {/* Fully-clickable card overlay */}
@@ -189,12 +183,6 @@ function ResourceCard({ resource }: { resource: Resource }) {
 
       <div className="flex items-center gap-2 mb-4">
         <Badge variant={kindVariant[resource.kind]}>{resource.kind}</Badge>
-        {resource.featured && (
-          <Star
-            aria-hidden="true"
-            className="fill-primary size-3.5 text-primary"
-          />
-        )}
       </div>
 
       <h3 className="mb-3 font-display font-medium group-hover:text-primary text-xl leading-snug tracking-tight transition-colors duration-200">
