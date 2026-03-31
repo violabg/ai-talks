@@ -1,9 +1,18 @@
 "use client";
 
 import { ThemeToggle } from "@/components/theme-toggle";
+import { Button } from "@/components/ui/button";
+import {
+  Sheet,
+  SheetContent,
+  SheetTitle,
+  SheetTrigger,
+} from "@/components/ui/sheet";
 import { cn } from "@/lib/utils";
+import { Menu } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { useState } from "react";
 
 const navItems = [
   { href: "/", label: "Home" },
@@ -13,6 +22,7 @@ const navItems = [
 
 export function Header() {
   const pathname = usePathname();
+  const [open, setOpen] = useState(false);
 
   const isActive = (href: string) => {
     if (href === "/") {
@@ -57,8 +67,48 @@ export function Header() {
           })}
         </nav>
 
-        <div className="flex items-center">
+        <div className="flex items-center gap-2">
           <ThemeToggle />
+
+          <Sheet open={open} onOpenChange={setOpen}>
+            <SheetTrigger
+              render={
+                <Button
+                  variant="ghost"
+                  size="icon"
+                  className="sm:hidden"
+                  aria-label="Apri menu"
+                />
+              }
+            >
+              <Menu className="size-5" />
+            </SheetTrigger>
+            <SheetContent side="right" className="pt-12 w-64">
+              <SheetTitle className="sr-only">Menu di navigazione</SheetTitle>
+              <nav className="flex flex-col gap-1 mt-4 font-sans text-sm">
+                {navItems.map((item) => {
+                  const active = isActive(item.href);
+
+                  return (
+                    <Link
+                      key={item.href}
+                      href={item.href}
+                      aria-current={active ? "page" : undefined}
+                      onClick={() => setOpen(false)}
+                      className={cn(
+                        "px-4 py-3 rounded-lg text-base transition-all duration-150",
+                        active
+                          ? "bg-primary/10 text-foreground shadow-sm"
+                          : "text-muted-foreground hover:bg-muted hover:text-foreground",
+                      )}
+                    >
+                      {item.label}
+                    </Link>
+                  );
+                })}
+              </nav>
+            </SheetContent>
+          </Sheet>
         </div>
       </div>
     </header>
