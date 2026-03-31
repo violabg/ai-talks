@@ -1,0 +1,269 @@
+---
+title: "Strumenti AI per la generazione di codice nel 2026: agenti, MCP, hook, skill e plugin"
+description: "Una panoramica completa di tutti gli strumenti disponibili oggi per la generazione di codice via AI: dai coding agent agli MCP server, dagli hook alle skill, dai framework di orchestrazione agli SDK."
+date: "2026-03-30T12:00:00+02:00"
+author: "AI Talks"
+tags: ["agenti AI", "MCP", "strumenti", "workflow", "Claude Code", "Cursor", "plugin"]
+published: false
+featured: true
+---
+
+# Strumenti AI per la generazione di codice nel 2026
+
+Il panorama degli strumenti AI per lo sviluppo software si è frammentato in decine di categorie diverse, ognuna con la propria filosofia, architettura e caso d'uso ideale. Agenti autonomi, plugin IDE, protocolli di integrazione, framework di orchestrazione: capire cosa esiste e come si relaziona è diventato un lavoro a sé.
+
+Questo articolo è una mappa. Non una classifica dei "migliori tool", ma un inventario ragionato di **tutto ciò che esiste oggi**, diviso per categoria, con il loro funzionamento e il contesto in cui ha senso usarlo.
+
+---
+
+## 1. Coding Agent: l'AI che lavora nel terminale
+
+I coding agent sono strumenti che operano autonomamente in un ambiente di sviluppo reale: leggono file, eseguono comandi, modificano codice, fanno commit. Non si limitano a suggerire: **agiscono**.
+
+### Claude Code
+
+Sviluppato da Anthropic, Claude Code è un agente CLI che gira nel terminale e ha accesso diretto alla shell, al filesystem e a git. È progettato per task di ingegneria complessi: può esplorare una codebase, pianificare modifiche, eseguirle e verificarle. Supporta MCP server, skill personalizzate, hook di automazione e modalità di pianificazione (plan mode) prima di eseguire qualsiasi modifica. È il punto di riferimento architetturale per questa categoria.
+
+### GitHub Copilot (Agent mode)
+
+GitHub Copilot è nato come autocompletamento inline, ma ha evoluto una modalità agente (Copilot Workspace e Copilot Agent) in grado di prendere un'issue GitHub e produrre una pull request completa. L'integrazione nativa con l'ecosistema GitHub lo rende particolarmente efficace per team che lavorano su repository esistenti.
+
+### Cursor
+
+Cursor è un fork di VS Code con l'AI integrata profondamente nell'editor. Offre autocompletamento multi-linea, una chat contestuale (Composer) che può modificare più file in un'unica istruzione, e una modalità agente (Agent mode) che opera in autonomia. Il vantaggio è zero attrito: è un editor completo, non uno strumento separato.
+
+### Cline / Roo Code
+
+Cline (ex Claude Dev) è un'estensione VS Code open source che trasforma qualsiasi modello LLM compatibile (Claude, GPT-4, Gemini, Ollama) in un coding agent. Roo Code è un fork con feature aggiuntive come modalità boomerang (task gerarchici), profili per modello e supporto esteso agli MCP server. Entrambi espongono direttamente all'utente le azioni dell'agente prima di eseguirle.
+
+### Aider
+
+Aider è un coding agent da CLI orientato al pair programming via terminale. Gestisce automaticamente il contesto dei file rilevanti, supporta git nativo (commit automatici dopo ogni modifica), e funziona con tutti i principali provider LLM. È particolarmente efficace per refactoring e modifiche trasversali su più file.
+
+### Devin / SWE-agent
+
+Devin (Cognition AI) è un agente autonomo full-stack che opera in un ambiente sandboxato con browser, terminale e IDE. È pensato per task lunghi e complessi che un developer impiega ore a completare. SWE-agent (Princeton) è la versione open source di riferimento per la ricerca su agenti che risolvono issue software reali.
+
+---
+
+## 2. Plugin e estensioni IDE
+
+Non tutti i workflow richiedono un agente autonomo. A volte serve assistenza contestuale nell'editor, con l'umano in the loop.
+
+### VS Code
+
+L'ecosistema VS Code è il più ricco. Oltre a Cline e Cursor (che è un fork), esistono:
+
+- **GitHub Copilot** — il più diffuso, con chat, autocompletamento e agent mode nativa
+- **Continue** — open source, supporta qualsiasi LLM locale o cloud, altamente configurabile
+- **Supermaven** — autocompletamento ultra-rapido con finestra di contesto molto ampia
+- **Tabnine** — orientato alla privacy, può girare completamente on-premise
+
+### JetBrains
+
+JetBrains AI Assistant è integrato in tutti i prodotti JetBrains (IntelliJ, WebStorm, PyCharm, etc.) e offre completamento AI, refactoring contestuale e chat integrata. Ha accesso al modello semantico dell'IDE (AST, riferimenti, documentazione), il che lo rende più preciso in certi contesti rispetto agli strumenti basati solo su testo.
+
+### Neovim / Vim
+
+L'ecosistema Neovim ha prodotto plugin come **Avante.nvim** (interfaccia agente in stile Cursor), **CodeCompanion** (chat e azioni contestuali) e il classico **Copilot.vim**. Per chi vive nel terminale, questi strumenti permettono di non dover cambiare ambiente.
+
+---
+
+## 3. MCP: Model Context Protocol
+
+> L'MCP è il "USB-C per gli agenti AI": un protocollo standard che permette a qualsiasi agente di connettersi a qualsiasi sorgente di dati o strumento esterno.
+
+Il **Model Context Protocol** (Anthropic, 2024) è uno standard aperto che definisce come un LLM può invocare strumenti esterni in modo sicuro e prevedibile. Un agente compatibile con MCP può connettersi a qualsiasi **MCP server** senza codice custom.
+
+### Architettura MCP
+
+```
+┌─────────────────┐         ┌──────────────────┐
+│   LLM Agent     │◄───────►│   MCP Server     │
+│  (host/client)  │  JSON-  │  (filesystem,    │
+│                 │  RPC    │   GitHub, DB...)  │
+└─────────────────┘         └──────────────────┘
+```
+
+Un MCP server espone tre tipi di primitive:
+- **Tools** — funzioni invocabili dall'agente (es. `read_file`, `create_issue`)
+- **Resources** — contenuti accessibili (es. file, pagine web, schemi DB)
+- **Prompts** — template riutilizzabili con parametri
+
+### MCP server disponibili
+
+| Categoria | Server notevoli | Cosa permettono |
+|-----------|----------------|-----------------|
+| Filesystem | `@modelcontextprotocol/server-filesystem` | Lettura/scrittura file locali con path allowlist |
+| Versioning | `@modelcontextprotocol/server-github` | Issue, PR, commit, branch, review su GitHub |
+| Database | `@modelcontextprotocol/server-postgres`, `server-sqlite` | Query SQL, schema inspection |
+| Web | `@modelcontextprotocol/server-fetch`, Puppeteer MCP | Fetch URL, scraping, automazione browser |
+| Ricerca | Brave Search MCP, Exa MCP | Ricerche web con risultati strutturati |
+| Memoria | `@modelcontextprotocol/server-memory` | Knowledge graph persistente tra sessioni |
+| Cloud | AWS MCP, GCP MCP | Gestione risorse cloud via linguaggio naturale |
+| Monitoraggio | Sentry MCP, Datadog MCP | Accesso a errori e metriche in tempo reale |
+| Design | Figma MCP | Lettura design tokens e layout da Figma |
+
+Ogni agente compatibile (Claude Code, Cursor, Cline, etc.) configura i propri MCP server in un file di configurazione JSON. Da quel momento, l'agente può usarli come strumenti nativi durante qualsiasi sessione.
+
+---
+
+## 4. Hook: automazione attorno all'agente
+
+Gli hook sono **script shell che si eseguono in risposta a eventi dell'agente**: prima di una modifica, dopo un tool call, quando l'agente sta per eseguire un comando pericoloso. Non è l'agente a eseguirli — è il sistema host.
+
+In Claude Code, gli hook si configurano in `settings.json`:
+
+```json
+{
+  "hooks": {
+    "PreToolUse": [
+      {
+        "matcher": "Bash",
+        "hooks": [{
+          "type": "command",
+          "command": "echo 'Eseguendo: $CLAUDE_TOOL_INPUT' >> ~/agent-log.txt"
+        }]
+      }
+    ],
+    "PostToolUse": [
+      {
+        "matcher": "Edit",
+        "hooks": [{
+          "type": "command",
+          "command": "pnpm tsc --noEmit 2>&1 | head -20"
+        }]
+      }
+    ]
+  }
+}
+```
+
+### Pattern di hook più utili
+
+- **Typecheck automatico** — dopo ogni modifica ai file TypeScript, esegui `tsc --noEmit` e il risultato viene mostrato all'agente come feedback
+- **Lint on save** — esegui ESLint/Prettier dopo ogni edit e blocca l'agente se ci sono errori critici
+- **Audit log** — registra ogni comando bash eseguito dall'agente per auditing e debug
+- **Guardrail di sicurezza** — blocca comandi come `rm -rf`, `git push --force` o accessi a path sensibili
+- **Notifiche** — invia una notifica desktop quando un task lungo è completato
+
+Gli hook trasformano un agente generico in un agente specializzato per il tuo ambiente, senza modificarne il comportamento interno.
+
+---
+
+## 5. Skill e slash command
+
+Le **skill** (o slash command) sono prompt specializzati e riutilizzabili che estendono il repertorio dell'agente con comportamenti predefiniti. In Claude Code, si definiscono come file Markdown in `.claude/commands/`.
+
+```markdown
+<!-- .claude/commands/review-pr.md -->
+Analizza il diff della PR corrente e produci un code review strutturata:
+1. Problemi di sicurezza
+2. Problemi di performance
+3. Violazioni di stile
+4. Suggerimenti di miglioramento
+
+Usa un tono tecnico e costruttivo.
+```
+
+Dalla CLI, basta digitare `/review-pr` per eseguire lo skill nel contesto corrente.
+
+### Casi d'uso comuni per le skill
+
+- `/commit` — genera un messaggio di commit semantico analizzando il diff
+- `/explain` — spiega il codice selezionato in italiano semplice
+- `/test` — genera test per la funzione o modulo corrente
+- `/refactor` — applica i principi dei deep modules alla funzione selezionata
+- `/security-audit` — analisi focalizzata su vulnerabilità OWASP
+
+Le skill possono essere versionare nel repository (condivise con il team) oppure personali (~/.claude/commands/). Alcuni strumenti, come Claude Code, offrono skill predefinite come `/init`, `/doctor`, `/cost`.
+
+---
+
+## 6. Framework di orchestrazione
+
+Quando il problema è troppo complesso per un singolo agente, si usano **framework di orchestrazione**: librerie che permettono di definire pipeline di agenti che collaborano, si delegano task e comunicano tramite messaggi.
+
+### LangChain / LangGraph
+
+LangChain è la libreria più diffusa per costruire applicazioni LLM in Python e TypeScript. LangGraph (parte dello stesso ecosistema) aggiunge la gestione di **grafi di agenti con stato**: definisci nodi (agenti o funzioni) e archi (condizioni di transizione), e LangGraph gestisce il routing e la memoria. Ideale per workflow complessi con branching condizionale.
+
+### LlamaIndex
+
+Orientato al **retrieval e alla RAG** (Retrieval-Augmented Generation). Offre astrazioni per indicizzare documenti, interrogarli semanticamente e inserire i risultati nel contesto degli agenti. Utile quando l'agente ha bisogno di conoscenza dalla codebase o dalla documentazione.
+
+### AutoGen (Microsoft)
+
+AutoGen permette di definire **conversazioni multi-agente**: un agente pianificatore, uno esecutore, uno critico che si scambiano messaggi finché un task non è completato o fallisce. Il modello a messaggi lo rende adatto a task di ricerca e coding che richiedono verifica iterativa.
+
+### CrewAI
+
+CrewAI introduce la metafora del **crew** (equipaggio): ogni agente ha un ruolo, un goal e degli strumenti. Il framework gestisce la comunicazione e la delega tra i membri. È orientato a team sintetici (es. "PM + developer + reviewer") per task che simulano processi reali.
+
+### Mastra
+
+Mastra è un framework TypeScript recente (2025) per agenti con memoria persistente, tool integration e workflow definition. È pensato per applicazioni production-grade su Node.js con integrazione nativa con Vercel, PlanetScale e altri servizi cloud moderni.
+
+---
+
+## 7. Agent SDK
+
+Gli **Agent SDK** sono librerie di basso livello per costruire agenti personalizzati che si integrano direttamente con i provider LLM.
+
+| SDK | Provider | Linguaggi | Focus |
+|-----|----------|-----------|-------|
+| Anthropic Agent SDK (Claude Agent SDK) | Anthropic | Python, TypeScript | Agenti con tool use, subagenti, orchestrazione |
+| OpenAI Agents SDK | OpenAI | Python | Handoffs, guardrail, tracing integrato |
+| Google Gemini SDK + Vertex AI | Google | Python, JavaScript | Multi-modal, function calling, grounding |
+| AWS Bedrock Agents | Amazon | Python, Java | Enterprise, integrazione nativa AWS |
+| Vercel AI SDK | Agnostico | TypeScript | Streaming, tool calls, React integration |
+
+Il **Vercel AI SDK** merita una menzione speciale: è l'SDK di riferimento per integrare LLM in applicazioni Next.js e React, con supporto nativo per streaming, tool calls e un'astrazione unificata su tutti i provider principali (Anthropic, OpenAI, Google, Mistral, Ollama).
+
+---
+
+## 8. Strumenti specializzati per use case specifici
+
+Oltre agli agenti general-purpose, esistono strumenti ottimizzati per casi d'uso precisi.
+
+### Generazione UI e frontend
+
+- **v0** (Vercel) — genera componenti React/shadcn da descrizioni testuali o screenshot
+- **Bolt** (StackBlitz) — genera applicazioni full-stack complete in un browser sandbox
+- **Lovable** — simile a Bolt, orientato a prodotti SaaS con Supabase integrato
+- **Galileo AI** — genera design UI da prompt, esportabile in Figma o codice
+
+### Ambienti di sviluppo completi
+
+- **Replit Agent** — agente integrato nell'IDE web Replit, con deploy immediato
+- **GitHub Copilot Workspace** — ambiente cloud dove Copilot pianifica e implementa task da issue GitHub
+- **Sourcegraph Cody** — agente con deep code search su repository enterprise di grandi dimensioni
+
+### Documentazione e comprensione del codice
+
+- **Mintlify Writer** — genera documentazione da codice
+- **CodeSee** — genera diagrammi architetturali da una codebase esistente
+- **Swimm** — documentazione "live" che rimane sincronizzata con il codice tramite AI
+
+---
+
+## Come orientarsi in questo panorama
+
+Con così tanti strumenti disponibili, il rischio è la paralisi da scelta o, peggio, l'accumulo di tool senza una strategia.
+
+Una griglia semplice per decidere:
+
+| Cosa serve | Strumento |
+|------------|-----------|
+| Task lunghi e autonomi nella CLI | Claude Code, Aider |
+| Assistenza contestuale nell'editor | Cursor, Cline, Copilot |
+| Integrare l'AI in un'app custom | Vercel AI SDK, Anthropic SDK |
+| Orchestrare più agenti | LangGraph, CrewAI, Mastra |
+| Connettere strumenti esterni all'agente | MCP server |
+| Automatizzare validazioni attorno all'agente | Hook |
+| Standardizzare comportamenti ripetitivi | Skill / slash command |
+| Generare UI da zero | v0, Bolt, Lovable |
+
+Il punto non è usare tutto. È capire la categoria di ogni strumento e scegliere il giusto livello di astrazione per il problema che stai risolvendo. Un hook può risolvere il problema che stavi cercando di risolvere con un framework di orchestrazione. Uno slash command può sostituire un intero script di automazione.
+
+> La complessità dell'ecosistema AI riflette la complessità dello sviluppo software. Ogni strumento occupa una nicchia reale. La skill dell'ingegnere è saper riconoscere quale nicchia si sta affrontando.
