@@ -222,7 +222,9 @@ export default async function ArticlePage({
       <div className={pageShellClass}>
         <div className={articleGridClass}>
           <article className="min-w-0 lg:max-w-none max-w-3xl">
-            <div className="py-14 max-w-none prose prose-lg">{content}</div>
+            <div className="py-14 max-w-none prose-h1:text-4xl sm:prose-h1:text-5xl prose prose-lg">
+              {content}
+            </div>
           </article>
 
           {hasSections && (
