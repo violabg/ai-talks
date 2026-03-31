@@ -56,7 +56,7 @@ export default function RootLayout({
         "font-sans",
       )}
     >
-      <body className="flex flex-col min-h-screen font-sans antialiased">
+      <body className="flex flex-col bg-background min-h-screen font-sans antialiased">
         <ThemeProvider>
           <Header />
           <main className="flex-1">{children}</main>
