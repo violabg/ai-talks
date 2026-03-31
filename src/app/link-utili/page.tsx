@@ -179,148 +179,39 @@ export default function UsefulLinksPage() {
         />
 
         <div className="relative mx-auto px-6 py-24 sm:py-32 max-w-6xl">
-          <div className="max-w-3xl">
-            <p className="inline-flex items-center gap-2 mb-5 font-sans font-medium text-primary text-xs uppercase tracking-[0.18em]">
-              <span className="inline-block bg-primary w-5 h-px" />
-              Riferimenti selezionati
-            </p>
-            <h1 className="mb-7 font-display font-medium text-5xl sm:text-6xl lg:text-7xl leading-[1.02] tracking-tight">
-              Link utili
-              <br />
-              <em className="text-primary not-italic">per lavorare meglio</em>
-            </h1>
-            <p className="mb-10 max-w-2xl font-sans text-muted-foreground text-lg sm:text-xl leading-relaxed">
-              Una raccolta ragionata di documentazione, tool, raccolte ed esempi
-              per orientarti tra coding assistant, agenti AI e workflow di
-              sviluppo piu strutturati.
-            </p>
-
-            <div className="flex flex-wrap gap-3 mb-10">
-              <div className="bg-background/75 backdrop-blur-sm px-4 py-2 border border-border rounded-full font-sans text-muted-foreground text-sm">
-                {totalResources} risorse selezionate
-              </div>
-              <div className="bg-background/75 backdrop-blur-sm px-4 py-2 border border-border rounded-full font-sans text-muted-foreground text-sm">
-                {resourceCategories.length} categorie
-              </div>
-              <div className="bg-background/75 backdrop-blur-sm px-4 py-2 border border-border rounded-full font-sans text-muted-foreground text-sm">
-                Focus su agenti, prompt e toolchain
-              </div>
-            </div>
-
-            <div className="flex flex-wrap items-center gap-3">
-              {resourceCategories.map((category) => (
-                <a
-                  key={category.id}
-                  href={`#${category.id}`}
-                  className="px-4 py-2 border border-border hover:border-primary/40 rounded-full font-sans text-muted-foreground hover:text-foreground text-sm transition-colors"
-                >
-                  {category.title}
-                </a>
-              ))}
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <section className="mx-auto px-6 py-20 max-w-6xl">
-        <div className="flex sm:flex-row flex-col sm:justify-between sm:items-end gap-4 mb-12">
-          <div>
-            <p className="mb-2 font-sans font-medium text-primary text-xs uppercase tracking-[0.18em]">
-              Da dove partire
-            </p>
-            <h2 className="font-display font-medium text-3xl sm:text-4xl tracking-tight">
-              Tre riferimenti ad alto valore
-            </h2>
-          </div>
-          <p className="max-w-xl font-sans text-muted-foreground text-sm sm:text-right leading-relaxed">
-            Se vuoi costruire rapidamente una base solida, inizia da
-            documentazione ufficiale e protocollo, poi passa a raccolte e
-            pattern.
+          <p className="inline-flex items-center gap-2 mb-5 font-sans font-medium text-primary text-xs uppercase tracking-[0.18em]">
+            <span className="inline-block bg-primary w-5 h-px" />
+            Riferimenti selezionati
           </p>
-        </div>
+          <h1 className="mb-7 font-display font-medium text-5xl sm:text-6xl lg:text-7xl leading-[1.02] tracking-tight">
+            Link utili
+            <br />
+            <em className="text-primary not-italic">per lavorare meglio</em>
+          </h1>
+          <p className="mb-10 max-w-2xl font-sans text-muted-foreground text-lg sm:text-xl leading-relaxed">
+            Una raccolta ragionata di documentazione, tool, raccolte ed esempi
+            per orientarti tra coding assistant, agenti AI e workflow di
+            sviluppo piu strutturati.
+          </p>
 
-        <div className="gap-5 grid grid-cols-1 lg:grid-cols-3">
-          {featuredResources.map((resource) => (
-            <article
-              key={resource.url}
-              className="group flex flex-col justify-between bg-card hover:shadow-md p-6 border border-border hover:border-primary/40 rounded-xl h-full transition-all duration-200"
-            >
-              <div>
-                <h3 className="mb-3 font-display font-medium group-hover:text-primary text-2xl tracking-tight transition-colors duration-200">
-                  {resource.title}
+          <div className="gap-4 grid grid-cols-1 md:grid-cols-2">
+            {resourceCategories.map((category, index) => (
+              <a
+                key={category.id}
+                href={`#${category.id}`}
+                className="group block bg-background hover:shadow-md p-5 border border-border hover:border-primary/40 rounded-xl transition-all duration-200"
+              >
+                <span className="block mb-4 font-mono font-medium text-primary text-xs">
+                  0{index + 1}
+                </span>
+                <h3 className="mb-2 font-display font-medium group-hover:text-primary text-xl tracking-tight transition-colors duration-200">
+                  {category.title}
                 </h3>
-                <p className="mb-6 font-sans text-muted-foreground text-sm leading-relaxed">
-                  {resource.description}
+                <p className="font-sans text-muted-foreground text-sm leading-relaxed">
+                  {category.description}
                 </p>
-              </div>
-
-              <div className="flex justify-end items-center">
-                <Button
-                  nativeButton={false}
-                  size="sm"
-                  variant="ghost"
-                  render={
-                    <a
-                      href={resource.url}
-                      target="_blank"
-                      rel="noreferrer"
-                      className="font-sans text-foreground hover:text-primary text-sm decoration-border underline underline-offset-4 transition-colors"
-                    >
-                      Apri risorsa
-                      <ExternalLink
-                        aria-hidden="true"
-                        data-icon="inline-end"
-                        className="text-primary transition-transform group-hover:translate-x-0.5"
-                      />
-                    </a>
-                  }
-                />
-              </div>
-            </article>
-          ))}
-        </div>
-      </section>
-
-      <section className="bg-muted/55 border-border border-y">
-        <div className="mx-auto px-6 py-20 max-w-6xl">
-          <div className="gap-12 grid grid-cols-1 lg:grid-cols-[0.9fr_2.1fr]">
-            <div>
-              <p className="mb-3 font-sans font-medium text-primary text-xs uppercase tracking-[0.18em]">
-                Come leggere la pagina
-              </p>
-              <h2 className="mb-5 font-display font-medium text-3xl sm:text-4xl tracking-tight">
-                Una mappa utile, non un dump di bookmark
-              </h2>
-              <p className="mb-4 font-sans text-muted-foreground leading-relaxed">
-                Ho privilegiato riferimenti che aiutano davvero a capire come
-                impostare strumenti, agenti e flussi di lavoro, evitando liste
-                troppo generiche o solo promozionali.
-              </p>
-              <p className="font-sans text-muted-foreground leading-relaxed">
-                Parti dalla documentazione ufficiale, poi usa raccolte ed esempi
-                per confrontare approcci, pattern e integrazioni reali.
-              </p>
-            </div>
-
-            <div className="gap-4 grid grid-cols-1 md:grid-cols-2">
-              {resourceCategories.map((category, index) => (
-                <a
-                  key={category.id}
-                  href={`#${category.id}`}
-                  className="group block bg-background hover:shadow-md p-5 border border-border hover:border-primary/40 rounded-xl transition-all duration-200"
-                >
-                  <span className="block mb-4 font-mono font-medium text-primary text-xs">
-                    0{index + 1}
-                  </span>
-                  <h3 className="mb-2 font-display font-medium group-hover:text-primary text-xl tracking-tight transition-colors duration-200">
-                    {category.title}
-                  </h3>
-                  <p className="font-sans text-muted-foreground text-sm leading-relaxed">
-                    {category.description}
-                  </p>
-                </a>
-              ))}
-            </div>
+              </a>
+            ))}
           </div>
         </div>
       </section>
