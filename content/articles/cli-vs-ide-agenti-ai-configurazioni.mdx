@@ -1,0 +1,293 @@
+---
+title: "Strumenti e configurazioni: CLI AI, IDE AI e livelli di personalizzazione"
+description: "Una guida pratica per distinguere strumenti AI da terminale e strumenti AI integrati nell'IDE, con use case essenziali e una mappa delle principali leve di configurazione degli agenti."
+date: "2026-03-24T10:30:00+02:00"
+author: "AI Talks"
+tags: ["CLI", "IDE", "agenti AI", "workflow", "configurazione"]
+published: true
+featured: true
+---
+
+# Strumenti e configurazioni: CLI AI, IDE AI e livelli di personalizzazione
+
+Quando si parla di strumenti AI per sviluppatori, molte discussioni confondono due piani distinti.
+
+Il primo piano riguarda **dove lavori**: terminale oppure editor. Il secondo riguarda **come personalizzi il comportamento dell'agente**: istruzioni permanenti, skill, prompt riusabili, tool esterni, hook di automazione.
+
+Se questi due piani si mescolano, si finisce per confrontare strumenti che non competono davvero fra loro. Un CLI e un IDE possono usare modelli simili, ma impongono interazioni diverse, livelli di contesto diversi e modi diversi di orchestrare il lavoro.
+
+Questo articolo serve a separare i livelli: prima il confronto tra **CLI AI** e **IDE AI**, poi una mappa sintetica delle configurazioni che cambiano davvero il comportamento dell'agente.
+
+---
+
+## 1. CLI AI e IDE AI non risolvono lo stesso problema
+
+Tool come **Claude Code**, **Codex CLI** e **GitHub Copilot CLI** nascono per lavorare bene dentro un flusso terminal-centric: repository, shell, comandi, script, output testuale, automazione.
+
+Tool come **Cursor**, **Antigravity** e **VS Code con Copilot** lavorano invece meglio in un contesto editoriale ricco: navigazione dei file, diff visivi, refactor assistiti, diagnostica inline, chat ancorata al codice aperto.
+
+La differenza principale non è "quale modello è più intelligente". La differenza è **quale superficie operativa** viene esposta all'agente.
+
+### CLI AI: che cosa ottieni
+
+- Accesso naturale a shell, script, test runner, grep, git e processi automatizzabili.
+- Flussi più vicini a build, verifica, scaffolding, batch editing e manutenzione repo-wide.
+- Output facile da inserire in pipeline ripetibili o semi-automatiche.
+
+### IDE AI: che cosa ottieni
+
+- Accesso diretto al contesto del file aperto, della selezione corrente e della navigazione nel progetto.
+- Cicli più rapidi per lettura, modifica, review locale e refactor mirato.
+- Feedback più immediato su errori, diff, problemi di linting e impatto della modifica.
+
+> In pratica: la CLI tende a favorire **operazioni ripetibili e orchestrabili**; l'IDE tende a favorire **iterazione locale e comprensione del codice**.
+
+---
+
+## 2. Use case brevi: quando usare CLI e quando usare IDE
+
+Nessuno dei due ambienti è universalmente migliore. Cambia il tipo di attrito che stai eliminando.
+
+### Quando ha senso un tool CLI
+
+Usa un tool CLI quando il task vive già bene nel terminale o quando vuoi una sequenza precisa di passi.
+
+- **Scansione ampia del repository**: trovare pattern, aggiornare molti file, verificare naming o convenzioni.
+- **Loop automatici di verifica**: lanciare test, typecheck, lint, build e usare quel feedback come oracolo operativo.
+- **Task ripetibili**: scaffolding, trasformazioni testuali, codemod semplici, preparazione di commit o changelog.
+- **Workflow scriptabili**: quando vuoi poter ripetere lo stesso task domani con le stesse regole.
+
+### Quando ha senso un tool IDE
+
+Usa un tool IDE quando hai bisogno di vedere il codice nel suo contesto e iterare rapidamente su una modifica locale.
+
+- **Refactor guidato dal contesto**: rinominare simboli, spostare responsabilità, capire dove una modifica si propaga.
+- **Review mirata**: leggere file collegati, seguire riferimenti, ispezionare diff e problemi inline.
+- **Scrittura assistita in un punto preciso**: completare componenti, funzioni, hook o sezioni di configurazione.
+- **Debug editoriale**: correggere errori con feedback immediato del language server o dei pannelli dell'IDE.
+
+### Esempio pratico
+
+Se devi aggiornare una convenzione in molti file TypeScript, una CLI è spesso più adatta.
+
+Se devi capire perché un componente React rompe una pagina solo dopo un refactor, l'IDE è quasi sempre più efficace.
+
+Per un workflow moderno, il punto non è scegliere un vincitore: è sapere **in quale fase del lavoro** cambiare superficie.
+
+---
+
+## 3. Confronto rapido
+
+| Dimensione | CLI AI | IDE AI |
+| ---------- | ------ | ------ |
+| Interazione principale | Comandi, output testuale, script | File aperti, pannelli, selezione, navigazione |
+| Punto di forza | Automazione e ripetibilità | Comprensione locale e iterazione rapida |
+| Contesto naturale | Repo, shell, processi, git | Editor, simboli, errori inline, diff |
+| Task tipici | Search/replace ampio, test loop, scaffolding | Refactor, review, debug locale, editing mirato |
+| Modalità d'uso | Spesso step sequenziali e verificabili | Spesso dialogo continuo ancorato al codice |
+| Rischio comune | Fare troppo affidamento su script senza leggere il contesto | Restare troppo nel micro-contesto e perdere la vista d'insieme |
+
+Questo è coerente con quanto visto in [Prompting e workflow: orchestrare agenti per task di ingegneria](/articles/prompting-e-workflow): la qualità dipende meno dal brand del tool e molto di più da **contesto, vincoli e feedback loop**.
+
+---
+
+## 4. Le configurazioni che contano davvero
+
+Una volta scelto l'ambiente, entra in gioco il secondo livello: le configurazioni che indirizzano il comportamento dell'agente.
+
+La domanda utile non è "quale feature ha questo prodotto", ma: **questa configurazione serve a memoria, specializzazione, estensibilità o automazione?**
+
+La tabella seguente riassume le leve più comuni.
+
+| Goal | Use | Example | When it activates |
+| ---- | --- | ------- | ----------------- |
+| Apply coding standards everywhere | Always-on instructions | Enforce ESLint rules, require JSDoc comments | Automatically included in every request |
+| Different rules for different file types | File-based instructions | React patterns for `.tsx` files | When files match a pattern or description |
+| Reusable task I run repeatedly | Prompt files | Scaffold a React component | When you invoke a slash command |
+| Package multi-step workflow with scripts | Agent skills | Test, lint, and deploy pipeline | When the task matches the skill description |
+| Specialized AI persona with tool restrictions | Custom agents | Security reviewer, database admin | When you select it or another agent delegates to it |
+| Connect to external APIs or databases | MCP | Query a PostgreSQL database | When the task matches a tool description |
+| Automate tasks at agent lifecycle points | Hooks | Run formatter after every file edit | When the agent reaches a matching lifecycle event |
+| Install pre-packaged customizations | Agent plugins | Install a community testing plugin | When you install a plugin |
+
+Le sezioni seguenti chiariscono a cosa serve davvero ogni livello.
+
+---
+
+## 5. Always-on instructions
+
+Le **always-on instructions** sono il livello più stabile della personalizzazione. Servono a definire regole che vuoi applicare sempre, indipendentemente dal task.
+
+Esempi tipici:
+
+- naming convention costanti;
+- divieti operativi, come non toccare certe directory;
+- standard di qualità, come eseguire sempre test o evitare certe API;
+- stile di comunicazione e formato della risposta.
+
+Sono utili quando vuoi evitare di ripetere ogni volta le stesse regole di base. In un CLI questo significa ridurre ambiguità su comandi, patch e verifiche. In un IDE significa rendere coerente ogni richiesta fatta dalla chat o dall'agente integrato.
+
+Il limite è semplice: se cerchi di farci entrare tutto, diventano troppo generiche. Devono contenere **regole trasversali**, non dettagli specifici di una singola feature.
+
+---
+
+## 6. File-based instructions
+
+Le **file-based instructions** servono quando la codebase non è uniforme e hai bisogno di regole diverse a seconda del contesto.
+
+Esempi comuni:
+
+- linee guida React solo per i file `.tsx`;
+- regole di test solo dentro cartelle `__tests__`;
+- convenzioni MDX solo per `content/articles/*.mdx`;
+- policy backend diverse da quelle frontend.
+
+Questo livello è molto utile perché sposta conoscenza locale vicino al codice a cui si applica. In pratica, invece di avere un'unica guida enorme, spezzi le istruzioni per dominio o tipo di file.
+
+In un IDE il vantaggio è immediato: quando l'agente lavora su un file aperto, può ricevere la guida giusta per quel contesto. In un CLI il vantaggio è simile, ma emerge soprattutto quando il tool seleziona o tocca file che matchano pattern precisi.
+
+---
+
+## 7. Prompt files
+
+I **prompt files** servono per i task che esegui spesso e che vuoi richiamare in modo consistente.
+
+Non sono una policy permanente. Sono più vicini a una **macro testuale strutturata**.
+
+Esempi tipici:
+
+- creare un componente con un formato standard;
+- generare una checklist di review;
+- trasformare un issue in un piano di implementazione;
+- avviare un'analisi di refactor con output in un formato preciso.
+
+Il vantaggio principale è la ripetibilità: non devi ogni volta riscrivere l'intento, i vincoli e il formato desiderato. In pratica riduci la variabilità del prompt iniziale.
+
+Sono particolarmente utili quando il team converge su alcune operazioni ricorrenti. Se invece il task è sempre diverso, i prompt file aiutano meno di quanto sembri.
+
+---
+
+## 8. Agent skills
+
+Le **agent skills** sono un livello più strutturato dei prompt file. Non descrivono solo cosa chiedere: spesso codificano **workflow multi-step**, criteri di attivazione, file di supporto e talvolta anche strumenti consigliati.
+
+Il vantaggio operativo più importante è che non entrano tutte nel contesto in blocco. In genere, all'inizio vengono caricati solo **name** e **description** delle skill disponibili: il contenuto dettagliato viene letto solo se la richiesta dell'utente è pertinente rispetto a quella descrizione.
+
+Questo significa che una skill non necessaria non consuma contesto inutilmente. Se il prompt non richiama quel tipo di task, la skill resta fuori dal flusso; se invece la richiesta combacia, l'agente la seleziona e ne carica le istruzioni specifiche.
+
+Una skill è utile quando vuoi trasformare un pattern operativo in un percorso ripetibile.
+
+Esempi:
+
+- ricerca iniziale della codebase;
+- preparazione di un piano di implementazione;
+- pipeline test-lint-build;
+- review specializzate su performance, accessibilità o sicurezza.
+
+Il loro valore sta nel fatto che impongono un metodo. Questo è perfettamente allineato con [Sviluppo con Agenti AI: guida di riferimento per ingegneri](/articles/sviluppo-con-agenti-ai-guida-riferimento), dove il problema principale non è la mancanza di capacità dell'agente, ma l'assenza di processo.
+
+Rispetto a un semplice prompt, una skill aiuta di più quando il task richiede **ordine, checkpoint e riuso**, ma senza pagare sempre il costo di tenere nel contesto istruzioni che in quel momento non servono.
+
+---
+
+## 9. Custom agents
+
+I **custom agents** servono quando vuoi un agente con un ruolo più definito: stessa famiglia di modelli, ma mandato diverso, istruzioni diverse, strumenti diversi, e talvolta restrizioni esplicite.
+
+Esempi classici:
+
+- reviewer di sicurezza;
+- agente focalizzato su documentazione;
+- agente per database e query;
+- agente planner che non implementa, ma prepara solo un piano.
+
+Questo approccio è utile quando il lavoro cambia davvero di natura. Un reviewer, per esempio, non dovrebbe comportarsi come un implementatore. Un agente di pianificazione non dovrebbe partire a modificare file.
+
+Il beneficio non è teatrale, è operativo: riduci il rischio che un singolo agente faccia troppe cose contemporaneamente e confonda analisi, esecuzione e verifica.
+
+---
+
+## 10. MCP
+
+**MCP** permette di collegare l'agente a strumenti e sistemi esterni tramite interfacce standardizzate: database, API, servizi cloud, knowledge base, sistemi interni.
+
+In pratica aggiunge nuove capacità operative oltre al semplice editing del codice.
+
+Esempi:
+
+- interrogare PostgreSQL;
+- leggere risorse cloud;
+- consultare documentazione interna;
+- usare strumenti diagnostici specializzati.
+
+Qui la differenza chiave è tra **conoscere** e **poter agire**. Un modello può sapere come si interroga un database, ma senza un bridge operativo non può leggere davvero i dati del tuo ambiente.
+
+MCP diventa utile quando il task dipende da informazioni o azioni che non vivono dentro il repository locale. È meno utile quando il problema è interamente risolvibile leggendo file e lanciando i comandi già disponibili nel progetto.
+
+---
+
+## 11. Hooks
+
+Gli **hooks** automatizzano azioni in momenti specifici del ciclo di vita dell'agente o del workflow.
+
+Esempi:
+
+- formattare un file dopo una modifica;
+- lanciare un controllo veloce prima di una proposta finale;
+- aggiornare artefatti o log di sessione;
+- bloccare certe azioni se mancano prerequisiti.
+
+Il loro scopo è ridurre lavoro meccanico e tenere il processo coerente. Sono particolarmente utili quando vuoi far rispettare sempre piccoli passaggi che le persone tendono a dimenticare.
+
+Vanno però usati con disciplina: se automatizzi troppo, aggiungi latenza e rumore. Un buon hook elimina attrito; un cattivo hook lo moltiplica.
+
+---
+
+## 12. Agent plugins
+
+Gli **agent plugins** sono pacchetti di personalizzazione già pronti. Possono includere prompt, skill, configurazioni, integrazioni o workflow orientati a uno scopo specifico.
+
+Sono utili quando vuoi adottare velocemente una capacità senza costruirla da zero.
+
+Esempi:
+
+- plugin focalizzati sul testing;
+- pacchetti per review specializzate;
+- estensioni con configurazioni già allineate a un certo stack;
+- integrazioni di team condivise tra più progetti.
+
+Il vantaggio è la velocità di adozione. Il rischio è importare opacità: installi qualcosa che accelera il setup, ma magari non capisci bene quali regole stia imponendo. Prima di affidarci una parte critica del workflow, conviene sempre leggere che cosa aggiunge davvero.
+
+---
+
+## 13. Come tenere insieme tutto senza complicarsi la vita
+
+Il modo più semplice per ragionare su questi strumenti è questo:
+
+- **CLI vs IDE** decide la superficie di lavoro.
+- **Instructions e prompt** decidono la memoria operativa.
+- **Skills e custom agents** decidono il metodo.
+- **MCP** decide le capacità esterne.
+- **Hooks e plugin** decidono il livello di automazione e di riuso.
+
+Se ti manca uno di questi livelli, il problema non è necessariamente il tool che hai scelto. Spesso manca il pezzo di configurazione giusto.
+
+Per questo, il confronto serio non è "Cursor contro Copilot" oppure "Claude contro Codex". Il confronto serio è: **che tipo di lavoro sto facendo, di quanto contesto ho bisogno, e quale livello di personalizzazione mi evita di ripetere errori?**
+
+---
+
+## 14. Una regola pratica per orientarsi
+
+Se il task è ampio, ripetibile, facilmente verificabile da terminale e potenzialmente scriptabile, parti da una **CLI**.
+
+Se il task è locale, interpretativo, legato alla navigazione del codice e alla modifica ragionata di file specifici, parti dall'**IDE**.
+
+Poi usa le configurazioni per ridurre attrito:
+
+- instructions per le regole permanenti;
+- prompt file per i task ripetuti;
+- skill e custom agent per i workflow specializzati;
+- MCP quando serve accedere a sistemi esterni;
+- hook e plugin quando vuoi automatizzare ciò che ripeti troppo spesso.
+
+La maturità non sta nel trovare il tool perfetto. Sta nel costruire un sistema in cui ogni strumento opera nel contesto giusto, con il giusto livello di memoria e con un feedback loop chiaro, come discusso anche in [Testing e feedback loop: come far migliorare davvero gli agenti AI](/articles/testing-feedback-loop-agenti-ai).
