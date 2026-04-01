@@ -171,6 +171,8 @@ Sono particolarmente utili quando il team converge su alcune operazioni ricorren
 
 Le **agent skills** sono un livello più strutturato dei prompt file. Non descrivono solo cosa chiedere: spesso codificano **workflow multi-step**, criteri di attivazione, file di supporto e talvolta anche strumenti consigliati.
 
+Documentazione ufficiale, [Agent Skills](https://agentskills.io/home).
+
 Il vantaggio operativo più importante è che non entrano tutte nel contesto in blocco. In genere, all'inizio vengono caricati solo **name** e **description** delle skill disponibili: il contenuto dettagliato viene letto solo se la richiesta dell'utente è pertinente rispetto a quella descrizione.
 
 Questo significa che una skill non necessaria non consuma contesto inutilmente. Se il prompt non richiama quel tipo di task, la skill resta fuori dal flusso; se invece la richiesta combacia, l'agente la seleziona e ne carica le istruzioni specifiche.
@@ -223,6 +225,8 @@ Esempi:
 Qui la differenza chiave è tra **conoscere** e **poter agire**. Un modello può sapere come si interroga un database, ma senza un bridge operativo non può leggere davvero i dati del tuo ambiente.
 
 MCP diventa utile quando il task dipende da informazioni o azioni che non vivono dentro il repository locale. È meno utile quando il problema è interamente risolvibile leggendo file e lanciando i comandi già disponibili nel progetto.
+
+La documentazione ufficiale è disponibile su [modelcontextprotocol.io](https://modelcontextprotocol.io/introduction).
 
 ---
 

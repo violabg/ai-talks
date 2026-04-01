@@ -1,4 +1,5 @@
 import { cn } from "@/lib/utils";
+import { ExternalLink } from "lucide-react";
 import type { MDXComponents } from "mdx/types";
 import Image from "next/image";
 
@@ -51,4 +52,22 @@ export const mdxComponents: MDXComponents = {
   hr: () => (
     <hr className="bg-linear-to-r from-transparent via-[--border] to-transparent my-12 border-none h-px" />
   ),
+  a: ({ href, children, ...props }) => {
+    const isExternal = href?.startsWith("http");
+    return (
+      <a
+        href={href}
+        {...(isExternal ? { target: "_blank", rel: "noreferrer" } : {})}
+        {...props}
+      >
+        {children}
+        {isExternal && (
+          <ExternalLink
+            className="inline-block opacity-60 mb-0.5 ml-1 size-3 text-foreground"
+            aria-hidden="true"
+          />
+        )}
+      </a>
+    );
+  },
 };

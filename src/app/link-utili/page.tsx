@@ -86,6 +86,13 @@ const resourceCategories: ResourceCategory[] = [
         url: "https://modelcontextprotocol.io/introduction",
         kind: "Ufficiale",
       },
+      {
+        title: "Agent Skills",
+        description:
+          "Documentazione ufficiale e catalogo di skill per agenti AI: pattern riusabili, criteri di attivazione e workflow multi-step pronti da integrare nei propri flussi di sviluppo.",
+        url: "https://agentskills.io/home",
+        kind: "Ufficiale",
+      },
     ],
   },
   {
