@@ -78,9 +78,9 @@ export function ArticleToc({ sections }: ArticleTocProps) {
   return (
     <nav
       aria-label="In questa pagina"
-      className="bg-card/85 supports-backdrop-filter:bg-card/75 shadow-[0_24px_60px_-48px_color-mix(in_oklch,var(--foreground)_35%,transparent)] backdrop-blur-sm p-5 border border-border/80 rounded-xl lg:max-h-[calc(100lvh-var(--header-height)-4rem)] overflow-y-auto"
+      className="bg-background/60 dark:bg-card/60 backdrop-blur-md p-5 border border-border/60 dark:border-primary/15 rounded-xl shadow-sm lg:max-h-[calc(100lvh-var(--header-height)-4rem)] overflow-y-auto"
     >
-      <p className="mb-4 font-sans font-medium text-foreground text-sm uppercase tracking-[0.18em]">
+      <p className="mb-4 font-mono text-[10px] uppercase tracking-[0.2em] text-muted-foreground">
         In questa pagina
       </p>
 
@@ -93,7 +93,7 @@ export function ArticleToc({ sections }: ArticleTocProps) {
               <a
                 href={`#${section.id}`}
                 className={cn(
-                  "relative flex px-3 py-2 rounded-lg font-sans text-sm leading-snug transition-all duration-150",
+                  "relative flex px-3 py-2 rounded-lg font-sans text-xs leading-snug transition-all duration-150",
                   isActive
                     ? "bg-primary/8 text-foreground"
                     : "text-muted-foreground hover:bg-muted hover:text-foreground",
@@ -102,8 +102,8 @@ export function ArticleToc({ sections }: ArticleTocProps) {
               >
                 <span
                   className={cn(
-                    "top-2.5 bottom-2.5 left-0 absolute rounded-full w-px transition-colors duration-150",
-                    isActive ? "bg-primary" : "bg-transparent",
+                    "top-2.5 bottom-2.5 left-0 absolute rounded-full w-0.5 transition-colors duration-150",
+                    isActive ? "bg-primary dark:shadow-[0_0_6px_var(--primary)]" : "bg-transparent",
                   )}
                   aria-hidden="true"
                 />

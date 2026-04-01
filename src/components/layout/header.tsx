@@ -35,16 +35,38 @@ export function Header() {
   return (
     <header className="top-0 z-50 sticky bg-background/75 backdrop-blur-md border-border border-b w-full">
       <div className="flex justify-between items-center mx-auto px-6 max-w-6xl h-16">
+        {/* Logo */}
         <Link
           href="/"
-          className="flex items-center gap-1.5 hover:opacity-80 transition-opacity"
+          className="flex items-center gap-2 hover:opacity-80 transition-opacity"
         >
+          {/* Neural-node SVG icon */}
+          <svg
+            width="16"
+            height="16"
+            viewBox="0 0 16 16"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+            aria-hidden="true"
+            className="text-primary shrink-0"
+          >
+            {/* Connecting lines */}
+            <line x1="3" y1="13" x2="8" y2="3" stroke="currentColor" strokeWidth="1" strokeLinecap="round" />
+            <line x1="8" y1="3" x2="13" y2="13" stroke="currentColor" strokeWidth="1" strokeLinecap="round" />
+            <line x1="3" y1="13" x2="13" y2="13" stroke="currentColor" strokeWidth="1" strokeLinecap="round" />
+            {/* Nodes */}
+            <circle cx="8" cy="3" r="1.75" fill="currentColor" />
+            <circle cx="3" cy="13" r="1.75" fill="currentColor" />
+            <circle cx="13" cy="13" r="1.75" fill="currentColor" />
+          </svg>
+          {/* Wordmark */}
           <span className="font-display font-medium text-xl tracking-tight">
             <span className="text-primary">AI</span>{" "}
             <span className="text-foreground">Talks</span>
           </span>
         </Link>
 
+        {/* Desktop nav */}
         <nav className="hidden sm:flex items-center gap-1 font-sans text-sm">
           {navItems.map((item) => {
             const active = isActive(item.href);
@@ -57,7 +79,7 @@ export function Header() {
                 className={cn(
                   "px-4 py-2 rounded-lg transition-all duration-150",
                   active
-                    ? "bg-primary/10 text-foreground shadow-sm"
+                    ? "bg-primary/8 text-foreground shadow-[inset_0_-2px_0_var(--primary)]"
                     : "text-muted-foreground hover:bg-muted hover:text-foreground",
                 )}
               >
@@ -68,7 +90,10 @@ export function Header() {
         </nav>
 
         <div className="flex items-center gap-2">
-          <ThemeToggle />
+          {/* Theme toggle with distinct interactive zone */}
+          <div className="bg-muted rounded-lg p-0.5">
+            <ThemeToggle />
+          </div>
 
           <Sheet open={open} onOpenChange={setOpen}>
             <SheetTrigger
@@ -83,8 +108,33 @@ export function Header() {
             >
               <Menu className="size-5" />
             </SheetTrigger>
-            <SheetContent side="right" className="pt-12 w-64">
+            <SheetContent side="right" className="pt-8 w-64">
               <SheetTitle className="sr-only">Menu di navigazione</SheetTitle>
+
+              {/* Mobile sheet branding */}
+              <div className="flex items-center gap-1.5 px-4 pb-4 border-b border-border">
+                <svg
+                  width="14"
+                  height="14"
+                  viewBox="0 0 16 16"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                  aria-hidden="true"
+                  className="text-primary shrink-0"
+                >
+                  <line x1="3" y1="13" x2="8" y2="3" stroke="currentColor" strokeWidth="1" strokeLinecap="round" />
+                  <line x1="8" y1="3" x2="13" y2="13" stroke="currentColor" strokeWidth="1" strokeLinecap="round" />
+                  <line x1="3" y1="13" x2="13" y2="13" stroke="currentColor" strokeWidth="1" strokeLinecap="round" />
+                  <circle cx="8" cy="3" r="1.75" fill="currentColor" />
+                  <circle cx="3" cy="13" r="1.75" fill="currentColor" />
+                  <circle cx="13" cy="13" r="1.75" fill="currentColor" />
+                </svg>
+                <span className="font-display font-medium text-lg tracking-tight">
+                  <span className="text-primary">AI</span>{" "}
+                  <span className="text-foreground">Talks</span>
+                </span>
+              </div>
+
               <nav className="flex flex-col gap-1 mt-4 font-sans text-sm">
                 {navItems.map((item) => {
                   const active = isActive(item.href);
@@ -98,7 +148,7 @@ export function Header() {
                       className={cn(
                         "px-4 py-3 rounded-lg text-base transition-all duration-150",
                         active
-                          ? "bg-primary/10 text-foreground shadow-sm"
+                          ? "bg-primary/8 text-foreground shadow-[inset_0_-2px_0_var(--primary)]"
                           : "text-muted-foreground hover:bg-muted hover:text-foreground",
                       )}
                     >
@@ -111,6 +161,16 @@ export function Header() {
           </Sheet>
         </div>
       </div>
+
+      {/* Gradient energy line */}
+      <div
+        aria-hidden="true"
+        className="absolute bottom-0 left-0 right-0 h-px"
+        style={{
+          background:
+            "linear-gradient(to right, transparent, color-mix(in oklch, var(--primary) 25%, transparent), transparent)",
+        }}
+      />
     </header>
   );
 }

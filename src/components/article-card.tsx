@@ -17,13 +17,13 @@ export function ArticleCard({ article }: ArticleCardProps) {
   return (
     <Link
       href={`/articles/${slug}`}
-      className="group relative flex flex-col justify-between bg-card hover:shadow-md p-6 border border-border hover:border-primary/30 rounded-xl transition-all duration-200 overflow-hidden before:absolute before:inset-y-0 before:left-0 before:w-[3px] before:bg-primary before:rounded-l-xl before:scale-y-0 before:origin-bottom before:transition-transform before:duration-300 hover:before:scale-y-100"
+      className="group flex flex-col justify-between bg-card hover:shadow-md dark:hover:shadow-[0_0_12px_color-mix(in_oklch,var(--primary)_15%,transparent)] p-6 border border-border hover:border-primary/40 rounded-xl transition-all duration-200 accent-top-line"
     >
       <div>
         {/* Meta row */}
         <div className="flex flex-wrap items-center gap-2 mb-4">
           <ViewTransition name={`article-date-${slug}`}>
-            <time className="font-sans text-muted-foreground text-xs">
+            <time className="font-mono text-[10px] text-muted-foreground uppercase tracking-wider">
               {date}
             </time>
           </ViewTransition>
@@ -32,7 +32,7 @@ export function ArticleCard({ article }: ArticleCardProps) {
             <>
               <span className="text-border">·</span>
               <span className="font-sans font-medium text-primary text-xs">
-                In evidenza
+                ★ In evidenza
               </span>
             </>
           )}
@@ -60,7 +60,7 @@ export function ArticleCard({ article }: ArticleCardProps) {
             <Badge
               key={tag}
               variant="outline"
-              className="font-sans font-medium text-[10px] uppercase tracking-wider"
+              className="bg-primary/8 border-primary/20 font-sans font-medium text-[10px] text-primary uppercase tracking-wider"
             >
               {tag}
             </Badge>
@@ -72,6 +72,14 @@ export function ArticleCard({ article }: ArticleCardProps) {
           )}
         </div>
       </ViewTransition>
+
+      {/* Hover arrow */}
+      <span className="flex items-center self-end gap-1 opacity-0 group-hover:opacity-100 mt-2 font-sans text-muted-foreground text-xs transition-opacity duration-200">
+        Leggi{" "}
+        <span className="inline-block transition-transform group-hover:translate-x-0.5">
+          →
+        </span>
+      </span>
     </Link>
   );
 }
