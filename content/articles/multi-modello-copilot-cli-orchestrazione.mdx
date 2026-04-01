@@ -1,0 +1,134 @@
+---
+title: "Orchestrazione multi-modello con GitHub Copilot CLI"
+description: "Come combinare più LLM in un sistema di agenti specializzati usando GitHub Copilot CLI: selezione dinamica del modello, fleet di sub-agenti, adversarial review e orchestrazione personalizzata."
+date: "2026-04-01T10:00:00+02:00"
+author: "AI Talks"
+tags: ["GitHub Copilot", "CLI", "agenti AI", "orchestrazione", "multi-modello", "LLM"]
+published: false
+featured: false
+---
+
+# Orchestrazione multi-modello con GitHub Copilot CLI
+
+L'idea di usare un singolo modello per tutto quello che fai è pratica, ma inefficiente. Modelli diversi hanno punti di forza diversi: c'è chi eccelle nell'analisi rapida di strutture, chi nel ragionamento complesso, chi nella generazione di codice precisa. La domanda utile non è "qual è il modello migliore in assoluto", ma **qual è il modello più adatto per questo task specifico**.
+
+GitHub Copilot CLI offre un sistema per rispondere a questa domanda in modo concreto: consente di selezionare il modello dinamicamente, di orchestrare fleet di sub-agenti specializzati e di costruire workflow personalizzati che distribuiscono il lavoro tra LLM diversi.
+
+Questo articolo esplora le funzionalità multi-modello della CLI di Copilot e i pattern di orchestrazione che rendono questo approccio più solido rispetto all'uso di un singolo agente generico.
+
+---
+
+## 1. Selezione dinamica del modello
+
+All'interno della CLI di Copilot è possibile cambiare il modello base tramite interfaccia utente, oppure specificarlo direttamente nel prompt per un singolo task.
+
+Questo secondo approccio è particolarmente utile quando vuoi che una parte del lavoro venga gestita da un modello diverso da quello predefinito, senza toccare le impostazioni globali.
+
+### Override del modello via prompt
+
+È possibile forzare l'uso di un modello specifico per un singolo task scrivendo esplicitamente l'istruzione nel prompt, ad esempio: "fai una revisione di sicurezza usando GPT-4".
+
+La CLI interpreta questa istruzione e lancia un **sub-agent** con il modello richiesto, ignorando temporaneamente le impostazioni globali per quella richiesta. Al termine, il flusso torna alle impostazioni standard.
+
+Questo meccanismo permette di combinare modelli diversi all'interno dello stesso workflow senza dover riconfigurare l'ambiente ogni volta.
+
+---
+
+## 2. Orchestrazione integrata: Fleet e sub-agenti
+
+La Copilot CLI include un framework di orchestrazione nativo chiamato **Fleet**.
+
+### Il comando `/fleet`
+
+`/fleet` abilita una flotta di sub-agenti che lavorano in **parallelo**. Fleet analizza la richiesta dell'utente e decide autonomamente quale agente — e quindi quale modello — delegare per ogni parte del lavoro.
+
+Il vantaggio principale è la **parallelizzazione**: Fleet identifica quali task possono essere eseguiti contemporaneamente, ad esempio scrivere il codice di componenti UI separati, e li distribuisce a sub-agenti distinti, riducendo i tempi di esecuzione complessivi.
+
+### Agenti predefiniti con modelli specifici
+
+La CLI usa già internamente modelli specifici per task particolari. L'agente **Explore**, dedicato all'analisi della struttura del repository, utilizza di default **Claude Haiku** per la sua velocità ed efficienza nei task di lettura.
+
+Questo è un esempio concreto del principio generale: non tutti i task richiedono il modello più potente disponibile. Per operazioni rapide di esplorazione e comprensione strutturale, un modello veloce è spesso la scelta migliore.
+
+---
+
+## 3. Orchestrazione personalizzata: agenti e skill
+
+Per un controllo maggiore, gli sviluppatori possono definire i propri agenti in file Markdown, solitamente salvati in `~/.copilot/agents/`.
+
+### Definizione di un agente personalizzato
+
+Un file agente specifica:
+
+- il **ruolo** e le istruzioni comportamentali;
+- il **modello** da utilizzare per quel tipo di task;
+- gli strumenti o le skill disponibili.
+
+Un pattern comune è assegnare modelli diversi a ruoli diversi: Sonnet per il planning, GPT-4 per il coding, Opus per il design e l'architettura.
+
+### Un workflow di orchestrazione standard
+
+Un pattern di orchestrazione pratico si articola in quattro fasi:
+
+1. **Plan** — un modello produce un piano d'azione ordinato;
+2. **Parallelize** — i task indipendenti vengono eseguiti contemporaneamente;
+3. **Delegate** — i prompt vengono inviati ai modelli specializzati per ogni task;
+4. **Verify** — un agente verifica la coerenza del lavoro finale.
+
+### Il ruolo del planning
+
+L'esecuzione basata su un piano riduce drasticamente le allucinazioni. Questo succede perché i token generati sono pesantemente influenzati dal contesto del piano precedentemente stabilito: il modello ha già un riferimento strutturale da seguire, invece di costruire la risposta in modo completamente libero.
+
+Questo allineato con quanto discusso in [Prompting e workflow: orchestrare agenti per task di ingegneria](/articles/prompting-e-workflow): la qualità del risultato dipende molto dalla qualità del contesto e della struttura che precede l'esecuzione.
+
+---
+
+## 4. Adversarial review
+
+Una tecnica avanzata per aumentare la qualità del codice è la **adversarial review**: invece di affidarsi a un singolo modello per analizzare il proprio output, si costruiscono più agenti con modelli diversi che revisionano lo stesso risultato.
+
+### La logica di base
+
+Un singolo modello può essere pigro, approssimativo o semplicemente tendere verso certi tipi di errori. Assegnare la review a un modello diverso da quello che ha prodotto l'output introduce una prospettiva genuinamente differente, riducendo la probabilità che gli stessi punti ciechi si propaghino.
+
+Con modelli come Sonnet, Opus e GPT-4 che analizzano lo stesso codice in parallelo, il risultato è una lista consolidata di miglioramenti che nessun singolo revisore avrebbe identificato per intero.
+
+### Implementazione tramite skill
+
+Tramite lo `skill-creator` è possibile creare una skill personalizzata che lancia più modelli in parallelo affinché si revisionino a vicenda, producendo una lista definitiva di miglioramenti suggeriti.
+
+Un punto critico: per attivare correttamente queste skill personalizzate, è necessario essere molto espliciti nel prompt. I modelli faticano a invocare skill dinamiche in modo autonomo. Se la richiesta è generica, la skill non viene selezionata anche se sarebbe pertinente.
+
+---
+
+## 5. Strumenti e considerazioni
+
+### MCP come alternativa alle skill
+
+I server **MCP (Model Context Protocol)** stanno diventando una scelta migliore rispetto alle skill tradizionali per estendere le capacità dei modelli. Il motivo è una gestione più solida del **tool-calling**: MCP standardizza il modo in cui gli agenti invocano strumenti esterni, riducendo l'ambiguità che si incontra con le skill dinamiche.
+
+Se stai costruendo workflow articolati che devono invocare strumenti in modo affidabile, vale la pena valutare MCP prima di investire in un sistema di skill personalizzate.
+
+### Quale modello usare per task complessi
+
+Per task complessi, **Claude 3 Opus** con "high reasoning" attivato è una buona impostazione predefinita, se il budget lo consente. Il compromesso è tra costo per token e qualità del ragionamento: Opus tende a produrre output più accurati su problemi che richiedono pianificazione e coerenza a lungo termine.
+
+---
+
+## 6. Il cambio di prospettiva
+
+Il punto centrale di questo approccio non è tecnico: è concettuale.
+
+Usare l'IA come un singolo chatbot è il punto di partenza. Ma un singolo agente generalista ha limiti strutturali: tende a fare tutto in modo accettabile ma niente in modo eccellente, mescola fasi che andrebbero separate e fatica a mantenere coerenza su task lunghi.
+
+Un **sistema distribuito di agenti specializzati** funziona diversamente: ogni agente opera in un dominio definito, con il modello più adatto per quel task, con un ruolo chiaro nel workflow complessivo. L'orchestratore — in questo caso la CLI di Copilot — gestisce il coordinamento, la parallelizzazione e la verifica.
+
+Il risultato non è solo più veloce. È strutturalmente più affidabile, perché il processo separa esplicitamente planning, esecuzione e review — invece di mescolarli in un unico flusso non verificato.
+
+Per approfondire come costruire questo tipo di sistema in modo pratico, vedi anche [Sviluppo con Agenti AI: guida di riferimento per ingegneri](/articles/sviluppo-con-agenti-ai-guida-riferimento) e [Strumenti e configurazioni: CLI AI, IDE AI e livelli di personalizzazione](/articles/cli-vs-ide-agenti-ai-configurazioni).
+
+---
+
+## Crediti
+
+I concetti e i pattern descritti in questo articolo sono tratti dal lavoro di **Burke Holland**. Il suo [video sull'orchestrazione multi-modello con GitHub Copilot CLI](https://www.youtube.com/watch?v=rJSsbHwkYAY) è il riferimento principale per gli esempi pratici qui riportati. Puoi seguire il suo lavoro sul suo [sito personale](https://burkeholland.github.io/).

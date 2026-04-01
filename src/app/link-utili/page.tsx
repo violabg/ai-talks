@@ -184,13 +184,6 @@ const resourceCategories: ResourceCategory[] = [
       "Materiali piccoli ma densi: gist, demo e prototipi utili per osservare come altri stanno modellando agenti e collaboration loop.",
     resources: [
       {
-        title: "AI Hero",
-        description:
-          "Raccolta di risorse e spunti per usare l'AI nello sviluppo software con taglio pratico e orientato alla produttivita.",
-        url: "https://www.aihero.dev",
-        kind: "Tool",
-      },
-      {
         title: "Ultralight orchestrator",
         description: "Un multi-agent orchestration framework per VS Code.",
         url: "https://burkeholland.github.io/ultralight",
@@ -209,6 +202,29 @@ const resourceCategories: ResourceCategory[] = [
           "AgentRC reads your codebase and generates the files that close that gap — then evaluates whether they actually help, so the context doesn't go stale as your code evolves.",
         url: "https://github.com/microsoft/agentrc",
         kind: "Esperimento",
+      },
+    ],
+  },
+  {
+    id: "blog-esterni",
+    eyebrow: "Per seguire chi fa ricerca",
+    title: "Blog esterni",
+    description:
+      "Siti e blog di sviluppatori e ricercatori che esplorano agenti AI, orchestrazione e workflow moderni con approccio pratico e sperimentale.",
+    resources: [
+      {
+        title: "AI Hero",
+        description:
+          "Raccolta di risorse e spunti per usare l'AI nello sviluppo software con taglio pratico e orientato alla produttivita.",
+        url: "https://www.aihero.dev",
+        kind: "Tool",
+      },
+      {
+        title: "Burke Holland",
+        description:
+          "Blog personale di Burke Holland, sviluppatore e developer advocate che esplora GitHub Copilot CLI, orchestrazione multi-modello e agenti AI con esempi concreti e strumenti open source.",
+        url: "https://burkeholland.github.io/",
+        kind: "Community",
       },
     ],
   },
