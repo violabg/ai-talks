@@ -103,18 +103,32 @@ const resourceCategories: ResourceCategory[] = [
         kind: "Tool",
       },
       {
-        title: "AI Hero",
+        title: "Matt Pocock skills",
         description:
-          "Raccolta di risorse e spunti per usare l'AI nello sviluppo software con taglio pratico e orientato alla produttivita.",
-        url: "https://www.aihero.dev",
+          "Catalogo di skill e pattern riusabili /grill-me, /write-a-prd, /prd-to-issues, /tdd, /improve-codebase-architecture...",
+        url: "https://github.com/mattpocock/skills",
         kind: "Tool",
       },
       {
-        title: "Anvil",
+        title: "everything-claude-code",
         description:
-          "Esperimento focalizzato su strumenti e workflow agentici, interessante per esplorare modalita meno convenzionali di collaborazione con l'AI.",
-        url: "https://burkeholland.github.io/anvil/",
-        kind: "Esperimento",
+          "Raccolta production-ready di agenti, skill, hook, comandi, regole e configurazioni MCP per Claude Code — compatibile anche con Cursor, OpenCode e Codex da un'unica sorgente di config.",
+        url: "https://github.com/affaan-m/everything-claude-code",
+        kind: "Tool",
+      },
+      {
+        title: "gh-aw (GitHub Agentic Workflows)",
+        description:
+          "Estensione per GitHub CLI che abilita workflow di automazione AI-driven: definisci flussi in markdown e gh-aw li compila in GitHub Actions, con agenti Copilot/Claude per triage, PR labeling e analisi CI.",
+        url: "https://github.github.io/gh-aw/",
+        kind: "Tool",
+      },
+      {
+        title: "varlock",
+        description:
+          "Gestione sicura dei file .env per team che lavorano con AI: definisce variabili con schema e validazione, fornisce agli agenti il contesto di configurazione senza esporre i segreti — recuperati a runtime da provider come 1Password, Infisical e AWS.",
+        url: "https://varlock.dev",
+        kind: "Tool",
       },
     ],
   },
@@ -139,6 +153,27 @@ const resourceCategories: ResourceCategory[] = [
         url: "https://github.com/anthropics/claude-plugins-official",
         kind: "Community",
       },
+      {
+        title: "claude-code",
+        description:
+          "Claude Code plugins that extend functionality through custom commands, agents, and workflows. These are examples of what's possible with the Claude Code plugin system—many more plugins are available through community marketplaces.",
+        url: "https://github.com/anthropics/claude-code",
+        kind: "Community",
+      },
+      {
+        title: "awesome-claude-code",
+        description:
+          "La directory community-driven piu completa sull'ecosistema Claude Code: skill, hook, comandi slash, template CLAUDE.md, tooling, status line e workflow. Il punto di partenza per chi vuole esplorare cosa la community ha costruito.",
+        url: "https://github.com/hesreallyhim/awesome-claude-code",
+        kind: "Community",
+      },
+      {
+        title: "claude-code-system-prompts",
+        description:
+          "Raccolta aggiornata di tutte le parti del system prompt di Claude Code: descrizioni dei tool built-in, prompt dei sub-agent (Plan, Explore, Task) e prompt di utilita. Utile per capire come ragiona Claude Code e per fare prompt engineering consapevole.",
+        url: "https://github.com/Piebald-AI/claude-code-system-prompts",
+        kind: "Community",
+      },
     ],
   },
   {
@@ -149,10 +184,30 @@ const resourceCategories: ResourceCategory[] = [
       "Materiali piccoli ma densi: gist, demo e prototipi utili per osservare come altri stanno modellando agenti e collaboration loop.",
     resources: [
       {
-        title: "Three Agent pattern",
+        title: "AI Hero",
         description:
-          "Gist che mostra un pattern a piu agenti, utile per ragionare su separazione dei ruoli e coordinamento tra specialisti.",
-        url: "https://gist.github.com/burkeholland/0e68481f96e94bbb98134fa6efd00436#file-three-agent-md",
+          "Raccolta di risorse e spunti per usare l'AI nello sviluppo software con taglio pratico e orientato alla produttivita.",
+        url: "https://www.aihero.dev",
+        kind: "Tool",
+      },
+      {
+        title: "Ultralight orchestrator",
+        description: "Un multi-agent orchestration framework per VS Code.",
+        url: "https://burkeholland.github.io/ultralight",
+        kind: "Esperimento",
+      },
+      {
+        title: "Anvil",
+        description:
+          "Un agente di coding evidence-first per GitHub Copilot CLI. Verifica prima di presentare, attacca il proprio output e utilizza una revisione multi-modello avversariale per garantire la qualità del codice.",
+        url: "https://burkeholland.github.io/anvil/",
+        kind: "Esperimento",
+      },
+      {
+        title: "Microsoft AgentRC",
+        description:
+          "AgentRC reads your codebase and generates the files that close that gap — then evaluates whether they actually help, so the context doesn't go stale as your code evolves.",
+        url: "https://github.com/microsoft/agentrc",
         kind: "Esperimento",
       },
     ],
