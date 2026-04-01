@@ -246,9 +246,9 @@ function ResourceCard({ resource }: { resource: Resource }) {
   return (
     <article
       className={cn(
-        "group relative flex flex-col bg-card hover:shadow-md p-6 border rounded-xl h-full transition-all duration-200 overflow-hidden",
-        "border-border hover:border-primary/30",
-        "before:absolute before:inset-y-0 before:left-0 before:w-[3px] before:bg-primary before:rounded-l-xl before:scale-y-0 before:origin-bottom before:transition-transform before:duration-300 group-hover:before:scale-y-100",
+        "group relative flex flex-col bg-card hover:shadow-md p-6 border rounded-xl h-full transition-all duration-200",
+        "border-border hover:border-primary/40",
+        "dark:hover:shadow-[0_0_12px_color-mix(in_oklch,var(--primary)_15%,transparent)]",
       )}
     >
       {/* Fully-clickable card overlay */}
@@ -298,21 +298,21 @@ export default function UsefulLinksPage() {
 
         {/* Subtle dot grid */}
         <div
-          className="absolute inset-0 pointer-events-none opacity-[0.03] dark:opacity-[0.04]"
+          className="absolute inset-0 opacity-[0.03] dark:opacity-[0.04] pointer-events-none"
           style={{
             backgroundImage:
               "radial-gradient(circle, var(--foreground) 0.6px, transparent 0.6px)",
             backgroundSize: "24px 24px",
           }}
         />
+        <div className="absolute inset-0 dot-grid" aria-hidden="true" />
 
         <div className="relative mx-auto px-6 py-24 sm:py-32 max-w-6xl">
-          <FadeIn
-            as="p"
-            className="inline-flex items-center gap-2.5 mb-5 font-mono font-medium text-primary text-xs uppercase tracking-[0.18em]"
-          >
-            <span className="inline-block bg-primary rounded-full w-1.5 h-1.5" />
-            {totalResources} riferimenti selezionati
+          <FadeIn as="p" className="mb-5">
+            <span className="inline-flex items-center gap-2 bg-primary/8 px-3 py-1 border border-primary/30 rounded-full font-mono font-medium text-primary text-xs uppercase tracking-[0.18em]">
+              <span className="inline-block bg-primary rounded-full w-1.5 h-1.5" />
+              {totalResources} riferimenti selezionati
+            </span>
           </FadeIn>
           <FadeIn delay={80}>
             <h1 className="mb-7 font-display font-medium text-5xl sm:text-6xl lg:text-7xl leading-[1.02] tracking-tight">
@@ -322,7 +322,7 @@ export default function UsefulLinksPage() {
             </h1>
           </FadeIn>
           <FadeIn delay={120}>
-            <div className="bg-primary mb-8 w-16 h-0.5 rounded-full" />
+            <div className="bg-primary mb-8 rounded-full w-16 h-0.5" />
           </FadeIn>
           <FadeIn
             as="p"
@@ -339,17 +339,15 @@ export default function UsefulLinksPage() {
               <FadeIn key={category.id} delay={240 + index * 60}>
                 <a
                   href={`#${category.id}`}
-                  className="group block bg-background hover:shadow-md p-5 border border-border hover:border-primary/40 rounded-xl h-full transition-all duration-200"
+                  className="group block relative bg-background hover:shadow-md p-5 border border-border hover:border-primary/40 rounded-xl h-full overflow-hidden transition-all duration-200 accent-top-line"
                 >
-                  <div className="flex justify-between items-center mb-4">
-                    <span className="font-mono font-medium text-primary text-xs">
-                      0{index + 1}
-                    </span>
-                    <span className="font-mono text-muted-foreground text-xs">
-                      {category.resources.length}{" "}
-                      {category.resources.length === 1 ? "risorsa" : "risorse"}
-                    </span>
-                  </div>
+                  <span className="top-3 right-4 absolute font-mono text-primary/[0.07] text-5xl pointer-events-none select-none">
+                    0{index + 1}
+                  </span>
+                  <span className="block mb-4 font-mono text-muted-foreground text-xs">
+                    {category.resources.length}{" "}
+                    {category.resources.length === 1 ? "risorsa" : "risorse"}
+                  </span>
                   <h3 className="mb-2 font-display font-medium group-hover:text-primary text-xl tracking-tight transition-colors duration-200">
                     {category.title}
                   </h3>
@@ -404,11 +402,7 @@ export default function UsefulLinksPage() {
               {/* Subtle divider between sections (not after the last one) */}
               {catIdx < resourceCategories.length - 1 && (
                 <div className="flex items-center gap-4 mt-20">
-                  <span className="flex-1 bg-border h-px" />
-                  <span className="font-mono text-muted-foreground/40 text-xs select-none">
-                    ·
-                  </span>
-                  <span className="flex-1 bg-border h-px" />
+                  <span className="flex-1 bg-gradient-to-r from-transparent via-primary/20 to-transparent h-px" />
                 </div>
               )}
             </section>
@@ -417,8 +411,9 @@ export default function UsefulLinksPage() {
       </div>
 
       {/* ── CTA footer ── */}
-      <section className="border-border border-t">
-        <FadeIn className="flex sm:flex-row flex-col justify-between items-start sm:items-end gap-6 mx-auto px-6 py-16 max-w-6xl">
+      <section className="relative bg-muted border-border border-t overflow-hidden">
+        <div className="absolute inset-0 dot-grid" aria-hidden="true" />
+        <FadeIn className="relative flex sm:flex-row flex-col justify-between items-start sm:items-end gap-6 mx-auto px-6 py-16 max-w-6xl">
           <div className="max-w-2xl">
             <p className="mb-2 font-mono font-medium text-primary text-xs uppercase tracking-[0.18em]">
               Continua a esplorare

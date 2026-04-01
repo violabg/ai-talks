@@ -147,14 +147,23 @@ export default async function ArticlePage({
   return (
     <div className="relative">
       {/* Article header */}
-      <div className="bg-muted border-border border-b">
+      <div className="relative bg-muted border-border border-b overflow-hidden">
+        <div className="dot-grid absolute inset-0" aria-hidden="true" />
+        <div
+          className="absolute inset-0 pointer-events-none"
+          aria-hidden="true"
+          style={{
+            background:
+              "radial-gradient(ellipse 70% 50% at 20% 50%, color-mix(in oklch, var(--primary) 6%, transparent) 0%, transparent 70%)",
+          }}
+        />
         <div className={pageShellClass}>
           <div className={articleGridClass}>
             <div className="pt-14 pb-12 min-w-0 lg:max-w-none max-w-3xl">
               {/* Back link */}
               <Link
                 href="/articles"
-                className="group inline-flex items-center gap-2 mb-10 font-sans text-muted-foreground hover:text-foreground text-sm transition-colors"
+                className="group inline-flex items-center gap-2 mb-10 font-mono text-xs uppercase tracking-wider text-muted-foreground hover:text-foreground transition-colors"
               >
                 <span className="transition-transform group-hover:-translate-x-0.5">
                   ←
@@ -175,7 +184,7 @@ export default async function ArticlePage({
                     <Badge
                       key={tag}
                       variant="outline"
-                      className="font-sans font-medium text-xs uppercase tracking-wide"
+                      className="bg-primary/8 border-primary/20 text-primary font-sans font-medium text-xs uppercase tracking-wide"
                     >
                       {tag}
                     </Badge>
@@ -185,7 +194,7 @@ export default async function ArticlePage({
 
               {/* Title */}
               <ViewTransition name={`article-title-${slug}`}>
-                <h1 className="mb-5 font-display font-medium text-4xl sm:text-5xl leading-[1.08] tracking-tight">
+                <h1 className="mb-5 font-display font-medium text-4xl sm:text-5xl leading-[1.08] tracking-tight text-balance">
                   {frontmatter.title}
                 </h1>
               </ViewTransition>
@@ -211,7 +220,7 @@ export default async function ArticlePage({
                   <time>{date}</time>
                 </ViewTransition>
                 <span className="text-border">·</span>
-                <span>{readingTime} min di lettura</span>
+                <span className="font-mono text-xs bg-muted-foreground/10 px-2 py-0.5 rounded">{readingTime} min</span>
               </div>
             </div>
           </div>
@@ -221,7 +230,7 @@ export default async function ArticlePage({
       {/* Article body */}
       <div className={pageShellClass}>
         <div className={articleGridClass}>
-          <article className="min-w-0 lg:max-w-none max-w-3xl">
+          <article className="min-w-0 lg:max-w-none max-w-3xl lg:border-l-2 lg:border-primary/15 lg:pl-8">
             <div className="py-14 max-w-none prose-h1:text-4xl sm:prose-h1:text-5xl prose prose-lg">
               {content}
             </div>

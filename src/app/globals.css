@@ -46,22 +46,28 @@
   --sidebar-foreground: oklch(15% 0.015 50);
   --sidebar-primary: oklch(62% 0.19 55);
   --sidebar-primary-foreground: oklch(99% 0 0);
-  --sidebar-accent: oklch(95.5% 0.01 75);
-  --sidebar-accent-foreground: oklch(15% 0.015 50);
-  --sidebar-border: oklch(88% 0.012 75);
-  --sidebar-ring: oklch(62% 0.19 55);
+  --sidebar-accent: oklch(96% 0.007 250);
+  --sidebar-accent-foreground: oklch(11% 0.02 260);
+  --sidebar-border: oklch(89% 0.01 250);
+  --sidebar-ring: oklch(54.914% 0.27604 292.489);
+
+  --accent-teal: oklch(65% 0.18 195);
+  --accent-amber: oklch(72% 0.17 58);
+
+  --glow-sm: 0 0 12px color-mix(in oklch, var(--primary) 20%, transparent);
+  --glow-md: 0 0 24px color-mix(in oklch, var(--primary) 25%, transparent);
 }
 
 /* ═══════════════════════════════════════════════
    DARK THEME — deep warm charcoal, golden amber
    ═══════════════════════════════════════════════ */
 .dark {
-  --background: oklch(10.648% 0.01775 305.141);
-  --foreground: oklch(92.762% 0.01285 305.755);
-  --card: oklch(14.429% 0.01852 307.353);
-  --card-foreground: oklch(92.684% 0.01255 301.039);
-  --popover: oklch(14.429% 0.01852 307.353);
-  --popover-foreground: oklch(92.606% 0.01235 296.137);
+  --background: oklch(9% 0.022 270);
+  --foreground: oklch(96% 0.005 95);
+  --card: oklch(12% 0.022 268);
+  --card-foreground: oklch(96% 0.005 95);
+  --popover: oklch(12% 0.022 268);
+  --popover-foreground: oklch(96% 0.005 95);
   --primary: oklch(54.914% 0.27604 292.489);
   --primary-foreground: oklch(10.648% 0.01775 305.141);
   --secondary: oklch(18.005% 0.0149 304.387);
@@ -71,8 +77,8 @@
   --accent: oklch(18.005% 0.0149 304.387);
   --accent-foreground: oklch(92.684% 0.01255 301.039);
   --destructive: oklch(58% 0.22 29);
-  --border: oklch(21.781% 0.01833 305.068);
-  --input: oklch(18.005% 0.0149 304.387);
+  --border: oklch(20% 0.02 268);
+  --input: oklch(18% 0.016 265);
   --ring: oklch(54.914% 0.27604 292.489);
   --radius: 0.5rem;
 
@@ -88,14 +94,22 @@
   --chart-4: oklch(66% 0.15 330);
   --chart-5: oklch(63% 0.16 30);
 
-  --sidebar: oklch(10% 0.01 55);
-  --sidebar-foreground: oklch(94% 0.008 75);
-  --sidebar-primary: oklch(74% 0.16 60);
-  --sidebar-primary-foreground: oklch(12% 0.01 55);
-  --sidebar-accent: oklch(19% 0.01 55);
-  --sidebar-accent-foreground: oklch(94% 0.008 75);
-  --sidebar-border: oklch(23% 0.01 55);
-  --sidebar-ring: oklch(74% 0.16 60);
+  --sidebar: oklch(8% 0.016 265);
+  --sidebar-foreground: oklch(96% 0.005 95);
+  --sidebar-primary: oklch(67% 0.2 257);
+  --sidebar-primary-foreground: oklch(10% 0.018 265);
+  --sidebar-accent: oklch(18% 0.016 265);
+  --sidebar-accent-foreground: oklch(96% 0.005 95);
+  --sidebar-border: oklch(21% 0.016 265);
+  --sidebar-ring: oklch(54.914% 0.27604 292.489);
+
+  --accent-teal: oklch(65% 0.18 195);
+  --accent-amber: oklch(72% 0.17 58);
+
+  --surface-raised: oklch(16% 0.02 265);
+
+  --glow-sm: 0 0 12px color-mix(in oklch, var(--primary) 20%, transparent);
+  --glow-md: 0 0 24px color-mix(in oklch, var(--primary) 25%, transparent);
 }
 
 /* ═══════════════════════════════════════════════
@@ -145,6 +159,8 @@
   --color-chart-3: var(--chart-3);
   --color-chart-2: var(--chart-2);
   --color-chart-1: var(--chart-1);
+  --color-accent-teal: var(--accent-teal);
+  --color-accent-amber: var(--accent-amber);
 }
 
 /* ═══════════════════════════════════════════════
@@ -191,6 +207,44 @@ h6,
 }
 
 /* ═══════════════════════════════════════════════
+   DECORATIVE UTILITIES
+   ═══════════════════════════════════════════════ */
+
+/* Dot-grid overlay — apply to an absolutely-positioned div */
+.dot-grid {
+  background-image: radial-gradient(circle, currentColor 0.5px, transparent 0.5px);
+  background-size: 24px 24px;
+  color: var(--foreground);
+  opacity: 0.03;
+  pointer-events: none;
+}
+.dark .dot-grid {
+  opacity: 0.05;
+}
+
+/* Accent top-line — 2px primary stripe that reveals on hover */
+.accent-top-line {
+  position: relative;
+  overflow: visible;
+}
+.accent-top-line::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: var(--primary);
+  border-radius: var(--radius) var(--radius) 0 0;
+  transform: scaleX(0);
+  transform-origin: center;
+  transition: transform 0.25s ease;
+}
+.accent-top-line:hover::before {
+  transform: scaleX(1);
+}
+
+/* ═══════════════════════════════════════════════
    SUBTLE GRAIN TEXTURE (light mode only)
    ═══════════════════════════════════════════════ */
 body::before {
@@ -206,7 +260,7 @@ body::before {
 }
 
 .dark body::before {
-  opacity: 0.012;
+  opacity: 0.025;
 }
 
 /* ═══════════════════════════════════════════════
@@ -323,8 +377,9 @@ body::before {
 }
 
 .prose :where(pre):not(:where([class~="not-prose"], [class~="not-prose"] *)) {
-  border-radius: var(--radius);
+  border-radius: 0 var(--radius) var(--radius) 0;
   border: 1px solid var(--border);
+  border-left: 3px solid var(--primary);
 }
 
 .prose
@@ -393,7 +448,7 @@ body::before {
    SELECTION COLOR
    ═══════════════════════════════════════════════ */
 ::selection {
-  background: color-mix(in oklch, var(--primary) 18%, transparent);
+  background: color-mix(in oklch, var(--primary) 22%, transparent);
 }
 
 /* ═══════════════════════════════════════════════
