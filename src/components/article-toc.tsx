@@ -2,6 +2,7 @@
 
 import { cn } from "@/lib/utils";
 import type { ArticleSection } from "@/types/article";
+import { motion } from "motion/react";
 import { useEffect, useState } from "react";
 
 type ArticleTocProps = {
@@ -10,6 +11,7 @@ type ArticleTocProps = {
 
 export function ArticleToc({ sections }: ArticleTocProps) {
   const [activeId, setActiveId] = useState(sections[0]?.id ?? "");
+  const [hoveredId, setHoveredId] = useState<string | null>(null);
 
   useEffect(() => {
     if (sections.length === 0) {
@@ -84,30 +86,36 @@ export function ArticleToc({ sections }: ArticleTocProps) {
         In questa pagina
       </p>
 
-      <ul className="flex flex-col gap-1.5">
+      <ul
+        className="flex flex-col gap-1.5"
+        onMouseLeave={() => setHoveredId(null)}
+      >
         {sections.map((section) => {
           const isActive = section.id === activeId;
+          const highlighted =
+            hoveredId === section.id || (!hoveredId && isActive);
 
           return (
             <li key={section.id}>
               <a
                 href={`#${section.id}`}
+                onMouseEnter={() => setHoveredId(section.id)}
                 className={cn(
-                  "relative flex px-3 py-2 rounded-lg font-sans text-xs leading-snug transition-all duration-150",
-                  isActive
-                    ? "bg-primary/8 text-foreground"
-                    : "text-muted-foreground hover:bg-muted hover:text-foreground",
+                  "relative flex px-3 py-2 rounded-lg font-sans text-xs leading-snug transition-colors duration-150",
+                  highlighted ? "text-foreground" : "text-muted-foreground",
                 )}
                 aria-current={isActive ? "location" : undefined}
               >
-                <span
-                  className={cn(
-                    "top-2.5 bottom-2.5 left-0 absolute rounded-full w-0.5 transition-colors duration-150",
-                    isActive ? "bg-primary dark:shadow-[0_0_6px_var(--primary)]" : "bg-transparent",
-                  )}
-                  aria-hidden="true"
-                />
-                <span className="text-balance">{section.title}</span>
+                {highlighted && (
+                  <motion.div
+                    layoutId="toc-indicator"
+                    className="absolute inset-0 rounded-lg bg-primary/8 shadow-[inset_2px_0_0_var(--primary)]"
+                    transition={{ type: "spring", bounce: 0.2, duration: 0.35 }}
+                  />
+                )}
+                <span className="relative z-10 text-balance">
+                  {section.title}
+                </span>
               </a>
             </li>
           );

@@ -211,37 +211,44 @@ h6,
    ═══════════════════════════════════════════════ */
 
 /* Dot-grid overlay — apply to an absolutely-positioned div */
-.dot-grid {
-  background-image: radial-gradient(circle, currentColor 0.5px, transparent 0.5px);
+@utility dot-grid {
+  background-image: radial-gradient(
+    circle,
+    currentColor 0.5px,
+    transparent 0.5px
+  );
   background-size: 24px 24px;
   color: var(--foreground);
   opacity: 0.03;
   pointer-events: none;
-}
-.dark .dot-grid {
-  opacity: 0.05;
+
+  @variant dark {
+    opacity: 0.05;
+  }
 }
 
 /* Accent top-line — 2px primary stripe that reveals on hover */
-.accent-top-line {
+@utility accent-top-line {
   position: relative;
   overflow: hidden;
-}
-.accent-top-line::before {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: 0;
-  bottom: 0;
-  width: 3px;
-  background: var(--primary);
-  border-radius: var(--radius) 0 var(--radius) 0;
-  transform: scaleY(0);
-  transform-origin: bottom;
-  transition: transform 0.25s ease;
-}
-.accent-top-line:hover::before {
-  transform: scaleY(1);
+
+  &::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    width: 3px;
+    background: var(--primary);
+    border-radius: var(--radius) 0 var(--radius) 0;
+    transform: scaleY(0);
+    transform-origin: bottom;
+    transition: transform 0.25s ease;
+  }
+
+  &:hover::before {
+    transform: scaleY(1);
+  }
 }
 
 /* ═══════════════════════════════════════════════
@@ -298,7 +305,8 @@ body::before {
   scroll-margin-top: calc(var(--header-height) + 1.5rem);
 }
 
-.prose :where(h2, h3, h4):not(:where([class~="not-prose"], [class~="not-prose"] *)) {
+.prose
+  :where(h2, h3, h4):not(:where([class~="not-prose"], [class~="not-prose"] *)) {
   position: relative;
 }
 
@@ -482,5 +490,3 @@ body::before {
     animation-duration: 0s !important;
   }
 }
-
-

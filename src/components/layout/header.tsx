@@ -10,6 +10,7 @@ import {
 } from "@/components/ui/sheet";
 import { cn } from "@/lib/utils";
 import { Menu } from "lucide-react";
+import { motion } from "motion/react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useState } from "react";
@@ -23,6 +24,7 @@ const navItems = [
 export function Header() {
   const pathname = usePathname();
   const [open, setOpen] = useState(false);
+  const [hovered, setHovered] = useState<string | null>(null);
 
   const isActive = (href: string) => {
     if (href === "/") {
@@ -51,9 +53,33 @@ export function Header() {
             className="text-primary shrink-0"
           >
             {/* Connecting lines */}
-            <line x1="3" y1="13" x2="8" y2="3" stroke="currentColor" strokeWidth="1" strokeLinecap="round" />
-            <line x1="8" y1="3" x2="13" y2="13" stroke="currentColor" strokeWidth="1" strokeLinecap="round" />
-            <line x1="3" y1="13" x2="13" y2="13" stroke="currentColor" strokeWidth="1" strokeLinecap="round" />
+            <line
+              x1="3"
+              y1="13"
+              x2="8"
+              y2="3"
+              stroke="currentColor"
+              strokeWidth="1"
+              strokeLinecap="round"
+            />
+            <line
+              x1="8"
+              y1="3"
+              x2="13"
+              y2="13"
+              stroke="currentColor"
+              strokeWidth="1"
+              strokeLinecap="round"
+            />
+            <line
+              x1="3"
+              y1="13"
+              x2="13"
+              y2="13"
+              stroke="currentColor"
+              strokeWidth="1"
+              strokeLinecap="round"
+            />
             {/* Nodes */}
             <circle cx="8" cy="3" r="1.75" fill="currentColor" />
             <circle cx="3" cy="13" r="1.75" fill="currentColor" />
@@ -67,23 +93,33 @@ export function Header() {
         </Link>
 
         {/* Desktop nav */}
-        <nav className="hidden sm:flex items-center gap-1 font-sans text-sm">
+        <nav
+          className="hidden sm:flex items-center gap-1 font-sans text-sm"
+          onMouseLeave={() => setHovered(null)}
+        >
           {navItems.map((item) => {
             const active = isActive(item.href);
+            const highlighted = hovered === item.href || (!hovered && active);
 
             return (
               <Link
                 key={item.href}
                 href={item.href}
                 aria-current={active ? "page" : undefined}
+                onMouseEnter={() => setHovered(item.href)}
                 className={cn(
-                  "px-4 py-2 rounded-lg transition-all duration-150",
-                  active
-                    ? "bg-primary/8 text-foreground shadow-[inset_0_-2px_0_var(--primary)]"
-                    : "text-muted-foreground hover:bg-muted hover:text-foreground",
+                  "relative px-4 py-2 rounded-lg transition-colors duration-150",
+                  highlighted ? "text-foreground" : "text-muted-foreground",
                 )}
               >
-                {item.label}
+                {highlighted && (
+                  <motion.div
+                    layoutId="nav-indicator"
+                    className="absolute inset-0 bg-primary/8 shadow-[inset_0_-2px_0_var(--primary)] rounded-lg"
+                    transition={{ type: "spring", bounce: 0.2, duration: 0.35 }}
+                  />
+                )}
+                <span className="z-10 relative">{item.label}</span>
               </Link>
             );
           })}
@@ -91,7 +127,7 @@ export function Header() {
 
         <div className="flex items-center gap-2">
           {/* Theme toggle with distinct interactive zone */}
-          <div className="bg-muted rounded-lg p-0.5">
+          <div className="bg-muted p-0.5 rounded-lg">
             <ThemeToggle />
           </div>
 
@@ -112,7 +148,7 @@ export function Header() {
               <SheetTitle className="sr-only">Menu di navigazione</SheetTitle>
 
               {/* Mobile sheet branding */}
-              <div className="flex items-center gap-1.5 px-4 pb-4 border-b border-border">
+              <div className="flex items-center gap-1.5 px-4 pb-4 border-border border-b">
                 <svg
                   width="14"
                   height="14"
@@ -122,9 +158,33 @@ export function Header() {
                   aria-hidden="true"
                   className="text-primary shrink-0"
                 >
-                  <line x1="3" y1="13" x2="8" y2="3" stroke="currentColor" strokeWidth="1" strokeLinecap="round" />
-                  <line x1="8" y1="3" x2="13" y2="13" stroke="currentColor" strokeWidth="1" strokeLinecap="round" />
-                  <line x1="3" y1="13" x2="13" y2="13" stroke="currentColor" strokeWidth="1" strokeLinecap="round" />
+                  <line
+                    x1="3"
+                    y1="13"
+                    x2="8"
+                    y2="3"
+                    stroke="currentColor"
+                    strokeWidth="1"
+                    strokeLinecap="round"
+                  />
+                  <line
+                    x1="8"
+                    y1="3"
+                    x2="13"
+                    y2="13"
+                    stroke="currentColor"
+                    strokeWidth="1"
+                    strokeLinecap="round"
+                  />
+                  <line
+                    x1="3"
+                    y1="13"
+                    x2="13"
+                    y2="13"
+                    stroke="currentColor"
+                    strokeWidth="1"
+                    strokeLinecap="round"
+                  />
                   <circle cx="8" cy="3" r="1.75" fill="currentColor" />
                   <circle cx="3" cy="13" r="1.75" fill="currentColor" />
                   <circle cx="13" cy="13" r="1.75" fill="currentColor" />
@@ -146,10 +206,10 @@ export function Header() {
                       aria-current={active ? "page" : undefined}
                       onClick={() => setOpen(false)}
                       className={cn(
-                        "px-4 py-3 rounded-lg text-base transition-all duration-150",
+                        "mx-4 px-4 py-3 rounded-lg text-base transition-all duration-150",
                         active
-                          ? "bg-primary/8 text-foreground shadow-[inset_0_-2px_0_var(--primary)]"
-                          : "text-muted-foreground hover:bg-muted hover:text-foreground",
+                          ? "bg-primary/8 text-foreground shadow-[inset_2px_0_0_var(--primary)]"
+                          : "text-muted-foreground hover:bg-primary/8 hover:text-foreground hover:shadow-[inset_2px_0_0_var(--primary)]",
                       )}
                     >
                       {item.label}
@@ -165,7 +225,7 @@ export function Header() {
       {/* Gradient energy line */}
       <div
         aria-hidden="true"
-        className="absolute bottom-0 left-0 right-0 h-px"
+        className="right-0 bottom-0 left-0 absolute h-px"
         style={{
           background:
             "linear-gradient(to right, transparent, color-mix(in oklch, var(--primary) 25%, transparent), transparent)",

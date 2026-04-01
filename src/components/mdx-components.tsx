@@ -21,7 +21,7 @@ export const mdxComponents: MDXComponents = {
     </span>
   ),
   blockquote: ({ children }) => (
-    <blockquote className="pl-6 border-[--primary] border-l-[3px] font-medium text-[--foreground]/80 text-[1.1em] not-italic leading-relaxed">
+    <blockquote className="pl-6 border-primary border-l-[3px] font-medium text-[--foreground]/80 text-[1.1em] not-italic leading-relaxed">
       {children}
     </blockquote>
   ),
@@ -29,7 +29,7 @@ export const mdxComponents: MDXComponents = {
     <pre
       {...props}
       className={cn(
-        "bg-[--muted] p-5 border border-[--border] rounded-[--radius-lg] overflow-x-auto font-mono text-sm leading-relaxed",
+        "bg-muted p-5 border border-border rounded-lg! overflow-x-auto font-mono text-sm leading-relaxed",
         className,
       )}
     >
@@ -37,20 +37,20 @@ export const mdxComponents: MDXComponents = {
     </pre>
   ),
   table: ({ children }) => (
-    <div className="my-6 border border-[--border] rounded-[--radius-lg] overflow-x-auto">
+    <div className="my-6 border border-border rounded-lg overflow-x-auto">
       <table className="w-full text-sm border-collapse">{children}</table>
     </div>
   ),
   th: ({ children }) => (
-    <th className="bg-[--muted] px-4 py-2.5 border-[--border] border-b font-semibold text-xs text-left uppercase tracking-wider">
+    <th className="bg-muted px-4 py-2.5 border-border border-b font-semibold text-xs text-left uppercase tracking-wider">
       {children}
     </th>
   ),
   td: ({ children }) => (
-    <td className="px-4 py-2.5 border-[--border] border-b">{children}</td>
+    <td className="px-4 py-2.5 border-border border-b">{children}</td>
   ),
   hr: () => (
-    <hr className="bg-linear-to-r from-transparent via-[--border] to-transparent my-12 border-none h-px" />
+    <hr className="bg-linear-to-r from-transparent to-transparent my-12 via-border border-none h-px" />
   ),
   a: ({ href, children, ...props }) => {
     const isExternal = href?.startsWith("http");
