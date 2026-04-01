@@ -17,7 +17,7 @@ export function ArticleCard({ article }: ArticleCardProps) {
   return (
     <Link
       href={`/articles/${slug}`}
-      className="group flex flex-col justify-between bg-card hover:shadow-md p-6 border border-border hover:border-primary/40 rounded-xl transition-all duration-200"
+      className="group relative flex flex-col justify-between bg-card hover:shadow-md p-6 border border-border hover:border-primary/30 rounded-xl transition-all duration-200 overflow-hidden before:absolute before:inset-y-0 before:left-0 before:w-[3px] before:bg-primary before:rounded-l-xl before:scale-y-0 before:origin-bottom before:transition-transform before:duration-300 hover:before:scale-y-100"
     >
       <div>
         {/* Meta row */}

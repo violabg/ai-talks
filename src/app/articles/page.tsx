@@ -31,7 +31,7 @@ export default async function ArticlesPage({ searchParams }: Props) {
   return (
     <div className="mx-auto px-6 py-20 max-w-6xl">
       <div className="mb-12">
-        <p className="mb-3 font-sans font-medium text-primary text-xs uppercase tracking-[0.18em]">
+        <p className="mb-3 font-mono font-medium text-primary text-xs uppercase tracking-[0.18em]">
           Archivio
         </p>
         <h1 className="mb-4 font-display font-medium text-4xl sm:text-5xl tracking-tight">

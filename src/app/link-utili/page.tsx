@@ -246,8 +246,9 @@ function ResourceCard({ resource }: { resource: Resource }) {
   return (
     <article
       className={cn(
-        "group relative flex flex-col bg-card hover:shadow-md p-6 border rounded-xl h-full transition-all duration-200",
-        "border-border hover:border-primary/40",
+        "group relative flex flex-col bg-card hover:shadow-md p-6 border rounded-xl h-full transition-all duration-200 overflow-hidden",
+        "border-border hover:border-primary/30",
+        "before:absolute before:inset-y-0 before:left-0 before:w-[3px] before:bg-primary before:rounded-l-xl before:scale-y-0 before:origin-bottom before:transition-transform before:duration-300 group-hover:before:scale-y-100",
       )}
     >
       {/* Fully-clickable card overlay */}
@@ -291,16 +292,26 @@ export default function UsefulLinksPage() {
           className="absolute inset-0 pointer-events-none"
           style={{
             background:
-              "radial-gradient(ellipse 78% 70% at 12% 20%, color-mix(in oklch, var(--primary) 12%, transparent) 0%, transparent 60%), radial-gradient(ellipse 68% 90% at 82% 78%, color-mix(in oklch, var(--primary) 7%, transparent) 0%, transparent 62%), linear-gradient(180deg, color-mix(in oklch, var(--muted) 58%, transparent) 0%, transparent 100%)",
+              "radial-gradient(ellipse 90% 60% at 5% 50%, color-mix(in oklch, var(--primary) 10%, transparent) 0%, transparent 60%), radial-gradient(ellipse 50% 80% at 95% 20%, color-mix(in oklch, var(--primary) 6%, transparent) 0%, transparent 55%), radial-gradient(ellipse 70% 50% at 60% 100%, color-mix(in oklch, var(--primary) 4%, transparent) 0%, transparent 50%)",
+          }}
+        />
+
+        {/* Subtle dot grid */}
+        <div
+          className="absolute inset-0 pointer-events-none opacity-[0.03] dark:opacity-[0.04]"
+          style={{
+            backgroundImage:
+              "radial-gradient(circle, var(--foreground) 0.6px, transparent 0.6px)",
+            backgroundSize: "24px 24px",
           }}
         />
 
         <div className="relative mx-auto px-6 py-24 sm:py-32 max-w-6xl">
           <FadeIn
             as="p"
-            className="inline-flex items-center gap-2 mb-5 font-sans font-medium text-primary text-xs uppercase tracking-[0.18em]"
+            className="inline-flex items-center gap-2.5 mb-5 font-mono font-medium text-primary text-xs uppercase tracking-[0.18em]"
           >
-            <span className="inline-block bg-primary w-5 h-px" />
+            <span className="inline-block bg-primary rounded-full w-1.5 h-1.5" />
             {totalResources} riferimenti selezionati
           </FadeIn>
           <FadeIn delay={80}>
@@ -309,6 +320,9 @@ export default function UsefulLinksPage() {
               <br />
               <em className="text-primary not-italic">per lavorare meglio</em>
             </h1>
+          </FadeIn>
+          <FadeIn delay={120}>
+            <div className="bg-primary mb-8 w-16 h-0.5 rounded-full" />
           </FadeIn>
           <FadeIn
             as="p"
@@ -359,7 +373,7 @@ export default function UsefulLinksPage() {
               className="scroll-mt-28"
             >
               <FadeIn className="mb-8 max-w-3xl">
-                <p className="mb-2 font-sans font-medium text-primary text-xs uppercase tracking-[0.18em]">
+                <p className="mb-2 font-mono font-medium text-primary text-xs uppercase tracking-[0.18em]">
                   {category.eyebrow}
                 </p>
                 <h2 className="mb-4 font-display font-medium text-3xl sm:text-4xl tracking-tight">
@@ -406,7 +420,7 @@ export default function UsefulLinksPage() {
       <section className="border-border border-t">
         <FadeIn className="flex sm:flex-row flex-col justify-between items-start sm:items-end gap-6 mx-auto px-6 py-16 max-w-6xl">
           <div className="max-w-2xl">
-            <p className="mb-2 font-sans font-medium text-primary text-xs uppercase tracking-[0.18em]">
+            <p className="mb-2 font-mono font-medium text-primary text-xs uppercase tracking-[0.18em]">
               Continua a esplorare
             </p>
             <h2 className="mb-3 font-display font-medium text-3xl tracking-tight">

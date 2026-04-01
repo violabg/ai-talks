@@ -13,19 +13,29 @@ export default function HomePage() {
     <>
       {/* Hero */}
       <section className="relative border-border border-b overflow-hidden">
-        {/* Gradient mesh background */}
+        {/* Warm gradient mesh */}
         <div
           className="absolute inset-0 pointer-events-none"
           style={{
             background:
-              "radial-gradient(ellipse 80% 70% at 10% 30%, color-mix(in oklch, var(--primary) 9%, transparent) 0%, transparent 65%), radial-gradient(ellipse 60% 90% at 90% 80%, color-mix(in oklch, var(--primary) 5%, transparent) 0%, transparent 60%)",
+              "radial-gradient(ellipse 90% 60% at 5% 50%, color-mix(in oklch, var(--primary) 10%, transparent) 0%, transparent 60%), radial-gradient(ellipse 50% 80% at 95% 20%, color-mix(in oklch, var(--primary) 6%, transparent) 0%, transparent 55%), radial-gradient(ellipse 70% 50% at 60% 100%, color-mix(in oklch, var(--primary) 4%, transparent) 0%, transparent 50%)",
           }}
         />
 
-        <div className="relative mx-auto px-6 py-28 sm:py-40 max-w-6xl">
+        {/* Subtle dot grid */}
+        <div
+          className="absolute inset-0 pointer-events-none opacity-[0.03] dark:opacity-[0.04]"
+          style={{
+            backgroundImage:
+              "radial-gradient(circle, var(--foreground) 0.6px, transparent 0.6px)",
+            backgroundSize: "24px 24px",
+          }}
+        />
+
+        <div className="relative mx-auto px-6 pt-28 pb-24 sm:pt-40 sm:pb-32 max-w-6xl">
           <div className="max-w-3xl">
-            <p className="inline-flex items-center gap-2 mb-5 font-sans font-medium text-primary text-xs uppercase tracking-[0.18em]">
-              <span className="inline-block bg-primary w-5 h-px" />
+            <p className="inline-flex items-center gap-2.5 mb-6 font-mono font-medium text-primary text-xs uppercase tracking-[0.18em]">
+              <span className="inline-block bg-primary rounded-full w-1.5 h-1.5" />
               Sviluppo &amp; Intelligenza Artificiale
             </p>
             <h1 className="mb-8 font-display font-medium text-5xl sm:text-6xl lg:text-7xl leading-[1.05] tracking-tight">
@@ -33,6 +43,7 @@ export default function HomePage() {
               <br />
               <em className="text-primary not-italic">con l&apos;AI</em>
             </h1>
+            <div className="bg-primary mb-8 w-16 h-0.5 rounded-full" />
             <p className="mb-12 max-w-xl font-sans text-muted-foreground text-lg sm:text-xl leading-relaxed">
               Articoli, best practice e idee per integrare l&apos;intelligenza
               artificiale nel tuo workflow di sviluppo.
@@ -57,7 +68,7 @@ export default function HomePage() {
       <section className="mx-auto px-6 py-20 max-w-6xl">
         <div className="flex justify-between items-end mb-12">
           <div>
-            <p className="mb-2 font-sans font-medium text-primary text-xs uppercase tracking-[0.18em]">
+            <p className="mb-2 font-mono font-medium text-primary text-xs uppercase tracking-[0.18em]">
               {featuredArticles.length > 0 ? "In evidenza" : "Recenti"}
             </p>
             <h2 className="font-display font-medium text-3xl sm:text-4xl tracking-tight">
@@ -98,9 +109,18 @@ export default function HomePage() {
       </section>
 
       {/* Topics */}
-      <section className="bg-muted border-border border-t">
-        <div className="mx-auto px-6 py-20 max-w-6xl">
-          <p className="mb-2 font-sans font-medium text-primary text-xs uppercase tracking-[0.18em]">
+      <section className="relative bg-muted border-border border-t overflow-hidden">
+        {/* Subtle dot grid */}
+        <div
+          className="absolute inset-0 pointer-events-none opacity-[0.025] dark:opacity-[0.035]"
+          style={{
+            backgroundImage:
+              "radial-gradient(circle, var(--foreground) 0.5px, transparent 0.5px)",
+            backgroundSize: "20px 20px",
+          }}
+        />
+        <div className="relative mx-auto px-6 py-20 max-w-6xl">
+          <p className="mb-2 font-mono font-medium text-primary text-xs uppercase tracking-[0.18em]">
             Argomenti
           </p>
           <h2 className="mb-14 font-display font-medium text-3xl sm:text-4xl tracking-tight">
@@ -130,7 +150,7 @@ export default function HomePage() {
             ].map((topic) => (
               <div
                 key={topic.title}
-                className="bg-card p-6 border border-border rounded-xl"
+                className="bg-card p-6 border border-border hover:border-primary/30 rounded-xl transition-colors duration-200"
               >
                 <span className="block mb-4 font-mono font-medium text-primary text-xs">
                   {topic.number}

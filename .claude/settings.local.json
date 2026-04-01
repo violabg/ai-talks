@@ -14,7 +14,10 @@
       "Bash(gh search:*)",
       "WebFetch(domain:raw.githubusercontent.com)",
       "WebSearch",
-      "WebFetch(domain:github.github.io)"
+      "WebFetch(domain:github.github.io)",
+      "Bash(pnpm build:*)",
+      "Bash(pnpm dev:*)",
+      "Bash(pkill -f \"next dev\")"
     ]
   }
 }
