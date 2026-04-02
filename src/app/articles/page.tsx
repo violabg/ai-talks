@@ -30,24 +30,6 @@ export default async function ArticlesPage({ searchParams }: Props) {
 
   return (
     <>
-      {/* ── Muted banner header ── */}
-      <div className="relative bg-muted border-border border-b overflow-hidden">
-        <div className="absolute inset-0 dot-grid" aria-hidden="true" />
-        <div className="relative mx-auto px-6 py-16 max-w-7xl">
-          <span className="inline-flex items-center gap-2 bg-primary/8 mb-3 px-3 py-1 border border-primary/30 rounded-full font-mono font-medium text-primary text-xs uppercase tracking-[0.18em]">
-            <span className="inline-block bg-primary rounded-full w-1.5 h-1.5" />
-            Archivio
-          </span>
-          <h1 className="mb-4 font-display font-medium text-4xl sm:text-5xl tracking-tight">
-            Articoli
-          </h1>
-          <p className="max-w-xl font-sans text-muted-foreground text-lg leading-relaxed">
-            Guide pratiche, best practice e idee per sviluppare con
-            l&apos;intelligenza artificiale.
-          </p>
-        </div>
-      </div>
-
       {/* ── Content area ── */}
       <div className="mx-auto px-6 py-12 max-w-7xl">
         {/* Search + article count row */}
