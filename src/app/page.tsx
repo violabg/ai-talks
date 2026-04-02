@@ -27,7 +27,7 @@ export default function HomePage() {
 
         {/* Right-side neural network decoration */}
         <div
-          className="hidden lg:block top-1/2 right-12 absolute opacity-[0.08] -translate-y-1/2"
+          className="hidden lg:block top-1/2 right-12 absolute opacity-[0.18] -translate-y-1/2"
           aria-hidden="true"
         >
           <svg
