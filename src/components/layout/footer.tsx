@@ -8,7 +8,7 @@ export function Footer() {
       {/* ── Top band ─────────────────────────────────────────────── */}
       <div className="relative bg-muted border-border border-t overflow-hidden">
         <div className="absolute inset-0 dot-grid" aria-hidden="true" />
-        <div className="relative flex sm:flex-row flex-col justify-between items-start sm:items-center gap-6 mx-auto px-6 py-10 max-w-6xl">
+        <div className="relative flex sm:flex-row flex-col justify-between items-start sm:items-center gap-6 mx-auto px-6 py-10 max-w-7xl">
           {/* Brand */}
           <div className="flex flex-col gap-1">
             <span className="font-display font-semibold text-foreground text-lg tracking-tight">
@@ -45,7 +45,7 @@ export function Footer() {
 
       {/* ── Bottom strip ─────────────────────────────────────────── */}
       <div className="border-border/50 border-t">
-        <div className="flex flex-row justify-between items-center gap-4 mx-auto px-6 py-4 max-w-6xl">
+        <div className="flex flex-row justify-between items-center gap-4 mx-auto px-6 py-4 max-w-7xl">
           {/* Copyright */}
           <p className="font-sans text-muted-foreground text-xs">
             &copy; {year} AI Talks

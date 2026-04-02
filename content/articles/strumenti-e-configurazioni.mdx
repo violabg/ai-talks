@@ -1,0 +1,292 @@
+---
+title: "Strumenti e configurazioni: livelli di personalizzazione degli agenti AI"
+description: "Una mappa pratica delle principali leve di configurazione degli agenti AI: istruzioni permanenti, skill, custom agent, MCP, hook e plugin, con un ordine di priorità per orientarsi."
+date: "2026-03-24T10:30:00+02:00"
+author: "AI Talks"
+tags: ["agenti AI", "workflow", "configurazione", "CLI", "IDE"]
+published: true
+featured: true
+---
+
+# Strumenti e configurazioni: livelli di personalizzazione degli agenti AI
+
+Una volta scelto l'ambiente di lavoro — [CLI o IDE](/articles/cli-vs-ide-agenti-ai) — entra in gioco il secondo livello: le configurazioni che indirizzano il comportamento dell'agente.
+
+La domanda utile non è "quale feature ha questo prodotto", ma: **questa configurazione serve a memoria, specializzazione, estensibilità o automazione?**
+
+---
+
+## 1. Le configurazioni che contano davvero
+
+La tabella seguente riassume le leve più comuni.
+
+| Configurazione | Scopo | Claude Code | GitHub Copilot |
+| -------------- | ----- | ----------- | -------------- |
+| Always-on instructions | Regole trasversali sempre attive | `CLAUDE.md` (root o `~/.claude/`) | `.github/copilot-instructions.md` `AGENTS.md`|
+| File-based instructions | Regole per contesto o directory | `CLAUDE.md` nelle sottodirectory | `*.instructions.md` con frontmatter `applyTo` |
+| Prompt files | Task ripetibili richiamabili da slash command | `.claude/commands/*.md` | `.github/prompts/*.prompt.md` |
+| Agent skills | Workflow multi-step attivati per affinità | `.claude/skills/*.md` | `.github/skills/<nome-skill>/SKILL.md` |
+| Custom agents | Agenti con mandato e tool specifici | `.claude/agents/*.md` | `.github/agents/*.agent.md` |
+| MCP | Connessione a sistemi e API esterni | `.mcp.json` o `~/.claude/mcp.json` | Impostazioni VS Code (`settings.json`) |
+| Hooks | Automazioni su eventi del ciclo di vita | `.claude/settings.json` → `hooks` | Chat Customizations editor (no file) |
+| Agent plugins | Pacchetti di personalizzazione preconfezionati | `claude install <plugin>` | Chat Customizations editor / marketplace |
+
+Le sezioni seguenti chiariscono a cosa serve davvero ogni livello.
+
+---
+
+## 2. Always-on instructions
+
+Le **always-on instructions** sono il livello più stabile della personalizzazione. Servono a definire regole che vuoi applicare sempre, indipendentemente dal task.
+
+Esempi tipici:
+
+- naming convention costanti;
+- divieti operativi, come non toccare certe directory;
+- standard di qualità, come eseguire sempre test o evitare certe API;
+- stile di comunicazione e formato della risposta.
+
+Sono utili quando vuoi evitare di ripetere ogni volta le stesse regole di base. In un CLI questo significa ridurre ambiguità su comandi, patch e verifiche. In un IDE significa rendere coerente ogni richiesta fatta dalla chat o dall'agente integrato.
+
+Il limite è semplice: se cerchi di farci entrare tutto, diventano troppo generiche. Devono contenere **regole trasversali**, non dettagli specifici di una singola feature.
+
+**Dove salvare i file**
+
+| Strumento | File |
+| --------- | ---- |
+| Claude Code | `CLAUDE.md` nella root del progetto; `~/.claude/CLAUDE.md` per regole globali valide su tutti i repository |
+| GitHub Copilot | `.github/copilot-instructions.md` nella root del repository; Copilot riconosce anche `AGENTS.md` e `CLAUDE.md` se presenti |
+
+---
+
+## 3. File-based instructions
+
+Le **file-based instructions** servono quando la codebase non è uniforme e hai bisogno di regole diverse a seconda del contesto.
+
+Esempi comuni:
+
+- linee guida React solo per i file `.tsx`;
+- regole di test solo dentro cartelle `__tests__`;
+- convenzioni MDX solo per `content/articles/*.mdx`;
+- policy backend diverse da quelle frontend.
+
+Questo livello è molto utile perché sposta conoscenza locale vicino al codice a cui si applica. In pratica, invece di avere un'unica guida enorme, spezzi le istruzioni per dominio o tipo di file.
+
+In un IDE il vantaggio è immediato: quando l'agente lavora su un file aperto, può ricevere la guida giusta per quel contesto. In un CLI il vantaggio è simile, ma emerge soprattutto quando il tool seleziona o tocca file che matchano pattern precisi.
+
+**Dove salvare i file**
+
+| Strumento | File |
+| --------- | ---- |
+| Claude Code | `CLAUDE.md` posizionato nella sottodirectory corrispondente — viene caricato automaticamente quando i file coinvolti nel task si trovano in quella cartella o più in basso |
+| GitHub Copilot | File `*.instructions.md` con frontmatter `applyTo: "**/*.tsx"` (o altro glob pattern), posizionabili in qualsiasi cartella del workspace; la posizione del file stabilisce anche il contesto di default |
+
+---
+
+## 4. Prompt files
+
+I **prompt files** servono per i task che esegui spesso e che vuoi richiamare in modo consistente.
+
+Non sono una policy permanente. Sono più vicini a una **macro testuale strutturata**.
+
+Esempi tipici:
+
+- creare un componente con un formato standard;
+- generare una checklist di review;
+- trasformare un issue in un piano di implementazione;
+- avviare un'analisi di refactor con output in un formato preciso.
+
+Il vantaggio principale è la ripetibilità: non devi ogni volta riscrivere l'intento, i vincoli e il formato desiderato. In pratica riduci la variabilità del prompt iniziale.
+
+Sono particolarmente utili quando il team converge su alcune operazioni ricorrenti. Se invece il task è sempre diverso, i prompt file aiutano meno di quanto sembri.
+
+**Dove salvare i file**
+
+| Strumento | File |
+| --------- | ---- |
+| Claude Code | `.claude/commands/*.md` — ogni file corrisponde a uno slash command; il nome del file diventa il comando (es. `scaffold.md` → `/scaffold`) |
+| GitHub Copilot | `.github/prompts/*.prompt.md` — richiamabili dalla chat di Copilot con `#nomefile.prompt`; supportano frontmatter `mode` e `tools` per controllare il comportamento |
+
+---
+
+## 5. Agent skills
+
+Le **agent skills** sono un livello più strutturato dei prompt file. Non descrivono solo cosa chiedere: spesso codificano **workflow multi-step**, criteri di attivazione, file di supporto e talvolta anche strumenti consigliati.
+
+Documentazione ufficiale, [Agent Skills](https://agentskills.io/home).
+
+Il vantaggio operativo più importante è che non entrano tutte nel contesto in blocco. In genere, all'inizio vengono caricati solo **name** e **description** delle skill disponibili: il contenuto dettagliato viene letto solo se la richiesta dell'utente è pertinente rispetto a quella descrizione.
+
+Questo significa che una skill non necessaria non consuma contesto inutilmente. Se il prompt non richiama quel tipo di task, la skill resta fuori dal flusso; se invece la richiesta combacia, l'agente la seleziona e ne carica le istruzioni specifiche.
+
+Una skill è utile quando vuoi trasformare un pattern operativo in un percorso ripetibile.
+
+Esempi:
+
+- ricerca iniziale della codebase;
+- preparazione di un piano di implementazione;
+- pipeline test-lint-build;
+- review specializzate su performance, accessibilità o sicurezza.
+
+Il loro valore sta nel fatto che impongono un metodo. Questo è perfettamente allineato con [Sviluppo con Agenti AI: guida di riferimento per ingegneri](/articles/sviluppo-con-agenti-ai-guida-riferimento), dove il problema principale non è la mancanza di capacità dell'agente, ma l'assenza di processo.
+
+Rispetto a un semplice prompt, una skill aiuta di più quando il task richiede **ordine, checkpoint e riuso**, ma senza pagare sempre il costo di tenere nel contesto istruzioni che in quel momento non servono.
+
+**Dove salvare i file**
+
+| Strumento | File |
+| --------- | ---- |
+| Claude Code | `.claude/skills/*.md` — ogni file è una skill con frontmatter `name`, `description` e `tools`; la description è il criterio con cui l'agente decide se attivarla |
+| GitHub Copilot | `.github/skills/<nome-skill>/SKILL.md` — ogni skill è una cartella; il nome della cartella deve corrispondere al campo `name` nel frontmatter; il file `SKILL.md` contiene frontmatter (`name`, `description`) e le istruzioni nel body |
+
+---
+
+## 6. Custom agents
+
+I **custom agents** servono quando vuoi un agente con un ruolo più definito: stessa famiglia di modelli, ma mandato diverso, istruzioni diverse, strumenti diversi, e talvolta restrizioni esplicite.
+
+Esempi classici:
+
+- reviewer di sicurezza;
+- agente focalizzato su documentazione;
+- agente per database e query;
+- agente planner che non implementa, ma prepara solo un piano.
+
+Questo approccio è utile quando il lavoro cambia davvero di natura. Un reviewer, per esempio, non dovrebbe comportarsi come un implementatore. Un agente di pianificazione non dovrebbe partire a modificare file.
+
+Il beneficio non è teatrale, è operativo: riduci il rischio che un singolo agente faccia troppe cose contemporaneamente e confonda analisi, esecuzione e verifica.
+
+**Dove salvare i file**
+
+| Strumento | File |
+| --------- | ---- |
+| Claude Code | `.claude/agents/*.md` — ogni file definisce un sub-agent con frontmatter `name`, `description` e `tools`; `description` è il criterio usato dall'agente orchestratore per delegare |
+| GitHub Copilot | `.github/agents/*.agent.md` (scope workspace) o `~/.copilot/agents/*.agent.md` (scope utente) — frontmatter con `name`, `description`, `tools`, `model` e `handoffs`; il campo `handoffs` permette transizioni verso altri agenti |
+
+---
+
+## 7. MCP
+
+**MCP** permette di collegare l'agente a strumenti e sistemi esterni tramite interfacce standardizzate: database, API, servizi cloud, knowledge base, sistemi interni.
+
+In pratica aggiunge nuove capacità operative oltre al semplice editing del codice.
+
+Esempi:
+
+- interrogare PostgreSQL;
+- leggere risorse cloud;
+- consultare documentazione interna;
+- usare strumenti diagnostici specializzati.
+
+Qui la differenza chiave è tra **conoscere** e **poter agire**. Un modello può sapere come si interroga un database, ma senza un bridge operativo non può leggere davvero i dati del tuo ambiente.
+
+MCP diventa utile quando il task dipende da informazioni o azioni che non vivono dentro il repository locale. È meno utile quando il problema è interamente risolvibile leggendo file e lanciando i comandi già disponibili nel progetto.
+
+La documentazione ufficiale è disponibile su [modelcontextprotocol.io](https://modelcontextprotocol.io/introduction).
+
+**Dove salvare i file**
+
+| Strumento | File |
+| --------- | ---- |
+| Claude Code | `.mcp.json` nella root del progetto (scope progetto) oppure `~/.claude/mcp.json` (scope globale) |
+| GitHub Copilot | Configurabile da VS Code tramite `settings.json` con la voce `mcp.servers`, oppure direttamente dalla UI Chat Customizations editor; non esiste un file `mcp.json` dedicato per Copilot |
+
+---
+
+## 8. Hooks
+
+Gli **hooks** automatizzano azioni in momenti specifici del ciclo di vita dell'agente o del workflow.
+
+Esempi:
+
+- formattare un file dopo una modifica;
+- lanciare un controllo veloce prima di una proposta finale;
+- aggiornare artefatti o log di sessione;
+- bloccare certe azioni se mancano prerequisiti.
+
+Il loro scopo è ridurre lavoro meccanico e tenere il processo coerente. Sono particolarmente utili quando vuoi far rispettare sempre piccoli passaggi che le persone tendono a dimenticare.
+
+Vanno però usati con disciplina: se automatizzi troppo, aggiungi latenza e rumore. Un buon hook elimina attrito; un cattivo hook lo moltiplica.
+
+**Dove salvare i file**
+
+| Strumento | File |
+| --------- | ---- |
+| Claude Code | `.claude/settings.json` (scope progetto) o `~/.claude/settings.json` (scope globale) → oggetto `hooks` con eventi come `PostToolUse`, `PreToolUse`, `Stop` |
+| GitHub Copilot | Non ha un sistema di hook configurabile via file locale; le automazioni equivalenti si gestiscono tramite il Chat Customizations editor di VS Code o con GitHub Actions esterne |
+
+---
+
+## 9. Agent plugins
+
+Gli **agent plugins** sono pacchetti di personalizzazione già pronti. Possono includere prompt, skill, configurazioni, integrazioni o workflow orientati a uno scopo specifico.
+
+Sono utili quando vuoi adottare velocemente una capacità senza costruirla da zero.
+
+Esempi:
+
+- plugin focalizzati sul testing;
+- pacchetti per review specializzate;
+- estensioni con configurazioni già allineate a un certo stack;
+- integrazioni di team condivise tra più progetti.
+
+Il vantaggio è la velocità di adozione. Il rischio è importare opacità: installi qualcosa che accelera il setup, ma magari non capisci bene quali regole stia imponendo. Prima di affidarci una parte critica del workflow, conviene sempre leggere che cosa aggiunge davvero.
+
+**Dove salvare i file**
+
+| Strumento | File |
+| --------- | ---- |
+| Claude Code | Installabili via `claude install <plugin>` — i file vengono copiati nelle directory `.claude/` appropriate del progetto o globali |
+| GitHub Copilot | Installabili tramite il Chat Customizations editor in VS Code o dal marketplace integrato; un plugin può raggruppare slash command, skill, agenti, hook e server MCP in un unico pacchetto |
+
+---
+
+## 10. Come tenere insieme tutto senza complicarsi la vita
+
+Il modo più semplice per ragionare su questi strumenti è questo:
+
+- **Instructions e prompt** decidono la memoria operativa.
+- **Skills e custom agents** decidono il metodo.
+- **MCP** decide le capacità esterne.
+- **Hooks e plugin** decidono il livello di automazione e di riuso.
+
+Se ti manca uno di questi livelli, il problema non è necessariamente il tool che hai scelto. Spesso manca il pezzo di configurazione giusto.
+
+Per questo, il confronto serio non è "Cursor contro Copilot" oppure "Claude contro Codex". Il confronto serio è: **che tipo di lavoro sto facendo, di quanto contesto ho bisogno, e quale livello di personalizzazione mi evita di ripetere errori?**
+
+---
+
+## 11. Ordine di importanza: da dove partire
+
+Non tutti i livelli hanno lo stesso impatto. Se stai costruendo un setup da zero o vuoi prioritizzare l'investimento, questo è l'ordine che rende di più.
+
+### 1. Custom agents
+
+I custom agents sono la scelta ad alto impatto perché definiscono il **mandato** dell'agente. Un agente senza ruolo definito tende a fare troppe cose contemporaneamente: implementa, pianifica, verifica, e nel farlo confonde i livelli. Separare un reviewer da un implementatore da un planner non è una questione estetica: cambia la qualità e la prevedibilità dell'output.
+
+Parti da qui quando il lavoro cambia davvero di natura tra sessione e sessione, o quando un singolo agente fa troppo.
+
+### 2. Agent skills
+
+Le skills vengono subito dopo perché codificano il **processo**. Un agente con un buon mandato ma senza un metodo ripetibile si comporta in modo diverso ad ogni esecuzione. Le skill impongono ordine, checkpoint e riuso senza saturare il contesto con istruzioni che non servono in quel momento.
+
+Parti da qui quando hai workflow ricorrenti che vuoi rendere consistenti: onboarding codebase, pipeline test-lint-build, review specializzate.
+
+### 3. MCP
+
+MCP viene terzo perché espande le **capacità operative** oltre il repository locale. Senza una connessione a sistemi reali, l'agente lavora solo su ciò che può leggere dai file. Con MCP puoi interrogare database, leggere risorse cloud, accedere a knowledge base interne.
+
+Parti da qui quando il task dipende da informazioni o azioni che non esistono nel repository, e solo dopo aver definito ruolo e processo.
+
+### Poi: il resto
+
+- **Always-on e file-based instructions**: fondamenta necessarie, ma a basso differenziale. Definiscono regole di base e riducono la ripetizione, non il metodo.
+- **Prompt files**: utili per team e task ricorrenti, ma facili da costruire quando il resto è a posto.
+- **Hooks**: automazione tattica, da aggiungere quando il workflow è già stabile.
+- **Agent plugins**: convengono quando il setup è maturo e vuoi accelerare l'adozione di capacità già testate da altri.
+
+La logica è semplice: prima definisci **chi fa cosa** (custom agents), poi **come lo fa** (skills), poi **con cosa** (MCP). Solo dopo ha senso investire sui livelli di rifinitura.
+
+---
+
+Questo schema è discusso anche in [Testing e feedback loop: come far migliorare davvero gli agenti AI](/articles/testing-feedback-loop-agenti-ai): la qualità dipende meno dal numero di configurazioni attive e molto di più da contesto, vincoli e feedback loop chiari.

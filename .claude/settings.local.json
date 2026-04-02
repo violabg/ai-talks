@@ -17,7 +17,8 @@
       "WebFetch(domain:github.github.io)",
       "Bash(pnpm build:*)",
       "Bash(pnpm dev:*)",
-      "Bash(pkill -f \"next dev\")"
+      "Bash(pkill -f \"next dev\")",
+      "WebFetch(domain:code.visualstudio.com)"
     ]
   }
 }

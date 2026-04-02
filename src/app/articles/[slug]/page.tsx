@@ -136,10 +136,10 @@ export default async function ArticlePage({
   const sections = extractArticleSections(source);
   const hasSections = sections.length > 0;
   const pageShellClass = hasSections
-    ? "mx-auto max-w-6xl px-6"
+    ? "mx-auto max-w-7xl px-6"
     : "mx-auto max-w-3xl px-6";
   const articleGridClass = hasSections
-    ? "lg:grid lg:grid-cols-[minmax(0,48rem)_minmax(14rem,1fr)] lg:items-start lg:gap-12"
+    ? "lg:grid lg:grid-cols-[minmax(0,52rem)_minmax(14rem,1fr)] lg:items-start lg:gap-12"
     : undefined;
 
   const readingTime = Math.max(1, Math.ceil(source.split(/\s+/).length / 200));
@@ -148,7 +148,7 @@ export default async function ArticlePage({
     <div className="relative">
       {/* Article header */}
       <div className="relative bg-muted border-border border-b overflow-hidden">
-        <div className="dot-grid absolute inset-0" aria-hidden="true" />
+        <div className="absolute inset-0 dot-grid" aria-hidden="true" />
         <div
           className="absolute inset-0 pointer-events-none"
           aria-hidden="true"
@@ -163,7 +163,7 @@ export default async function ArticlePage({
               {/* Back link */}
               <Link
                 href="/articles"
-                className="group inline-flex items-center gap-2 mb-10 font-mono text-xs uppercase tracking-wider text-muted-foreground hover:text-foreground transition-colors"
+                className="group inline-flex items-center gap-2 mb-10 font-mono text-muted-foreground hover:text-foreground text-xs uppercase tracking-wider transition-colors"
               >
                 <span className="transition-transform group-hover:-translate-x-0.5">
                   ←
@@ -184,7 +184,7 @@ export default async function ArticlePage({
                     <Badge
                       key={tag}
                       variant="outline"
-                      className="bg-primary/8 border-primary/20 text-primary font-sans font-medium text-xs uppercase tracking-wide"
+                      className="bg-primary/8 border-primary/20 font-sans font-medium text-primary text-xs uppercase tracking-wide"
                     >
                       {tag}
                     </Badge>
@@ -194,7 +194,7 @@ export default async function ArticlePage({
 
               {/* Title */}
               <ViewTransition name={`article-title-${slug}`}>
-                <h1 className="mb-5 font-display font-medium text-4xl sm:text-5xl leading-[1.08] tracking-tight text-balance">
+                <h1 className="mb-5 font-display font-medium text-4xl sm:text-5xl text-balance leading-[1.08] tracking-tight">
                   {frontmatter.title}
                 </h1>
               </ViewTransition>
@@ -220,7 +220,9 @@ export default async function ArticlePage({
                   <time>{date}</time>
                 </ViewTransition>
                 <span className="text-border">·</span>
-                <span className="font-mono text-xs bg-muted-foreground/10 px-2 py-0.5 rounded">{readingTime} min</span>
+                <span className="bg-muted-foreground/10 px-2 py-0.5 rounded font-mono text-xs">
+                  {readingTime} min
+                </span>
               </div>
             </div>
           </div>
@@ -230,7 +232,7 @@ export default async function ArticlePage({
       {/* Article body */}
       <div className={pageShellClass}>
         <div className={articleGridClass}>
-          <article className="min-w-0 lg:max-w-none max-w-3xl lg:border-l-2 lg:border-primary/15 lg:pl-8">
+          <article className="lg:pl-8 lg:border-primary/15 lg:border-l-2 min-w-0 lg:max-w-none max-w-3xl">
             <div className="py-14 max-w-none prose-h1:text-4xl sm:prose-h1:text-5xl prose prose-lg">
               {content}
             </div>

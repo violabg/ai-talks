@@ -116,7 +116,7 @@ export default function HomePage() {
           }}
         />
 
-        <div className="relative mx-auto px-6 pt-28 sm:pt-40 pb-24 sm:pb-32 max-w-6xl">
+        <div className="relative mx-auto px-6 pt-28 sm:pt-40 pb-24 sm:pb-32 max-w-7xl">
           <div className="max-w-3xl">
             <span className="inline-flex items-center gap-2 bg-primary/8 mb-5 px-3 py-1 border border-primary/30 rounded-full font-mono font-medium text-primary text-xs uppercase tracking-[0.18em]">
               <span className="inline-block bg-primary rounded-full w-1.5 h-1.5" />
@@ -149,7 +149,7 @@ export default function HomePage() {
       </section>
 
       {/* Articles Grid */}
-      <section className="mx-auto px-6 py-20 max-w-6xl">
+      <section className="mx-auto px-6 py-20 max-w-7xl">
         <div className="flex justify-between items-end mb-6">
           <div>
             <span className="inline-flex items-center gap-2 bg-primary/8 mb-3 px-3 py-1 border border-primary/30 rounded-full font-mono font-medium text-primary text-xs uppercase tracking-[0.18em]">
@@ -206,7 +206,7 @@ export default function HomePage() {
             backgroundSize: "20px 20px",
           }}
         />
-        <div className="relative mx-auto px-6 py-20 max-w-6xl">
+        <div className="relative mx-auto px-6 py-20 max-w-7xl">
           <p className="mb-2 font-mono font-medium text-primary text-xs uppercase tracking-[0.18em]">
             Argomenti
           </p>
