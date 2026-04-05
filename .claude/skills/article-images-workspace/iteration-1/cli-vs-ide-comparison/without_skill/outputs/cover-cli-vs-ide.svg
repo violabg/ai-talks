@@ -1,0 +1,101 @@
+<svg width="800" height="450" xmlns="http://www.w3.org/2000/svg">
+  <!-- Background -->
+  <rect width="800" height="450" fill="#0f172a"/>
+
+  <!-- Left half: CLI panel -->
+  <rect x="0" y="0" width="400" height="450" fill="#1e293b"/>
+  <!-- Terminal chrome -->
+  <rect x="20" y="40" width="360" height="280" rx="8" fill="#0f172a" stroke="#334155" stroke-width="1.5"/>
+  <!-- Traffic lights -->
+  <circle cx="44" cy="58" r="6" fill="#ef4444"/>
+  <circle cx="62" cy="58" r="6" fill="#f59e0b"/>
+  <circle cx="80" cy="58" r="6" fill="#22c55e"/>
+  <!-- Title bar text -->
+  <text x="200" y="62" text-anchor="middle" font-family="monospace" font-size="11" fill="#64748b">bash — 80×24</text>
+  <!-- Separator -->
+  <line x1="20" y1="72" x2="380" y2="72" stroke="#334155" stroke-width="1"/>
+  <!-- Terminal content -->
+  <text x="36" y="98" font-family="monospace" font-size="12" fill="#22c55e">$ claude "scan all TS files for unused exports"</text>
+  <text x="36" y="118" font-family="monospace" font-size="11" fill="#94a3b8">Scanning 342 files...</text>
+  <text x="36" y="136" font-family="monospace" font-size="11" fill="#94a3b8">Found 12 unused exports in 8 files</text>
+  <text x="36" y="154" font-family="monospace" font-size="11" fill="#64748b">  src/utils/format.ts:14  — formatDate</text>
+  <text x="36" y="170" font-family="monospace" font-size="11" fill="#64748b">  src/utils/parse.ts:8   — parseRaw</text>
+  <text x="36" y="186" font-family="monospace" font-size="11" fill="#64748b">  src/api/users.ts:22   — internalFetch</text>
+  <text x="36" y="204" font-family="monospace" font-size="11" fill="#94a3b8">Remove all? [y/N]</text>
+  <text x="36" y="222" font-family="monospace" font-size="12" fill="#22c55e">$ <text fill="#e2e8f0">y</text></text>
+  <!-- Cursor blink -->
+  <rect x="50" y="226" width="8" height="14" fill="#22c55e" opacity="0.9"/>
+
+  <!-- CLI label -->
+  <text x="200" y="370" text-anchor="middle" font-family="sans-serif" font-size="22" font-weight="bold" fill="#22c55e">CLI AI</text>
+  <text x="200" y="396" text-anchor="middle" font-family="sans-serif" font-size="13" fill="#64748b">automazione · repo-wide · pipeline</text>
+
+  <!-- Divider -->
+  <line x1="400" y1="0" x2="400" y2="450" stroke="#334155" stroke-width="2"/>
+
+  <!-- Right half: IDE panel -->
+  <rect x="400" y="0" width="400" height="450" fill="#1e293b"/>
+  <!-- IDE chrome -->
+  <rect x="420" y="40" width="360" height="280" rx="8" fill="#0f172a" stroke="#334155" stroke-width="1.5"/>
+  <!-- IDE tab bar -->
+  <rect x="420" y="40" width="360" height="28" rx="8" fill="#1e293b"/>
+  <rect x="420" y="54" width="360" height="14" fill="#1e293b"/>
+  <!-- Active tab -->
+  <rect x="432" y="43" width="110" height="22" rx="4" fill="#0f172a"/>
+  <text x="487" y="58" text-anchor="middle" font-family="monospace" font-size="11" fill="#94a3b8">UserCard.tsx</text>
+  <rect x="548" y="43" width="90" height="22" rx="4" fill="none"/>
+  <text x="593" y="58" text-anchor="middle" font-family="monospace" font-size="11" fill="#475569">api/users.ts</text>
+  <!-- Separator -->
+  <line x1="420" y1="68" x2="780" y2="68" stroke="#334155" stroke-width="1"/>
+  <!-- Code lines with syntax highlighting -->
+  <text x="436" y="90" font-family="monospace" font-size="11" fill="#64748b">1  </text>
+  <text x="458" y="90" font-family="monospace" font-size="11" fill="#818cf8">import </text>
+  <text x="504" y="90" font-family="monospace" font-size="11" fill="#e2e8f0">React </text>
+  <text x="537" y="90" font-family="monospace" font-size="11" fill="#818cf8">from </text>
+  <text x="567" y="90" font-family="monospace" font-size="11" fill="#86efac">'react'</text>
+  <text x="436" y="108" font-family="monospace" font-size="11" fill="#64748b">2  </text>
+  <text x="436" y="126" font-family="monospace" font-size="11" fill="#64748b">3  </text>
+  <text x="458" y="126" font-family="monospace" font-size="11" fill="#818cf8">interface </text>
+  <text x="524" y="126" font-family="monospace" font-size="11" fill="#7dd3fc">Props </text>
+  <text x="560" y="126" font-family="monospace" font-size="11" fill="#e2e8f0">{ user: </text>
+  <text x="604" y="126" font-family="monospace" font-size="11" fill="#7dd3fc">User </text>
+  <text x="630" y="126" font-family="monospace" font-size="11" fill="#e2e8f0">}</text>
+  <text x="436" y="144" font-family="monospace" font-size="11" fill="#64748b">4  </text>
+  <text x="458" y="144" font-family="monospace" font-size="11" fill="#818cf8">export </text>
+  <text x="500" y="144" font-family="monospace" font-size="11" fill="#818cf8">function </text>
+  <text x="554" y="144" font-family="monospace" font-size="11" fill="#fde68a">UserCard</text>
+  <text x="606" y="144" font-family="monospace" font-size="11" fill="#e2e8f0">({ user }: </text>
+  <text x="665" y="144" font-family="monospace" font-size="11" fill="#7dd3fc">Props</text>
+  <text x="695" y="144" font-family="monospace" font-size="11" fill="#e2e8f0">) {</text>
+  <!-- Error squiggle line -->
+  <text x="436" y="162" font-family="monospace" font-size="11" fill="#64748b">5  </text>
+  <text x="458" y="162" font-family="monospace" font-size="11" fill="#818cf8">  return </text>
+  <text x="506" y="162" font-family="monospace" font-size="11" fill="#e2e8f0">&lt;div className=</text>
+  <text x="614" y="162" font-family="monospace" font-size="11" fill="#86efac">"card"</text>
+  <text x="652" y="162" font-family="monospace" font-size="11" fill="#e2e8f0">&gt;</text>
+  <!-- Squiggly underline for error indication -->
+  <path d="M458,165 Q464,168 470,165 Q476,162 482,165 Q488,168 494,165 Q500,162 506,165" stroke="#f87171" stroke-width="1.5" fill="none"/>
+  <text x="436" y="180" font-family="monospace" font-size="11" fill="#64748b">6  </text>
+  <text x="458" y="180" font-family="monospace" font-size="11" fill="#e2e8f0">    &lt;</text>
+  <text x="470" y="180" font-family="monospace" font-size="11" fill="#7dd3fc">span</text>
+  <text x="494" y="180" font-family="monospace" font-size="11" fill="#e2e8f0">&gt;{user.name}&lt;/</text>
+  <text x="578" y="180" font-family="monospace" font-size="11" fill="#7dd3fc">span</text>
+  <text x="602" y="180" font-family="monospace" font-size="11" fill="#e2e8f0">&gt;</text>
+  <!-- AI inline suggestion -->
+  <rect x="430" y="192" width="330" height="50" rx="4" fill="#1d2d3e" stroke="#3b82f6" stroke-width="1" opacity="0.9"/>
+  <text x="444" y="208" font-family="sans-serif" font-size="10" fill="#60a5fa">AI suggestion</text>
+  <text x="444" y="224" font-family="monospace" font-size="10" fill="#94a3b8">Missing key prop. Add key={user.id} to fix.</text>
+  <text x="444" y="238" font-family="monospace" font-size="10" fill="#475569">Tab to accept  ·  Esc to dismiss</text>
+
+  <!-- IDE label -->
+  <text x="600" y="370" text-anchor="middle" font-family="sans-serif" font-size="22" font-weight="bold" fill="#60a5fa">IDE AI</text>
+  <text x="600" y="396" text-anchor="middle" font-family="sans-serif" font-size="13" fill="#64748b">contesto locale · refactor · debug</text>
+
+  <!-- Central VS badge -->
+  <circle cx="400" cy="225" r="28" fill="#0f172a" stroke="#334155" stroke-width="2"/>
+  <text x="400" y="231" text-anchor="middle" font-family="sans-serif" font-size="16" font-weight="bold" fill="#94a3b8">vs</text>
+
+  <!-- Bottom title bar -->
+  <rect x="0" y="418" width="800" height="32" fill="#0f172a"/>
+  <text x="400" y="438" text-anchor="middle" font-family="sans-serif" font-size="13" fill="#475569">CLI AI vs IDE AI — quale superficie scegliere per il tuo workflow</text>
+</svg>

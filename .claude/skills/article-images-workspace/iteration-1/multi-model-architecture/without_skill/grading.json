@@ -1,0 +1,13 @@
+{
+  "eval_id": 2,
+  "eval_name": "multi-model-architecture",
+  "configuration": "without_skill",
+  "expectations": [
+    {"text": "A cover SVG file exists for the multi-model article", "passed": true, "evidence": "cover.svg found (generic naming, not slug-based)"},
+    {"text": "At least one architecture/flow diagram SVG is generated", "passed": true, "evidence": "4 SVGs: cover + fleet + workflow + adversarial"},
+    {"text": "Cover SVG has width=\"800\" height=\"450\"", "passed": false, "evidence": "0 SVGs with 800x450 — used different dimensions"},
+    {"text": "article-modified.mdx exists", "passed": true, "evidence": "article-modified.mdx present"},
+    {"text": "article-modified.mdx has coverImage field in frontmatter", "passed": true, "evidence": "coverImage field present"},
+    {"text": "Multiple SVG files generated (cover + at least one diagram)", "passed": true, "evidence": "4 SVG files generated"}
+  ]
+}

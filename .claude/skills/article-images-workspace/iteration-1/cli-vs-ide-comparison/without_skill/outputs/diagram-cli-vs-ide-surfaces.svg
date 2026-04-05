@@ -1,0 +1,83 @@
+<svg width="800" height="420" xmlns="http://www.w3.org/2000/svg">
+  <!-- Background -->
+  <rect width="800" height="420" fill="#f8fafc"/>
+
+  <!-- Title -->
+  <text x="400" y="36" text-anchor="middle" font-family="sans-serif" font-size="17" font-weight="bold" fill="#1e293b">Le due superfici operative a confronto</text>
+
+  <!-- === CLI Column === -->
+  <rect x="40" y="60" width="330" height="310" rx="10" fill="#f0fdf4" stroke="#86efac" stroke-width="2"/>
+
+  <!-- CLI Header -->
+  <rect x="40" y="60" width="330" height="44" rx="10" fill="#16a34a"/>
+  <rect x="40" y="90" width="330" height="14" rx="0" fill="#16a34a"/>
+  <text x="205" y="88" text-anchor="middle" font-family="monospace" font-size="15" font-weight="bold" fill="#ffffff">CLI AI</text>
+
+  <!-- CLI Tool examples -->
+  <text x="68" y="128" font-family="sans-serif" font-size="11" fill="#166534" font-weight="bold">Strumenti tipici</text>
+  <rect x="60" y="135" width="90" height="22" rx="4" fill="#dcfce7" stroke="#86efac" stroke-width="1"/>
+  <text x="105" y="150" text-anchor="middle" font-family="monospace" font-size="11" fill="#166534">Claude Code</text>
+  <rect x="158" y="135" width="76" height="22" rx="4" fill="#dcfce7" stroke="#86efac" stroke-width="1"/>
+  <text x="196" y="150" text-anchor="middle" font-family="monospace" font-size="11" fill="#166534">Codex CLI</text>
+  <rect x="242" y="135" width="108" height="22" rx="4" fill="#dcfce7" stroke="#86efac" stroke-width="1"/>
+  <text x="296" y="150" text-anchor="middle" font-family="monospace" font-size="11" fill="#166534">Copilot CLI</text>
+
+  <!-- CLI Context -->
+  <text x="68" y="180" font-family="sans-serif" font-size="11" fill="#166534" font-weight="bold">Contesto naturale</text>
+  <!-- Context items with icons -->
+  <rect x="60" y="188" width="295" height="62" rx="6" fill="#ffffff" stroke="#bbf7d0" stroke-width="1"/>
+  <text x="74" y="205" font-family="sans-serif" font-size="12" fill="#15803d">⌥  Shell, script, processi</text>
+  <text x="74" y="222" font-family="sans-serif" font-size="12" fill="#15803d">⌥  Repository e git history</text>
+  <text x="74" y="239" font-family="sans-serif" font-size="12" fill="#15803d">⌥  Output testuale da tool</text>
+
+  <!-- CLI Strengths -->
+  <text x="68" y="272" font-family="sans-serif" font-size="11" fill="#166534" font-weight="bold">Punto di forza</text>
+  <rect x="60" y="280" width="295" height="50" rx="6" fill="#ffffff" stroke="#bbf7d0" stroke-width="1"/>
+  <text x="74" y="298" font-family="sans-serif" font-size="12" fill="#15803d">Automazione e ripetibilità</text>
+  <text x="74" y="316" font-family="sans-serif" font-size="12" fill="#15803d">Pipeline scriptabili, batch editing</text>
+
+  <!-- CLI Risk -->
+  <rect x="60" y="340" width="295" height="24" rx="6" fill="#fef2f2" stroke="#fca5a5" stroke-width="1"/>
+  <text x="205" y="356" text-anchor="middle" font-family="sans-serif" font-size="11" fill="#dc2626">Rischio: perdere il contesto locale</text>
+
+  <!-- === IDE Column === -->
+  <rect x="430" y="60" width="330" height="310" rx="10" fill="#eff6ff" stroke="#93c5fd" stroke-width="2"/>
+
+  <!-- IDE Header -->
+  <rect x="430" y="60" width="330" height="44" rx="10" fill="#2563eb"/>
+  <rect x="430" y="90" width="330" height="14" rx="0" fill="#2563eb"/>
+  <text x="595" y="88" text-anchor="middle" font-family="monospace" font-size="15" font-weight="bold" fill="#ffffff">IDE AI</text>
+
+  <!-- IDE Tool examples -->
+  <text x="458" y="128" font-family="sans-serif" font-size="11" fill="#1e40af" font-weight="bold">Strumenti tipici</text>
+  <rect x="450" y="135" width="66" height="22" rx="4" fill="#dbeafe" stroke="#93c5fd" stroke-width="1"/>
+  <text x="483" y="150" text-anchor="middle" font-family="monospace" font-size="11" fill="#1e40af">Cursor</text>
+  <rect x="524" y="135" width="98" height="22" rx="4" fill="#dbeafe" stroke="#93c5fd" stroke-width="1"/>
+  <text x="573" y="150" text-anchor="middle" font-family="monospace" font-size="11" fill="#1e40af">Antigravity</text>
+  <rect x="630" y="135" width="110" height="22" rx="4" fill="#dbeafe" stroke="#93c5fd" stroke-width="1"/>
+  <text x="685" y="150" text-anchor="middle" font-family="monospace" font-size="11" fill="#1e40af">VSCode+Copilot</text>
+
+  <!-- IDE Context -->
+  <text x="458" y="180" font-family="sans-serif" font-size="11" fill="#1e40af" font-weight="bold">Contesto naturale</text>
+  <rect x="450" y="188" width="295" height="62" rx="6" fill="#ffffff" stroke="#bfdbfe" stroke-width="1"/>
+  <text x="464" y="205" font-family="sans-serif" font-size="12" fill="#1d4ed8">⌥  File aperto e selezione corrente</text>
+  <text x="464" y="222" font-family="sans-serif" font-size="12" fill="#1d4ed8">⌥  Simboli, errori, navigazione</text>
+  <text x="464" y="239" font-family="sans-serif" font-size="12" fill="#1d4ed8">⌥  Diff visivi e diagnostica inline</text>
+
+  <!-- IDE Strengths -->
+  <text x="458" y="272" font-family="sans-serif" font-size="11" fill="#1e40af" font-weight="bold">Punto di forza</text>
+  <rect x="450" y="280" width="295" height="50" rx="6" fill="#ffffff" stroke="#bfdbfe" stroke-width="1"/>
+  <text x="464" y="298" font-family="sans-serif" font-size="12" fill="#1d4ed8">Comprensione locale e iterazione rapida</text>
+  <text x="464" y="316" font-family="sans-serif" font-size="12" fill="#1d4ed8">Refactor guidato, review mirata</text>
+
+  <!-- IDE Risk -->
+  <rect x="450" y="340" width="295" height="24" rx="6" fill="#fef2f2" stroke="#fca5a5" stroke-width="1"/>
+  <text x="597" y="356" text-anchor="middle" font-family="sans-serif" font-size="11" fill="#dc2626">Rischio: perdere la vista d'insieme</text>
+
+  <!-- VS separator -->
+  <circle cx="400" cy="215" r="24" fill="#1e293b"/>
+  <text x="400" y="221" text-anchor="middle" font-family="sans-serif" font-size="14" font-weight="bold" fill="#f8fafc">vs</text>
+
+  <!-- Bottom caption -->
+  <text x="400" y="400" text-anchor="middle" font-family="sans-serif" font-size="12" fill="#94a3b8">La scelta dipende dalla superficie operativa richiesta dal task, non dal modello AI.</text>
+</svg>

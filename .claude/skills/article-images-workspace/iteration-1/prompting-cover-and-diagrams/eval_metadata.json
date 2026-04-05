@@ -1,0 +1,6 @@
+{
+  "eval_id": 0,
+  "eval_name": "prompting-cover-and-diagrams",
+  "prompt": "Generate images for content/articles/prompting-e-workflow.mdx — create a cover/poster SVG for the article card and any inline diagrams that would genuinely help readers understand the prompting concepts.",
+  "assertions": []
+}

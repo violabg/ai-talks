@@ -23,6 +23,8 @@ Un prompt per un agente di coding non è una richiesta generica. È più simile 
 
 ### I quattro elementi fondamentali
 
+![I quattro elementi di un prompt efficace: Contesto, Obiettivo, Vincoli e Criterio di successo convergono per eliminare ogni ambiguità](/images/articles/prompting-e-workflow-prompt-anatomy.svg)
+
 ```
 [CONTESTO]
 Stai lavorando su un'API REST in Express.js. Il file principale è src/routes/users.ts.
@@ -42,8 +44,6 @@ I test esistenti passano ancora. Il nuovo test per GET /users/:id passa.
 ```
 
 Senza questi quattro elementi, l'agente riempie i buchi con assunzioni — spesso sbagliate.
-
-![I quattro elementi fondamentali di un prompt efficace: contesto, obiettivo, vincoli e criterio di successo convergono verso un output prevedibile](/images/articles/prompting-e-workflow-anatomy.svg)
 
 ### Contesto implicito vs. esplicito
 
@@ -160,7 +160,7 @@ Segnala ogni discrepanza e proponi correzioni."
 
 Ogni step produce un artefatto verificabile: RESEARCH.md, PLAN.md, codice, report di review. Questo rende il workflow **ispezionabile e correggibile** — puoi interrompere dopo ogni step, controllare l'output, e procedere o correggere.
 
-![Pipeline multi-agente con quattro step — Research, Planning, Implementation, Review — con checkpoint umano tra pianificazione e implementazione](/images/articles/prompting-e-workflow-pipeline.svg)
+![Pipeline multi-agente: Research → Planning (con human checkpoint) → Implementation → Review, con context isolation tra gli step](/images/articles/prompting-e-workflow-multi-agent.svg)
 
 ### Orchestrazione con checkpoint umani
 
@@ -216,7 +216,7 @@ Non procedere finché tutti i test non passano.
 
 Questo loop — modifica → test → correggi — è il cuore di qualsiasi workflow di coding con agenti AI. Senza di esso, gli errori si accumulano e il costo di correzione cresce esponenzialmente.
 
-![Ciclo di feedback: l'agente modifica il codice, esegue i test, e se falliscono corregge e ripete — tre oracoli di verifica: test, TypeScript, lint](/images/articles/prompting-e-workflow-feedback.svg)
+![Il ciclo modifica → test → correggi: il segnale binario pass/fail guida l'agente senza ambiguità](/images/articles/prompting-e-workflow-feedback-loop.svg)
 
 ### TypeScript come feedback in tempo reale
 

@@ -1,0 +1,77 @@
+<svg width="800" height="380" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <marker id="arrowGray" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto">
+      <polygon points="0 0, 8 3, 0 6" fill="#94a3b8"/>
+    </marker>
+  </defs>
+
+  <!-- Background -->
+  <rect width="800" height="380" fill="#f8fafc"/>
+
+  <!-- Title -->
+  <text x="400" y="38" text-anchor="middle" font-family="sans-serif" font-size="17" fill="#1e293b" font-weight="700">Workflow di orchestrazione: 4 fasi</text>
+  <text x="400" y="58" text-anchor="middle" font-family="sans-serif" font-size="12" fill="#64748b">Un piano strutturato riduce le allucinazioni e aumenta la coerenza del risultato</text>
+
+  <!-- Phase 1: Plan -->
+  <rect x="30" y="90" width="160" height="200" rx="12" fill="#f5f3ff" stroke="#8b5cf6" stroke-width="2"/>
+  <!-- Phase number circle -->
+  <circle cx="110" cy="120" r="20" fill="#8b5cf6"/>
+  <text x="110" y="126" text-anchor="middle" font-family="sans-serif" font-size="16" fill="white" font-weight="700">1</text>
+  <text x="110" y="162" text-anchor="middle" font-family="sans-serif" font-size="15" fill="#6d28d9" font-weight="700">Plan</text>
+  <text x="110" y="185" text-anchor="middle" font-family="sans-serif" font-size="11" fill="#7c3aed">Sonnet produce</text>
+  <text x="110" y="200" text-anchor="middle" font-family="sans-serif" font-size="11" fill="#7c3aed">un piano d'azione</text>
+  <text x="110" y="222" text-anchor="middle" font-family="sans-serif" font-size="10" fill="#a78bfa">ordinato e strutturato</text>
+  <!-- Model tag -->
+  <rect x="62" y="255" width="96" height="22" rx="11" fill="#ede9fe" stroke="#8b5cf6" stroke-width="1"/>
+  <text x="110" y="270" text-anchor="middle" font-family="monospace" font-size="10" fill="#6d28d9">Claude Sonnet</text>
+
+  <!-- Arrow 1→2 -->
+  <line x1="190" y1="190" x2="225" y2="190" stroke="#94a3b8" stroke-width="1.5" marker-end="url(#arrowGray)"/>
+
+  <!-- Phase 2: Parallelize -->
+  <rect x="230" y="90" width="160" height="200" rx="12" fill="#f0f9ff" stroke="#0ea5e9" stroke-width="2"/>
+  <circle cx="310" cy="120" r="20" fill="#0ea5e9"/>
+  <text x="310" y="126" text-anchor="middle" font-family="sans-serif" font-size="16" fill="white" font-weight="700">2</text>
+  <text x="310" y="162" text-anchor="middle" font-family="sans-serif" font-size="15" fill="#0369a1" font-weight="700">Parallelize</text>
+  <text x="310" y="185" text-anchor="middle" font-family="sans-serif" font-size="11" fill="#0284c7">I task indipendenti</text>
+  <text x="310" y="200" text-anchor="middle" font-family="sans-serif" font-size="11" fill="#0284c7">vengono eseguiti</text>
+  <text x="310" y="222" text-anchor="middle" font-family="sans-serif" font-size="10" fill="#38bdf8">contemporaneamente</text>
+  <!-- Model tag -->
+  <rect x="262" y="255" width="96" height="22" rx="11" fill="#e0f2fe" stroke="#0ea5e9" stroke-width="1"/>
+  <text x="310" y="270" text-anchor="middle" font-family="monospace" font-size="10" fill="#0369a1">Fleet /agenti</text>
+
+  <!-- Arrow 2→3 -->
+  <line x1="390" y1="190" x2="425" y2="190" stroke="#94a3b8" stroke-width="1.5" marker-end="url(#arrowGray)"/>
+
+  <!-- Phase 3: Delegate -->
+  <rect x="430" y="90" width="160" height="200" rx="12" fill="#fff7ed" stroke="#f59e0b" stroke-width="2"/>
+  <circle cx="510" cy="120" r="20" fill="#f59e0b"/>
+  <text x="510" y="126" text-anchor="middle" font-family="sans-serif" font-size="16" fill="white" font-weight="700">3</text>
+  <text x="510" y="162" text-anchor="middle" font-family="sans-serif" font-size="15" fill="#92400e" font-weight="700">Delegate</text>
+  <text x="510" y="185" text-anchor="middle" font-family="sans-serif" font-size="11" fill="#b45309">I prompt vanno ai</text>
+  <text x="510" y="200" text-anchor="middle" font-family="sans-serif" font-size="11" fill="#b45309">modelli specializzati</text>
+  <text x="510" y="222" text-anchor="middle" font-family="sans-serif" font-size="10" fill="#fbbf24">per ogni task specifico</text>
+  <!-- Model tag -->
+  <rect x="462" y="255" width="96" height="22" rx="11" fill="#fef3c7" stroke="#f59e0b" stroke-width="1"/>
+  <text x="510" y="270" text-anchor="middle" font-family="monospace" font-size="10" fill="#92400e">GPT-4 / Opus</text>
+
+  <!-- Arrow 3→4 -->
+  <line x1="590" y1="190" x2="625" y2="190" stroke="#94a3b8" stroke-width="1.5" marker-end="url(#arrowGray)"/>
+
+  <!-- Phase 4: Verify -->
+  <rect x="630" y="90" width="140" height="200" rx="12" fill="#f0fdf4" stroke="#10b981" stroke-width="2"/>
+  <circle cx="700" cy="120" r="20" fill="#10b981"/>
+  <text x="700" y="126" text-anchor="middle" font-family="sans-serif" font-size="16" fill="white" font-weight="700">4</text>
+  <text x="700" y="162" text-anchor="middle" font-family="sans-serif" font-size="15" fill="#065f46" font-weight="700">Verify</text>
+  <text x="700" y="185" text-anchor="middle" font-family="sans-serif" font-size="11" fill="#059669">Un agente verifica</text>
+  <text x="700" y="200" text-anchor="middle" font-family="sans-serif" font-size="11" fill="#059669">la coerenza</text>
+  <text x="700" y="222" text-anchor="middle" font-family="sans-serif" font-size="10" fill="#34d399">del lavoro finale</text>
+  <!-- Model tag -->
+  <rect x="652" y="255" width="96" height="22" rx="11" fill="#dcfce7" stroke="#10b981" stroke-width="1"/>
+  <text x="700" y="270" text-anchor="middle" font-family="monospace" font-size="10" fill="#065f46">Opus / revisore</text>
+
+  <!-- Bottom insight box -->
+  <rect x="30" y="318" width="740" height="46" rx="8" fill="#f1f5f9" stroke="#e2e8f0" stroke-width="1.5"/>
+  <text x="400" y="337" text-anchor="middle" font-family="sans-serif" font-size="11" fill="#475569" font-weight="600">Perché funziona:</text>
+  <text x="400" y="355" text-anchor="middle" font-family="sans-serif" font-size="11" fill="#64748b">Il piano precedente fornisce un contesto strutturale — i token generati sono "ancorati" alla struttura, riducendo le allucinazioni</text>
+</svg>

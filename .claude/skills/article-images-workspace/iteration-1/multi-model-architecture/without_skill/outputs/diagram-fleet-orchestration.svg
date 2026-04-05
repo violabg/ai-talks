@@ -1,0 +1,103 @@
+<svg width="800" height="500" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <marker id="arrowBlue" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto">
+      <polygon points="0 0, 8 3, 0 6" fill="#0ea5e9"/>
+    </marker>
+    <marker id="arrowPurple" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto">
+      <polygon points="0 0, 8 3, 0 6" fill="#8b5cf6"/>
+    </marker>
+    <marker id="arrowGreen" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto">
+      <polygon points="0 0, 8 3, 0 6" fill="#10b981"/>
+    </marker>
+    <marker id="arrowAmber" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto">
+      <polygon points="0 0, 8 3, 0 6" fill="#f59e0b"/>
+    </marker>
+    <marker id="arrowBack" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto">
+      <polygon points="0 0, 8 3, 0 6" fill="#475569"/>
+    </marker>
+  </defs>
+
+  <!-- Background -->
+  <rect width="800" height="500" fill="#f8fafc"/>
+
+  <!-- Title -->
+  <text x="400" y="38" text-anchor="middle" font-family="sans-serif" font-size="17" fill="#1e293b" font-weight="700">Fleet: orchestrazione con sub-agenti paralleli</text>
+  <text x="400" y="60" text-anchor="middle" font-family="sans-serif" font-size="12" fill="#64748b">Il comando /fleet distribuisce i task ai modelli più adatti, in parallelo</text>
+
+  <!-- User request box -->
+  <rect x="30" y="90" width="140" height="60" rx="8" fill="#e2e8f0" stroke="#94a3b8" stroke-width="1.5"/>
+  <text x="100" y="116" text-anchor="middle" font-family="sans-serif" font-size="12" fill="#334155" font-weight="600">Richiesta</text>
+  <text x="100" y="135" text-anchor="middle" font-family="sans-serif" font-size="11" fill="#475569">utente</text>
+
+  <!-- Arrow: user → CLI -->
+  <line x1="170" y1="120" x2="215" y2="120" stroke="#94a3b8" stroke-width="1.5" marker-end="url(#arrowBack)"/>
+
+  <!-- CLI / Fleet orchestrator -->
+  <rect x="220" y="75" width="160" height="90" rx="10" fill="#1e293b" stroke="#6366f1" stroke-width="2"/>
+  <text x="300" y="108" text-anchor="middle" font-family="monospace" font-size="13" fill="#a5b4fc" font-weight="700">GitHub Copilot</text>
+  <text x="300" y="127" text-anchor="middle" font-family="monospace" font-size="13" fill="#a5b4fc" font-weight="700">CLI /fleet</text>
+  <text x="300" y="148" text-anchor="middle" font-family="monospace" font-size="10" fill="#6366f1">analizza · delega · parallelizza</text>
+
+  <!-- Parallel label -->
+  <text x="460" y="85" text-anchor="middle" font-family="sans-serif" font-size="11" fill="#64748b" font-style="italic">task parallelizzati</text>
+  <line x1="380" y1="90" x2="540" y2="90" stroke="#e2e8f0" stroke-width="1" stroke-dasharray="4,3"/>
+
+  <!-- Arrow: CLI → agents (3 branches) -->
+  <!-- Top branch -->
+  <path d="M 380 100 Q 420 100 425 145" fill="none" stroke="#8b5cf6" stroke-width="1.5" marker-end="url(#arrowPurple)" stroke-dasharray="5,3"/>
+  <!-- Middle branch -->
+  <line x1="380" y1="120" x2="430" y2="240" stroke="#0ea5e9" stroke-width="1.5" marker-end="url(#arrowBlue)" stroke-dasharray="5,3"/>
+  <!-- Bottom branch -->
+  <path d="M 380 135 Q 420 135 425 330" fill="none" stroke="#10b981" stroke-width="1.5" marker-end="url(#arrowGreen)" stroke-dasharray="5,3"/>
+  <!-- Extra branch for Explore -->
+  <path d="M 380 110 Q 415 110 425 430" fill="none" stroke="#f59e0b" stroke-width="1.5" marker-end="url(#arrowAmber)" stroke-dasharray="5,3"/>
+
+  <!-- Sub-agent 1: Sonnet (planning) -->
+  <rect x="430" y="120" width="150" height="70" rx="8" fill="#f5f3ff" stroke="#8b5cf6" stroke-width="1.5"/>
+  <text x="505" y="145" text-anchor="middle" font-family="monospace" font-size="12" fill="#6d28d9" font-weight="700">Claude Sonnet</text>
+  <text x="505" y="162" text-anchor="middle" font-family="sans-serif" font-size="11" fill="#7c3aed">planning &amp; struttura</text>
+  <text x="505" y="178" text-anchor="middle" font-family="monospace" font-size="10" fill="#8b5cf6">sub-agent #1</text>
+
+  <!-- Sub-agent 2: GPT-4 (coding) -->
+  <rect x="430" y="215" width="150" height="70" rx="8" fill="#f0f9ff" stroke="#0ea5e9" stroke-width="1.5"/>
+  <text x="505" y="240" text-anchor="middle" font-family="monospace" font-size="12" fill="#0369a1" font-weight="700">GPT-4</text>
+  <text x="505" y="257" text-anchor="middle" font-family="sans-serif" font-size="11" fill="#0284c7">coding &amp; review</text>
+  <text x="505" y="273" text-anchor="middle" font-family="monospace" font-size="10" fill="#0ea5e9">sub-agent #2</text>
+
+  <!-- Sub-agent 3: Opus (architecture) -->
+  <rect x="430" y="310" width="150" height="70" rx="8" fill="#f0fdf4" stroke="#10b981" stroke-width="1.5"/>
+  <text x="505" y="335" text-anchor="middle" font-family="monospace" font-size="12" fill="#065f46" font-weight="700">Claude Opus</text>
+  <text x="505" y="352" text-anchor="middle" font-family="sans-serif" font-size="11" fill="#059669">architettura &amp; design</text>
+  <text x="505" y="368" text-anchor="middle" font-family="monospace" font-size="10" fill="#10b981">sub-agent #3</text>
+
+  <!-- Sub-agent 4: Haiku (explore) -->
+  <rect x="430" y="405" width="150" height="70" rx="8" fill="#fffbeb" stroke="#f59e0b" stroke-width="1.5"/>
+  <text x="505" y="430" text-anchor="middle" font-family="monospace" font-size="12" fill="#92400e" font-weight="700">Claude Haiku</text>
+  <text x="505" y="447" text-anchor="middle" font-family="sans-serif" font-size="11" fill="#b45309">esplorazione repo</text>
+  <text x="505" y="463" text-anchor="middle" font-family="monospace" font-size="10" fill="#f59e0b">agente Explore</text>
+
+  <!-- Results merge arrows → back to CLI / result -->
+  <rect x="635" y="255" width="130" height="70" rx="8" fill="#e2e8f0" stroke="#94a3b8" stroke-width="1.5"/>
+  <text x="700" y="284" text-anchor="middle" font-family="sans-serif" font-size="12" fill="#334155" font-weight="600">Risultato</text>
+  <text x="700" y="302" text-anchor="middle" font-family="sans-serif" font-size="11" fill="#475569">consolidato</text>
+  <text x="700" y="316" text-anchor="middle" font-family="sans-serif" font-size="10" fill="#64748b">verificato</text>
+
+  <!-- Arrows to result -->
+  <line x1="580" y1="155" x2="630" y2="275" stroke="#8b5cf6" stroke-width="1" opacity="0.6" marker-end="url(#arrowPurple)"/>
+  <line x1="580" y1="250" x2="630" y2="280" stroke="#0ea5e9" stroke-width="1" opacity="0.6" marker-end="url(#arrowBlue)"/>
+  <line x1="580" y1="345" x2="630" y2="300" stroke="#10b981" stroke-width="1" opacity="0.6" marker-end="url(#arrowGreen)"/>
+  <line x1="580" y1="440" x2="635" y2="310" stroke="#f59e0b" stroke-width="1" opacity="0.6" marker-end="url(#arrowAmber)"/>
+
+  <!-- Parallel execution bracket -->
+  <rect x="418" y="112" width="8" height="371" rx="4" fill="#e2e8f0"/>
+  <line x1="422" y1="112" x2="422" y2="483" stroke="#cbd5e1" stroke-width="1"/>
+
+  <!-- Legend -->
+  <text x="30" y="215" font-family="sans-serif" font-size="11" fill="#64748b" font-weight="600">Principio chiave:</text>
+  <text x="30" y="232" font-family="sans-serif" font-size="11" fill="#94a3b8">task veloce →</text>
+  <rect x="30" y="242" width="10" height="10" rx="2" fill="#fef3c7" stroke="#f59e0b" stroke-width="1"/>
+  <text x="45" y="251" font-family="sans-serif" font-size="10" fill="#64748b">modello veloce (Haiku)</text>
+  <text x="30" y="268" font-family="sans-serif" font-size="11" fill="#94a3b8">task complesso →</text>
+  <rect x="30" y="278" width="10" height="10" rx="2" fill="#f0fdf4" stroke="#10b981" stroke-width="1"/>
+  <text x="45" y="287" font-family="sans-serif" font-size="10" fill="#64748b">modello potente (Opus)</text>
+</svg>

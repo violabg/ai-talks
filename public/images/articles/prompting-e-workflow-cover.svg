@@ -1,0 +1,71 @@
+<svg width="800" height="450" xmlns="http://www.w3.org/2000/svg">
+  <rect width="800" height="450" fill="#1e293b"/>
+
+  <!-- Grid pattern background -->
+  <defs>
+    <pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse">
+      <path d="M 40 0 L 0 0 0 40" fill="none" stroke="#334155" stroke-width="0.5"/>
+    </pattern>
+    <marker id="arrow-cover" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#7c3aed"/>
+    </marker>
+    <linearGradient id="glow" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#7c3aed" stop-opacity="0.15"/>
+      <stop offset="100%" stop-color="#7c3aed" stop-opacity="0"/>
+    </linearGradient>
+  </defs>
+  <rect width="800" height="450" fill="url(#grid)"/>
+
+  <!-- Glow behind center -->
+  <ellipse cx="400" cy="210" rx="250" ry="150" fill="url(#glow)"/>
+
+  <!-- Central prompt box -->
+  <rect x="280" y="140" width="240" height="80" rx="10" fill="#1e293b" stroke="#7c3aed" stroke-width="2.5"/>
+  <text x="400" y="172" text-anchor="middle" font-family="monospace" font-size="13" fill="#c4b5fd">[CONTESTO]</text>
+  <text x="400" y="195" text-anchor="middle" font-family="monospace" font-size="11" fill="#7c3aed">[OBIETTIVO] [VINCOLI] [SUCCESSO]</text>
+
+  <!-- Agent 1 — Research (top-left) -->
+  <rect x="60" y="50" width="150" height="55" rx="8" fill="#1e293b" stroke="#94a3b8" stroke-width="1.5"/>
+  <text x="135" y="73" text-anchor="middle" font-family="sans-serif" font-size="11" fill="#94a3b8" font-weight="600">RESEARCH</text>
+  <text x="135" y="91" text-anchor="middle" font-family="sans-serif" font-size="10" fill="#64748b">Agent</text>
+
+  <!-- Agent 2 — Planning (top-right) -->
+  <rect x="590" y="50" width="150" height="55" rx="8" fill="#1e293b" stroke="#94a3b8" stroke-width="1.5"/>
+  <text x="665" y="73" text-anchor="middle" font-family="sans-serif" font-size="11" fill="#94a3b8" font-weight="600">PLANNING</text>
+  <text x="665" y="91" text-anchor="middle" font-family="sans-serif" font-size="10" fill="#64748b">Agent</text>
+
+  <!-- Agent 3 — Implementation (bottom-left) -->
+  <rect x="60" y="290" width="150" height="55" rx="8" fill="#1e293b" stroke="#94a3b8" stroke-width="1.5"/>
+  <text x="135" y="313" text-anchor="middle" font-family="sans-serif" font-size="11" fill="#94a3b8" font-weight="600">IMPLEMENT</text>
+  <text x="135" y="331" text-anchor="middle" font-family="sans-serif" font-size="10" fill="#64748b">Agent</text>
+
+  <!-- Agent 4 — Review (bottom-right) -->
+  <rect x="590" y="290" width="150" height="55" rx="8" fill="#1e293b" stroke="#94a3b8" stroke-width="1.5"/>
+  <text x="665" y="313" text-anchor="middle" font-family="sans-serif" font-size="11" fill="#94a3b8" font-weight="600">REVIEW</text>
+  <text x="665" y="331" text-anchor="middle" font-family="sans-serif" font-size="10" fill="#64748b">Agent</text>
+
+  <!-- Arrows from center to agents -->
+  <line x1="290" y1="160" x2="215" y2="100" stroke="#7c3aed" stroke-width="1.5" marker-end="url(#arrow-cover)"/>
+  <line x1="510" y1="160" x2="585" y2="100" stroke="#7c3aed" stroke-width="1.5" marker-end="url(#arrow-cover)"/>
+  <line x1="290" y1="210" x2="215" y2="300" stroke="#7c3aed" stroke-width="1.5" marker-end="url(#arrow-cover)"/>
+  <line x1="510" y1="210" x2="585" y2="300" stroke="#7c3aed" stroke-width="1.5" marker-end="url(#arrow-cover)"/>
+
+  <!-- Connecting arrows between agents (workflow order) -->
+  <line x1="210" y1="77" x2="590" y2="77" stroke="#475569" stroke-width="1" stroke-dasharray="6 4" marker-end="url(#arrow-cover)"/>
+  <line x1="665" y1="105" x2="665" y2="290" stroke="#475569" stroke-width="1" stroke-dasharray="6 4" marker-end="url(#arrow-cover)"/>
+  <line x1="590" y1="317" x2="210" y2="317" stroke="#475569" stroke-width="1" stroke-dasharray="6 4" marker-end="url(#arrow-cover)"/>
+
+  <!-- Artifacts floating between -->
+  <rect x="355" y="55" width="90" height="26" rx="13" fill="#7c3aed" fill-opacity="0.15" stroke="#7c3aed" stroke-width="1"/>
+  <text x="400" y="73" text-anchor="middle" font-family="monospace" font-size="9" fill="#c4b5fd">RESEARCH.md</text>
+
+  <rect x="695" y="165" width="75" height="26" rx="13" fill="#7c3aed" fill-opacity="0.15" stroke="#7c3aed" stroke-width="1"/>
+  <text x="732" y="183" text-anchor="middle" font-family="monospace" font-size="9" fill="#c4b5fd">PLAN.md</text>
+
+  <rect x="360" y="330" width="80" height="26" rx="13" fill="#7c3aed" fill-opacity="0.15" stroke="#7c3aed" stroke-width="1"/>
+  <text x="400" y="348" text-anchor="middle" font-family="monospace" font-size="9" fill="#c4b5fd">code + tests</text>
+
+  <!-- Title -->
+  <text x="400" y="415" text-anchor="middle" font-family="sans-serif" font-size="18" fill="#e2e8f0" font-weight="700">Prompting e Workflow</text>
+  <text x="400" y="438" text-anchor="middle" font-family="sans-serif" font-size="12" fill="#94a3b8">Orchestrare agenti per task di ingegneria</text>
+</svg>

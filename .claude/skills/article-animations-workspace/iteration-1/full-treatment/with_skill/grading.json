@@ -1,0 +1,12 @@
+{
+  "eval_id": 2,
+  "eval_name": "full-treatment",
+  "configuration": "with_skill",
+  "expectations": [
+    {"text": "mdx-animated.tsx contains \"use client\" directive", "passed": true, "evidence": "\"use client\" at top"},
+    {"text": "Uses staggerChildren for staggered list item animations", "passed": true, "evidence": "staggerChildren: 0.06 in listVariants"},
+    {"text": "Uses the variants pattern (hidden/visible) for parent-child stagger coordination", "passed": true, "evidence": "variants prop used with hidden/visible keys (3 occurrences)"},
+    {"text": "Exports animated ul/ol and li components", "passed": true, "evidence": "AnimatedUl, AnimatedOl, AnimatedLi all exported"},
+    {"text": "Uses viewport: { once: true }", "passed": true, "evidence": "once: true present 10 times"}
+  ]
+}

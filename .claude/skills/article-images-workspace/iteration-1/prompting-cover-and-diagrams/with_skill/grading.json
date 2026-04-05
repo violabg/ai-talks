@@ -1,0 +1,13 @@
+{
+  "eval_id": 0,
+  "eval_name": "prompting-cover-and-diagrams",
+  "configuration": "with_skill",
+  "expectations": [
+    {"text": "A cover SVG file exists named with the article slug (e.g. prompting-e-workflow-cover.svg)", "passed": true, "evidence": "prompting-e-workflow-cover.svg found"},
+    {"text": "Cover SVG has width=\"800\" height=\"450\" (16:9 aspect ratio)", "passed": true, "evidence": "1 SVG with 800x450 dimensions"},
+    {"text": "SVG(s) use the project's purple accent color (#7c3aed or similar)", "passed": true, "evidence": "#7c3aed appears in 4 of 4 SVG files"},
+    {"text": "article-modified.mdx file exists in outputs", "passed": true, "evidence": "article-modified.mdx present"},
+    {"text": "article-modified.mdx has coverImage field in frontmatter", "passed": true, "evidence": "coverImage: 'prompting-e-workflow-cover' in frontmatter"},
+    {"text": "article-modified.mdx contains at least one inline image reference (![) for a diagram", "passed": true, "evidence": "3 inline image references found"}
+  ]
+}

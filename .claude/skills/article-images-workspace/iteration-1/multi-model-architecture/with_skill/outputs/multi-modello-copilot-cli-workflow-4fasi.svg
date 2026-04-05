@@ -1,0 +1,70 @@
+<svg width="800" height="350" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <marker id="arrow" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#94a3b8"/>
+    </marker>
+    <marker id="arrow-primary" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#7c3aed"/>
+    </marker>
+  </defs>
+
+  <!-- Background -->
+  <rect width="800" height="350" fill="#f1f5f9"/>
+
+  <!-- Title -->
+  <text x="400" y="38" text-anchor="middle" font-family="sans-serif" font-size="16" fill="#334155" font-weight="700">Workflow di orchestrazione in 4 fasi</text>
+
+  <!-- Phase 1: Plan -->
+  <rect x="40" y="70" width="155" height="160" rx="10" fill="#ede9fe" stroke="#7c3aed" stroke-width="2"/>
+  <text x="118" y="100" text-anchor="middle" font-family="sans-serif" font-size="11" fill="#7c3aed" font-weight="700" letter-spacing="1">FASE 1</text>
+  <text x="118" y="122" text-anchor="middle" font-family="sans-serif" font-size="15" fill="#5b21b6" font-weight="700">Plan</text>
+  <line x1="60" y1="135" x2="177" y2="135" stroke="#c4b5fd" stroke-width="1"/>
+  <text x="118" y="158" text-anchor="middle" font-family="monospace" font-size="11" fill="#5b21b6">Sonnet</text>
+  <text x="118" y="178" text-anchor="middle" font-family="sans-serif" font-size="11" fill="#7c3aed">produce piano</text>
+  <text x="118" y="196" text-anchor="middle" font-family="sans-serif" font-size="11" fill="#7c3aed">d'azione ordinato</text>
+
+  <!-- Arrow 1→2 -->
+  <line x1="197" y1="150" x2="228" y2="150" stroke="#7c3aed" stroke-width="1.5" marker-end="url(#arrow-primary)"/>
+
+  <!-- Phase 2: Parallelize -->
+  <rect x="230" y="70" width="155" height="160" rx="10" fill="#e2e8f0" stroke="#94a3b8" stroke-width="1.5"/>
+  <text x="308" y="100" text-anchor="middle" font-family="sans-serif" font-size="11" fill="#64748b" font-weight="700" letter-spacing="1">FASE 2</text>
+  <text x="308" y="122" text-anchor="middle" font-family="sans-serif" font-size="15" fill="#334155" font-weight="700">Parallelize</text>
+  <line x1="248" y1="135" x2="367" y2="135" stroke="#cbd5e1" stroke-width="1"/>
+  <text x="308" y="158" text-anchor="middle" font-family="sans-serif" font-size="11" fill="#64748b">identifica task</text>
+  <text x="308" y="176" text-anchor="middle" font-family="sans-serif" font-size="11" fill="#64748b">indipendenti da</text>
+  <text x="308" y="194" text-anchor="middle" font-family="sans-serif" font-size="11" fill="#64748b">eseguire in parallelo</text>
+
+  <!-- Arrow 2→3 -->
+  <line x1="387" y1="150" x2="418" y2="150" stroke="#94a3b8" stroke-width="1.5" marker-end="url(#arrow)"/>
+
+  <!-- Phase 3: Delegate -->
+  <rect x="420" y="70" width="155" height="160" rx="10" fill="#e2e8f0" stroke="#94a3b8" stroke-width="1.5"/>
+  <text x="498" y="100" text-anchor="middle" font-family="sans-serif" font-size="11" fill="#64748b" font-weight="700" letter-spacing="1">FASE 3</text>
+  <text x="498" y="122" text-anchor="middle" font-family="sans-serif" font-size="15" fill="#334155" font-weight="700">Delegate</text>
+  <line x1="438" y1="135" x2="557" y2="135" stroke="#cbd5e1" stroke-width="1"/>
+  <text x="498" y="158" text-anchor="middle" font-family="sans-serif" font-size="11" fill="#64748b">prompt ai modelli</text>
+  <text x="498" y="176" text-anchor="middle" font-family="sans-serif" font-size="11" fill="#64748b">specializzati per</text>
+  <text x="498" y="194" text-anchor="middle" font-family="sans-serif" font-size="11" fill="#64748b">ogni sotto-task</text>
+
+  <!-- Arrow 3→4 -->
+  <line x1="577" y1="150" x2="608" y2="150" stroke="#94a3b8" stroke-width="1.5" marker-end="url(#arrow)"/>
+
+  <!-- Phase 4: Verify -->
+  <rect x="610" y="70" width="155" height="160" rx="10" fill="#e2e8f0" stroke="#94a3b8" stroke-width="1.5"/>
+  <text x="688" y="100" text-anchor="middle" font-family="sans-serif" font-size="11" fill="#64748b" font-weight="700" letter-spacing="1">FASE 4</text>
+  <text x="688" y="122" text-anchor="middle" font-family="sans-serif" font-size="15" fill="#334155" font-weight="700">Verify</text>
+  <line x1="628" y1="135" x2="747" y2="135" stroke="#cbd5e1" stroke-width="1"/>
+  <text x="688" y="158" text-anchor="middle" font-family="sans-serif" font-size="11" fill="#64748b">agente verifica</text>
+  <text x="688" y="176" text-anchor="middle" font-family="sans-serif" font-size="11" fill="#64748b">coerenza del</text>
+  <text x="688" y="194" text-anchor="middle" font-family="sans-serif" font-size="11" fill="#64748b">lavoro finale</text>
+
+  <!-- Model labels below each box -->
+  <text x="118" y="260" text-anchor="middle" font-family="monospace" font-size="10" fill="#7c3aed">→ struttura il contesto</text>
+  <text x="308" y="260" text-anchor="middle" font-family="monospace" font-size="10" fill="#64748b">→ riduce le dipendenze</text>
+  <text x="498" y="260" text-anchor="middle" font-family="monospace" font-size="10" fill="#64748b">→ modello giusto per task</text>
+  <text x="688" y="260" text-anchor="middle" font-family="monospace" font-size="10" fill="#64748b">→ riduce allucinazioni</text>
+
+  <!-- Caption -->
+  <text x="400" y="320" text-anchor="middle" font-family="sans-serif" font-size="12" fill="#64748b">Il piano (fase 1) funge da contesto strutturale per tutte le fasi successive, riducendo le allucinazioni</text>
+</svg>

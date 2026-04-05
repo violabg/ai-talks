@@ -1,0 +1,108 @@
+<svg width="800" height="480" xmlns="http://www.w3.org/2000/svg">
+  <!-- Background -->
+  <rect width="800" height="480" fill="#f8fafc"/>
+
+  <!-- Title -->
+  <text x="400" y="36" text-anchor="middle" font-family="sans-serif" font-size="17" font-weight="bold" fill="#1e293b">Quando usare CLI AI vs IDE AI</text>
+  <text x="400" y="56" text-anchor="middle" font-family="sans-serif" font-size="12" fill="#64748b">Identifica la natura del task per scegliere la superficie giusta</text>
+
+  <!-- Central question diamond -->
+  <polygon points="400,90 510,150 400,210 290,150" fill="#1e293b" stroke="#334155" stroke-width="2"/>
+  <text x="400" y="143" text-anchor="middle" font-family="sans-serif" font-size="12" fill="#f8fafc" font-weight="bold">Il task è ampio,</text>
+  <text x="400" y="161" text-anchor="middle" font-family="sans-serif" font-size="12" fill="#f8fafc" font-weight="bold">scriptabile o repo-wide?</text>
+
+  <!-- YES arrow left -->
+  <line x1="290" y1="150" x2="175" y2="150" stroke="#16a34a" stroke-width="2" marker-end="url(#arrowGreen)"/>
+  <text x="232" y="140" text-anchor="middle" font-family="sans-serif" font-size="12" fill="#16a34a" font-weight="bold">SÌ</text>
+
+  <!-- NO arrow right -->
+  <line x1="510" y1="150" x2="625" y2="150" stroke="#2563eb" stroke-width="2" marker-end="url(#arrowBlue)"/>
+  <text x="568" y="140" text-anchor="middle" font-family="sans-serif" font-size="12" fill="#2563eb" font-weight="bold">NO</text>
+
+  <!-- Arrowhead definitions -->
+  <defs>
+    <marker id="arrowGreen" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#16a34a"/>
+    </marker>
+    <marker id="arrowBlue" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#2563eb"/>
+    </marker>
+    <marker id="arrowGray" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#64748b"/>
+    </marker>
+  </defs>
+
+  <!-- CLI Box -->
+  <rect x="40" y="112" width="135" height="76" rx="8" fill="#16a34a" stroke="#15803d" stroke-width="2"/>
+  <text x="107" y="144" text-anchor="middle" font-family="sans-serif" font-size="15" font-weight="bold" fill="#ffffff">CLI AI</text>
+  <text x="107" y="164" text-anchor="middle" font-family="sans-serif" font-size="11" fill="#dcfce7">terminale, automazione</text>
+  <text x="107" y="180" text-anchor="middle" font-family="sans-serif" font-size="11" fill="#dcfce7">pipeline, batch</text>
+
+  <!-- IDE Box -->
+  <rect x="625" y="112" width="135" height="76" rx="8" fill="#2563eb" stroke="#1d4ed8" stroke-width="2"/>
+  <text x="692" y="144" text-anchor="middle" font-family="sans-serif" font-size="15" font-weight="bold" fill="#ffffff">IDE AI</text>
+  <text x="692" y="164" text-anchor="middle" font-family="sans-serif" font-size="11" fill="#dbeafe">editor, refactor</text>
+  <text x="692" y="180" text-anchor="middle" font-family="sans-serif" font-size="11" fill="#dbeafe">debug, iterazione</text>
+
+  <!-- CLI use cases arrow down -->
+  <line x1="107" y1="188" x2="107" y2="228" stroke="#16a34a" stroke-width="2" marker-end="url(#arrowGreen)"/>
+
+  <!-- IDE use cases arrow down -->
+  <line x1="692" y1="188" x2="692" y2="228" stroke="#2563eb" stroke-width="2" marker-end="url(#arrowBlue)"/>
+
+  <!-- CLI use cases box -->
+  <rect x="20" y="228" width="174" height="140" rx="8" fill="#f0fdf4" stroke="#86efac" stroke-width="1.5"/>
+  <text x="107" y="250" text-anchor="middle" font-family="sans-serif" font-size="11" fill="#166534" font-weight="bold">Casi d'uso tipici</text>
+  <text x="36" y="270" font-family="sans-serif" font-size="11" fill="#15803d">→ Scansione ampia del repo</text>
+  <text x="36" y="288" font-family="sans-serif" font-size="11" fill="#15803d">→ Loop test/lint automatici</text>
+  <text x="36" y="306" font-family="sans-serif" font-size="11" fill="#15803d">→ Scaffolding e codemod</text>
+  <text x="36" y="324" font-family="sans-serif" font-size="11" fill="#15803d">→ Workflow scriptabili</text>
+  <text x="36" y="342" font-family="sans-serif" font-size="11" fill="#15803d">→ Preparazione commit</text>
+
+  <!-- IDE use cases box -->
+  <rect x="606" y="228" width="174" height="140" rx="8" fill="#eff6ff" stroke="#93c5fd" stroke-width="1.5"/>
+  <text x="692" y="250" text-anchor="middle" font-family="sans-serif" font-size="11" fill="#1e40af" font-weight="bold">Casi d'uso tipici</text>
+  <text x="622" y="270" font-family="sans-serif" font-size="11" fill="#1d4ed8">→ Refactor guidato</text>
+  <text x="622" y="288" font-family="sans-serif" font-size="11" fill="#1d4ed8">→ Review mirata sul codice</text>
+  <text x="622" y="306" font-family="sans-serif" font-size="11" fill="#1d4ed8">→ Scrittura componenti</text>
+  <text x="622" y="324" font-family="sans-serif" font-size="11" fill="#1d4ed8">→ Debug editoriale</text>
+  <text x="622" y="342" font-family="sans-serif" font-size="11" fill="#1d4ed8">→ Ispezione diff inline</text>
+
+  <!-- Example: TypeScript convention -->
+  <rect x="195" y="228" width="220" height="58" rx="8" fill="#fef9c3" stroke="#fde047" stroke-width="1.5"/>
+  <text x="305" y="249" text-anchor="middle" font-family="sans-serif" font-size="11" fill="#713f12" font-weight="bold">Esempio: aggiornare convenzione TS</text>
+  <text x="305" y="266" text-anchor="middle" font-family="sans-serif" font-size="11" fill="#854d0e">Tanti file da toccare → CLI</text>
+  <text x="305" y="281" text-anchor="middle" font-family="sans-serif" font-size="11" fill="#854d0e">Capire un componente rotto → IDE</text>
+
+  <!-- Example: React debug -->
+  <rect x="385" y="228" width="220" height="58" rx="8" fill="#fef9c3" stroke="#fde047" stroke-width="1.5"/>
+  <text x="495" y="249" text-anchor="middle" font-family="sans-serif" font-size="11" fill="#713f12" font-weight="bold">Esempio: componente React rotto</text>
+  <text x="495" y="266" text-anchor="middle" font-family="sans-serif" font-size="11" fill="#854d0e">Navigare riferimenti → IDE</text>
+  <text x="495" y="281" text-anchor="middle" font-family="sans-serif" font-size="11" fill="#854d0e">Verifica diff e errori inline → IDE</text>
+
+  <!-- Bottom insight box -->
+  <rect x="140" y="400" width="520" height="58" rx="8" fill="#1e293b" stroke="#334155" stroke-width="1.5"/>
+  <text x="400" y="422" text-anchor="middle" font-family="sans-serif" font-size="13" font-weight="bold" fill="#f8fafc">La maturità non sta nel tool perfetto.</text>
+  <text x="400" y="444" text-anchor="middle" font-family="sans-serif" font-size="12" fill="#94a3b8">Sta nel sapere in quale fase del lavoro cambiare superficie.</text>
+
+  <!-- Arrows from example boxes to bottom -->
+  <line x1="305" y1="286" x2="305" y2="330" stroke="#d97706" stroke-width="1.5" stroke-dasharray="4,3" marker-end="url(#arrowGray)"/>
+  <line x1="495" y1="286" x2="495" y2="330" stroke="#d97706" stroke-width="1.5" stroke-dasharray="4,3" marker-end="url(#arrowGray)"/>
+
+  <!-- Converge to bottom box -->
+  <line x1="305" y1="390" x2="305" y2="400" stroke="#64748b" stroke-width="1.5" stroke-dasharray="4,3"/>
+  <line x1="495" y1="390" x2="495" y2="400" stroke="#64748b" stroke-width="1.5" stroke-dasharray="4,3"/>
+
+  <!-- "Poi" label -->
+  <text x="305" y="348" text-anchor="middle" font-family="sans-serif" font-size="11" fill="#92400e">poi passa all'IDE</text>
+  <text x="495" y="348" text-anchor="middle" font-family="sans-serif" font-size="11" fill="#1d4ed8">rimani nell'IDE</text>
+
+  <!-- Connecting boxes for "poi" labels -->
+  <rect x="228" y="335" width="155" height="50" rx="6" fill="#fff7ed" stroke="#fed7aa" stroke-width="1"/>
+  <text x="305" y="356" text-anchor="middle" font-family="sans-serif" font-size="11" fill="#9a3412">Risolvi con CLI, poi</text>
+  <text x="305" y="372" text-anchor="middle" font-family="sans-serif" font-size="11" fill="#9a3412">verifica nell'IDE</text>
+
+  <rect x="418" y="335" width="155" height="50" rx="6" fill="#eff6ff" stroke="#bfdbfe" stroke-width="1"/>
+  <text x="495" y="356" text-anchor="middle" font-family="sans-serif" font-size="11" fill="#1e40af">Usa IDE per tutto</text>
+  <text x="495" y="372" text-anchor="middle" font-family="sans-serif" font-size="11" fill="#1e40af">il ciclo locale</text>
+</svg>

@@ -1,0 +1,12 @@
+{
+  "eval_id": 1,
+  "eval_name": "cli-vs-ide-comparison",
+  "configuration": "with_skill",
+  "expectations": [
+    {"text": "A cover SVG file exists for the CLI vs IDE article", "passed": true, "evidence": "cli-vs-ide-agenti-ai-cover.svg found (slug-based naming)"},
+    {"text": "Cover SVG has width=\"800\" height=\"450\"", "passed": true, "evidence": "800x450 dimensions confirmed"},
+    {"text": "At least one comparison/diagram SVG is generated (not just the cover)", "passed": true, "evidence": "2 SVG files total: cover + cli-vs-ide-use-cases.svg"},
+    {"text": "article-modified.mdx exists with image references", "passed": true, "evidence": "article-modified.mdx present"},
+    {"text": "article-modified.mdx has coverImage field in frontmatter", "passed": true, "evidence": "coverImage: 'cli-vs-ide-agenti-ai-cover' in frontmatter"}
+  ]
+}

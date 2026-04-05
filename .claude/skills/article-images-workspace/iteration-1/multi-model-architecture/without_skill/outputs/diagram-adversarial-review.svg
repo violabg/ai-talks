@@ -1,0 +1,88 @@
+<svg width="800" height="430" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <marker id="arrDown" markerWidth="7" markerHeight="6" refX="3.5" refY="6" orient="auto">
+      <polygon points="0 0, 7 0, 3.5 6" fill="#94a3b8"/>
+    </marker>
+    <marker id="arrRight" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto">
+      <polygon points="0 0, 8 3, 0 6" fill="#94a3b8"/>
+    </marker>
+    <marker id="arrPurple" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto">
+      <polygon points="0 0, 8 3, 0 6" fill="#8b5cf6"/>
+    </marker>
+    <marker id="arrBlue" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto">
+      <polygon points="0 0, 8 3, 0 6" fill="#0ea5e9"/>
+    </marker>
+    <marker id="arrGreen" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto">
+      <polygon points="0 0, 8 3, 0 6" fill="#10b981"/>
+    </marker>
+  </defs>
+
+  <!-- Background -->
+  <rect width="800" height="430" fill="#f8fafc"/>
+
+  <!-- Title -->
+  <text x="400" y="36" text-anchor="middle" font-family="sans-serif" font-size="17" fill="#1e293b" font-weight="700">Adversarial Review: più modelli, più prospettive</text>
+  <text x="400" y="56" text-anchor="middle" font-family="sans-serif" font-size="12" fill="#64748b">Un singolo revisore ha punti ciechi. Modelli diversi ne hanno diversi.</text>
+
+  <!-- Code / Output source -->
+  <rect x="310" y="78" width="180" height="60" rx="8" fill="#1e293b" stroke="#475569" stroke-width="1.5"/>
+  <text x="400" y="104" text-anchor="middle" font-family="monospace" font-size="13" fill="#e2e8f0">codice prodotto</text>
+  <text x="400" y="122" text-anchor="middle" font-family="monospace" font-size="11" fill="#64748b">dal modello principale</text>
+
+  <!-- 3 diverging arrows down to reviewers -->
+  <!-- Left -->
+  <line x1="360" y1="138" x2="145" y2="218" stroke="#8b5cf6" stroke-width="1.5" stroke-dasharray="5,3" marker-end="url(#arrPurple)"/>
+  <!-- Center -->
+  <line x1="400" y1="138" x2="400" y2="218" stroke="#0ea5e9" stroke-width="1.5" stroke-dasharray="5,3" marker-end="url(#arrBlue)"/>
+  <!-- Right -->
+  <line x1="440" y1="138" x2="655" y2="218" stroke="#10b981" stroke-width="1.5" stroke-dasharray="5,3" marker-end="url(#arrGreen)"/>
+
+  <!-- "stesso output, revisori diversi" label -->
+  <text x="400" y="178" text-anchor="middle" font-family="sans-serif" font-size="10" fill="#94a3b8" font-style="italic">stesso output, revisori indipendenti in parallelo</text>
+
+  <!-- Reviewer 1: Sonnet -->
+  <rect x="40" y="222" width="210" height="110" rx="10" fill="#f5f3ff" stroke="#8b5cf6" stroke-width="1.5"/>
+  <text x="145" y="248" text-anchor="middle" font-family="monospace" font-size="12" fill="#6d28d9" font-weight="700">Claude Sonnet</text>
+  <text x="145" y="265" text-anchor="middle" font-family="sans-serif" font-size="10" fill="#7c3aed">reviewer #1</text>
+  <!-- Issues found -->
+  <text x="58" y="284" font-family="sans-serif" font-size="10" fill="#6d28d9">✗ logica di validazione debole</text>
+  <text x="58" y="299" font-family="sans-serif" font-size="10" fill="#6d28d9">✗ mancano i test edge case</text>
+  <text x="58" y="314" font-family="sans-serif" font-size="10" fill="#7c3aed">✓ struttura coerente</text>
+
+  <!-- Reviewer 2: GPT-4 -->
+  <rect x="295" y="222" width="210" height="110" rx="10" fill="#f0f9ff" stroke="#0ea5e9" stroke-width="1.5"/>
+  <text x="400" y="248" text-anchor="middle" font-family="monospace" font-size="12" fill="#0369a1" font-weight="700">GPT-4</text>
+  <text x="400" y="265" text-anchor="middle" font-family="sans-serif" font-size="10" fill="#0284c7">reviewer #2</text>
+  <text x="313" y="284" font-family="sans-serif" font-size="10" fill="#0369a1">✗ vulnerabilità SQL injection</text>
+  <text x="313" y="299" font-family="sans-serif" font-size="10" fill="#0369a1">✗ nessun rate limiting</text>
+  <text x="313" y="314" font-family="sans-serif" font-size="10" fill="#0284c7">✓ naming conventions ok</text>
+
+  <!-- Reviewer 3: Opus -->
+  <rect x="550" y="222" width="210" height="110" rx="10" fill="#f0fdf4" stroke="#10b981" stroke-width="1.5"/>
+  <text x="655" y="248" text-anchor="middle" font-family="monospace" font-size="12" fill="#065f46" font-weight="700">Claude Opus</text>
+  <text x="655" y="265" text-anchor="middle" font-family="sans-serif" font-size="10" fill="#059669">reviewer #3</text>
+  <text x="568" y="284" font-family="sans-serif" font-size="10" fill="#065f46">✗ architettura non scalabile</text>
+  <text x="568" y="299" font-family="sans-serif" font-size="10" fill="#065f46">✗ dipendenze circolari</text>
+  <text x="568" y="314" font-family="sans-serif" font-size="10" fill="#059669">✓ documentazione adeguata</text>
+
+  <!-- Arrows down to consolidated result -->
+  <line x1="145" y1="332" x2="320" y2="382" stroke="#8b5cf6" stroke-width="1.5" opacity="0.7" marker-end="url(#arrPurple)"/>
+  <line x1="400" y1="332" x2="400" y2="382" stroke="#0ea5e9" stroke-width="1.5" opacity="0.7" marker-end="url(#arrBlue)"/>
+  <line x1="655" y1="332" x2="480" y2="382" stroke="#10b981" stroke-width="1.5" opacity="0.7" marker-end="url(#arrGreen)"/>
+
+  <!-- Consolidated output -->
+  <rect x="225" y="385" width="350" height="34" rx="8" fill="#1e293b" stroke="#475569" stroke-width="1.5"/>
+  <text x="400" y="398" text-anchor="middle" font-family="sans-serif" font-size="10" fill="#94a3b8">lista consolidata —</text>
+  <text x="400" y="412" text-anchor="middle" font-family="sans-serif" font-size="11" fill="#e2e8f0" font-weight="600">5 problemi critici identificati · 0 falsi negativi condivisi</text>
+
+  <!-- Side note -->
+  <rect x="30" y="370" width="175" height="48" rx="6" fill="#fef2f2" stroke="#fca5a5" stroke-width="1"/>
+  <text x="117" y="388" text-anchor="middle" font-family="sans-serif" font-size="10" fill="#b91c1c" font-weight="600">Prompt esplicito</text>
+  <text x="117" y="403" text-anchor="middle" font-family="sans-serif" font-size="10" fill="#dc2626">I modelli non invocano</text>
+  <text x="117" y="416" text-anchor="middle" font-family="sans-serif" font-size="10" fill="#dc2626">skill dinamiche in autonomia</text>
+
+  <rect x="595" y="370" width="175" height="48" rx="6" fill="#fef2f2" stroke="#fca5a5" stroke-width="1"/>
+  <text x="682" y="388" text-anchor="middle" font-family="sans-serif" font-size="10" fill="#b91c1c" font-weight="600">Alternativa consigliata</text>
+  <text x="682" y="403" text-anchor="middle" font-family="sans-serif" font-size="10" fill="#dc2626">MCP per tool-calling</text>
+  <text x="682" y="416" text-anchor="middle" font-family="sans-serif" font-size="10" fill="#dc2626">più affidabile delle skill</text>
+</svg>

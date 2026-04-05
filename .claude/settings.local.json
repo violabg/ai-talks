@@ -18,7 +18,25 @@
       "Bash(pnpm build:*)",
       "Bash(pnpm dev:*)",
       "Bash(pkill -f \"next dev\")",
-      "WebFetch(domain:code.visualstudio.com)"
+      "WebFetch(domain:code.visualstudio.com)",
+      "mcp__context7__resolve-library-id",
+      "mcp__context7__query-docs",
+      "Bash(mkdir -p /Users/paolo/Sites/ai/ai-course/.claude/skills/article-animations-workspace/iteration-1)",
+      "Bash(mkdir -p /Users/paolo/Sites/ai/ai-course/.claude/skills/article-images-workspace/iteration-1)",
+      "Bash(mkdir -p /Users/paolo/Sites/ai/ai-course/.claude/skills/article-animations/evals)",
+      "Bash(mkdir -p /Users/paolo/Sites/ai/ai-course/.claude/skills/article-images/evals)",
+      "Bash(python -m scripts.aggregate_benchmark /Users/paolo/Sites/ai/ai-course/.claude/skills/article-animations-workspace/iteration-1 --skill-name article-animations)",
+      "Bash(python -m scripts.aggregate_benchmark /Users/paolo/Sites/ai/ai-course/.claude/skills/article-images-workspace/iteration-1 --skill-name article-images)",
+      "Bash(nohup python:*)",
+      "Bash(echo \"PID: $!\")",
+      "Bash(/opt/homebrew/bin/python3 /Users/paolo/Sites/ai/ai-course/.claude/skills/skill-creator/eval-viewer/generate_review.py /Users/paolo/Sites/ai/ai-course/.claude/skills/article-animations-workspace/iteration-1 --skill-name article-animations --benchmark /Users/paolo/Sites/ai/ai-course/.claude/skills/article-animations-workspace/iteration-1/benchmark.json)",
+      "Bash(/opt/homebrew/bin/python3 /Users/paolo/Sites/ai/ai-course/.claude/skills/skill-creator/eval-viewer/generate_review.py --help)",
+      "Bash(/opt/homebrew/bin/python3 /Users/paolo/Sites/ai/ai-course/.claude/skills/skill-creator/eval-viewer/generate_review.py /Users/paolo/Sites/ai/ai-course/.claude/skills/article-animations-workspace/iteration-1 --skill-name article-animations --benchmark /Users/paolo/Sites/ai/ai-course/.claude/skills/article-animations-workspace/iteration-1/benchmark.json --port 8765)",
+      "Bash(curl -s http://localhost:8765)",
+      "Bash(/opt/homebrew/bin/python3 /Users/paolo/Sites/ai/ai-course/.claude/skills/skill-creator/eval-viewer/generate_review.py /Users/paolo/Sites/ai/ai-course/.claude/skills/article-images-workspace/iteration-1 --skill-name article-images --benchmark /Users/paolo/Sites/ai/ai-course/.claude/skills/article-images-workspace/iteration-1/benchmark.json --port 8766)",
+      "Bash(open http://localhost:8765)",
+      "Bash(open http://localhost:8766)",
+      "Bash(pnpm tsc:*)"
     ]
   }
 }

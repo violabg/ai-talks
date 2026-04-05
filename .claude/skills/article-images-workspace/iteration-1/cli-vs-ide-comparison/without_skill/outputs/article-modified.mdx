@@ -1,0 +1,111 @@
+---
+title: "CLI AI vs IDE AI: quale superficie scegliere per il tuo workflow"
+description: "Guida pratica per distinguere strumenti AI da terminale e strumenti AI integrati nell'IDE, con use case essenziali e un confronto diretto delle due superfici operative."
+date: "2026-03-24T10:00:00+02:00"
+author: "AI Talks"
+tags: ["CLI", "IDE", "agenti AI", "workflow"]
+published: true
+featured: false
+coverImage: "/images/articles/cover-cli-vs-ide.svg"
+---
+
+# CLI AI vs IDE AI: quale superficie scegliere per il tuo workflow
+
+Quando si parla di strumenti AI per sviluppatori, molte discussioni confondono due piani distinti.
+
+Il primo piano riguarda **dove lavori**: terminale oppure editor. Il secondo riguarda **come personalizzi il comportamento dell'agente**: istruzioni permanenti, skill, prompt riusabili, tool esterni, hook di automazione.
+
+Se questi due piani si mescolano, si finisce per confrontare strumenti che non competono davvero fra loro. Un CLI e un IDE possono usare modelli simili, ma impongono interazioni diverse, livelli di contesto diversi e modi diversi di orchestrare il lavoro.
+
+Questo articolo si concentra sul primo piano: la scelta della superficie operativa. Per le configurazioni che indirizzano il comportamento dell'agente, vedi [Strumenti e configurazioni: livelli di personalizzazione degli agenti AI](/articles/cli-vs-ide-agenti-ai-configurazioni).
+
+---
+
+## 1. CLI AI e IDE AI non risolvono lo stesso problema
+
+Tool come **Claude Code**, **Codex CLI** e **GitHub Copilot CLI** nascono per lavorare bene dentro un flusso terminal-centric: repository, shell, comandi, script, output testuale, automazione.
+
+Tool come **Cursor**, **Antigravity** e **VS Code con Copilot** lavorano invece meglio in un contesto editoriale ricco: navigazione dei file, diff visivi, refactor assistiti, diagnostica inline, chat ancorata al codice aperto.
+
+La differenza principale non è "quale modello è più intelligente". La differenza è **quale superficie operativa** viene esposta all'agente.
+
+<figure>
+  <img src="/images/articles/diagram-cli-vs-ide-surfaces.svg" alt="Confronto delle superfici operative: CLI AI vs IDE AI con strumenti, contesto naturale e punti di forza" />
+  <figcaption>Le due superfici a confronto: strumenti, contesto naturale e rischi tipici di ciascun approccio.</figcaption>
+</figure>
+
+### CLI AI: che cosa ottieni
+
+- Accesso naturale a shell, script, test runner, grep, git e processi automatizzabili.
+- Flussi più vicini a build, verifica, scaffolding, batch editing e manutenzione repo-wide.
+- Output facile da inserire in pipeline ripetibili o semi-automatiche.
+
+### IDE AI: che cosa ottieni
+
+- Accesso diretto al contesto del file aperto, della selezione corrente e della navigazione nel progetto.
+- Cicli più rapidi per lettura, modifica, review locale e refactor mirato.
+- Feedback più immediato su errori, diff, problemi di linting e impatto della modifica.
+
+> In pratica: la CLI tende a favorire **operazioni ripetibili e orchestrabili**; l'IDE tende a favorire **iterazione locale e comprensione del codice**.
+
+---
+
+## 2. Use case brevi: quando usare CLI e quando usare IDE
+
+Nessuno dei due ambienti è universalmente migliore. Cambia il tipo di attrito che stai eliminando.
+
+<figure>
+  <img src="/images/articles/diagram-when-to-use.svg" alt="Schema decisionale: quando scegliere CLI AI e quando scegliere IDE AI, con casi d'uso ed esempi pratici" />
+  <figcaption>Schema decisionale per orientarsi nella scelta della superficie: dalla natura del task agli esempi concreti.</figcaption>
+</figure>
+
+### Quando ha senso un tool CLI
+
+Usa un tool CLI quando il task vive già bene nel terminale o quando vuoi una sequenza precisa di passi.
+
+- **Scansione ampia del repository**: trovare pattern, aggiornare molti file, verificare naming o convenzioni.
+- **Loop automatici di verifica**: lanciare test, typecheck, lint, build e usare quel feedback come oracolo operativo.
+- **Task ripetibili**: scaffolding, trasformazioni testuali, codemod semplici, preparazione di commit o changelog.
+- **Workflow scriptabili**: quando vuoi poter ripetere lo stesso task domani con le stesse regole.
+
+### Quando ha senso un tool IDE
+
+Usa un tool IDE quando hai bisogno di vedere il codice nel suo contesto e iterare rapidamente su una modifica locale.
+
+- **Refactor guidato dal contesto**: rinominare simboli, spostare responsabilità, capire dove una modifica si propaga.
+- **Review mirata**: leggere file collegati, seguire riferimenti, ispezionare diff e problemi inline.
+- **Scrittura assistita in un punto preciso**: completare componenti, funzioni, hook o sezioni di configurazione.
+- **Debug editoriale**: correggere errori con feedback immediato del language server o dei pannelli dell'IDE.
+
+### Esempio pratico
+
+Se devi aggiornare una convenzione in molti file TypeScript, una CLI è spesso più adatta.
+
+Se devi capire perché un componente React rompe una pagina solo dopo un refactor, l'IDE è quasi sempre più efficace.
+
+Per un workflow moderno, il punto non è scegliere un vincitore: è sapere **in quale fase del lavoro** cambiare superficie.
+
+---
+
+## 3. Confronto rapido
+
+| Dimensione | CLI AI | IDE AI |
+| ---------- | ------ | ------ |
+| Interazione principale | Comandi, output testuale, script | File aperti, pannelli, selezione, navigazione |
+| Punto di forza | Automazione e ripetibilità | Comprensione locale e iterazione rapida |
+| Contesto naturale | Repo, shell, processi, git | Editor, simboli, errori inline, diff |
+| Task tipici | Search/replace ampio, test loop, scaffolding | Refactor, review, debug locale, editing mirato |
+| Modalità d'uso | Spesso step sequenziali e verificabili | Spesso dialogo continuo ancorato al codice |
+| Rischio comune | Fare troppo affidamento su script senza leggere il contesto | Restare troppo nel micro-contesto e perdere la vista d'insieme |
+
+Questo è coerente con quanto visto in [Prompting e workflow: orchestrare agenti per task di ingegneria](/articles/prompting-e-workflow): la qualità dipende meno dal brand del tool e molto di più da **contesto, vincoli e feedback loop**.
+
+---
+
+## 4. Una regola pratica per orientarsi
+
+Se il task è ampio, ripetibile, facilmente verificabile da terminale e potenzialmente scriptabile, parti da una **CLI**.
+
+Se il task è locale, interpretativo, legato alla navigazione del codice e alla modifica ragionata di file specifici, parti dall'**IDE**.
+
+La maturità non sta nel trovare il tool perfetto. Sta nel sapere in quale fase del lavoro cambiare superficie — e poi usare le [configurazioni giuste](/articles/cli-vs-ide-agenti-ai-configurazioni) per ridurre l'attrito in ciascuna di esse.

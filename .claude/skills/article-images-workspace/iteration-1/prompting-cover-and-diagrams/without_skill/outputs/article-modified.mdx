@@ -6,7 +6,7 @@ author: "AI Talks"
 tags: ["prompt", "workflow", "agents"]
 published: true
 featured: true
-coverImage: "prompting-e-workflow-cover"
+coverImage: "prompting-cover"
 ---
 
 # Prompting e workflow: orchestrare agenti per task di ingegneria
@@ -22,6 +22,15 @@ Questo articolo esplora tecniche pratiche per progettare prompt efficaci e costr
 Un prompt per un agente di coding non è una richiesta generica. È più simile a una **specifica tecnica**: deve definire il contesto, l'obiettivo, i vincoli e i criteri di successo.
 
 ### I quattro elementi fondamentali
+
+{/* DIAGRAM INSERT: anatomy of an effective prompt — four-quadrant card layout */}
+<img
+  src="/images/articles/prompting-diagram-1-anatomy.svg"
+  alt="I quattro elementi fondamentali di un prompt efficace: Contesto, Obiettivo, Vincoli, Criterio di successo"
+  width={800}
+  height={420}
+  className="rounded-lg my-8 w-full"
+/>
 
 ```
 [CONTESTO]
@@ -42,8 +51,6 @@ I test esistenti passano ancora. Il nuovo test per GET /users/:id passa.
 ```
 
 Senza questi quattro elementi, l'agente riempie i buchi con assunzioni — spesso sbagliate.
-
-![I quattro elementi fondamentali di un prompt efficace: contesto, obiettivo, vincoli e criterio di successo convergono verso un output prevedibile](/images/articles/prompting-e-workflow-anatomy.svg)
 
 ### Contesto implicito vs. esplicito
 
@@ -134,6 +141,15 @@ Un singolo prompt non basta per task complessi. Il vero potere emerge quando si 
 
 Ogni step del workflow deve avere un obiettivo unico e verificabile:
 
+{/* DIAGRAM INSERT: multi-agent workflow — vertical timeline with steps, artifacts, and human checkpoint */}
+<img
+  src="/images/articles/prompting-diagram-2-workflow.svg"
+  alt="Workflow multi-agente: Research Agent, Planning Agent, Human Checkpoint, Implementation Agent, Review Agent — con artefatti prodotti da ogni step"
+  width={800}
+  height={500}
+  className="rounded-lg my-8 w-full"
+/>
+
 ```
 Workflow: implementa una nuova feature
 
@@ -159,8 +175,6 @@ Segnala ogni discrepanza e proponi correzioni."
 ```
 
 Ogni step produce un artefatto verificabile: RESEARCH.md, PLAN.md, codice, report di review. Questo rende il workflow **ispezionabile e correggibile** — puoi interrompere dopo ogni step, controllare l'output, e procedere o correggere.
-
-![Pipeline multi-agente con quattro step — Research, Planning, Implementation, Review — con checkpoint umano tra pianificazione e implementazione](/images/articles/prompting-e-workflow-pipeline.svg)
 
 ### Orchestrazione con checkpoint umani
 
@@ -201,6 +215,15 @@ Non hai bisogno di altro contesto.
 
 Un agente senza feedback opera al buio. Il feedback deve essere **deterministico** — lo stesso input produce sempre lo stesso segnale — e **immediato** — l'agente lo riceve prima di procedere al passo successivo.
 
+{/* DIAGRAM INSERT: feedback loop — circular flow: Modifica → Test/Type Check → Pass (next file) / Fail → Correggi → Modifica */}
+<img
+  src="/images/articles/prompting-diagram-3-feedback-loop.svg"
+  alt="Il ciclo di feedback deterministico: Modifica → Test/Type Check → se Pass passa al file successivo, se Fail correggi e riprova"
+  width={800}
+  height={420}
+  className="rounded-lg my-8 w-full"
+/>
+
 ### Test come oracolo
 
 I test automatici sono il meccanismo di feedback più potente. Non perché "i test sono una buona pratica" in astratto, ma perché danno all'agente un segnale binario e non ambiguo:
@@ -215,8 +238,6 @@ Non procedere finché tutti i test non passano.
 ```
 
 Questo loop — modifica → test → correggi — è il cuore di qualsiasi workflow di coding con agenti AI. Senza di esso, gli errori si accumulano e il costo di correzione cresce esponenzialmente.
-
-![Ciclo di feedback: l'agente modifica il codice, esegue i test, e se falliscono corregge e ripete — tre oracoli di verifica: test, TypeScript, lint](/images/articles/prompting-e-workflow-feedback.svg)
 
 ### TypeScript come feedback in tempo reale
 

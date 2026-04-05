@@ -1,0 +1,13 @@
+{
+  "eval_id": 0,
+  "eval_name": "basic-scroll-fade",
+  "configuration": "without_skill",
+  "expectations": [
+    {"text": "mdx-animated.tsx contains \"use client\" directive at the top", "passed": true, "evidence": "Found '\"use client\"' at line 1"},
+    {"text": "Uses 'motion/react-client' import path (not 'motion/react'), correct for server-component trees", "passed": true, "evidence": "Uses motion/react-client (2 occurrences)"},
+    {"text": "Uses whileInView for scroll-triggered animations", "passed": true, "evidence": "whileInView appears 3 times"},
+    {"text": "Uses viewport: { once: true } so elements don't re-animate on scroll-back", "passed": true, "evidence": "once: true present"},
+    {"text": "Both mdx-animated.tsx and mdx-components-proposed.tsx exist in outputs", "passed": true, "evidence": "Both files found in outputs/"},
+    {"text": "Includes an animated paragraph (p element) component as requested", "passed": true, "evidence": "AnimatedP present"}
+  ]
+}

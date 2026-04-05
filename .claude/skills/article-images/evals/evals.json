@@ -1,0 +1,114 @@
+{
+  "skill_name": "article-images",
+  "evals": [
+    {
+      "id": 0,
+      "prompt": "Generate images for content/articles/prompting-e-workflow.mdx — create a cover/poster SVG for the article card and any inline diagrams that would genuinely help readers understand the prompting concepts.",
+      "expected_output": "A cover SVG (800x450), 1-3 inline diagram SVGs for key concepts, and a modified MDX with image references and updated coverImage frontmatter.",
+      "files": ["content/articles/prompting-e-workflow.mdx"],
+      "assertions": [
+        {
+          "id": "cover-svg-exists",
+          "text": "A cover SVG file exists named with the article slug (e.g. prompting-e-workflow-cover.svg)",
+          "check": "file_exists"
+        },
+        {
+          "id": "cover-dimensions",
+          "text": "Cover SVG has width=\"800\" height=\"450\" (16:9 aspect ratio)",
+          "check": "grep"
+        },
+        {
+          "id": "purple-accent",
+          "text": "SVG(s) use the project's purple accent color (#7c3aed or similar purple hex)",
+          "check": "grep"
+        },
+        {
+          "id": "article-modified-exists",
+          "text": "article-modified.mdx file exists in outputs",
+          "check": "file_exists"
+        },
+        {
+          "id": "cover-image-frontmatter",
+          "text": "article-modified.mdx has coverImage field in frontmatter",
+          "check": "grep"
+        },
+        {
+          "id": "inline-image-references",
+          "text": "article-modified.mdx contains at least one inline image reference (![) for a diagram",
+          "check": "grep"
+        }
+      ]
+    },
+    {
+      "id": 1,
+      "prompt": "The article content/articles/cli-vs-ide-agenti-ai.mdx needs a cover image for the article card, and diagrams comparing CLI vs IDE approaches where it would help readers.",
+      "expected_output": "A cover SVG with CLI vs IDE visual motif, comparison diagram(s), and modified MDX with image references.",
+      "files": ["content/articles/cli-vs-ide-agenti-ai.mdx"],
+      "assertions": [
+        {
+          "id": "cover-svg-exists",
+          "text": "A cover SVG file exists for the CLI vs IDE article",
+          "check": "file_exists"
+        },
+        {
+          "id": "cover-dimensions",
+          "text": "Cover SVG has width=\"800\" height=\"450\"",
+          "check": "grep"
+        },
+        {
+          "id": "comparison-diagram",
+          "text": "At least one comparison/diagram SVG is generated (not just the cover) showing CLI vs IDE differences",
+          "check": "file_count"
+        },
+        {
+          "id": "article-modified-exists",
+          "text": "article-modified.mdx exists with image references",
+          "check": "file_exists"
+        },
+        {
+          "id": "cover-image-frontmatter",
+          "text": "article-modified.mdx has coverImage field in frontmatter",
+          "check": "grep"
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "prompt": "Generate diagrams for content/articles/multi-modello-copilot-cli-orchestrazione.mdx to explain the multi-model orchestration architecture. Also create a cover image.",
+      "expected_output": "Architecture diagram(s) showing multi-model flow, a cover SVG, and modified MDX with image references.",
+      "files": ["content/articles/multi-modello-copilot-cli-orchestrazione.mdx"],
+      "assertions": [
+        {
+          "id": "cover-svg-exists",
+          "text": "A cover SVG file exists for the multi-model article",
+          "check": "file_exists"
+        },
+        {
+          "id": "architecture-diagram",
+          "text": "At least one architecture/flow diagram SVG is generated showing model orchestration",
+          "check": "file_count"
+        },
+        {
+          "id": "cover-dimensions",
+          "text": "Cover SVG has width=\"800\" height=\"450\"",
+          "check": "grep"
+        },
+        {
+          "id": "article-modified-exists",
+          "text": "article-modified.mdx exists",
+          "check": "file_exists"
+        },
+        {
+          "id": "cover-image-frontmatter",
+          "text": "article-modified.mdx has coverImage field in frontmatter",
+          "check": "grep"
+        },
+        {
+          "id": "multiple-diagrams",
+          "text": "Multiple SVG files generated (cover + at least one diagram) — multi-model orchestration is complex enough to warrant multiple visuals",
+          "check": "file_count"
+        }
+      ]
+    }
+  ]
+}

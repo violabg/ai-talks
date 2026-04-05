@@ -1,0 +1,48 @@
+<svg width="800" height="450" xmlns="http://www.w3.org/2000/svg">
+  <rect width="800" height="450" fill="#f1f5f9"/>
+
+  <defs>
+    <marker id="arrow-a" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#7c3aed"/>
+    </marker>
+  </defs>
+
+  <!-- Title -->
+  <text x="400" y="40" text-anchor="middle" font-family="sans-serif" font-size="16" fill="#334155" font-weight="700">I quattro elementi di un prompt efficace</text>
+
+  <!-- Central prompt block -->
+  <rect x="260" y="140" width="280" height="170" rx="12" fill="#ffffff" stroke="#7c3aed" stroke-width="2"/>
+  <text x="400" y="170" text-anchor="middle" font-family="monospace" font-size="14" fill="#7c3aed" font-weight="700">PROMPT</text>
+  <line x1="290" y1="182" x2="510" y2="182" stroke="#e2e8f0" stroke-width="1"/>
+  <text x="310" y="205" font-family="monospace" font-size="11" fill="#64748b">Contesto + Obiettivo</text>
+  <text x="310" y="225" font-family="monospace" font-size="11" fill="#64748b">+ Vincoli + Successo</text>
+  <text x="310" y="255" font-family="monospace" font-size="10" fill="#94a3b8">= output prevedibile</text>
+  <text x="310" y="275" font-family="monospace" font-size="10" fill="#94a3b8">= zero assunzioni</text>
+
+  <!-- 1. CONTESTO (top-left) -->
+  <rect x="40" y="70" width="170" height="60" rx="8" fill="#ede9fe" stroke="#7c3aed" stroke-width="1.5"/>
+  <text x="125" y="96" text-anchor="middle" font-family="sans-serif" font-size="12" fill="#5b21b6" font-weight="700">CONTESTO</text>
+  <text x="125" y="116" text-anchor="middle" font-family="sans-serif" font-size="10" fill="#7c3aed">Stack, file, struttura</text>
+  <line x1="210" y1="100" x2="260" y2="170" stroke="#7c3aed" stroke-width="1.5" marker-end="url(#arrow-a)"/>
+
+  <!-- 2. OBIETTIVO (top-right) -->
+  <rect x="590" y="70" width="170" height="60" rx="8" fill="#ede9fe" stroke="#7c3aed" stroke-width="1.5"/>
+  <text x="675" y="96" text-anchor="middle" font-family="sans-serif" font-size="12" fill="#5b21b6" font-weight="700">OBIETTIVO</text>
+  <text x="675" y="116" text-anchor="middle" font-family="sans-serif" font-size="10" fill="#7c3aed">Cosa deve fare, dove</text>
+  <line x1="590" y1="100" x2="540" y2="170" stroke="#7c3aed" stroke-width="1.5" marker-end="url(#arrow-a)"/>
+
+  <!-- 3. VINCOLI (bottom-left) -->
+  <rect x="40" y="320" width="170" height="60" rx="8" fill="#ede9fe" stroke="#7c3aed" stroke-width="1.5"/>
+  <text x="125" y="346" text-anchor="middle" font-family="sans-serif" font-size="12" fill="#5b21b6" font-weight="700">VINCOLI</text>
+  <text x="125" y="366" text-anchor="middle" font-family="sans-serif" font-size="10" fill="#7c3aed">Non toccare, limiti, regole</text>
+  <line x1="210" y1="350" x2="260" y2="280" stroke="#7c3aed" stroke-width="1.5" marker-end="url(#arrow-a)"/>
+
+  <!-- 4. CRITERIO DI SUCCESSO (bottom-right) -->
+  <rect x="590" y="320" width="170" height="60" rx="8" fill="#ede9fe" stroke="#7c3aed" stroke-width="1.5"/>
+  <text x="675" y="346" text-anchor="middle" font-family="sans-serif" font-size="12" fill="#5b21b6" font-weight="700">SUCCESSO</text>
+  <text x="675" y="366" text-anchor="middle" font-family="sans-serif" font-size="10" fill="#7c3aed">Test passano, build ok</text>
+  <line x1="590" y1="350" x2="540" y2="280" stroke="#7c3aed" stroke-width="1.5" marker-end="url(#arrow-a)"/>
+
+  <!-- Caption -->
+  <text x="400" y="430" text-anchor="middle" font-family="sans-serif" font-size="12" fill="#64748b">Senza questi quattro elementi, l'agente riempie i buchi con assunzioni</text>
+</svg>

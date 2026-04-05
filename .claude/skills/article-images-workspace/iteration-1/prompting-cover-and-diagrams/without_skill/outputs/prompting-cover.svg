@@ -1,0 +1,103 @@
+<svg width="800" height="450" xmlns="http://www.w3.org/2000/svg">
+  <!-- Background gradient -->
+  <defs>
+    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#0f172a;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#1e293b;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="accentGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#6366f1;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#8b5cf6;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="nodeGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#1e293b;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#0f172a;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+
+  <!-- Background -->
+  <rect width="800" height="450" fill="url(#bgGrad)"/>
+
+  <!-- Subtle grid lines -->
+  <line x1="0" y1="150" x2="800" y2="150" stroke="#1e293b" stroke-width="1" opacity="0.5"/>
+  <line x1="0" y1="300" x2="800" y2="300" stroke="#1e293b" stroke-width="1" opacity="0.5"/>
+  <line x1="200" y1="0" x2="200" y2="450" stroke="#1e293b" stroke-width="1" opacity="0.5"/>
+  <line x1="400" y1="0" x2="400" y2="450" stroke="#1e293b" stroke-width="1" opacity="0.5"/>
+  <line x1="600" y1="0" x2="600" y2="450" stroke="#1e293b" stroke-width="1" opacity="0.5"/>
+
+  <!-- Accent bar top -->
+  <rect x="0" y="0" width="800" height="4" fill="url(#accentGrad)"/>
+
+  <!-- Left: prompt block visual -->
+  <!-- Step node 1 -->
+  <rect x="40" y="70" width="160" height="64" rx="8" fill="#1e293b" stroke="#6366f1" stroke-width="1.5"/>
+  <text x="60" y="94" font-family="monospace" font-size="10" fill="#6366f1" font-weight="bold">CONTESTO</text>
+  <text x="60" y="112" font-family="monospace" font-size="10" fill="#94a3b8">src/routes/users.ts</text>
+  <text x="60" y="126" font-family="monospace" font-size="10" fill="#94a3b8">Vitest · Express.js</text>
+
+  <!-- Step node 2 -->
+  <rect x="40" y="150" width="160" height="64" rx="8" fill="#1e293b" stroke="#8b5cf6" stroke-width="1.5"/>
+  <text x="60" y="174" font-family="monospace" font-size="10" fill="#8b5cf6" font-weight="bold">OBIETTIVO</text>
+  <text x="60" y="192" font-family="monospace" font-size="10" fill="#94a3b8">GET /users/:id</text>
+  <text x="60" y="206" font-family="monospace" font-size="10" fill="#94a3b8">userRepository.ts</text>
+
+  <!-- Step node 3 -->
+  <rect x="40" y="230" width="160" height="64" rx="8" fill="#1e293b" stroke="#a78bfa" stroke-width="1.5"/>
+  <text x="60" y="254" font-family="monospace" font-size="10" fill="#a78bfa" font-weight="bold">VINCOLI</text>
+  <text x="60" y="272" font-family="monospace" font-size="10" fill="#94a3b8">no src/types/user.ts</text>
+  <text x="60" y="286" font-family="monospace" font-size="10" fill="#94a3b8">errorHandler, tests</text>
+
+  <!-- Step node 4 -->
+  <rect x="40" y="310" width="160" height="64" rx="8" fill="#1e293b" stroke="#c4b5fd" stroke-width="1.5"/>
+  <text x="60" y="334" font-family="monospace" font-size="10" fill="#c4b5fd" font-weight="bold">CRITERIO</text>
+  <text x="60" y="352" font-family="monospace" font-size="10" fill="#94a3b8">test esistenti: pass</text>
+  <text x="60" y="366" font-family="monospace" font-size="10" fill="#94a3b8">new test: pass</text>
+
+  <!-- Arrow from prompt block to agent -->
+  <line x1="210" y1="225" x2="270" y2="225" stroke="#6366f1" stroke-width="2"/>
+  <polygon points="270,220 280,225 270,230" fill="#6366f1"/>
+
+  <!-- Center: agent box -->
+  <rect x="285" y="155" width="140" height="140" rx="12" fill="#1e293b" stroke="#6366f1" stroke-width="2"/>
+  <text x="355" y="198" text-anchor="middle" font-family="sans-serif" font-size="28" fill="#6366f1">⚙</text>
+  <text x="355" y="226" text-anchor="middle" font-family="sans-serif" font-size="13" fill="#e2e8f0" font-weight="bold">AI Agent</text>
+  <text x="355" y="246" text-anchor="middle" font-family="monospace" font-size="10" fill="#64748b">reasoning</text>
+  <text x="355" y="262" text-anchor="middle" font-family="monospace" font-size="10" fill="#64748b">planning</text>
+  <text x="355" y="278" text-anchor="middle" font-family="monospace" font-size="10" fill="#64748b">execution</text>
+
+  <!-- Arrow from agent to workflow -->
+  <line x1="430" y1="225" x2="490" y2="225" stroke="#8b5cf6" stroke-width="2"/>
+  <polygon points="490,220 500,225 490,230" fill="#8b5cf6"/>
+
+  <!-- Right: workflow column -->
+  <rect x="505" y="80" width="250" height="48" rx="8" fill="#1e293b" stroke="#10b981" stroke-width="1.5"/>
+  <text x="525" y="100" font-family="monospace" font-size="10" fill="#10b981" font-weight="bold">Step 1 — Research</text>
+  <text x="525" y="118" font-family="monospace" font-size="10" fill="#94a3b8">→ RESEARCH.md</text>
+
+  <line x1="630" y1="128" x2="630" y2="148" stroke="#334155" stroke-width="1.5" stroke-dasharray="4,3"/>
+
+  <rect x="505" y="148" width="250" height="48" rx="8" fill="#1e293b" stroke="#10b981" stroke-width="1.5"/>
+  <text x="525" y="168" font-family="monospace" font-size="10" fill="#10b981" font-weight="bold">Step 2 — Planning</text>
+  <text x="525" y="186" font-family="monospace" font-size="10" fill="#94a3b8">→ PLAN.md</text>
+
+  <line x1="630" y1="196" x2="630" y2="216" stroke="#334155" stroke-width="1.5" stroke-dasharray="4,3"/>
+
+  <!-- Human checkpoint badge -->
+  <rect x="505" y="210" width="250" height="36" rx="8" fill="#292524" stroke="#f59e0b" stroke-width="1.5"/>
+  <text x="630" y="233" text-anchor="middle" font-family="sans-serif" font-size="10" fill="#f59e0b" font-weight="bold">▶ HUMAN CHECKPOINT</text>
+
+  <line x1="630" y1="246" x2="630" y2="266" stroke="#334155" stroke-width="1.5" stroke-dasharray="4,3"/>
+
+  <rect x="505" y="266" width="250" height="48" rx="8" fill="#1e293b" stroke="#10b981" stroke-width="1.5"/>
+  <text x="525" y="286" font-family="monospace" font-size="10" fill="#10b981" font-weight="bold">Step 3 — Implementation</text>
+  <text x="525" y="304" font-family="monospace" font-size="10" fill="#94a3b8">→ code + tests</text>
+
+  <line x1="630" y1="314" x2="630" y2="334" stroke="#334155" stroke-width="1.5" stroke-dasharray="4,3"/>
+
+  <rect x="505" y="334" width="250" height="48" rx="8" fill="#1e293b" stroke="#10b981" stroke-width="1.5"/>
+  <text x="525" y="354" font-family="monospace" font-size="10" fill="#10b981" font-weight="bold">Step 4 — Review</text>
+  <text x="525" y="372" font-family="monospace" font-size="10" fill="#94a3b8">→ diff + corrections</text>
+
+  <!-- Title area -->
+  <text x="400" y="430" text-anchor="middle" font-family="sans-serif" font-size="15" fill="#64748b" font-weight="bold" letter-spacing="3">PROMPTING E WORKFLOW</text>
+</svg>

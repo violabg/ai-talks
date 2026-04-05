@@ -1,0 +1,109 @@
+<svg width="800" height="480" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <marker id="arrow" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#94a3b8"/>
+    </marker>
+    <marker id="arrow-primary" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#7c3aed"/>
+    </marker>
+  </defs>
+
+  <!-- Background -->
+  <rect width="800" height="480" fill="#f1f5f9"/>
+
+  <!-- Title -->
+  <text x="400" y="36" text-anchor="middle" font-family="sans-serif" font-size="16" fill="#334155" font-weight="700">Workflow multi-agente: principio di singola responsabilità</text>
+
+  <!-- === STEP 1: Research Agent === -->
+  <rect x="40" y="68" width="160" height="72" rx="8" fill="#e2e8f0" stroke="#94a3b8" stroke-width="1.5"/>
+  <text x="120" y="92" text-anchor="middle" font-family="sans-serif" font-size="12" fill="#475569" font-weight="600">Step 1</text>
+  <text x="120" y="109" text-anchor="middle" font-family="monospace" font-size="11" fill="#334155">Research</text>
+  <text x="120" y="127" text-anchor="middle" font-family="sans-serif" font-size="10" fill="#64748b">Agent</text>
+
+  <!-- Artefact 1 -->
+  <rect x="40" y="178" width="160" height="42" rx="6" fill="#fef9c3" stroke="#ca8a04" stroke-width="1.5"/>
+  <text x="120" y="196" text-anchor="middle" font-family="monospace" font-size="11" fill="#713f12">RESEARCH.md</text>
+  <text x="120" y="212" text-anchor="middle" font-family="sans-serif" font-size="10" fill="#92400e">artefatto verificabile</text>
+
+  <!-- Arrow Step1 → Artefact1 -->
+  <line x1="120" y1="140" x2="120" y2="175" stroke="#94a3b8" stroke-width="1.5" marker-end="url(#arrow)"/>
+
+  <!-- === STEP 2: Planning Agent === -->
+  <rect x="220" y="68" width="160" height="72" rx="8" fill="#e2e8f0" stroke="#94a3b8" stroke-width="1.5"/>
+  <text x="300" y="92" text-anchor="middle" font-family="sans-serif" font-size="12" fill="#475569" font-weight="600">Step 2</text>
+  <text x="300" y="109" text-anchor="middle" font-family="monospace" font-size="11" fill="#334155">Planning</text>
+  <text x="300" y="127" text-anchor="middle" font-family="sans-serif" font-size="10" fill="#64748b">Agent</text>
+
+  <!-- Arrow A1 → Step2 (input flow) -->
+  <line x1="200" y1="199" x2="218" y2="199" stroke="#ca8a04" stroke-width="1.5" stroke-dasharray="4,3" marker-end="url(#arrow)"/>
+
+  <!-- Artefact 2 -->
+  <rect x="220" y="178" width="160" height="42" rx="6" fill="#fef9c3" stroke="#ca8a04" stroke-width="1.5"/>
+  <text x="300" y="196" text-anchor="middle" font-family="monospace" font-size="11" fill="#713f12">PLAN.md</text>
+  <text x="300" y="212" text-anchor="middle" font-family="sans-serif" font-size="10" fill="#92400e">artefatto verificabile</text>
+
+  <!-- Arrow Step2 → Artefact2 -->
+  <line x1="300" y1="140" x2="300" y2="175" stroke="#94a3b8" stroke-width="1.5" marker-end="url(#arrow)"/>
+
+  <!-- HUMAN CHECKPOINT badge -->
+  <rect x="228" y="238" width="144" height="28" rx="14" fill="#fce7f3" stroke="#db2777" stroke-width="1.5"/>
+  <text x="300" y="257" text-anchor="middle" font-family="sans-serif" font-size="10" fill="#9d174d" font-weight="600">HUMAN CHECKPOINT</text>
+
+  <!-- === STEP 3: Implementation Agent === -->
+  <rect x="400" y="68" width="160" height="72" rx="8" fill="#ede9fe" stroke="#7c3aed" stroke-width="2"/>
+  <text x="480" y="92" text-anchor="middle" font-family="sans-serif" font-size="12" fill="#5b21b6" font-weight="600">Step 3</text>
+  <text x="480" y="109" text-anchor="middle" font-family="monospace" font-size="11" fill="#4c1d95">Implementation</text>
+  <text x="480" y="127" text-anchor="middle" font-family="sans-serif" font-size="10" fill="#7c3aed">Agent</text>
+
+  <!-- Arrow A2 → Step3 -->
+  <line x1="380" y1="199" x2="398" y2="199" stroke="#ca8a04" stroke-width="1.5" stroke-dasharray="4,3" marker-end="url(#arrow)"/>
+
+  <!-- Artefact 3 -->
+  <rect x="400" y="178" width="160" height="42" rx="6" fill="#d1fae5" stroke="#059669" stroke-width="1.5"/>
+  <text x="480" y="196" text-anchor="middle" font-family="monospace" font-size="11" fill="#065f46">codice modificato</text>
+  <text x="480" y="212" text-anchor="middle" font-family="sans-serif" font-size="10" fill="#047857">+ test passati</text>
+
+  <!-- Arrow Step3 → Artefact3 -->
+  <line x1="480" y1="140" x2="480" y2="175" stroke="#7c3aed" stroke-width="1.5" marker-end="url(#arrow-primary)"/>
+
+  <!-- === STEP 4: Review Agent === -->
+  <rect x="580" y="68" width="160" height="72" rx="8" fill="#e2e8f0" stroke="#94a3b8" stroke-width="1.5"/>
+  <text x="660" y="92" text-anchor="middle" font-family="sans-serif" font-size="12" fill="#475569" font-weight="600">Step 4</text>
+  <text x="660" y="109" text-anchor="middle" font-family="monospace" font-size="11" fill="#334155">Review</text>
+  <text x="660" y="127" text-anchor="middle" font-family="sans-serif" font-size="10" fill="#64748b">Agent</text>
+
+  <!-- Arrow A3 → Step4 -->
+  <line x1="560" y1="199" x2="578" y2="199" stroke="#059669" stroke-width="1.5" stroke-dasharray="4,3" marker-end="url(#arrow)"/>
+
+  <!-- Artefact 4 -->
+  <rect x="580" y="178" width="160" height="42" rx="6" fill="#d1fae5" stroke="#059669" stroke-width="1.5"/>
+  <text x="660" y="196" text-anchor="middle" font-family="monospace" font-size="11" fill="#065f46">review report</text>
+  <text x="660" y="212" text-anchor="middle" font-family="sans-serif" font-size="10" fill="#047857">discrepanze / ok</text>
+
+  <!-- Arrow Step4 → Artefact4 -->
+  <line x1="660" y1="140" x2="660" y2="175" stroke="#94a3b8" stroke-width="1.5" marker-end="url(#arrow)"/>
+
+  <!-- Horizontal flow arrows between steps -->
+  <line x1="200" y1="104" x2="218" y2="104" stroke="#94a3b8" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <line x1="380" y1="104" x2="398" y2="104" stroke="#94a3b8" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <line x1="560" y1="104" x2="578" y2="104" stroke="#94a3b8" stroke-width="1.5" marker-end="url(#arrow)"/>
+
+  <!-- Context isolation section -->
+  <rect x="40" y="295" width="720" height="110" rx="8" fill="#f8fafc" stroke="#cbd5e1" stroke-width="1.5"/>
+  <text x="400" y="318" text-anchor="middle" font-family="sans-serif" font-size="13" fill="#334155" font-weight="600">Context isolation: ogni agente riceve solo l'input che gli serve</text>
+
+  <!-- Bad example -->
+  <rect x="60" y="330" width="300" height="58" rx="6" fill="#fee2e2" stroke="#ef4444" stroke-width="1.5"/>
+  <text x="84" y="350" font-family="monospace" font-size="10" fill="#991b1b">❌  agent_3.prompt =</text>
+  <text x="84" y="366" font-family="monospace" font-size="10" fill="#b91c1c">     previous_conversations</text>
+  <text x="84" y="382" font-family="monospace" font-size="10" fill="#b91c1c">     + research + plan + ...</text>
+
+  <!-- Good example -->
+  <rect x="440" y="330" width="300" height="58" rx="6" fill="#d1fae5" stroke="#059669" stroke-width="1.5"/>
+  <text x="464" y="350" font-family="monospace" font-size="10" fill="#065f46">✅  agent_3 riceve:</text>
+  <text x="464" y="366" font-family="monospace" font-size="10" fill="#047857">     PLAN.md + RESEARCH.md</text>
+  <text x="464" y="382" font-family="monospace" font-size="10" fill="#047857">     solo quello che serve</text>
+
+  <!-- Caption -->
+  <text x="400" y="460" text-anchor="middle" font-family="sans-serif" font-size="12" fill="#64748b">Ogni step produce un artefatto ispezionabile e correggibile prima di procedere</text>
+</svg>
