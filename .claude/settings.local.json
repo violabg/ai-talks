@@ -38,7 +38,11 @@
       "Bash(open http://localhost:8766)",
       "Bash(pnpm tsc:*)",
       "Bash(python3 -c \"import sys,json; d=json.load\\(sys.stdin\\); print\\(json.dumps\\(d.get\\('dependencies',{}\\), indent=2\\)\\)\")",
-      "Bash(python3:*)"
+      "Bash(python3:*)",
+      "Bash(chmod +x:*)",
+      "Bash(CLAUDE_TOOL_INPUT='{\"file_path\":\"/Users/paolo/Sites/ai/ai-course/content/articles/prompting-e-workflow.mdx\"}' bash:*)",
+      "Bash(CLAUDE_TOOL_INPUT='{\"file_path\":\"/Users/paolo/Sites/ai/ai-course/content/articles/testing-feedback-loop-agenti-ai.mdx\"}' bash:*)",
+      "Bash(CLAUDE_TOOL_INPUT='{\"file_path\":\"/Users/paolo/Sites/ai/ai-course/src/components/foo.tsx\"}' bash:*)"
     ]
   }
 }

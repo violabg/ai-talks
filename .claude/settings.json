@@ -7,6 +7,11 @@
           {
             "type": "command",
             "command": "cd /Users/paolo/Sites/ai/ai-course && pnpm lint --fix 2>&1 | tail -20"
+          },
+          {
+            "type": "command",
+            "command": "cd /Users/paolo/Sites/ai/ai-course && bash .github/hooks/scripts/auto-sync-article-presentation.sh",
+            "timeout": 10
           }
         ]
       }
