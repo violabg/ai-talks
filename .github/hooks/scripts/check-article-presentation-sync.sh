@@ -39,7 +39,7 @@ declare -a article_slugs=()
 contains_slug() {
   local needle="$1"
   local item
-  for item in "${article_slugs[@]}"; do
+  for item in "${article_slugs[@]-}"; do
     if [[ "$item" == "$needle" ]]; then
       return 0
     fi
@@ -72,7 +72,7 @@ has_presentation() {
 presentation_updated() {
   local slug="$1"
   local file
-  for file in "${changed_files[@]}"; do
+  for file in "${changed_files[@]-}"; do
     if [[ "$file" == src/app/articles/"$slug"/presentazione/* ]]; then
       return 0
     fi
@@ -81,7 +81,7 @@ presentation_updated() {
 }
 
 declare -a violations=()
-for slug in "${article_slugs[@]}"; do
+for slug in "${article_slugs[@]-}"; do
   if has_presentation "$slug" && ! presentation_updated "$slug"; then
     violations+=("$slug")
   fi
@@ -94,7 +94,7 @@ JSON
   exit 0
 fi
 
-violations_csv="$(printf '%s, ' "${violations[@]}")"
+violations_csv="$(printf '%s, ' "${violations[@]-}")"
 violations_csv="${violations_csv%, }"
 
 cat <<JSON
