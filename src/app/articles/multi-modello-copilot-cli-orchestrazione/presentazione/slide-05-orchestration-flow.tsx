@@ -32,7 +32,7 @@ export function OrchestrationFlowSlide() {
   return (
     <div>
       <FadeIn>
-        <h2 className="mb-8 text-center text-2xl font-bold text-[#a78bfa] md:text-4xl">
+        <h2 className="mb-8 font-bold text-[#a78bfa] text-2xl md:text-4xl text-center">
           Il workflow di orchestrazione
         </h2>
       </FadeIn>

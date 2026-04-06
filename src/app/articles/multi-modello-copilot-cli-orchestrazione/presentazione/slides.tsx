@@ -61,11 +61,11 @@ export function PresentationSlides({ slug }: { slug: string }) {
   }, [next, prev]);
 
   return (
-    <div className="fixed inset-0 z-50 flex flex-col bg-[#0f172a] text-[#e2e8f0]">
-      <div className="flex shrink-0 items-center justify-between px-6 py-4 text-sm text-[#94a3b8]">
+    <div className="z-50 fixed inset-0 flex flex-col bg-[#0f172a] text-[#e2e8f0]">
+      <div className="flex justify-between items-center px-6 py-4 text-[#94a3b8] text-sm shrink-0">
         <Link
           href={`/articles/${slug}`}
-          className="transition-colors hover:text-white"
+          className="hover:text-white transition-colors"
         >
           &larr; Torna all&apos;articolo
         </Link>
@@ -75,7 +75,7 @@ export function PresentationSlides({ slug }: { slug: string }) {
       </div>
 
       <div
-        className="flex flex-1 items-center justify-center overflow-hidden px-6 md:px-16 lg:px-24"
+        className="flex flex-1 justify-center items-center px-6 md:px-16 lg:px-24 overflow-hidden"
         onClick={(event) => {
           const x = event.clientX;
           const width = window.innerWidth;
@@ -109,7 +109,7 @@ export function PresentationSlides({ slug }: { slug: string }) {
         </AnimatePresence>
       </div>
 
-      <div className="shrink-0 px-6 py-4">
+      <div className="px-6 py-4 shrink-0">
         <div className="flex gap-1.5">
           {Array.from({ length: totalSlides }).map((_, i) => (
             <button

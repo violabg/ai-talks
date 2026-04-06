@@ -5,10 +5,10 @@ export function ClosingSlide() {
   return (
     <div className="text-center">
       <FadeIn delay={0.15}>
-        <p className="mb-4 text-lg text-[#94a3b8]">Il cambio di prospettiva</p>
+        <p className="mb-4 text-[#94a3b8] text-lg">Il cambio di prospettiva</p>
       </FadeIn>
       <FadeIn delay={0.3}>
-        <div className="mx-auto flex max-w-3xl items-center justify-center gap-6 md:gap-10">
+        <div className="flex justify-center items-center gap-6 md:gap-10 mx-auto max-w-3xl">
           <div className="flex flex-col items-center gap-3">
             <svg viewBox="0 0 80 80" className="size-16 md:size-20">
               <rect
@@ -22,11 +22,17 @@ export function ClosingSlide() {
                 stroke="#94a3b8"
                 strokeWidth="1.5"
               />
-              <text x="40" y="46" textAnchor="middle" fill="#94a3b8" fontSize="24">
+              <text
+                x="40"
+                y="46"
+                textAnchor="middle"
+                fill="#94a3b8"
+                fontSize="24"
+              >
                 ?
               </text>
             </svg>
-            <span className="text-sm text-[#94a3b8]">Chatbot</span>
+            <span className="text-[#94a3b8] text-sm">Chatbot</span>
           </div>
 
           <motion.div
@@ -52,7 +58,7 @@ export function ClosingSlide() {
             animate={{ opacity: 1 }}
             transition={{ delay: 0.8, duration: 0.5 }}
           >
-            <svg viewBox="0 0 120 100" className="h-16 w-24 md:h-20 md:w-28">
+            <svg viewBox="0 0 120 100" className="w-24 md:w-28 h-16 md:h-20">
               <circle
                 cx="60"
                 cy="25"
@@ -99,20 +105,20 @@ export function ClosingSlide() {
                 </g>
               ))}
             </svg>
-            <span className="text-sm text-[#a78bfa]">Sistema distribuito</span>
+            <span className="text-[#a78bfa] text-sm">Sistema distribuito</span>
           </motion.div>
         </div>
       </FadeIn>
 
       <FadeIn delay={1.2}>
-        <div className="mx-auto mt-10 max-w-2xl rounded-xl border border-[#a78bfa]/20 bg-[#a78bfa]/5 p-6 md:p-8">
-          <p className="text-lg leading-relaxed md:text-xl">
+        <div className="bg-[#a78bfa]/5 mx-auto mt-10 p-6 md:p-8 border border-[#a78bfa]/20 rounded-xl max-w-2xl">
+          <p className="text-lg md:text-xl leading-relaxed">
             Separare <span className="font-bold text-[#60a5fa]">planning</span>,{" "}
             <span className="font-bold text-[#fbbf24]">esecuzione</span> e{" "}
             <span className="font-bold text-[#a78bfa]">review</span> non e solo
             piu veloce.
           </p>
-          <p className="mt-2 text-lg leading-relaxed text-[#94a3b8] md:text-xl">
+          <p className="mt-2 text-[#94a3b8] text-lg md:text-xl leading-relaxed">
             E strutturalmente piu affidabile.
           </p>
         </div>

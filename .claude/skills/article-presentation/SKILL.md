@@ -49,18 +49,21 @@ Wait for confirmation before proceeding.
 Think of these as layout patterns you can mix and match. Each presentation will use a different combination depending on the content. You are not limited to these — invent new layouts when the content calls for it.
 
 ### Visual-first slides
+
 - **Flowchart slide** — an SVG flowchart that builds step by step with staggered animations. Great for processes, pipelines, decision trees.
 - **Diagram slide** — a relationship diagram, architecture overview, or concept map rendered as inline SVG with animated connections.
 - **Comparison slide** — two or three columns that animate in, showing before/after, good/bad, or option A vs B.
 - **Timeline slide** — a horizontal or vertical progression showing evolution or sequence of steps.
 
 ### Content slides
+
 - **Statement slide** — a single bold statement or question, centered. No bullet points. Used to introduce a key idea or create a pause.
 - **Code spotlight slide** — a code block with specific lines or sections that highlight sequentially via animation, with annotations that appear alongside.
 - **Quote/insight slide** — a key insight from the article, typographically prominent, with optional supporting context below.
 - **Key points slide** — when (and only when) a list of points genuinely is the best format, show 3-5 short items with staggered entrance. But ask yourself first: could this be a flowchart or diagram instead?
 
 ### Structural slides
+
 - **Title slide** — article title, a punchy presentation-specific subtitle, and tags.
 - **Section divider** — a full-screen heading that marks a major shift in topic.
 - **Closing slide** — final takeaways. Can be a summary diagram, a set of principles, or a single memorable statement.
@@ -72,6 +75,7 @@ Think of these as layout patterns you can mix and match. Each presentation will 
 Each presentation is a **static page** at `src/app/articles/[slug]/presentazione/page.tsx`. This is a regular Next.js page component — not a dynamic route reading from JSON.
 
 The page should:
+
 - Be a server component that renders the presentation shell
 - Import a client component for the interactive slideshow (navigation, animations)
 - Keep slide content in local component files in the same `presentazione/` folder (one slide component per file)

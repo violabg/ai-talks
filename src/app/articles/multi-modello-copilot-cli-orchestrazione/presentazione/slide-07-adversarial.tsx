@@ -26,12 +26,12 @@ export function AdversarialSlide() {
   return (
     <div>
       <FadeIn>
-        <h2 className="mb-4 text-center text-2xl font-bold text-[#a78bfa] md:text-4xl">
+        <h2 className="mb-4 font-bold text-[#a78bfa] text-2xl md:text-4xl text-center">
           Adversarial Review
         </h2>
       </FadeIn>
       <FadeIn delay={0.15}>
-        <p className="mb-6 text-center text-sm text-[#94a3b8]">
+        <p className="mb-6 text-[#94a3b8] text-sm text-center">
           Modelli diversi trovano errori diversi: i punti ciechi non si
           propagano.
         </p>

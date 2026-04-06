@@ -4,13 +4,13 @@ export function ComparisonSlide() {
   return (
     <div>
       <FadeIn>
-        <h2 className="mb-10 text-center text-2xl font-bold text-[#a78bfa] md:text-4xl">
+        <h2 className="mb-10 font-bold text-[#a78bfa] text-2xl md:text-4xl text-center">
           Agente singolo vs. Sistema distribuito
         </h2>
       </FadeIn>
-      <div className="grid gap-8 md:grid-cols-2">
+      <div className="gap-8 grid md:grid-cols-2">
         <FadeInLeft delay={0.2}>
-          <div className="rounded-xl border border-[#fbbf24]/30 bg-[#fbbf24]/5 p-6">
+          <div className="bg-[#fbbf24]/5 p-6 border border-[#fbbf24]/30 rounded-xl">
             <svg viewBox="0 0 300 220" className="mx-auto mb-4 w-full max-w-75">
               <rect
                 x="75"
@@ -59,14 +59,14 @@ export function ComparisonSlide() {
                 </g>
               ))}
             </svg>
-            <p className="text-center text-sm text-[#fbbf24]">
+            <p className="text-[#fbbf24] text-sm text-center">
               Tutto accettabile, niente eccellente
             </p>
           </div>
         </FadeInLeft>
 
         <FadeInLeft delay={0.5}>
-          <div className="rounded-xl border border-[#34d399]/30 bg-[#34d399]/5 p-6">
+          <div className="bg-[#34d399]/5 p-6 border border-[#34d399]/30 rounded-xl">
             <svg viewBox="0 0 300 220" className="mx-auto mb-4 w-full max-w-75">
               <circle
                 cx="150"
@@ -145,11 +145,17 @@ export function ComparisonSlide() {
                 stroke={MODEL_COLORS.haiku}
                 strokeWidth="1"
               />
-              <text x="30" y="28" textAnchor="middle" fill={MODEL_COLORS.haiku} fontSize="10">
+              <text
+                x="30"
+                y="28"
+                textAnchor="middle"
+                fill={MODEL_COLORS.haiku}
+                fontSize="10"
+              >
                 Explore
               </text>
             </svg>
-            <p className="text-center text-sm text-[#34d399]">
+            <p className="text-[#34d399] text-sm text-center">
               Ogni agente eccelle nel suo dominio
             </p>
           </div>

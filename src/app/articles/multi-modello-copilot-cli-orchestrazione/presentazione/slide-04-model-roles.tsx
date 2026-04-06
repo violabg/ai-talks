@@ -31,21 +31,21 @@ export function ModelRolesSlide() {
   return (
     <div>
       <FadeIn>
-        <h2 className="mb-8 text-center text-2xl font-bold text-[#a78bfa] md:text-4xl">
+        <h2 className="mb-8 font-bold text-[#a78bfa] text-2xl md:text-4xl text-center">
           Ogni modello ha un ruolo
         </h2>
       </FadeIn>
-      <div className="grid grid-cols-2 gap-4 md:gap-6">
+      <div className="gap-4 md:gap-6 grid grid-cols-2">
         {roles.map((role, i) => (
           <FadeIn key={role.model} delay={0.2 + i * 0.15}>
             <div
-              className="rounded-xl border p-5 md:p-6"
+              className="p-5 md:p-6 border rounded-xl"
               style={{
                 borderColor: `${role.color}40`,
                 backgroundColor: `${role.color}08`,
               }}
             >
-              <div className="mb-2 flex items-center gap-3">
+              <div className="flex items-center gap-3 mb-2">
                 <svg viewBox="0 0 32 32" className="size-8 shrink-0">
                   <circle
                     cx="16"
@@ -71,16 +71,16 @@ export function ModelRolesSlide() {
                   <p className="font-bold" style={{ color: role.color }}>
                     {role.model}
                   </p>
-                  <p className="text-xs text-[#94a3b8]">{role.role}</p>
+                  <p className="text-[#94a3b8] text-xs">{role.role}</p>
                 </div>
               </div>
-              <p className="text-sm text-[#94a3b8]">{role.desc}</p>
+              <p className="text-[#94a3b8] text-sm">{role.desc}</p>
             </div>
           </FadeIn>
         ))}
       </div>
       <FadeIn delay={0.9}>
-        <p className="mt-6 text-center text-sm italic text-[#94a3b8]">
+        <p className="mt-6 text-[#94a3b8] text-sm text-center italic">
           Non tutti i task richiedono il modello piu potente: un modello veloce
           e spesso la scelta migliore.
         </p>

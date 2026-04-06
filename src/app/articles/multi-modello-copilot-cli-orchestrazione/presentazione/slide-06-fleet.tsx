@@ -11,13 +11,13 @@ export function FleetSlide() {
   return (
     <div>
       <FadeIn>
-        <h2 className="mb-4 text-center text-2xl font-bold text-[#a78bfa] md:text-4xl">
+        <h2 className="mb-4 font-bold text-[#a78bfa] text-2xl md:text-4xl text-center">
           Fleet: parallelizzazione nativa
         </h2>
       </FadeIn>
       <FadeIn delay={0.15}>
-        <p className="mb-8 text-center text-sm text-[#94a3b8]">
-          <code className="rounded bg-[#1e293b] px-2 py-0.5 font-mono text-[#a78bfa]">
+        <p className="mb-8 text-[#94a3b8] text-sm text-center">
+          <code className="bg-[#1e293b] px-2 py-0.5 rounded font-mono text-[#a78bfa]">
             /fleet
           </code>{" "}
           analizza la richiesta, la decompone e distribuisce i task in parallelo
