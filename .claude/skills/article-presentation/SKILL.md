@@ -74,7 +74,7 @@ Each presentation is a **static page** at `src/app/articles/[slug]/presentazione
 The page should:
 - Be a server component that renders the presentation shell
 - Import a client component for the interactive slideshow (navigation, animations)
-- Contain all slide content inline — no external JSON files
+- Keep slide content in local component files in the same `presentazione/` folder (one slide component per file)
 - Include inline SVG graphics directly in the JSX
 
 ### File Structure
@@ -82,12 +82,16 @@ The page should:
 ```
 src/app/articles/[slug]/presentazione/
 ├── page.tsx          # Server component — metadata, static params, shell
-└── slides.tsx        # "use client" — all slides, animations, navigation, SVGs
+├── slides.tsx        # "use client" — slideshow shell, navigation, transitions
+├── slide-01-*.tsx    # Slide 1 component
+├── slide-02-*.tsx    # Slide 2 component
+└── ...               # Continue with one file per slide in this folder
 ```
 
 ### Technical Requirements
 
 - **Animations**: Use `motion/react` and `motion/react-client` (already installed). Every slide should have entrance animations. Flowcharts and diagrams should build incrementally — elements appearing with staggered delays.
+- **Slide components**: Every slide must live in a separate component file in the same `presentazione/` folder. Avoid monolithic `slides.tsx` files containing all slide JSX.
 - **SVG**: Create inline SVG graphics directly in the JSX. Use the presentation's color palette (see below). SVGs should be responsive (use viewBox, not fixed dimensions).
 - **Navigation**: Arrow keys, spacebar (next), click left/right halves. Show slide count. Progress bar at bottom.
 - **Responsive**: Must work on desktop and mobile. Use Tailwind breakpoints.
@@ -117,11 +121,7 @@ The page must work with Next.js static generation. Add `generateStaticParams` th
 
 ### Connecting to the Article Page
 
-The article page at `src/app/articles/[slug]/page.tsx` already has logic to show a "Inizia presentazione" button when `hasPresentation(slug)` returns true. This function checks for JSON files in `content/presentations/`. 
-
-To make the button appear, create an empty marker file at `content/presentations/[slug].json` with just `{}`. The actual presentation content lives in the page component, not in this JSON — the marker file just triggers the button visibility.
-
-Alternatively, if you prefer, you can modify the `hasPresentation` function in `src/lib/presentations.ts` and the button in the article page to check for the existence of the presentazione route directory instead. Use your judgment on which approach is cleaner.
+The article page at `src/app/articles/[slug]/page.tsx` shows the "Inizia presentazione" button when `hasPresentation(slug)` returns true. In this project, `hasPresentation` should check if `src/app/articles/[slug]/presentazione/` exists.
 
 ## Quality Standards
 

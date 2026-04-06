@@ -1,0 +1,18 @@
+{
+  "hooks": {
+    "SessionStart": [
+      {
+        "type": "command",
+        "command": "bash .github/hooks/scripts/remind-article-presentation-policy.sh",
+        "timeout": 5
+      }
+    ],
+    "Stop": [
+      {
+        "type": "command",
+        "command": "bash .github/hooks/scripts/check-article-presentation-sync.sh",
+        "timeout": 15
+      }
+    ]
+  }
+}
