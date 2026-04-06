@@ -10,7 +10,7 @@
           },
           {
             "type": "command",
-            "command": "cd /Users/paolo/Sites/ai/ai-course && bash .github/hooks/scripts/auto-sync-article-presentation.sh",
+            "command": "cd /Users/paolo/Sites/ai/ai-course && bash .claude/hooks/scripts/auto-sync-article-presentation.sh",
             "timeout": 10
           }
         ]
