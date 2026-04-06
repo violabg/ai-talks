@@ -8,6 +8,7 @@ import {
   getArticleSource,
   shouldShowDraftBadge,
 } from "@/lib/articles";
+import { hasPresentation } from "@/lib/presentations";
 import type { ArticleFrontmatter, ArticleSection } from "@/types/article";
 import GithubSlugger from "github-slugger";
 import matter from "gray-matter";
@@ -143,6 +144,7 @@ export default async function ArticlePage({
     : undefined;
 
   const readingTime = Math.max(1, Math.ceil(source.split(/\s+/).length / 200));
+  const showPresentation = hasPresentation(slug);
 
   return (
     <div className="relative">
@@ -224,6 +226,53 @@ export default async function ArticlePage({
                   {readingTime} min
                 </span>
               </div>
+
+              {showPresentation && (
+                <Link
+                  href={`/articles/${slug}/presentazione`}
+                  className="group inline-flex items-center gap-2 mt-6 px-4 py-2 rounded-lg bg-primary/10 border border-primary/20 text-primary hover:bg-primary/20 text-sm font-medium transition-colors"
+                >
+                  <svg
+                    width="16"
+                    height="16"
+                    viewBox="0 0 16 16"
+                    fill="none"
+                    className="transition-transform group-hover:scale-110"
+                  >
+                    <rect
+                      x="1"
+                      y="2"
+                      width="14"
+                      height="10"
+                      rx="1.5"
+                      stroke="currentColor"
+                      strokeWidth="1.5"
+                    />
+                    <path
+                      d="M6.5 5.5L10.5 7.5L6.5 9.5V5.5Z"
+                      fill="currentColor"
+                    />
+                    <line
+                      x1="8"
+                      y1="12"
+                      x2="8"
+                      y2="14"
+                      stroke="currentColor"
+                      strokeWidth="1.5"
+                    />
+                    <line
+                      x1="5"
+                      y1="14"
+                      x2="11"
+                      y2="14"
+                      stroke="currentColor"
+                      strokeWidth="1.5"
+                      strokeLinecap="round"
+                    />
+                  </svg>
+                  Inizia presentazione
+                </Link>
+              )}
             </div>
           </div>
         </div>
