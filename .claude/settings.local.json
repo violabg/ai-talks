@@ -53,7 +53,9 @@
       "Bash(rm /Users/paolo/Sites/ai/ai-course/src/app/api/tts/route.ts)",
       "Bash(rmdir /Users/paolo/Sites/ai/ai-course/src/app/api/tts)",
       "Bash(rmdir /Users/paolo/Sites/ai/ai-course/src/app/api)",
-      "Bash(pnpm remove:*)"
+      "Bash(pnpm remove:*)",
+      "Skill(shadcn)",
+      "Bash(pnpm dlx:*)"
     ]
   }
 }

@@ -106,11 +106,41 @@ All components live in `src/components/presentation/`:
 - Firefox: `onboundary` events may not fire, orb falls back to smooth oscillation
 - Mobile: works on iOS/Android, voice quality depends on device
 
+## Features
+
+### First-Time Prompt
+On first visit (or when localStorage is cleared), a shadcn/ui Dialog modal appears asking if the user wants narration enabled. Options:
+- "Sì, attiva" — enables narration with Google voice (if available) or a system Italian voice
+- "No, grazie" — disables narration
+
+The preference is saved to `localStorage` and persists across sessions.
+
+### Default Voice Selection
+When available voices are first discovered, the system automatically selects:
+1. **Google voice (Italian)** — if found in the system voices (preferred for quality)
+2. **System local voice (Italian)** — any local system voice as fallback
+3. **First Italian voice** — any other Italian voice in the list
+
+### 1-Second Delay
+Speech automatically delays by 1 second after navigating to a new slide. This gives the slide animation time to complete before audio starts.
+
+### Voice Selection Dropdown
+When narration is enabled, a dropdown menu (Select component from shadcn/ui) appears showing all available Italian system voices. Users can:
+- See voice name and indicator for local system voices "(locale)"
+- Switch voices on the fly; changes apply to the next slide
+- Voice preference is saved to `localStorage` per browser
+
+### Narration ID
+Each time the user toggles narration on/off, a unique `narrationId` is generated (using `Date.now()`). This ensures proper state isolation if narration is toggled rapidly.
+
 ## Verify
 
 1. `pnpm build` passes
-2. Click narration toggle → Italian voice reads the slide text
-3. Navigate to next slide → previous speech stops, new starts
-4. Toggle off → speech stops, orb disappears
-5. Slide with empty text → silence, no error
-6. Orb pulses in sync with speech cadence
+2. First visit → Dialog modal appears: "Narrazione Vocale — Desideri attivare la narrazione vocale per questa presentazione?" with "No, grazie" and "Sì, attiva" buttons
+3. Click "Sì, attiva" → dialog closes, toggle button shows Volume2 icon, voice selector dropdown appears with Italian voices
+4. Default voice is Google voice (if available), otherwise a system local voice
+5. Click the voice dropdown → see list of Italian voices with "(locale)" indicator for system voices, select one
+6. Navigate to next slide → 1-second delay, then speech starts in selected voice
+7. Toggle volume button → toggles narration on/off, dropdown hides when disabled, narrationId updates
+8. Refresh page → narration preference and voice selection are restored from localStorage
+9. Voice preference persists across different presentations

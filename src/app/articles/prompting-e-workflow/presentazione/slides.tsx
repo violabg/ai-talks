@@ -1,6 +1,7 @@
 "use client";
 
 import { AudioOrb } from "@/components/presentation/audio-orb";
+import { NarrationDialog } from "@/components/presentation/narration-dialog";
 import { NarrationProvider } from "@/components/presentation/narration-provider";
 import { NarrationToggle } from "@/components/presentation/narration-toggle";
 import { AnimatePresence } from "motion/react";
@@ -139,6 +140,7 @@ export function PresentationSlides({ slug }: { slug: string }) {
         </div>
       </div>
       <AudioOrb />
+      <NarrationDialog />
     </div>
     </NarrationProvider>
   );
