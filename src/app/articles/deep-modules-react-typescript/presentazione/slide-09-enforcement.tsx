@@ -33,6 +33,30 @@ export function Slide09Enforcement() {
 
         <div className="bg-[#0b1222] p-4 border border-[#334155] rounded-xl">
           <svg viewBox="0 0 520 310" className="w-full">
+            <defs>
+              <marker
+                id="arrow-green"
+                viewBox="0 0 10 10"
+                refX="8"
+                refY="5"
+                markerWidth="5"
+                markerHeight="5"
+                orient="auto-start-reverse"
+              >
+                <path d="M 0 0 L 10 5 L 0 10 z" fill="#34d399" />
+              </marker>
+              <marker
+                id="arrow-red"
+                viewBox="0 0 10 10"
+                refX="8"
+                refY="5"
+                markerWidth="5"
+                markerHeight="5"
+                orient="auto-start-reverse"
+              >
+                <path d="M 0 0 L 10 5 L 0 10 z" fill="#f87171" />
+              </marker>
+            </defs>
             <motion.rect
               x="30"
               y="38"
@@ -86,6 +110,7 @@ export function Slide09Enforcement() {
               y2="122"
               stroke="#34d399"
               strokeWidth="4"
+              markerEnd="url(#arrow-green)"
               initial={{ pathLength: 0, opacity: 0 }}
               animate={{ pathLength: 1, opacity: 1 }}
               transition={{ delay: 0.38, duration: 0.35 }}
@@ -109,13 +134,14 @@ export function Slide09Enforcement() {
               y2="110"
               stroke="#f87171"
               strokeWidth="4"
+              markerEnd="url(#arrow-red)"
               initial={{ pathLength: 0, opacity: 0 }}
               animate={{ pathLength: 1, opacity: 1 }}
               transition={{ delay: 0.52, duration: 0.35 }}
             />
             <motion.text
-              x="208"
-              y="172"
+              x="200"
+              y="195"
               fill="#f87171"
               fontSize="12"
               initial={{ opacity: 0 }}

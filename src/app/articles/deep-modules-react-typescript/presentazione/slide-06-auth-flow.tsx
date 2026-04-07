@@ -19,6 +19,19 @@ export function Slide06AuthFlow() {
       <div className="bg-[#0b1222] mx-auto p-5 sm:p-8 border border-[#334155] rounded-2xl w-full max-w-6xl">
         <div className="mx-auto w-full max-w-5xl">
           <svg viewBox="0 0 760 360" className="w-full">
+            <defs>
+              <marker
+                id="arrow-slate"
+                viewBox="0 0 10 10"
+                refX="8"
+                refY="5"
+                markerWidth="5"
+                markerHeight="5"
+                orient="auto-start-reverse"
+              >
+                <path d="M 0 0 L 10 5 L 0 10 z" fill="#94a3b8" />
+              </marker>
+            </defs>
             {steps.map((step, i) => {
               const x = 74 + i * 168;
               const y = 94 + (i % 2) * 86;
@@ -61,26 +74,21 @@ export function Slide06AuthFlow() {
                   animate={{ opacity: 1 }}
                   transition={{ delay: 0.35 + i * 0.16 }}
                 >
-                  <line
-                    x1={x}
-                    y1={122 + (i % 2) * 86}
-                    x2={x + 30}
-                    y2={122 + ((i + 1) % 2) * 86}
+                  <path
+                    d={`M ${x} ${122 + (i % 2) * 86} L ${x + 15} ${122 + (i % 2) * 86} L ${x + 15} ${122 + ((i + 1) % 2) * 86} L ${x + 30} ${122 + ((i + 1) % 2) * 86}`}
                     stroke="#94a3b8"
                     strokeWidth="3"
-                  />
-                  <polygon
-                    points={`${x + 30},${122 + ((i + 1) % 2) * 86} ${x + 20},${116 + ((i + 1) % 2) * 86} ${x + 20},${128 + ((i + 1) % 2) * 86}`}
-                    fill="#94a3b8"
+                    fill="none"
+                    markerEnd="url(#arrow-slate)"
                   />
                 </motion.g>
               );
             })}
 
             <motion.rect
-              x="238"
+              x="180"
               y="260"
-              width="286"
+              width="400"
               height="64"
               rx="12"
               fill="rgba(167,139,250,0.2)"

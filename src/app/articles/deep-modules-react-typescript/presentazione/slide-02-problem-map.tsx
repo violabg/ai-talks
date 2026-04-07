@@ -23,6 +23,19 @@ export function Slide02ProblemMap() {
         <div className="bg-[#0b1222] mx-auto p-4 sm:p-7 border border-[#334155] rounded-2xl w-full max-w-6xl">
           <div className="mx-auto w-full max-w-5xl">
             <svg viewBox="0 0 700 380" className="w-full">
+              <defs>
+                <marker
+                  id="arrow-red"
+                  viewBox="0 0 10 10"
+                  refX="6"
+                  refY="5"
+                  markerWidth="6"
+                  markerHeight="6"
+                  orient="auto-start-reverse"
+                >
+                  <path d="M 0 0 L 10 5 L 0 10 z" fill="#f87171" opacity="0.65" />
+                </marker>
+              </defs>
               <motion.text
                 x="350"
                 y="34"
@@ -44,9 +57,9 @@ export function Slide02ProblemMap() {
                   transition={{ delay: 0.12 + i * 0.08, duration: 0.35 }}
                 >
                   <rect
-                    x={node.x - 64}
+                    x={node.x - 70}
                     y={node.y - 20}
-                    width="128"
+                    width="140"
                     height="40"
                     rx="10"
                     fill="rgba(248,113,113,0.14)"
@@ -67,16 +80,27 @@ export function Slide02ProblemMap() {
               {[0, 1, 2, 3, 4, 5].map((i) => {
                 const a = nodes[i];
                 const b = nodes[(i + 2) % nodes.length];
+                const dx = b.x - a.x;
+                const dy = b.y - a.y;
+                const padX = 70;
+                const padY = 20;
+                const t = Math.min(Math.abs(padX / dx), Math.abs(padY / dy));
+                const x1 = a.x + dx * t;
+                const y1 = a.y + dy * t;
+                const x2 = b.x - dx * t;
+                const y2 = b.y - dy * t;
+
                 return (
                   <motion.line
                     key={`${a.label}-${b.label}`}
-                    x1={a.x}
-                    y1={a.y}
-                    x2={b.x}
-                    y2={b.y}
+                    x1={x1}
+                    y1={y1}
+                    x2={x2}
+                    y2={y2}
                     stroke="#f87171"
                     strokeWidth="2"
                     strokeDasharray="8 8"
+                    markerEnd="url(#arrow-red)"
                     initial={{ pathLength: 0, opacity: 0 }}
                     animate={{ pathLength: 1, opacity: 0.65 }}
                     transition={{ delay: 0.42 + i * 0.06, duration: 0.45 }}
@@ -85,9 +109,9 @@ export function Slide02ProblemMap() {
               })}
 
               <motion.rect
-                x="250"
+                x="220"
                 y="145"
-                width="200"
+                width="260"
                 height="92"
                 rx="16"
                 fill="rgba(15,23,42,0.95)"
@@ -107,7 +131,7 @@ export function Slide02ProblemMap() {
                 animate={{ opacity: 1 }}
                 transition={{ delay: 0.98 }}
               >
-                "Dove inizio?"
+                &quot;Dove inizio?&quot;
               </motion.text>
               <motion.text
                 x="350"

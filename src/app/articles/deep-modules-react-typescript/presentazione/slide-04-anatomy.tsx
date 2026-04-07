@@ -18,6 +18,19 @@ export function Slide04Anatomy() {
       >
         <div className="mx-auto w-full max-w-5xl">
           <svg viewBox="0 0 760 430" className="w-full">
+            <defs>
+              <marker
+                id="arrow-purple"
+                viewBox="0 0 10 10"
+                refX="8"
+                refY="5"
+                markerWidth="5"
+                markerHeight="5"
+                orient="auto-start-reverse"
+              >
+                <path d="M 0 0 L 10 5 L 0 10 z" fill="#a78bfa" />
+              </marker>
+            </defs>
             <motion.rect
               x="34"
               y="42"
@@ -51,7 +64,7 @@ export function Slide04Anatomy() {
             </text>
 
             <motion.rect
-              x="430"
+              x="480"
               y="92"
               width="250"
               height="262"
@@ -62,7 +75,7 @@ export function Slide04Anatomy() {
               animate={{ opacity: 1, x: 0 }}
               transition={{ delay: 0.38 }}
             />
-            <text x="455" y="126" fill="#34d399" fontSize="20" fontWeight="700">
+            <text x="505" y="126" fill="#34d399" fontSize="20" fontWeight="700">
               _internal/
             </text>
 
@@ -80,7 +93,7 @@ export function Slide04Anatomy() {
                 transition={{ delay: 0.48 + i * 0.08 }}
               >
                 <rect
-                  x="448"
+                  x="498"
                   y={146 + i * 38}
                   width="214"
                   height="28"
@@ -88,7 +101,7 @@ export function Slide04Anatomy() {
                   fill="rgba(15,23,42,0.8)"
                   stroke="rgba(148,163,184,0.35)"
                 />
-                <text x="462" y={165 + i * 38} fill="#cbd5e1" fontSize="13">
+                <text x="512" y={165 + i * 38} fill="#cbd5e1" fontSize="13">
                   {item}
                 </text>
               </motion.g>
@@ -97,26 +110,28 @@ export function Slide04Anatomy() {
             <motion.line
               x1="326"
               y1="146"
-              x2="430"
+              x2="480"
               y2="146"
               stroke="#a78bfa"
               strokeWidth="4"
               strokeDasharray="9 8"
+              markerEnd="url(#arrow-purple)"
               initial={{ pathLength: 0, opacity: 0 }}
               animate={{ pathLength: 1, opacity: 1 }}
               transition={{ delay: 0.64, duration: 0.5 }}
             />
             <motion.text
-              x="378"
-              y="136"
+              x="403"
+              y="126"
               textAnchor="middle"
               fill="#a78bfa"
-              fontSize="13"
+              fontSize="12"
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ delay: 0.8 }}
             >
-              unico punto di contatto
+              <tspan x="403" dy="0">unico punto</tspan>
+              <tspan x="403" dy="1.2em">di contatto</tspan>
             </motion.text>
 
             <motion.text
