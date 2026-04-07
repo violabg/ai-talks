@@ -1,12 +1,38 @@
 import * as motion from "motion/react-client";
 import { FadeIn } from "./slide-shared";
 
+// Center box bounds
+const BOX = { x: 135, y: 128, w: 150, h: 44 };
+const BOX_CX = BOX.x + BOX.w / 2; // 210
+const BOX_CY = BOX.y + BOX.h / 2; // 150
+
 const nodes = [
-  { title: "Contesto", x: 100, y: 80, color: "#60a5fa" },
-  { title: "Obiettivo", x: 320, y: 80, color: "#34d399" },
-  { title: "Vincoli", x: 100, y: 220, color: "#fbbf24" },
-  { title: "Successo", x: 320, y: 220, color: "#f87171" },
+  { title: "Contesto",  x: 100, y: 80,  color: "#60a5fa" },
+  { title: "Obiettivo", x: 320, y: 80,  color: "#34d399" },
+  { title: "Vincoli",   x: 100, y: 220, color: "#fbbf24" },
+  { title: "Successo",  x: 320, y: 220, color: "#f87171" },
 ];
+
+// For each node compute the line start (edge of node rect) and end (edge of center box)
+function lineEndpoints(node: typeof nodes[0]) {
+  // Start: bottom or top edge of the node rect (height 48, half = 24)
+  const startY = node.y < BOX_CY ? node.y + 24 : node.y - 24;
+  const startX = node.x;
+
+  // Direction toward box center
+  const dx = BOX_CX - startX;
+  const dy = BOX_CY - startY;
+
+  // Find t where line hits top or bottom edge of center box
+  const tTop    = (BOX.y - startY) / dy;
+  const tBottom = (BOX.y + BOX.h - startY) / dy;
+  const t = node.y < BOX_CY ? tTop : tBottom;
+
+  const endX = startX + t * dx;
+  const endY = startY + t * dy;
+
+  return { x1: startX, y1: startY, x2: endX, y2: endY };
+}
 
 export function Slide02Anatomy() {
   return (
@@ -23,6 +49,24 @@ export function Slide02Anatomy() {
       </FadeIn>
       <div className="flex justify-center">
         <svg viewBox="0 0 420 300" className="w-full max-w-3xl">
+          {/* Lines first — behind everything */}
+          {nodes.map((node, i) => {
+            const { x1, y1, x2, y2 } = lineEndpoints(node);
+            return (
+              <motion.line
+                key={`line-${node.title}`}
+                x1={x1} y1={y1} x2={x2} y2={y2}
+                stroke={node.color}
+                strokeWidth="1.5"
+                strokeDasharray="5 3"
+                initial={{ pathLength: 0, opacity: 0 }}
+                animate={{ pathLength: 1, opacity: 0.65 }}
+                transition={{ duration: 0.4, delay: 0.9 + i * 0.12 }}
+              />
+            );
+          })}
+
+          {/* Corner nodes */}
           {nodes.map((node, i) => (
             <motion.g
               key={node.title}
@@ -54,32 +98,27 @@ export function Slide02Anatomy() {
             </motion.g>
           ))}
 
-          {nodes.map((node, i) => (
-            <motion.line
-              key={`line-${node.title}`}
-              x1={node.x}
-              y1={node.y + (node.y < 150 ? 24 : -24)}
-              x2="210"
-              y2="150"
-              stroke={node.color}
-              strokeWidth="1.5"
-              strokeDasharray="5 3"
-              initial={{ pathLength: 0, opacity: 0 }}
-              animate={{ pathLength: 1, opacity: 0.65 }}
-              transition={{ duration: 0.4, delay: 0.9 + i * 0.12 }}
-            />
-          ))}
-
+          {/* Center box — solid background first to mask any line overshoot */}
           <motion.g
             initial={{ opacity: 0, y: 8 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.4, delay: 1.5 }}
           >
+            {/* Solid backing rect */}
             <rect
-              x="135"
-              y="128"
-              width="150"
-              height="44"
+              x={BOX.x}
+              y={BOX.y}
+              width={BOX.w}
+              height={BOX.h}
+              rx="12"
+              fill="#0f172a"
+            />
+            {/* Styled overlay */}
+            <rect
+              x={BOX.x}
+              y={BOX.y}
+              width={BOX.w}
+              height={BOX.h}
               rx="12"
               fill="#a78bfa"
               fillOpacity="0.2"
@@ -87,8 +126,8 @@ export function Slide02Anatomy() {
               strokeWidth="1.5"
             />
             <text
-              x="210"
-              y="154"
+              x={BOX_CX}
+              y={BOX_CY + 5}
               textAnchor="middle"
               fill="#a78bfa"
               fontSize="13"
