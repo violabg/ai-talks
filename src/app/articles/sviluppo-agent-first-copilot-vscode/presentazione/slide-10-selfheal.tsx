@@ -107,18 +107,19 @@ export function Slide10SelfHeal() {
 
           {/* Self-heal arc annotation */}
           <motion.path
-            d="M 590 150 Q 640 100 640 50 Q 640 30 590 30 Q 200 30 200 30"
+            d="M 590 150 L 630 150 L 630 15 L 200 15 L 200 24"
             fill="none"
             stroke="var(--pres-success)"
             strokeWidth="1.5"
             strokeDasharray="6 3"
+            strokeLinejoin="round"
             opacity={0}
             initial={{ pathLength: 0, opacity: 0 }}
             animate={{ pathLength: 1, opacity: 0.4 }}
             transition={{ duration: 0.8, delay: 2.0 }}
           />
           <motion.text
-            x={620} y={95}
+            x={645} y={85}
             textAnchor="middle"
             fill="var(--pres-success)"
             fontSize="9"

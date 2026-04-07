@@ -173,7 +173,7 @@ export function Slide03Pillars() {
             <motion.circle
               cx={cx}
               cy={cy}
-              r={28}
+              r={34}
               fill="var(--pres-accent-dim)"
               stroke="var(--pres-accent)"
               strokeWidth="1.5"
@@ -184,10 +184,10 @@ export function Slide03Pillars() {
             />
             <motion.text
               x={cx}
-              y={cy - 6}
+              y={cy - 4}
               textAnchor="middle"
               fill="var(--pres-accent)"
-              fontSize="10"
+              fontSize="13"
               fontWeight="600"
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
@@ -197,10 +197,10 @@ export function Slide03Pillars() {
             </motion.text>
             <motion.text
               x={cx}
-              y={cy + 8}
+              y={cy + 12}
               textAnchor="middle"
               fill="var(--pres-accent)"
-              fontSize="9"
+              fontSize="12"
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ delay: 0.4 }}
@@ -224,7 +224,7 @@ export function Slide03Pillars() {
                   <circle
                     cx={nx}
                     cy={ny}
-                    r={22}
+                    r={28}
                     fill={`color-mix(in srgb, ${p.color} 12%, transparent)`}
                     stroke={p.color}
                     strokeWidth="1.5"
@@ -234,7 +234,7 @@ export function Slide03Pillars() {
                     y={ny + 4}
                     textAnchor="middle"
                     fill={p.color}
-                    fontSize="8.5"
+                    fontSize="11"
                     fontWeight="700"
                   >
                     {p.label}
