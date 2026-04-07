@@ -56,8 +56,8 @@ export function Slide04Cycle() {
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5 }}
       >
-        Dal <span className="text-[var(--pres-accent)]">Pensiero</span> all&apos;
-        <span className="text-[var(--pres-success)]">Azione</span>
+        Dal <span className="text-[var(--pres-accent)]">Pensiero</span>{" "}
+        all&apos;<span className="text-[var(--pres-success)]">Azione</span>
       </motion.h2>
 
       <div className="flex flex-col items-center w-full max-w-2xl gap-0">

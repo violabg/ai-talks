@@ -2,72 +2,158 @@
 
 import { motion } from "motion/react";
 
-// viewBox: 0 0 700 400
-// Left column x=200, Right column x=500, node h=52
+// viewBox: 0 0 820 430
+// Left column x=195, Right column x=625, node w=240 h=62
 const nodes = [
-  { id: "prompt",  label: "Prompt",          sublabel: "URL shortener con FastAPI + SQLite",           color: "var(--pres-blue)", x: 200, y: 50  },
-  { id: "plan",    label: "Plan Mode",        sublabel: "main.py · database.py · templates/ · req.txt", color: "var(--pres-accent)", x: 200, y: 150 },
-  { id: "act",     label: "Act Mode",         sublabel: "Crea i file, invoca pip install",              color: "var(--pres-accent)", x: 200, y: 250 },
-  { id: "error",   label: "Errore Terminale", sublabel: "ModuleNotFoundError: jinja2",                  color: "var(--pres-danger)", x: 200, y: 350 },
-  { id: "read",    label: "Legge l'Output",   sublabel: "L'agente analizza il traceback",               color: "var(--pres-warning)", x: 500, y: 350 },
-  { id: "fix",     label: "Auto-Fix",         sublabel: "pip install jinja2 → riavvia uvicorn",         color: "var(--pres-success)", x: 500, y: 250 },
-  { id: "success", label: "Server Avviato",   sublabel: "localhost:8000 ✓",                             color: "var(--pres-success)", x: 500, y: 150 },
+  {
+    id: "prompt",
+    label: "Prompt",
+    sublabel: "URL shortener con FastAPI + SQLite",
+    color: "var(--pres-blue)",
+    x: 195,
+    y: 55,
+  },
+  {
+    id: "plan",
+    label: "Plan Mode",
+    sublabel: "main.py · database.py · templates/ · req.txt",
+    color: "var(--pres-accent)",
+    x: 195,
+    y: 165,
+  },
+  {
+    id: "act",
+    label: "Act Mode",
+    sublabel: "Crea i file, invoca pip install",
+    color: "var(--pres-accent)",
+    x: 195,
+    y: 275,
+  },
+  {
+    id: "error",
+    label: "Errore Terminale",
+    sublabel: "ModuleNotFoundError: jinja2",
+    color: "var(--pres-danger)",
+    x: 195,
+    y: 385,
+  },
+  {
+    id: "read",
+    label: "Legge l'Output",
+    sublabel: "L'agente analizza il traceback",
+    color: "var(--pres-warning)",
+    x: 625,
+    y: 385,
+  },
+  {
+    id: "fix",
+    label: "Auto-Fix",
+    sublabel: "pip install jinja2 → riavvia uvicorn",
+    color: "var(--pres-success)",
+    x: 625,
+    y: 275,
+  },
+  {
+    id: "success",
+    label: "Server Avviato",
+    sublabel: "localhost:8000 ✓",
+    color: "var(--pres-success)",
+    x: 625,
+    y: 165,
+  },
 ];
 
 // Straight edges — vertical for same column, horizontal for cross
 const edges = [
-  { from: "prompt", to: "plan",    type: "v" },
-  { from: "plan",   to: "act",     type: "v" },
-  { from: "act",    to: "error",   type: "v" },
-  { from: "error",  to: "read",    type: "h" },
-  { from: "read",   to: "fix",     type: "v" },
-  { from: "fix",    to: "success", type: "v" },
+  { from: "prompt", to: "plan", type: "v" },
+  { from: "plan", to: "act", type: "v" },
+  { from: "act", to: "error", type: "v" },
+  { from: "error", to: "read", type: "h" },
+  { from: "read", to: "fix", type: "v" },
+  { from: "fix", to: "success", type: "v" },
 ];
 
-const NODE_W = 180;
-const NODE_H = 52;
+const NODE_W = 240;
+const NODE_H = 62;
 
 export function Slide10SelfHeal() {
   const pos: Record<string, { x: number; y: number }> = {};
-  nodes.forEach((n) => { pos[n.id] = { x: n.x, y: n.y }; });
+  nodes.forEach((n) => {
+    pos[n.id] = { x: n.x, y: n.y };
+  });
 
   return (
-    <div className="flex flex-col items-center justify-center h-full px-6">
+    <div className="flex flex-col justify-center items-center px-6 h-full">
       <motion.h2
-        className="text-2xl sm:text-3xl font-bold text-center mb-2"
+        className="mb-2 font-bold text-2xl sm:text-3xl text-center"
         initial={{ opacity: 0, y: -15 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5 }}
       >
-        L&apos;Agente che si <span className="text-[var(--pres-success)]">Auto-Ripara</span>
+        L&apos;Agente che si{" "}
+        <span className="text-[var(--pres-success)]">Auto-Ripara</span>
       </motion.h2>
       <motion.p
-        className="text-[var(--pres-muted)] text-sm mb-4 text-center max-w-xl"
+        className="mb-4 max-w-xl text-[var(--pres-muted)] text-sm text-center"
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ delay: 0.3 }}
       >
-        Esercitazione: URL Shortener da zero — senza un secondo prompt dall&apos;utente
+        Esercitazione: URL Shortener da zero — senza un secondo prompt
+        dall&apos;utente
       </motion.p>
 
       <div className="w-full max-w-4xl">
-        <svg viewBox="0 0 700 420" className="w-full">
+        <svg viewBox="0 0 820 430" className="w-full">
           <defs>
-            <marker id="arrow10" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto">
+            <marker
+              id="arrow10"
+              markerWidth="8"
+              markerHeight="6"
+              refX="7"
+              refY="3"
+              orient="auto"
+            >
               <polygon points="0 0, 8 3, 0 6" fill="var(--pres-muted)" />
             </marker>
-            <marker id="arrow10green" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto">
+            <marker
+              id="arrow10green"
+              markerWidth="8"
+              markerHeight="6"
+              refX="7"
+              refY="3"
+              orient="auto"
+            >
               <polygon points="0 0, 8 3, 0 6" fill="var(--pres-success)" />
             </marker>
           </defs>
 
           {/* Column labels */}
-          <motion.text x={200} y={16} textAnchor="middle" fill="var(--pres-muted)" fontSize="11" fontFamily="monospace"
-            initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.2 }}>
-            flus normal →
+          <motion.text
+            x={195}
+            y={15}
+            textAnchor="middle"
+            fill="var(--pres-muted)"
+            fontSize="12"
+            fontFamily="monospace"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 0.2 }}
+          >
+            flusso normale →
           </motion.text>
-          <motion.text x={500} y={16} textAnchor="middle" fill="var(--pres-success)" fontSize="11" fontFamily="monospace" opacity={0.7}
-            initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.2 }}>
+          <motion.text
+            x={625}
+            y={42}
+            textAnchor="middle"
+            fill="var(--pres-success)"
+            fontSize="12"
+            fontFamily="monospace"
+            opacity={0.7}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 0.2 }}
+          >
             ← auto-riparazione
           </motion.text>
 
@@ -79,22 +165,40 @@ export function Slide10SelfHeal() {
 
             const isGreen = edge.from === "read" || edge.from === "fix";
             const marker = isGreen ? "url(#arrow10green)" : "url(#arrow10)";
-            const stroke = isGreen ? "var(--pres-success)" : "var(--pres-muted)";
+            const stroke = isGreen
+              ? "var(--pres-success)"
+              : "var(--pres-muted)";
 
             let x1, y1, x2, y2;
             if (edge.type === "v") {
-              x1 = from.x; y1 = from.y + NODE_H / 2 + 2;
-              x2 = to.x;   y2 = to.y - NODE_H / 2 - 2;
+              if (to.y > from.y) {
+                // going down: exit bottom, enter top
+                x1 = from.x;
+                y1 = from.y + NODE_H / 2 + 2;
+                x2 = to.x;
+                y2 = to.y - NODE_H / 2 - 2;
+              } else {
+                // going up: exit top, enter bottom
+                x1 = from.x;
+                y1 = from.y - NODE_H / 2 - 2;
+                x2 = to.x;
+                y2 = to.y + NODE_H / 2 + 2;
+              }
             } else {
               // horizontal: error → read
-              x1 = from.x + NODE_W / 2 + 2; y1 = from.y;
-              x2 = to.x - NODE_W / 2 - 2;   y2 = to.y;
+              x1 = from.x + NODE_W / 2 + 2;
+              y1 = from.y;
+              x2 = to.x - NODE_W / 2 - 2;
+              y2 = to.y;
             }
 
             return (
               <motion.line
                 key={`${edge.from}-${edge.to}`}
-                x1={x1} y1={y1} x2={x2} y2={y2}
+                x1={x1}
+                y1={y1}
+                x2={x2}
+                y2={y2}
                 stroke={stroke}
                 strokeWidth="1.5"
                 markerEnd={marker}
@@ -105,24 +209,25 @@ export function Slide10SelfHeal() {
             );
           })}
 
-          {/* Self-heal arc annotation */}
+          {/* Self-heal arc: top-center of Server Avviato → right-middle of Prompt (single L-turn) */}
           <motion.path
-            d="M 590 150 L 630 150 L 630 15 L 200 15 L 200 24"
+            d={`M 625 ${165 - NODE_H / 2} L 625 55 L ${195 + NODE_W / 2} 55`}
             fill="none"
             stroke="var(--pres-success)"
             strokeWidth="1.5"
             strokeDasharray="6 3"
             strokeLinejoin="round"
-            opacity={0}
+            markerEnd="url(#arrow10green)"
             initial={{ pathLength: 0, opacity: 0 }}
             animate={{ pathLength: 1, opacity: 0.4 }}
             transition={{ duration: 0.8, delay: 2.0 }}
           />
           <motion.text
-            x={645} y={85}
-            textAnchor="middle"
+            x={643}
+            y={115}
+            textAnchor="start"
             fill="var(--pres-success)"
-            fontSize="9"
+            fontSize="10"
             fontStyle="italic"
             initial={{ opacity: 0 }}
             animate={{ opacity: 0.7 }}
@@ -152,20 +257,20 @@ export function Slide10SelfHeal() {
               />
               <text
                 x={node.x}
-                y={node.y - 7}
+                y={node.y - 8}
                 textAnchor="middle"
                 fill={node.color}
-                fontSize="13"
+                fontSize="15"
                 fontWeight="700"
               >
                 {node.label}
               </text>
               <text
                 x={node.x}
-                y={node.y + 10}
+                y={node.y + 12}
                 textAnchor="middle"
                 fill="var(--pres-muted)"
-                fontSize="9.5"
+                fontSize="11"
               >
                 {node.sublabel}
               </text>
@@ -175,10 +280,4 @@ export function Slide10SelfHeal() {
       </div>
     </div>
   );
-}
-
-function hexToRgb(hex: string): string {
-  const result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
-  if (!result) return "255,255,255";
-  return `${parseInt(result[1], 16)},${parseInt(result[2], 16)},${parseInt(result[3], 16)}`;
 }
