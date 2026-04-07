@@ -108,6 +108,34 @@ export function Slide07VideoEditor() {
               />
             ))}
 
+            {/* Dashed arrows from provider to consumer components */}
+            <motion.line
+              x1="490"
+              y1="160"
+              x2="546"
+              y2="123"
+              stroke="var(--pres-success)"
+              strokeWidth="2"
+              strokeDasharray="6 4"
+              markerEnd="url(#arrow-purple)"
+              initial={{ pathLength: 0, opacity: 0 }}
+              animate={{ pathLength: 1, opacity: 1 }}
+              transition={{ delay: 0.96, duration: 0.35 }}
+            />
+            <motion.line
+              x1="490"
+              y1="210"
+              x2="546"
+              y2="213"
+              stroke="var(--pres-success)"
+              strokeWidth="2"
+              strokeDasharray="6 4"
+              markerEnd="url(#arrow-purple)"
+              initial={{ pathLength: 0, opacity: 0 }}
+              animate={{ pathLength: 1, opacity: 1 }}
+              transition={{ delay: 1.0, duration: 0.35 }}
+            />
+
             <motion.rect
               x="548"
               y="96"
