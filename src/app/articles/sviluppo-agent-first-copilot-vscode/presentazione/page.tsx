@@ -1,6 +1,13 @@
 import type { Metadata } from "next";
-import { getAllArticleSlugs } from "@/lib/articles";
 import { Slideshow } from "./slides";
+
+const SLUG = "sviluppo-agent-first-copilot-vscode";
+
+export async function generateStaticParams() {
+  return [{}];
+}
+
+export const dynamicParams = false;
 
 export const metadata: Metadata = {
   title: "L'Era Agent-First — Presentazione",
@@ -8,18 +15,6 @@ export const metadata: Metadata = {
     "I cinque pilastri, il ciclo plan-act e il debugging trasparente con GitHub Copilot in VS Code.",
 };
 
-export async function generateStaticParams() {
-  return getAllArticleSlugs()
-    .filter((slug) => slug === "sviluppo-agent-first-copilot-vscode")
-    .map((slug) => ({ slug }));
-}
-
-export const dynamicParams = false;
-
 export default function PresentazionePage() {
-  return (
-    <div className="fixed inset-0 bg-[#0f172a] text-[#e2e8f0] overflow-hidden">
-      <Slideshow />
-    </div>
-  );
+  return <Slideshow slug={SLUG} />;
 }

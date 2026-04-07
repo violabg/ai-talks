@@ -70,14 +70,23 @@ Think of these as layout patterns you can mix and match. Each presentation will 
 
 ## Building the Presentation
 
-### Architecture
+### Architecture & Code Reuse
 
-Each presentation is a **static page** at `src/app/articles/[slug]/presentazione/page.tsx`. This is a regular Next.js page component — not a dynamic route reading from JSON.
+Each presentation is a **static page** at `src/app/articles/[slug]/presentazione/page.tsx`. All presentations use the same standard layout via the reusable `PresentationShell` component (`src/components/presentation/presentation-shell.tsx`) to ensure consistency and eliminate repetition. This component handles:
+
+- Navigation (keyboard, click, progress bar)
+- Header (back link, narration toggle, slide counter)
+- Slide transitions and animations
+- Speech narration integration
+- Audio orb visualization
+- First-time narration consent dialog
+
+Slides only need to define their visual content — all UI chrome is handled by the shell.
 
 The page should:
 
-- Be a server component that renders the presentation shell
-- Import a client component for the interactive slideshow (navigation, animations)
+- Be a server component that renders the slideshow (typically just calling `<PresentationSlides slug={SLUG} />` or `<Slideshow slug={SLUG} />`)
+- Import a client component in `slides.tsx` that uses `PresentationShell` for the interactive slideshow
 - Keep slide content in local component files in the same `presentazione/` folder (one slide component per file)
 - Include inline SVG graphics directly in the JSX
 
@@ -85,12 +94,26 @@ The page should:
 
 ```
 src/app/articles/[slug]/presentazione/
-├── page.tsx          # Server component — metadata, static params, shell
-├── slides.tsx        # "use client" — slideshow shell, navigation, transitions
-├── slide-01-*.tsx    # Slide 1 component
-├── slide-02-*.tsx    # Slide 2 component
-└── ...               # Continue with one file per slide in this folder
+├── page.tsx               # Server component — metadata, static params, simple render
+├── slides.tsx             # "use client" — imports PresentationShell from shared components
+├── slide-01-*.tsx         # Slide 1 component
+├── slide-02-*.tsx         # Slide 2 component
+├── speech.json            # Narration text for each slide (optional, required for voice)
+└── ...                    # Continue with one file per slide in this folder
 ```
+
+### Consistent Layout
+
+All presentations use the `PresentationShell` component at `src/components/presentation/presentation-shell.tsx`. This ensures:
+
+- Consistent navigation (keyboard arrows, click-to-advance, progress bar)
+- Consistent header (back link, narration toggle, slide counter)
+- Consistent animations and slide transitions
+- Built-in speech narration support
+- Audio orb visualization for narration
+- Dialog for first-time narration consent
+
+The shell handles all presentation UI chrome — slides only need to define their visual content.
 
 ### Technical Requirements
 

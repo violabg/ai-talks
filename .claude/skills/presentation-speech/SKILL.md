@@ -108,6 +108,9 @@ All components live in `src/components/presentation/`:
 
 ## Features
 
+### Automatic Cleanup
+When the user leaves the presentation page, any currently playing narration is automatically stopped via `useEffect` cleanup in the `PresentationShell` component. This prevents audio from continuing to play in the background if the user navigates away or closes the page.
+
 ### First-Time Prompt
 On first visit (or when localStorage is cleared), a shadcn/ui Dialog modal appears asking if the user wants narration enabled. Options:
 - "Sì, attiva" — enables narration with Google voice (if available) or a system Italian voice

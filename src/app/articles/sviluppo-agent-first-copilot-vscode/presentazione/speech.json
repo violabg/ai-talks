@@ -1,0 +1,38 @@
+{
+  "voice": "it-IT",
+  "slides": [
+    {
+      "text": "L'Era dello Sviluppo Agent-First: Masterclass su GitHub Copilot e VS Code. Il panorama della programmazione sta subendo una trasformazione radicale. L'Intelligenza Artificiale non è più relegata al ruolo di suggeritore di codice. Siamo entrati nell'era dello sviluppo Agent-First, un paradigma in cui l'IA agisce come un collaboratore autonomo, capace di ragionare su architetture complesse, pianificare interventi multi-file e correggere i propri errori."
+    },
+    {
+      "text": "Perché un agente sia efficace, deve operare all'interno di un ecosistema ben definito. Il successo di un'interazione non dipende solo da quanto è intelligente il modello, ma dalla sinergia di cinque componenti: l'Harness, il tuo VS Code; il Model, il cervello dell'agente; il Context, la memoria a lungo termine del progetto; i Tools, le mani dell'agente per compiere azioni reali; il Prompt, la bussola che definisce l'obiettivo."
+    },
+    {
+      "text": "A differenza di un completamento istantaneo, l'agente divide il proprio lavoro in due fasi distinte: Plan Mode, dove l'agente propone un piano d'azione che tu approvi; Act Mode, dove l'agente esegue effettivamente le modifiche. Questo garantisce allo sviluppatore il massimo controllo su cosa succede nel suo codebase."
+    },
+    {
+      "text": "Durante la fase di Act Mode, l'agente potrebbe aver bisogno di eseguire comandi nel terminale. VS Code permette di configurare il livello di fiducia: Default Approvals, che richiede un clic umano per ogni azione; Bypass Approvals, che auto-approva azioni standard; Autopilot, che dà all'agente carta bianca per iterare fino al raggiungimento dell'obiettivo."
+    },
+    {
+      "text": "Lavorare con un agente che modifica decine di file contemporaneamente richiede meccanismi di safety avanzati. VS Code integra una revisione multi-file con diff in tempo reale: rosso per le rimozioni, verde per le aggiunte. Puoi accettare o scartare le modifiche granularmente. Inoltre, ogni volta che l'agente completa un Act, VS Code crea un checkpoint invisibile, permettendoti di fare rollback istantaneo."
+    },
+    {
+      "text": "Puoi anche creare un Fork della sessione: una biforcazione della chat che clona la conversazione in una nuova finestra. Questo ti permette di esplorare una via alternativa senza inquinare la sessione originale. È come avere due rami paralleli della stessa ricerca."
+    },
+    {
+      "text": "I modelli linguistici hanno una memoria limitata, misurata in token. Quando la finestra di contesto si riempie, l'agente inizia a dimenticare le istruzioni iniziali. VS Code offre il Context Breakdown, che mostra esattamente come viene consumata la memoria. Quando noti che la memoria si sta esaurendo, il comando refresh-context forza l'agente a generare un riassunto condensato mantenendo il contesto storico vitale."
+    },
+    {
+      "text": "L'approccio Agent-First non è limitato al tuo laptop. Puoi decidere dove far girare l'agente: esecuzione locale, ideale per scrivere codice e fare refactoring; oppure delegare a GitHub Platform Agent nel cloud per task asincroni come analizzare una Pull Request o scrivere documentazione, permettendoti di continuare a lavorare su altro."
+    },
+    {
+      "text": "Per gli sviluppatori senior, è necessario capire il perché di una scelta. L'ambiente offre strumenti di telemetria molto dettagliati. Accedendo al pannello Debug Output, puoi visualizzare i log di sistema grezzi e ispezionare le chiamate JSON che l'agente invia e riceve. Se l'agente afferma di non trovare un file, guardando questi log potresti scoprire che sta cercando nella directory sbagliata."
+    },
+    {
+      "text": "Vediamo come l'agente affronterebbe la creazione da zero di un'applicazione web: in Plan Mode delinea i file necessari e chiede conferma; in Act Mode, dopo l'approvazione, genera il codice; se un'esecuzione fallisce per una libreria mancante, l'agente legge l'errore nel terminale e installa la dipendenza senza bisogno di un nuovo prompt logico. Lo sviluppo Agent-First trasforma la programmazione in un dialogo architettonico."
+    },
+    {
+      "text": "Lo sviluppatore detta la visione e vigila sulla qualità, mentre l'agente esegue il lavoro meccanico e strutturale. Questo paradigma rappresenta il futuro della programmazione: una collaborazione intelligente tra umano e macchina."
+    }
+  ]
+}
