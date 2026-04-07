@@ -1,0 +1,35 @@
+{
+  "voice": "it-IT",
+  "slides": [
+    {
+      "text": "Deep Modules in React e TypeScript significa una cosa molto pratica: ridurre la superficie pubblica e concentrare la complessita interna. In questa presentazione vediamo come passare da moduli fragili e rumorosi a confini chiari, cosi che anche gli agenti AI possano lavorare in modo affidabile."
+    },
+    {
+      "text": "Con moduli shallow la conoscenza e sparsa. Per capire una feature devi seguire molti file, hook e utility. L agente AI costruisce una mappa mentale instabile, e ogni modifica diventa rischiosa. Il problema non e la dimensione dei file, ma la frammentazione del punto di ingresso."
+    },
+    {
+      "text": "Qui vedi il confronto netto. A sinistra: tanti ingressi, dipendenze trasversali, refactor costosi. A destra: un entrypoint pubblico, interno incapsulato, API semantica. Questo riduce accoppiamento e ambiguita, e rende piu prevedibile il comportamento del codice prodotto da agenti o da team distribuiti."
+    },
+    {
+      "text": "L anatomia e semplice: index.ts espone il contratto, _internal contiene implementazione e test. Se il contratto resta stabile, l interno puo evolvere liberamente. E il principio che permette refactor frequenti senza toccare i consumer, con un impatto minimo sull applicazione."
+    },
+    {
+      "text": "Un API profonda espone azioni con significato, non setter tecnici. selectItem, removeItem, refreshList raccontano intenzioni di dominio. Chi usa il modulo capisce subito cosa puo fare, senza conoscere struttura interna o sincronizzazioni nascoste. Questo e il punto che aiuta di piu anche gli agenti AI."
+    },
+    {
+      "text": "Nel caso Auth, login, refresh token e permessi restano orchestrati dentro il modulo. Il consumer usa soltanto useAuth e riceve cio che serve: utente, autorizzazioni, azioni principali. La complessita non sparisce, ma viene spostata dietro un confine intenzionale e testabile."
+    },
+    {
+      "text": "Nel video editor succede lo stesso: timeline, thumbnails, playback e cache convergono in un provider interno. I componenti esterni montano il modulo e visualizzano stato e controlli, senza conoscere la regia. Risultato: UI piu pulita e modifiche interne meno invasive."
+    },
+    {
+      "text": "I test Grey Box fissano il contratto pubblico: se i test passano, il comportamento atteso e salvo, anche dopo un grande refactor interno. Questo da agli agenti AI un feedback oggettivo: possono migliorare implementazione, ottimizzare, ristrutturare, mantenendo invariata l esperienza d uso del modulo."
+    },
+    {
+      "text": "La governance chiude il cerchio. Con una regola lint che blocca gli import diretti verso _internal, il confine diventa automatico e non opzionale. Non dipende dalla memoria del team: vale sempre, anche quando il codice viene generato in fretta o in parallelo."
+    },
+    {
+      "text": "Porta con te cinque regole: entrypoint unico, API semantica, interno isolato, test di contratto, lint di enforcement. Deep Modules non servono solo per ordine estetico: servono per aumentare autonomia, velocita e affidabilita quando umani e agenti AI lavorano insieme."
+    }
+  ]
+}

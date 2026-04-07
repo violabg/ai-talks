@@ -63,81 +63,101 @@ export function PresentationShell({
     };
   }, []);
 
-  return (
-    <NarrationProvider speechData={speechData} currentSlide={current}>
-      <div className="z-50 fixed inset-0 flex flex-col bg-[#0f172a] text-[#e2e8f0]">
-        <div className="flex justify-between items-center px-6 py-4 text-[#94a3b8] text-sm shrink-0">
-          <Link
-            href={`/articles/${slug}`}
-            className="hover:text-white transition-colors"
-          >
-            &larr; Torna all&apos;articolo
-          </Link>
-          <div className="flex items-center gap-3">
-            <NarrationToggle />
-            <span className="font-mono tabular-nums">
-              {current + 1} / {totalSlides}
-            </span>
-          </div>
-        </div>
-
-        <div
-          className="flex flex-1 justify-center items-center px-6 md:px-16 lg:px-24 overflow-hidden"
-          onClick={(event) => {
-            const x = event.clientX;
-            const width = window.innerWidth;
-            if (x > width * 0.6) next();
-            else if (x < width * 0.4) prev();
-          }}
-        >
-          <AnimatePresence mode="wait" custom={dir}>
-            <motion.div
-              key={current}
-              custom={dir}
-              variants={{
-                enter: (direction: number) => ({
-                  x: direction > 0 ? 220 : -220,
-                  opacity: 0,
-                }),
-                center: { x: 0, opacity: 1 },
-                exit: (direction: number) => ({
-                  x: direction > 0 ? -220 : 220,
-                  opacity: 0,
-                }),
-              }}
-              initial="enter"
-              animate="center"
-              exit="exit"
-              transition={{ duration: 0.4, ease: "easeOut" }}
-              className="w-full max-w-6xl"
-            >
-              {slides[current].component}
-            </motion.div>
-          </AnimatePresence>
-        </div>
-
-        <div className="px-6 py-4 shrink-0">
-          <div className="flex gap-1.5">
-            {slides.map((_, i) => (
-              <button
-                key={i}
-                type="button"
-                onClick={() => goTo(i)}
-                className={`h-1 flex-1 rounded-full transition-colors ${
-                  i === current
-                    ? "bg-[#a78bfa]"
-                    : i < current
-                      ? "bg-[#a78bfa]/35"
-                      : "bg-[#334155]"
-                }`}
-                aria-label={`Vai alla slide ${i + 1}`}
-              />
-            ))}
-          </div>
-        </div>
-        <AudioOrb />
-        <NarrationDialog />
+  const headerContent = (
+    <div className="flex justify-between items-center px-6 py-4 text-[#94a3b8] text-sm shrink-0">
+      <Link
+        href={`/articles/${slug}`}
+        className="hover:text-white transition-colors"
+      >
+        &larr; Torna all&apos;articolo
+      </Link>
+      <div className="flex items-center gap-3">
+        {speechData && <NarrationToggle />}
+        <span className="font-mono tabular-nums">
+          {current + 1} / {totalSlides}
+        </span>
       </div>
-    </NarrationProvider>
+    </div>
+  );
+
+  const slideContent = (
+    <div
+      className="flex flex-1 justify-center items-center px-6 md:px-16 lg:px-24 overflow-hidden"
+      onClick={(event) => {
+        const x = event.clientX;
+        const width = window.innerWidth;
+        if (x > width * 0.6) next();
+        else if (x < width * 0.4) prev();
+      }}
+    >
+      <AnimatePresence mode="wait" custom={dir}>
+        <motion.div
+          key={current}
+          custom={dir}
+          variants={{
+            enter: (direction: number) => ({
+              x: direction > 0 ? 220 : -220,
+              opacity: 0,
+            }),
+            center: { x: 0, opacity: 1 },
+            exit: (direction: number) => ({
+              x: direction > 0 ? -220 : 220,
+              opacity: 0,
+            }),
+          }}
+          initial="enter"
+          animate="center"
+          exit="exit"
+          transition={{ duration: 0.4, ease: "easeOut" }}
+          className="w-full max-w-6xl"
+        >
+          {slides[current].component}
+        </motion.div>
+      </AnimatePresence>
+    </div>
+  );
+
+  const progressBar = (
+    <div className="px-6 py-4 shrink-0">
+      <div className="flex gap-1.5">
+        {slides.map((_, i) => (
+          <button
+            key={i}
+            type="button"
+            onClick={() => goTo(i)}
+            className={`h-1 flex-1 rounded-full transition-colors ${
+              i === current
+                ? "bg-[#a78bfa]"
+                : i < current
+                  ? "bg-[#a78bfa]/35"
+                  : "bg-[#334155]"
+            }`}
+            aria-label={`Vai alla slide ${i + 1}`}
+          />
+        ))}
+      </div>
+    </div>
+  );
+
+  if (speechData) {
+    return (
+      <NarrationProvider speechData={speechData} currentSlide={current}>
+        <div className="z-50 fixed inset-0 flex flex-col bg-[#0f172a] text-[#e2e8f0]">
+          {headerContent}
+          {slideContent}
+          {progressBar}
+          <AudioOrb />
+          <NarrationDialog />
+        </div>
+      </NarrationProvider>
+    );
+  }
+
+  return (
+    <div className="z-50 fixed inset-0 flex flex-col bg-[#0f172a] text-[#e2e8f0]">
+      {headerContent}
+      {slideContent}
+      {progressBar}
+    </div>
   );
 }
