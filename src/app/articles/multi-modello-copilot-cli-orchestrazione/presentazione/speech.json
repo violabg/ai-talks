@@ -1,0 +1,32 @@
+{
+  "voice": "it-IT",
+  "slides": [
+    {
+      "text": "Orchestrazione multi-modello con GitHub Copilot CLI. L'idea di usare un singolo modello per tutto è pratica, ma inefficiente. Modelli diversi hanno punti di forza diversi. La domanda utile non è qual è il modello migliore in assoluto, ma qual è il modello più adatto per questo task specifico. GitHub Copilot CLI offre un sistema per orchestrare fleet di sub-agenti specializzati e costruire workflow che distribuiscono il lavoro tra LLM diversi."
+    },
+    {
+      "text": "All'interno della CLI di Copilot è possibile cambiare il modello base tramite interfaccia utente, oppure specificarlo direttamente nel prompt per un singolo task. Questo secondo approccio è particolarmente utile quando vuoi che una parte del lavoro venga gestita da un modello diverso da quello predefinito, senza toccare le impostazioni globali."
+    },
+    {
+      "text": "È possibile forzare l'uso di un modello specifico per un singolo task scrivendo esplicitamente l'istruzione nel prompt. La CLI interpreta questa istruzione e lancia un sub-agent con il modello richiesto. Al termine, il flusso torna alle impostazioni standard. Questo meccanismo permette di combinare modelli diversi all'interno dello stesso workflow."
+    },
+    {
+      "text": "La Copilot CLI include un framework di orchestrazione nativo chiamato Fleet. Il comando fleet abilita una flotta di sub-agenti che lavorano in parallelo. Fleet analizza la richiesta dell'utente e decide autonomamente quale agente delegare per ogni parte del lavoro. Il vantaggio principale è la parallelizzazione: i task indipendenti vengono distribuiti a sub-agenti distinti, riducendo i tempi complessivi."
+    },
+    {
+      "text": "La CLI usa già internamente modelli specifici per task particolari. L'agente Explore, dedicato all'analisi della struttura del repository, utilizza di default Claude Haiku per la sua velocità ed efficienza. Questo è un esempio concreto del principio generale: non tutti i task richiedono il modello più potente. Per operazioni rapide di esplorazione, un modello veloce è spesso la scelta migliore."
+    },
+    {
+      "text": "Una tecnica avanzata per aumentare la qualità del codice è la adversarial review. Invece di affidarsi a un singolo modello, si costruiscono più agenti con modelli diversi che revisionano lo stesso risultato. Con modelli come Sonnet, Opus e GPT-4 che analizzano lo stesso codice in parallelo, il risultato è una lista consolidata di miglioramenti che nessun singolo revisore avrebbe identificato per intero."
+    },
+    {
+      "text": "Il punto centrale di questo approccio è concettuale, non tecnico. Usare l'IA come un singolo chatbot è il punto di partenza. Ma un singolo agente generalista ha limiti strutturali. Un sistema distribuito di agenti specializzati funziona diversamente: ogni agente opera in un dominio definito, con il modello più adatto per quel task, con un ruolo chiaro nel workflow. Il risultato non è solo più veloce, è strutturalmente più affidabile."
+    },
+    {
+      "text": "Per approfondire come costruire questo tipo di sistema in modo pratico, ti consiglio di esplorare la documentazione di GitHub Copilot e gli articoli correlati su sviluppo con agenti AI e strumenti e configurazioni per CLI AI e IDE AI."
+    },
+    {
+      "text": ""
+    }
+  ]
+}
