@@ -43,7 +43,9 @@
       "Bash(CLAUDE_TOOL_INPUT='{\"file_path\":\"/Users/paolo/Sites/ai/ai-course/content/articles/prompting-e-workflow.mdx\"}' bash:*)",
       "Bash(CLAUDE_TOOL_INPUT='{\"file_path\":\"/Users/paolo/Sites/ai/ai-course/content/articles/testing-feedback-loop-agenti-ai.mdx\"}' bash:*)",
       "Bash(CLAUDE_TOOL_INPUT='{\"file_path\":\"/Users/paolo/Sites/ai/ai-course/src/components/foo.tsx\"}' bash:*)",
-      "Bash(npx tsc:*)"
+      "Bash(npx tsc:*)",
+      "Bash(xargs cat:*)",
+      "Bash(xargs ls:*)"
     ]
   }
 }
