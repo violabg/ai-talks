@@ -10,7 +10,7 @@ export function Slide07VideoEditor() {
         subtitle="Il componente esterno monta il modulo, non orchestra i dettagli di sincronizzazione."
       />
 
-      <div className="bg-[#0b1222] mx-auto p-5 sm:p-8 border border-[#334155] rounded-2xl w-full max-w-6xl">
+      <div className="bg-[var(--pres-bg-card)] mx-auto p-5 sm:p-8 border border-[var(--pres-border)] rounded-2xl w-full max-w-6xl">
         <div className="mx-auto w-full max-w-5xl">
           <svg viewBox="0 0 760 380" className="w-full">
             <defs>
@@ -23,7 +23,7 @@ export function Slide07VideoEditor() {
                 markerHeight="5"
                 orient="auto-start-reverse"
               >
-                <path d="M 0 0 L 10 5 L 0 10 z" fill="#a78bfa" />
+                <path d="M 0 0 L 10 5 L 0 10 z" fill="var(--pres-accent)" />
               </marker>
             </defs>
             {["Timeline", "Thumbnails", "Playback", "Cache"].map((node, i) => (
@@ -39,13 +39,13 @@ export function Slide07VideoEditor() {
                   width="180"
                   height="48"
                   rx="10"
-                  fill="rgba(96,165,250,0.16)"
-                  stroke="#60a5fa"
+                  fill="var(--pres-blue-dim)"
+                  stroke="var(--pres-blue)"
                 />
                 <text
                   x="138"
                   y={92 + i * 72}
-                  fill="#bfdbfe"
+                  fill="var(--pres-blue-fg)"
                   textAnchor="middle"
                   fontSize="14"
                   fontWeight="700"
@@ -61,8 +61,8 @@ export function Slide07VideoEditor() {
               width="204"
               height="142"
               rx="14"
-              fill="rgba(167,139,250,0.2)"
-              stroke="#a78bfa"
+              fill="var(--pres-accent-dim)"
+              stroke="var(--pres-accent)"
               initial={{ opacity: 0, scale: 0.95 }}
               animate={{ opacity: 1, scale: 1 }}
               transition={{ delay: 0.56 }}
@@ -70,7 +70,7 @@ export function Slide07VideoEditor() {
             <text
               x="388"
               y="165"
-              fill="#e2e8f0"
+              fill="var(--pres-text)"
               textAnchor="middle"
               fontSize="17"
               fontWeight="700"
@@ -80,7 +80,7 @@ export function Slide07VideoEditor() {
             <text
               x="388"
               y="190"
-              fill="#94a3b8"
+              fill="var(--pres-muted)"
               textAnchor="middle"
               fontSize="13"
             >
@@ -99,7 +99,7 @@ export function Slide07VideoEditor() {
                 y1={y1}
                 x2={x2}
                 y2={y2}
-                stroke="#a78bfa"
+                stroke="var(--pres-accent)"
                 strokeWidth="3"
                 markerEnd="url(#arrow-purple)"
                 initial={{ pathLength: 0, opacity: 0 }}
@@ -114,8 +114,8 @@ export function Slide07VideoEditor() {
               width="166"
               height="54"
               rx="10"
-              fill="rgba(52,211,153,0.16)"
-              stroke="#34d399"
+              fill="var(--pres-success-dim)"
+              stroke="var(--pres-success)"
               initial={{ opacity: 0, x: 18 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ delay: 1.02 }}
@@ -126,8 +126,8 @@ export function Slide07VideoEditor() {
               width="166"
               height="54"
               rx="10"
-              fill="rgba(52,211,153,0.16)"
-              stroke="#34d399"
+              fill="var(--pres-success-dim)"
+              stroke="var(--pres-success)"
               initial={{ opacity: 0, x: 18 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ delay: 1.16 }}
@@ -135,7 +135,7 @@ export function Slide07VideoEditor() {
             <text
               x="631"
               y="128"
-              fill="#bbf7d0"
+              fill="var(--pres-success-fg)"
               textAnchor="middle"
               fontSize="13"
               fontWeight="700"
@@ -145,7 +145,7 @@ export function Slide07VideoEditor() {
             <text
               x="631"
               y="218"
-              fill="#bbf7d0"
+              fill="var(--pres-success-fg)"
               textAnchor="middle"
               fontSize="13"
               fontWeight="700"

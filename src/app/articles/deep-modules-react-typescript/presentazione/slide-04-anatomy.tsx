@@ -14,7 +14,7 @@ export function Slide04Anatomy() {
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5, delay: 0.12 }}
-        className="bg-[#0b1222] mx-auto p-5 sm:p-8 border border-[#334155] rounded-2xl w-full max-w-6xl"
+        className="bg-[var(--pres-bg-card)] mx-auto p-5 sm:p-8 border border-[var(--pres-border)] rounded-2xl w-full max-w-6xl"
       >
         <div className="mx-auto w-full max-w-5xl">
           <svg viewBox="0 0 760 430" className="w-full">
@@ -28,7 +28,7 @@ export function Slide04Anatomy() {
                 markerHeight="5"
                 orient="auto-start-reverse"
               >
-                <path d="M 0 0 L 10 5 L 0 10 z" fill="#a78bfa" />
+                <path d="M 0 0 L 10 5 L 0 10 z" fill="var(--pres-accent)" />
               </marker>
             </defs>
             <motion.rect
@@ -37,8 +37,8 @@ export function Slide04Anatomy() {
               width="692"
               height="348"
               rx="18"
-              fill="rgba(30,41,59,0.45)"
-              stroke="#334155"
+              fill="var(--pres-bg-surface)"
+              stroke="var(--pres-border)"
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ duration: 0.4 }}
@@ -50,16 +50,16 @@ export function Slide04Anatomy() {
               width="240"
               height="68"
               rx="10"
-              fill="rgba(167,139,250,0.2)"
-              stroke="#a78bfa"
+              fill="var(--pres-accent-dim)"
+              stroke="var(--pres-accent)"
               initial={{ opacity: 0, x: -20 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ delay: 0.2 }}
             />
-            <text x="106" y="145" fill="#e2e8f0" fontSize="20" fontWeight="700">
+            <text x="106" y="145" fill="var(--pres-text)" fontSize="20" fontWeight="700">
               index.ts
             </text>
-            <text x="106" y="168" fill="#94a3b8" fontSize="13">
+            <text x="106" y="168" fill="var(--pres-muted)" fontSize="13">
               interfaccia pubblica stabile
             </text>
 
@@ -69,13 +69,13 @@ export function Slide04Anatomy() {
               width="250"
               height="262"
               rx="14"
-              fill="rgba(52,211,153,0.12)"
-              stroke="#34d399"
+              fill="var(--pres-success-dim)"
+              stroke="var(--pres-success)"
               initial={{ opacity: 0, x: 20 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ delay: 0.38 }}
             />
-            <text x="505" y="126" fill="#34d399" fontSize="20" fontWeight="700">
+            <text x="505" y="126" fill="var(--pres-success)" fontSize="20" fontWeight="700">
               _internal/
             </text>
 
@@ -98,10 +98,10 @@ export function Slide04Anatomy() {
                   width="214"
                   height="28"
                   rx="8"
-                  fill="rgba(15,23,42,0.8)"
-                  stroke="rgba(148,163,184,0.35)"
+                  fill="var(--pres-bg-node)"
+                  stroke="var(--pres-border)"
                 />
-                <text x="512" y={165 + i * 38} fill="#cbd5e1" fontSize="13">
+                <text x="512" y={165 + i * 38} fill="var(--pres-text-sub)" fontSize="13">
                   {item}
                 </text>
               </motion.g>
@@ -112,7 +112,7 @@ export function Slide04Anatomy() {
               y1="146"
               x2="480"
               y2="146"
-              stroke="#a78bfa"
+              stroke="var(--pres-accent)"
               strokeWidth="4"
               strokeDasharray="9 8"
               markerEnd="url(#arrow-purple)"
@@ -124,7 +124,7 @@ export function Slide04Anatomy() {
               x="403"
               y="126"
               textAnchor="middle"
-              fill="#a78bfa"
+              fill="var(--pres-accent)"
               fontSize="12"
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
@@ -137,7 +137,7 @@ export function Slide04Anatomy() {
             <motion.text
               x="90"
               y="84"
-              fill="#94a3b8"
+              fill="var(--pres-muted)"
               fontSize="14"
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}

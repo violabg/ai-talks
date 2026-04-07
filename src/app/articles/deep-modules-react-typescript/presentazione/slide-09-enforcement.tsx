@@ -15,12 +15,12 @@ export function Slide09Enforcement() {
           initial={{ opacity: 0, y: 16 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.45 }}
-          className="bg-[rgba(30,41,59,0.8)] p-4 border border-[#334155] rounded-xl"
+          className="bg-[var(--pres-bg-surface)] p-4 border border-[var(--pres-border)] rounded-xl"
         >
-          <p className="mb-2 font-mono text-[#a78bfa] text-xs uppercase">
+          <p className="mb-2 font-mono text-[var(--pres-accent)] text-xs uppercase">
             eslint rule
           </p>
-          <pre className="bg-[#0b1222] p-3 rounded overflow-x-auto text-[#cbd5e1] text-[12px] leading-relaxed">
+          <pre className="bg-[var(--pres-bg-card)] p-3 rounded overflow-x-auto text-[var(--pres-text-sub)] text-[12px] leading-relaxed">
             {`{
   "rules": {
     "no-restricted-imports": ["error", {
@@ -31,7 +31,7 @@ export function Slide09Enforcement() {
           </pre>
         </motion.div>
 
-        <div className="bg-[#0b1222] p-4 border border-[#334155] rounded-xl">
+        <div className="bg-[var(--pres-bg-card)] p-4 border border-[var(--pres-border)] rounded-xl">
           <svg viewBox="0 0 520 310" className="w-full">
             <defs>
               <marker
@@ -43,7 +43,7 @@ export function Slide09Enforcement() {
                 markerHeight="5"
                 orient="auto-start-reverse"
               >
-                <path d="M 0 0 L 10 5 L 0 10 z" fill="#34d399" />
+                <path d="M 0 0 L 10 5 L 0 10 z" fill="var(--pres-success)" />
               </marker>
               <marker
                 id="arrow-red"
@@ -54,7 +54,7 @@ export function Slide09Enforcement() {
                 markerHeight="5"
                 orient="auto-start-reverse"
               >
-                <path d="M 0 0 L 10 5 L 0 10 z" fill="#f87171" />
+                <path d="M 0 0 L 10 5 L 0 10 z" fill="var(--pres-danger)" />
               </marker>
             </defs>
             <motion.rect
@@ -63,8 +63,8 @@ export function Slide09Enforcement() {
               width="200"
               height="62"
               rx="10"
-              fill="rgba(52,211,153,0.14)"
-              stroke="#34d399"
+              fill="var(--pres-success-dim)"
+              stroke="var(--pres-success)"
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ delay: 0.14 }}
@@ -73,7 +73,7 @@ export function Slide09Enforcement() {
               x="130"
               y="74"
               textAnchor="middle"
-              fill="#bbf7d0"
+              fill="var(--pres-success-fg)"
               fontSize="13"
               fontWeight="700"
             >
@@ -86,8 +86,8 @@ export function Slide09Enforcement() {
               width="200"
               height="62"
               rx="10"
-              fill="rgba(248,113,113,0.14)"
-              stroke="#f87171"
+              fill="var(--pres-danger-dim)"
+              stroke="var(--pres-danger)"
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ delay: 0.28 }}
@@ -96,7 +96,7 @@ export function Slide09Enforcement() {
               x="392"
               y="242"
               textAnchor="middle"
-              fill="#fecaca"
+              fill="var(--pres-danger-fg)"
               fontSize="13"
               fontWeight="700"
             >
@@ -108,7 +108,7 @@ export function Slide09Enforcement() {
               y1="68"
               x2="360"
               y2="122"
-              stroke="#34d399"
+              stroke="var(--pres-success)"
               strokeWidth="4"
               markerEnd="url(#arrow-green)"
               initial={{ pathLength: 0, opacity: 0 }}
@@ -118,7 +118,7 @@ export function Slide09Enforcement() {
             <motion.text
               x="371"
               y="130"
-              fill="#34d399"
+              fill="var(--pres-success)"
               fontSize="12"
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
@@ -132,7 +132,7 @@ export function Slide09Enforcement() {
               y1="206"
               x2="170"
               y2="110"
-              stroke="#f87171"
+              stroke="var(--pres-danger)"
               strokeWidth="4"
               markerEnd="url(#arrow-red)"
               initial={{ pathLength: 0, opacity: 0 }}
@@ -142,7 +142,7 @@ export function Slide09Enforcement() {
             <motion.text
               x="200"
               y="195"
-              fill="#f87171"
+              fill="var(--pres-danger)"
               fontSize="12"
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}

@@ -10,7 +10,7 @@ export function Slide01Title() {
           {tags.map((tag) => (
             <span
               key={tag}
-              className="bg-[#a78bfa]/15 px-3 py-1 border border-[#a78bfa]/35 rounded-full font-mono text-[#a78bfa] text-xs uppercase tracking-wider"
+              className="bg-[var(--pres-accent)]/15 px-3 py-1 border border-[var(--pres-accent)]/35 rounded-full font-mono text-[var(--pres-accent)] text-xs uppercase tracking-wider"
             >
               {tag}
             </span>
@@ -23,15 +23,15 @@ export function Slide01Title() {
         </h1>
       </FadeIn>
       <FadeIn delay={0.36}>
-        <p className="mx-auto max-w-3xl text-[#94a3b8] text-lg md:text-2xl leading-relaxed">
+        <p className="mx-auto max-w-3xl text-[var(--pres-muted)] text-lg md:text-2xl leading-relaxed">
           Come orchestrare agenti AI per task di ingegneria
           <br />
           in modo affidabile e verificabile.
         </p>
       </FadeIn>
       <FadeIn delay={0.55}>
-        <div className="bg-[#1e293b]/65 mx-auto mt-10 px-6 py-5 border border-[#334155] rounded-xl max-w-3xl">
-          <p className="font-mono text-[#94a3b8] text-sm">
+        <div className="bg-[var(--pres-bg-surface)]/65 mx-auto mt-10 px-6 py-5 border border-[var(--pres-border)] rounded-xl max-w-3xl">
+          <p className="font-mono text-[var(--pres-muted)] text-sm">
             Prompt preciso -&gt; Workflow strutturato -&gt; Output prevedibile
           </p>
         </div>

@@ -7,42 +7,42 @@ const steps = [
     id: 1,
     label: "Prompt Iniziale",
     desc: "L'obiettivo in linguaggio naturale",
-    color: "#38bdf8",
+    color: "var(--pres-blue)",
     isHuman: false,
   },
   {
     id: 2,
     label: "Plan Mode",
     desc: "Analizza file, propone architettura, chiede chiarimenti",
-    color: "#a78bfa",
+    color: "var(--pres-accent)",
     isHuman: false,
   },
   {
     id: 3,
     label: "Revisione Umana",
     desc: "Steering: modifichi il piano o dai l'ok",
-    color: "#fbbf24",
+    color: "var(--pres-warning)",
     isHuman: true,
   },
   {
     id: 4,
     label: "Act Mode",
     desc: "Crea file · modifica · esegue comandi",
-    color: "#a78bfa",
+    color: "var(--pres-accent)",
     isHuman: false,
   },
   {
     id: 5,
     label: "Diff Review",
     desc: "Valuti le differenze in tempo reale",
-    color: "#fbbf24",
+    color: "var(--pres-warning)",
     isHuman: true,
   },
   {
     id: 6,
     label: "Checkpoint",
     desc: "Accetti le modifiche · stato di ripristino salvato",
-    color: "#34d399",
+    color: "var(--pres-success)",
     isHuman: false,
   },
 ];
@@ -56,8 +56,8 @@ export function Slide04Cycle() {
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5 }}
       >
-        Dal <span className="text-[#a78bfa]">Pensiero</span> all&apos;
-        <span className="text-[#34d399]">Azione</span>
+        Dal <span className="text-[var(--pres-accent)]">Pensiero</span> all&apos;
+        <span className="text-[var(--pres-success)]">Azione</span>
       </motion.h2>
 
       <div className="flex flex-col items-center w-full max-w-2xl gap-0">
@@ -73,16 +73,14 @@ export function Slide04Cycle() {
             <div
               className="flex items-center gap-4 w-full rounded-xl px-4 py-3 border"
               style={{
-                borderColor: step.isHuman ? `${step.color}60` : `${step.color}40`,
-                background: step.isHuman
-                  ? `rgba(251,191,36,0.06)`
-                  : `rgba(${step.color === "#a78bfa" ? "167,139,250" : step.color === "#38bdf8" ? "56,189,248" : "52,211,153"},0.06)`,
+                borderColor: `color-mix(in srgb, ${step.color} 30%, transparent)`,
+                background: `color-mix(in srgb, ${step.color} 6%, transparent)`,
               }}
             >
               {/* Step number */}
               <div
                 className="flex-shrink-0 w-7 h-7 rounded-full flex items-center justify-center text-xs font-bold"
-                style={{ background: `${step.color}25`, color: step.color, border: `1.5px solid ${step.color}` }}
+                style={{ background: `color-mix(in srgb, ${step.color} 15%, transparent)`, color: step.color, border: `1.5px solid ${step.color}` }}
               >
                 {step.id}
               </div>
@@ -91,12 +89,12 @@ export function Slide04Cycle() {
                 <p className="font-semibold text-sm" style={{ color: step.color }}>
                   {step.label}
                   {step.isHuman && (
-                    <span className="ml-2 text-[10px] font-mono text-[#fbbf24] bg-[rgba(251,191,36,0.1)] px-1.5 py-0.5 rounded">
+                    <span className="ml-2 text-[10px] font-mono text-[var(--pres-warning)] bg-[var(--pres-warning)]/10 px-1.5 py-0.5 rounded">
                       👤 umano
                     </span>
                   )}
                 </p>
-                <p className="text-[#94a3b8] text-xs mt-0.5">{step.desc}</p>
+                <p className="text-[var(--pres-muted)] text-xs mt-0.5">{step.desc}</p>
               </div>
             </div>
 
@@ -109,8 +107,8 @@ export function Slide04Cycle() {
                 transition={{ delay: 0.5 + i * 0.2 }}
               >
                 <svg viewBox="0 0 16 20" width="16" height="20">
-                  <line x1="8" y1="0" x2="8" y2="12" stroke="#334155" strokeWidth="1.5" />
-                  <polygon points="3,10 8,18 13,10" fill="#334155" />
+                  <line x1="8" y1="0" x2="8" y2="12" stroke="var(--pres-border)" strokeWidth="1.5" />
+                  <polygon points="3,10 8,18 13,10" fill="var(--pres-border)" />
                 </svg>
               </motion.div>
             )}

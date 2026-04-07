@@ -12,7 +12,7 @@ export function Slide05StepByStep() {
   return (
     <div>
       <FadeIn>
-        <h2 className="mb-8 font-bold text-[#a78bfa] text-2xl md:text-4xl text-center">
+        <h2 className="mb-8 font-bold text-[var(--pres-accent)] text-2xl md:text-4xl text-center">
           Step-by-step obbligato
         </h2>
       </FadeIn>
@@ -23,10 +23,10 @@ export function Slide05StepByStep() {
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.35, delay: 0.25 + i * 0.2 }}
-            className="relative bg-[#1e293b]/70 px-5 py-4 border border-[#334155] rounded-xl"
+            className="relative bg-[var(--pres-bg-surface)]/70 px-5 py-4 border border-[var(--pres-border)] rounded-xl"
           >
             <div className="flex items-center gap-3">
-              <span className="flex justify-center items-center bg-[#a78bfa]/20 rounded-full w-7 h-7 font-mono text-[#a78bfa] text-xs">
+              <span className="flex justify-center items-center bg-[var(--pres-accent)]/20 rounded-full w-7 h-7 font-mono text-[var(--pres-accent)] text-xs">
                 {i + 1}
               </span>
               <p className="text-sm md:text-base">{step}</p>
@@ -36,14 +36,14 @@ export function Slide05StepByStep() {
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 transition={{ delay: 0.45 + i * 0.2 }}
-                className="-bottom-3 left-1/2 absolute bg-[#a78bfa]/50 w-px h-3"
+                className="-bottom-3 left-1/2 absolute bg-[var(--pres-accent)]/50 w-px h-3"
               />
             )}
           </motion.div>
         ))}
       </div>
       <FadeIn delay={1.1}>
-        <p className="mt-8 text-[#94a3b8] text-sm text-center">
+        <p className="mt-8 text-[var(--pres-muted)] text-sm text-center">
           Pianificare ad alta voce riduce errori sui task complessi.
         </p>
       </FadeIn>

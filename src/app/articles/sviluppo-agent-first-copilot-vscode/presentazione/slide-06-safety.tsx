@@ -8,7 +8,7 @@ const layers = [
     label: "Diff Review",
     sublabel: "Prima del salvataggio",
     desc: "Visualizzazione comparativa multi-file — rosso/verde per ogni modifica. Accetti o scarti granularmente.",
-    color: "#fbbf24",
+    color: "var(--pres-warning)",
     icon: (
       <svg viewBox="0 0 24 24" width="28" height="28" fill="none">
         <path d="M9 3H5a2 2 0 0 0-2 2v4m6-6h10a2 2 0 0 1 2 2v4M9 3v18m0 0h10a2 2 0 0 0 2-2V9M9 21H5a2 2 0 0 1-2-2V9m0 0h18" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
@@ -21,7 +21,7 @@ const layers = [
     label: "Checkpoints",
     sublabel: "Dopo ogni Act",
     desc: "Istantanea invisibile dello stato dei file. Rollback istantaneo senza toccare Git.",
-    color: "#a78bfa",
+    color: "var(--pres-accent)",
     icon: (
       <svg viewBox="0 0 24 24" width="28" height="28" fill="none">
         <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2z" stroke="currentColor" strokeWidth="1.5" />
@@ -34,7 +34,7 @@ const layers = [
     label: "Fork della Sessione",
     sublabel: "Esplorazione parallela",
     desc: "Clona la conversazione in una nuova finestra. Esplora strade alternative senza inquinare la sessione originale.",
-    color: "#34d399",
+    color: "var(--pres-success)",
     icon: (
       <svg viewBox="0 0 24 24" width="28" height="28" fill="none">
         <circle cx="6" cy="18" r="2" stroke="currentColor" strokeWidth="1.5" />
@@ -55,10 +55,10 @@ export function Slide06Safety() {
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5 }}
       >
-        La Rete di <span className="text-[#34d399]">Sicurezza</span>
+        La Rete di <span className="text-[var(--pres-success)]">Sicurezza</span>
       </motion.h2>
       <motion.p
-        className="text-[#94a3b8] text-sm mb-10 text-center"
+        className="text-[var(--pres-muted)] text-sm mb-10 text-center"
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ delay: 0.3 }}
@@ -74,9 +74,9 @@ export function Slide06Safety() {
           preserveAspectRatio="none"
         >
           {[
-            { cx: 320, cy: 110, rx: 310, ry: 100, color: "#34d399" },
-            { cx: 320, cy: 110, rx: 220, ry: 75, color: "#a78bfa" },
-            { cx: 320, cy: 110, rx: 130, ry: 50, color: "#fbbf24" },
+            { cx: 320, cy: 110, rx: 310, ry: 100, color: "var(--pres-success)" },
+            { cx: 320, cy: 110, rx: 220, ry: 75, color: "var(--pres-accent)" },
+            { cx: 320, cy: 110, rx: 130, ry: 50, color: "var(--pres-warning)" },
           ].map((ellipse, i) => (
             <motion.ellipse
               key={i}
@@ -103,8 +103,8 @@ export function Slide06Safety() {
               key={layer.id}
               className="flex flex-col items-center text-center rounded-xl border p-5 gap-3"
               style={{
-                borderColor: `${layer.color}40`,
-                background: `rgba(${hexToRgb(layer.color)}, 0.05)`,
+                borderColor: `color-mix(in srgb, ${layer.color} 25%, transparent)`,
+                background: `color-mix(in srgb, ${layer.color} 5%, transparent)`,
               }}
               initial={{ opacity: 0, scale: 0.85 }}
               animate={{ opacity: 1, scale: 1 }}
@@ -115,9 +115,9 @@ export function Slide06Safety() {
                 <p className="font-bold text-sm" style={{ color: layer.color }}>
                   {layer.label}
                 </p>
-                <p className="text-[#64748b] text-xs font-mono">{layer.sublabel}</p>
+                <p className="text-[var(--pres-muted)] text-xs font-mono">{layer.sublabel}</p>
               </div>
-              <p className="text-[#94a3b8] text-xs leading-relaxed">{layer.desc}</p>
+              <p className="text-[var(--pres-muted)] text-xs leading-relaxed">{layer.desc}</p>
             </motion.div>
           ))}
         </div>

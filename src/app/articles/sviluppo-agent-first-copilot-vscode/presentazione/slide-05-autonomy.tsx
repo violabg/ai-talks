@@ -7,8 +7,8 @@ const levels = [
     id: "default",
     label: "Default Approvals",
     icon: "🔒",
-    color: "#34d399",
-    borderColor: "#34d399",
+    color: "var(--pres-success)",
+    borderColor: "var(--pres-success)",
     control: "Controllo massimo",
     desc: "Ogni azione potenzialmente distruttiva richiede un clic umano",
     use: "Ideale per: ambienti di produzione, codebase critiche",
@@ -18,8 +18,8 @@ const levels = [
     id: "bypass",
     label: "Bypass Approvals",
     icon: "⚡",
-    color: "#fbbf24",
-    borderColor: "#fbbf24",
+    color: "var(--pres-warning)",
+    borderColor: "var(--pres-warning)",
     control: "Controllo bilanciato",
     desc: "Auto-approva azioni standard, richiede conferma solo per quelle distruttive",
     use: "Ideale per: sviluppo quotidiano, refactoring",
@@ -29,8 +29,8 @@ const levels = [
     id: "autopilot",
     label: "Autopilot",
     icon: "🚀",
-    color: "#f87171",
-    borderColor: "#f87171",
+    color: "var(--pres-danger)",
+    borderColor: "var(--pres-danger)",
     control: "Autonomia totale",
     desc: "L'agente ha carta bianca per iterare, testare e correggere",
     use: "Ideale per: prototipazione rapida, task ben delimitati",
@@ -47,11 +47,11 @@ export function Slide05Autonomy() {
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5 }}
       >
-        Livelli di <span className="text-[#a78bfa]">Autonomia</span>
+        Livelli di <span className="text-[var(--pres-accent)]">Autonomia</span>
       </motion.h2>
 
       <motion.p
-        className="text-[#94a3b8] text-sm mb-8 text-center"
+        className="text-[var(--pres-muted)] text-sm mb-8 text-center"
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ delay: 0.3 }}
@@ -66,7 +66,7 @@ export function Slide05Autonomy() {
         animate={{ opacity: 1, scaleX: 1 }}
         transition={{ duration: 0.6, delay: 0.4 }}
         style={{
-          background: "linear-gradient(to right, #34d399, #fbbf24, #f87171)",
+          background: "linear-gradient(to right, var(--pres-success), var(--pres-warning), var(--pres-danger))",
           transformOrigin: "left",
         }}
       />
@@ -77,8 +77,8 @@ export function Slide05Autonomy() {
             key={level.id}
             className="flex flex-col rounded-xl border p-5 gap-3"
             style={{
-              borderColor: `${level.borderColor}40`,
-              background: `rgba(${hexToRgb(level.color)}, 0.05)`,
+              borderColor: `color-mix(in srgb, ${level.borderColor} 25%, transparent)`,
+              background: `color-mix(in srgb, ${level.color} 5%, transparent)`,
             }}
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
@@ -90,12 +90,12 @@ export function Slide05Autonomy() {
                 <p className="font-bold text-sm" style={{ color: level.color }}>
                   {level.label}
                 </p>
-                <p className="text-[#94a3b8] text-xs">{level.control}</p>
+                <p className="text-[var(--pres-muted)] text-xs">{level.control}</p>
               </div>
             </div>
 
             {/* Autonomy bar */}
-            <div className="w-full h-1.5 bg-[#1e293b] rounded-full overflow-hidden">
+            <div className="w-full h-1.5 bg-[var(--pres-bg-surface)] rounded-full overflow-hidden">
               <motion.div
                 className="h-full rounded-full"
                 style={{ background: level.color }}
@@ -105,8 +105,8 @@ export function Slide05Autonomy() {
               />
             </div>
 
-            <p className="text-[#94a3b8] text-xs leading-relaxed">{level.desc}</p>
-            <p className="text-[#64748b] text-xs font-mono">{level.use}</p>
+            <p className="text-[var(--pres-muted)] text-xs leading-relaxed">{level.desc}</p>
+            <p className="text-[var(--pres-muted)] text-xs font-mono">{level.use}</p>
           </motion.div>
         ))}
       </div>

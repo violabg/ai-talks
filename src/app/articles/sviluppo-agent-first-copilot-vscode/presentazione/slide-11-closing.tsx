@@ -12,12 +12,12 @@ export function Slide11Closing() {
         transition={{ duration: 1.5 }}
         style={{
           background:
-            "radial-gradient(ellipse 55% 45% at 50% 50%, rgba(167,139,250,0.1) 0%, transparent 70%)",
+            "radial-gradient(ellipse 55% 45% at 50% 50%, color-mix(in srgb, var(--pres-accent) 10%, transparent) 0%, transparent 70%)",
         }}
       />
 
       <motion.p
-        className="font-mono text-[#94a3b8] text-xs uppercase tracking-[0.2em] mb-8"
+        className="font-mono text-[var(--pres-muted)] text-xs uppercase tracking-[0.2em] mb-8"
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ delay: 0.3 }}
@@ -34,17 +34,17 @@ export function Slide11Closing() {
           animate={{ opacity: 1, x: 0 }}
           transition={{ duration: 0.6, delay: 0.5 }}
         >
-          <div className="w-16 h-16 rounded-full border-2 border-[#38bdf8] bg-[rgba(56,189,248,0.1)] flex items-center justify-center">
+          <div className="w-16 h-16 rounded-full border-2 border-[var(--pres-blue)] bg-[var(--pres-blue-dim)] flex items-center justify-center">
             <svg viewBox="0 0 32 32" width="32" height="32" fill="none">
-              <circle cx="16" cy="10" r="5" stroke="#38bdf8" strokeWidth="1.5" />
-              <path d="M6 28c0-5.52 4.48-10 10-10s10 4.48 10 10" stroke="#38bdf8" strokeWidth="1.5" strokeLinecap="round" />
+              <circle cx="16" cy="10" r="5" stroke="var(--pres-blue)" strokeWidth="1.5" />
+              <path d="M6 28c0-5.52 4.48-10 10-10s10 4.48 10 10" stroke="var(--pres-blue)" strokeWidth="1.5" strokeLinecap="round" />
             </svg>
           </div>
-          <p className="font-bold text-[#38bdf8] text-sm">Sviluppatore</p>
+          <p className="font-bold text-[var(--pres-blue)] text-sm">Sviluppatore</p>
           <div className="flex flex-col gap-1.5 text-center">
-            <p className="text-[#e2e8f0] text-xs font-semibold">Visione</p>
-            <p className="text-[#94a3b8] text-xs">Qualità</p>
-            <p className="text-[#94a3b8] text-xs">Architettura</p>
+            <p className="text-[var(--pres-text)] text-xs font-semibold">Visione</p>
+            <p className="text-[var(--pres-muted)] text-xs">Qualità</p>
+            <p className="text-[var(--pres-muted)] text-xs">Architettura</p>
           </div>
         </motion.div>
 
@@ -56,9 +56,9 @@ export function Slide11Closing() {
           className="flex-shrink-0"
         >
           <svg viewBox="0 0 80 30" width="80" height="30">
-            <path d="M5 15 H 35 M 45 15 H 75" stroke="#a78bfa" strokeWidth="1.5" />
-            <polygon points="32,10 42,15 32,20" fill="#a78bfa" />
-            <polygon points="48,10 38,15 48,20" fill="#a78bfa" />
+            <path d="M5 15 H 35 M 45 15 H 75" stroke="var(--pres-accent)" strokeWidth="1.5" />
+            <polygon points="32,10 42,15 32,20" fill="var(--pres-accent)" />
+            <polygon points="48,10 38,15 48,20" fill="var(--pres-accent)" />
           </svg>
         </motion.div>
 
@@ -69,19 +69,19 @@ export function Slide11Closing() {
           animate={{ opacity: 1, x: 0 }}
           transition={{ duration: 0.6, delay: 0.5 }}
         >
-          <div className="w-16 h-16 rounded-full border-2 border-[#a78bfa] bg-[rgba(167,139,250,0.1)] flex items-center justify-center">
+          <div className="w-16 h-16 rounded-full border-2 border-[var(--pres-accent)] bg-[var(--pres-accent)]/10 flex items-center justify-center">
             <svg viewBox="0 0 32 32" width="32" height="32" fill="none">
-              <rect x="6" y="8" width="20" height="16" rx="3" stroke="#a78bfa" strokeWidth="1.5" />
-              <circle cx="11" cy="16" r="2" fill="#a78bfa" />
-              <circle cx="21" cy="16" r="2" fill="#a78bfa" />
-              <path d="M11 24v3M21 24v3" stroke="#a78bfa" strokeWidth="1.5" strokeLinecap="round" />
+              <rect x="6" y="8" width="20" height="16" rx="3" stroke="var(--pres-accent)" strokeWidth="1.5" />
+              <circle cx="11" cy="16" r="2" fill="var(--pres-accent)" />
+              <circle cx="21" cy="16" r="2" fill="var(--pres-accent)" />
+              <path d="M11 24v3M21 24v3" stroke="var(--pres-accent)" strokeWidth="1.5" strokeLinecap="round" />
             </svg>
           </div>
-          <p className="font-bold text-[#a78bfa] text-sm">Agente AI</p>
+          <p className="font-bold text-[var(--pres-accent)] text-sm">Agente AI</p>
           <div className="flex flex-col gap-1.5 text-center">
-            <p className="text-[#e2e8f0] text-xs font-semibold">Esecuzione</p>
-            <p className="text-[#94a3b8] text-xs">Struttura</p>
-            <p className="text-[#94a3b8] text-xs">Auto-correzione</p>
+            <p className="text-[var(--pres-text)] text-xs font-semibold">Esecuzione</p>
+            <p className="text-[var(--pres-muted)] text-xs">Struttura</p>
+            <p className="text-[var(--pres-muted)] text-xs">Auto-correzione</p>
           </div>
         </motion.div>
       </div>
@@ -94,11 +94,11 @@ export function Slide11Closing() {
         transition={{ duration: 0.6, delay: 1.2 }}
       >
         Lo sviluppo Agent-First trasforma la programmazione in un{" "}
-        <span className="text-[#a78bfa]">dialogo architettonico</span>.
+        <span className="text-[var(--pres-accent)]">dialogo architettonico</span>.
       </motion.blockquote>
 
       <motion.p
-        className="text-[#94a3b8] text-sm max-w-2xl"
+        className="text-[var(--pres-muted)] text-sm max-w-2xl"
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ delay: 1.6 }}

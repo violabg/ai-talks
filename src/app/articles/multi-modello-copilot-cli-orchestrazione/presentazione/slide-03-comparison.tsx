@@ -4,13 +4,13 @@ export function ComparisonSlide() {
   return (
     <div>
       <FadeIn>
-        <h2 className="mb-10 font-bold text-[#a78bfa] text-2xl md:text-4xl text-center">
+        <h2 className="mb-10 font-bold text-[var(--pres-accent)] text-2xl md:text-4xl text-center">
           Agente singolo vs. Sistema distribuito
         </h2>
       </FadeIn>
       <div className="gap-8 grid md:grid-cols-2">
         <FadeInLeft delay={0.2}>
-          <div className="bg-[#fbbf24]/5 p-6 border border-[#fbbf24]/30 rounded-xl">
+          <div className="bg-[var(--pres-warning)]/5 p-6 border border-[var(--pres-warning)]/30 rounded-xl">
             <svg viewBox="0 0 300 220" className="mx-auto mb-4 w-full max-w-75">
               <rect
                 x="75"
@@ -18,16 +18,16 @@ export function ComparisonSlide() {
                 width="150"
                 height="160"
                 rx="12"
-                fill="#fbbf24"
+                fill="var(--pres-warning)"
                 fillOpacity="0.15"
-                stroke="#fbbf24"
+                stroke="var(--pres-warning)"
                 strokeWidth="2"
               />
               <text
                 x="150"
                 y="65"
                 textAnchor="middle"
-                fill="#fbbf24"
+                fill="var(--pres-warning)"
                 fontSize="14"
                 fontWeight="bold"
               >
@@ -41,9 +41,9 @@ export function ComparisonSlide() {
                     width="110"
                     height="22"
                     rx="4"
-                    fill="#fbbf24"
+                    fill="var(--pres-warning)"
                     fillOpacity="0.1"
-                    stroke="#fbbf24"
+                    stroke="var(--pres-warning)"
                     strokeWidth="1"
                     strokeDasharray="4 2"
                   />
@@ -51,7 +51,7 @@ export function ComparisonSlide() {
                     x="150"
                     y={100 + i * 28}
                     textAnchor="middle"
-                    fill="#fbbf24"
+                    fill="var(--pres-warning)"
                     fontSize="11"
                   >
                     {label}
@@ -59,29 +59,29 @@ export function ComparisonSlide() {
                 </g>
               ))}
             </svg>
-            <p className="text-[#fbbf24] text-sm text-center">
+            <p className="text-[var(--pres-warning)] text-sm text-center">
               Tutto accettabile, niente eccellente
             </p>
           </div>
         </FadeInLeft>
 
         <FadeInLeft delay={0.5}>
-          <div className="bg-[#34d399]/5 p-6 border border-[#34d399]/30 rounded-xl">
+          <div className="bg-[var(--pres-success)]/5 p-6 border border-[var(--pres-success)]/30 rounded-xl">
             <svg viewBox="0 0 300 220" className="mx-auto mb-4 w-full max-w-75">
               <circle
                 cx="150"
                 cy="50"
                 r="28"
-                fill="#a78bfa"
+                fill="var(--pres-accent)"
                 fillOpacity="0.2"
-                stroke="#a78bfa"
+                stroke="var(--pres-accent)"
                 strokeWidth="2"
               />
               <text
                 x="150"
                 y="54"
                 textAnchor="middle"
-                fill="#a78bfa"
+                fill="var(--pres-accent)"
                 fontSize="10"
                 fontWeight="bold"
               >
@@ -155,7 +155,7 @@ export function ComparisonSlide() {
                 Explore
               </text>
             </svg>
-            <p className="text-[#34d399] text-sm text-center">
+            <p className="text-[var(--pres-success)] text-sm text-center">
               Ogni agente eccelle nel suo dominio
             </p>
           </div>

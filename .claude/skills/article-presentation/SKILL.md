@@ -128,20 +128,28 @@ The shell handles all presentation UI chrome — slides only need to define thei
 
 ### Color Palette
 
-Use the dark presentation theme — consistent across all presentations:
+Use the theme-aware CSS variables defined in globals.css (`--pres-*`). Do not use hardcoded hex colors or Tailwind generic colors for presentation elements, especially inside SVGs, to ensure proper light/dark mode support. 
 
+```css
+var(--pres-bg)           /* Main background */
+var(--pres-bg-surface)   /* Slightly elevated background */
+var(--pres-bg-card)      /* Card background */
+var(--pres-bg-node)      /* SVG node background */
+
+var(--pres-text)         /* Primary text */
+var(--pres-text-sub)     /* Secondary text */
+var(--pres-muted)        /* Muted text/borders */
+
+var(--pres-border)       /* Default borders */
+
+var(--pres-accent)       /* Primary brand color (purple) */
+var(--pres-blue)         /* Sky blue for links/accents */
+var(--pres-success)      /* Emerald green */
+var(--pres-warning)      /* Amber */
+var(--pres-danger)       /* Rose red */
 ```
-Background:    #0f172a (slate-900)
-Text primary:  #e2e8f0 (slate-200)
-Text muted:    #94a3b8 (slate-400)
-Accent:        #a78bfa (purple-400) — for highlights, flowchart nodes, active elements
-Accent dim:    rgba(167, 139, 250, 0.2) — for backgrounds, inactive elements
-Code bg:       rgba(30, 41, 59, 0.8) — for code blocks
-Borders:       #334155 (slate-700)
-Success/green: #34d399
-Warning/amber: #fbbf24
-Error/red:     #f87171
-```
+
+For translucent background colors, use tailwind opacity modifiers like `bg-[var(--pres-accent)]/10` or use the CSS `color-mix` function, such as `color-mix(in srgb, var(--pres-success) 10%, transparent)`.
 
 ### Static Generation
 

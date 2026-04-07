@@ -64,10 +64,10 @@ export function PresentationShell({
   }, []);
 
   const headerContent = (
-    <div className="flex justify-between items-center px-6 py-4 text-[#94a3b8] text-sm shrink-0">
+    <div className="flex justify-between items-center px-6 py-4 text-[var(--pres-muted)] text-sm shrink-0">
       <Link
         href={`/articles/${slug}`}
-        className="hover:text-white transition-colors"
+        className="hover:text-[var(--pres-text)] transition-colors"
       >
         &larr; Torna all&apos;articolo
       </Link>
@@ -127,10 +127,10 @@ export function PresentationShell({
             onClick={() => goTo(i)}
             className={`h-1 flex-1 rounded-full transition-colors ${
               i === current
-                ? "bg-[#a78bfa]"
+                ? "bg-[var(--pres-accent)]"
                 : i < current
-                  ? "bg-[#a78bfa]/35"
-                  : "bg-[#334155]"
+                  ? "bg-[var(--pres-accent)]/35"
+                  : "bg-[var(--pres-border)]"
             }`}
             aria-label={`Vai alla slide ${i + 1}`}
           />
@@ -142,7 +142,7 @@ export function PresentationShell({
   if (speechData) {
     return (
       <NarrationProvider speechData={speechData} currentSlide={current}>
-        <div className="z-50 fixed inset-0 flex flex-col bg-[#0f172a] text-[#e2e8f0]">
+        <div className="z-50 fixed inset-0 flex flex-col bg-[var(--pres-bg)] text-[var(--pres-text)]">
           {headerContent}
           {slideContent}
           {progressBar}
@@ -154,7 +154,7 @@ export function PresentationShell({
   }
 
   return (
-    <div className="z-50 fixed inset-0 flex flex-col bg-[#0f172a] text-[#e2e8f0]">
+    <div className="z-50 fixed inset-0 flex flex-col bg-[var(--pres-bg)] text-[var(--pres-text)]">
       {headerContent}
       {slideContent}
       {progressBar}

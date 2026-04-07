@@ -5,32 +5,20 @@ export function PlanningSlide() {
   return (
     <div>
       <FadeIn>
-        <h2 className="mb-8 font-bold text-[#a78bfa] text-2xl md:text-4xl text-center">
+        <h2 className="mb-8 font-bold text-[var(--pres-accent)] text-2xl md:text-4xl text-center">
           Il planning riduce le allucinazioni
         </h2>
       </FadeIn>
       <div className="items-center gap-8 grid md:grid-cols-2">
         <FadeInLeft delay={0.2}>
-          <div className="bg-[#1e293b]/80 p-5 border border-[#334155] rounded-lg font-mono text-sm">
-            <p className="mb-3 text-[#94a3b8] text-xs uppercase tracking-wider">
+          <div className="bg-[var(--pres-bg-surface)] p-5 border border-[var(--pres-border)] rounded-lg font-mono text-sm">
+            <p className="mb-3 text-[var(--pres-muted)] text-xs uppercase tracking-wider">
               PLAN.md
             </p>
             {[
-              {
-                n: "1",
-                text: "Analizzare schema DB",
-                color: MODEL_COLORS.sonnet,
-              },
-              {
-                n: "2",
-                text: "Creare endpoint REST",
-                color: MODEL_COLORS.gpt4,
-              },
-              {
-                n: "3",
-                text: "Aggiungere validazione",
-                color: MODEL_COLORS.gpt4,
-              },
+              { n: "1", text: "Analizzare schema DB", color: MODEL_COLORS.sonnet },
+              { n: "2", text: "Creare endpoint REST", color: MODEL_COLORS.gpt4 },
+              { n: "3", text: "Aggiungere validazione", color: MODEL_COLORS.gpt4 },
               { n: "4", text: "Scrivere test", color: MODEL_COLORS.opus },
             ].map((step, i) => (
               <motion.div
@@ -42,14 +30,11 @@ export function PlanningSlide() {
               >
                 <span
                   className="flex justify-center items-center rounded-full size-5 font-bold text-xs shrink-0"
-                  style={{
-                    backgroundColor: `${step.color}20`,
-                    color: step.color,
-                  }}
+                  style={{ backgroundColor: `color-mix(in srgb, ${step.color} 13%, transparent)`, color: step.color }}
                 >
                   {step.n}
                 </span>
-                <span className="text-[#e2e8f0]">{step.text}</span>
+                <span className="text-[var(--pres-text)]">{step.text}</span>
               </motion.div>
             ))}
           </div>
@@ -58,72 +43,18 @@ export function PlanningSlide() {
         <FadeIn delay={0.7}>
           <div className="flex flex-col items-center gap-4">
             <svg viewBox="0 0 200 180" className="w-full max-w-50">
-              <motion.g
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                transition={{ delay: 0.8 }}
-              >
-                <path
-                  d="M 20 20 L 180 20 L 140 90 L 60 90 Z"
-                  fill="#f87171"
-                  fillOpacity="0.08"
-                  stroke="#f87171"
-                  strokeWidth="1.5"
-                />
-                <text
-                  x="100"
-                  y="45"
-                  textAnchor="middle"
-                  fill="#f87171"
-                  fontSize="10"
-                >
-                  Senza piano
-                </text>
-                <text
-                  x="100"
-                  y="60"
-                  textAnchor="middle"
-                  fill="#f87171"
-                  fontSize="9"
-                  opacity="0.7"
-                >
-                  spazio libero = allucinazioni
-                </text>
+              <motion.g initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.8 }}>
+                <path d="M 20 20 L 180 20 L 140 90 L 60 90 Z" fill="var(--pres-danger)" fillOpacity="0.08" stroke="var(--pres-danger)" strokeWidth="1.5" />
+                <text x="100" y="45" textAnchor="middle" fill="var(--pres-danger)" fontSize="10">Senza piano</text>
+                <text x="100" y="60" textAnchor="middle" fill="var(--pres-danger)" fontSize="9" opacity="0.7">spazio libero = allucinazioni</text>
               </motion.g>
-              <motion.g
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                transition={{ delay: 1.1 }}
-              >
-                <path
-                  d="M 60 95 L 140 95 L 120 160 L 80 160 Z"
-                  fill="#34d399"
-                  fillOpacity="0.08"
-                  stroke="#34d399"
-                  strokeWidth="1.5"
-                />
-                <text
-                  x="100"
-                  y="120"
-                  textAnchor="middle"
-                  fill="#34d399"
-                  fontSize="10"
-                >
-                  Con piano
-                </text>
-                <text
-                  x="100"
-                  y="135"
-                  textAnchor="middle"
-                  fill="#34d399"
-                  fontSize="9"
-                  opacity="0.7"
-                >
-                  output vincolato
-                </text>
+              <motion.g initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 1.1 }}>
+                <path d="M 60 95 L 140 95 L 120 160 L 80 160 Z" fill="var(--pres-success)" fillOpacity="0.08" stroke="var(--pres-success)" strokeWidth="1.5" />
+                <text x="100" y="120" textAnchor="middle" fill="var(--pres-success)" fontSize="10">Con piano</text>
+                <text x="100" y="135" textAnchor="middle" fill="var(--pres-success)" fontSize="9" opacity="0.7">output vincolato</text>
               </motion.g>
             </svg>
-            <p className="text-[#94a3b8] text-xs text-center">
+            <p className="text-[var(--pres-muted)] text-xs text-center">
               I token generati seguono il contesto strutturale del piano
             </p>
           </div>

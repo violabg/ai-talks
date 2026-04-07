@@ -2,14 +2,14 @@ import * as motion from "motion/react-client";
 import type { ReactNode } from "react";
 
 export const COLORS = {
-  bg: "#0f172a",
-  text: "#e2e8f0",
-  muted: "#94a3b8",
-  accent: "#a78bfa",
-  success: "#34d399",
-  warning: "#fbbf24",
-  danger: "#f87171",
-  border: "#334155",
+  bg: "var(--pres-bg)",
+  text: "var(--pres-text)",
+  muted: "var(--pres-muted)",
+  accent: "var(--pres-accent)",
+  success: "var(--pres-success)",
+  warning: "var(--pres-warning)",
+  danger: "var(--pres-danger)",
+  border: "var(--pres-border)",
 } as const;
 
 export function FadeIn({

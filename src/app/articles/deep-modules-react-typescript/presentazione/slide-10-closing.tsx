@@ -15,7 +15,7 @@ export function Slide10Closing() {
         initial={{ opacity: 0, y: 12 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.45 }}
-        className="font-mono text-[#a78bfa] text-xs uppercase tracking-[0.28em]"
+        className="font-mono text-[var(--pres-accent)] text-xs uppercase tracking-[0.28em]"
       >
         Closing
       </motion.p>
@@ -38,10 +38,10 @@ export function Slide10Closing() {
             initial={{ opacity: 0, y: 12 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.24 + i * 0.09 }}
-            className="bg-[#a78bfa]/10 px-3 py-4 border border-[#334155] rounded-lg text-left"
+            className="bg-[var(--pres-accent-dim)] px-3 py-4 border border-[var(--pres-border)] rounded-lg text-left"
           >
-            <p className="font-mono text-[#a78bfa] text-xs">0{i + 1}</p>
-            <p className="mt-2 text-[#e2e8f0] text-sm leading-snug">
+            <p className="font-mono text-[var(--pres-accent)] text-xs">0{i + 1}</p>
+            <p className="mt-2 text-[var(--pres-text)] text-sm leading-snug">
               {principle}
             </p>
           </motion.div>
@@ -52,7 +52,7 @@ export function Slide10Closing() {
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ delay: 0.8 }}
-        className="text-[#94a3b8] text-sm"
+        className="text-[var(--pres-muted)] text-sm"
       >
         Regola pratica: se un consumer deve conoscere dettagli interni, il
         modulo non e ancora profondo.

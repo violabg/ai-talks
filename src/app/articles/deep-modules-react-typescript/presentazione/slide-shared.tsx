@@ -34,7 +34,7 @@ export function SlideTitle({
   return (
     <div className="mx-auto w-full max-w-6xl">
       <FadeIn>
-        <p className="mb-4 font-mono text-[#a78bfa] text-xs uppercase tracking-[0.28em]">
+        <p className="mb-4 font-mono text-[var(--pres-accent)] text-xs uppercase tracking-[0.28em]">
           {eyebrow}
         </p>
       </FadeIn>
@@ -45,7 +45,7 @@ export function SlideTitle({
       </FadeIn>
       {subtitle && (
         <FadeIn delay={0.16}>
-          <p className="mt-4 max-w-3xl text-[#94a3b8] text-base sm:text-lg">
+          <p className="mt-4 max-w-3xl text-[var(--pres-muted)] text-base sm:text-lg">
             {subtitle}
           </p>
         </FadeIn>

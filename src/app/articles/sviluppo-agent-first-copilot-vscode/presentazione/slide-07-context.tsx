@@ -3,9 +3,9 @@
 import { motion } from "motion/react";
 
 const segments = [
-  { label: "System Prompts", pct: 30, color: "#334155", desc: "Regole di comportamento nascoste dell'editor" },
-  { label: "Tool Definitions", pct: 25, color: "#475569", desc: "Spiegazione al modello di come usare le skill" },
-  { label: "User Context", pct: 45, color: "#a78bfa", desc: "Il tuo codice, la chat e i file allegati" },
+  { label: "System Prompts", pct: 30, color: "var(--pres-border)", desc: "Regole di comportamento nascoste dell'editor" },
+  { label: "Tool Definitions", pct: 25, color: "var(--pres-muted)", desc: "Spiegazione al modello di come usare le skill" },
+  { label: "User Context", pct: 45, color: "var(--pres-accent)", desc: "Il tuo codice, la chat e i file allegati" },
 ];
 
 export function Slide07Context() {
@@ -40,10 +40,10 @@ export function Slide07Context() {
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5 }}
       >
-        La <span className="text-[#a78bfa]">Finestra dei Token</span>
+        La <span className="text-[var(--pres-accent)]">Finestra dei Token</span>
       </motion.h2>
       <motion.p
-        className="text-[#94a3b8] text-sm mb-8 text-center max-w-lg"
+        className="text-[var(--pres-muted)] text-sm mb-8 text-center max-w-lg"
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ delay: 0.3 }}
@@ -72,7 +72,7 @@ export function Slide07Context() {
             <motion.text
               x={cx} y={cy - 6}
               textAnchor="middle"
-              fill="#e2e8f0"
+              fill="var(--pres-text)"
               fontSize="11"
               fontWeight="600"
               initial={{ opacity: 0 }}
@@ -84,7 +84,7 @@ export function Slide07Context() {
             <motion.text
               x={cx} y={cy + 10}
               textAnchor="middle"
-              fill="#94a3b8"
+              fill="var(--pres-muted)"
               fontSize="9"
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
@@ -110,24 +110,24 @@ export function Slide07Context() {
                 style={{ background: seg.color }}
               />
               <div>
-                <p className="text-sm font-semibold" style={{ color: seg.color === "#a78bfa" ? "#a78bfa" : "#e2e8f0" }}>
+                <p className="text-sm font-semibold" style={{ color: seg.color === "var(--pres-accent)" ? "var(--pres-accent)" : "var(--pres-text)" }}>
                   {seg.label}{" "}
-                  <span className="text-[#94a3b8] font-normal text-xs">({seg.pct}%)</span>
+                  <span className="text-[var(--pres-muted)] font-normal text-xs">({seg.pct}%)</span>
                 </p>
-                <p className="text-[#94a3b8] text-xs">{seg.desc}</p>
+                <p className="text-[var(--pres-muted)] text-xs">{seg.desc}</p>
               </div>
             </motion.div>
           ))}
 
           {/* Compact box */}
           <motion.div
-            className="mt-4 rounded-xl border border-[#a78bfa]/30 bg-[rgba(167,139,250,0.08)] px-4 py-3"
+            className="mt-4 rounded-xl border border-[var(--pres-accent)]/30 bg-[var(--pres-accent)]/8 px-4 py-3"
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: 1.2 }}
           >
-            <p className="font-mono text-[#a78bfa] text-sm font-bold mb-1">/compact</p>
-            <p className="text-[#94a3b8] text-xs leading-relaxed">
+            <p className="font-mono text-[var(--pres-accent)] text-sm font-bold mb-1">/compact</p>
+            <p className="text-[var(--pres-muted)] text-xs leading-relaxed">
               Resetta la memoria a breve termine — estrae i punti chiave e le decisioni architetturali, genera un riassunto condensato.
             </p>
           </motion.div>

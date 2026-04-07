@@ -12,7 +12,7 @@ export function Slide02Paradigm() {
         transition={{ duration: 1 }}
         style={{
           background:
-            "radial-gradient(ellipse 50% 40% at 50% 60%, rgba(167,139,250,0.08) 0%, transparent 70%)",
+            "radial-gradient(ellipse 50% 40% at 50% 60%, color-mix(in srgb, var(--pres-accent) 8%, transparent) 0%, transparent 70%)",
         }}
       />
 
@@ -23,8 +23,8 @@ export function Slide02Paradigm() {
         animate={{ opacity: 1, x: 0 }}
         transition={{ duration: 0.5, delay: 0.3 }}
       >
-        <span className="font-mono text-[#94a3b8] text-sm line-through opacity-60">Prima</span>
-        <span className="text-[#f87171] font-mono text-sm">Completamento automatico · riga per riga</span>
+        <span className="font-mono text-[var(--pres-muted)] text-sm line-through opacity-60">Prima</span>
+        <span className="text-[var(--pres-danger)] font-mono text-sm">Completamento automatico · riga per riga</span>
       </motion.div>
 
       {/* Arrow */}
@@ -35,8 +35,8 @@ export function Slide02Paradigm() {
         className="mb-10"
       >
         <svg viewBox="0 0 40 60" width="40" height="60">
-          <line x1="20" y1="0" x2="20" y2="45" stroke="#334155" strokeWidth="2" />
-          <polygon points="10,38 20,58 30,38" fill="#a78bfa" />
+          <line x1="20" y1="0" x2="20" y2="45" stroke="var(--pres-border)" strokeWidth="2" />
+          <polygon points="10,38 20,58 30,38" fill="var(--pres-accent)" />
         </svg>
       </motion.div>
 
@@ -48,11 +48,11 @@ export function Slide02Paradigm() {
         transition={{ duration: 0.6, delay: 1.0 }}
       >
         L&apos;IA come{" "}
-        <span className="text-[#a78bfa]">collaboratore autonomo</span>
+        <span className="text-[var(--pres-accent)]">collaboratore autonomo</span>
       </motion.h2>
 
       <motion.p
-        className="text-[#94a3b8] text-lg max-w-lg"
+        className="text-[var(--pres-muted)] text-lg max-w-lg"
         initial={{ opacity: 0, y: 10 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5, delay: 1.3 }}

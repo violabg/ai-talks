@@ -5,120 +5,52 @@ export function ClosingSlide() {
   return (
     <div className="text-center">
       <FadeIn delay={0.15}>
-        <p className="mb-4 text-[#94a3b8] text-lg">Il cambio di prospettiva</p>
+        <p className="mb-4 text-[var(--pres-muted)] text-lg">Il cambio di prospettiva</p>
       </FadeIn>
       <FadeIn delay={0.3}>
         <div className="flex justify-center items-center gap-6 md:gap-10 mx-auto max-w-3xl">
           <div className="flex flex-col items-center gap-3">
             <svg viewBox="0 0 80 80" className="size-16 md:size-20">
-              <rect
-                x="10"
-                y="10"
-                width="60"
-                height="60"
-                rx="12"
-                fill="#94a3b8"
-                fillOpacity="0.1"
-                stroke="#94a3b8"
-                strokeWidth="1.5"
-              />
-              <text
-                x="40"
-                y="46"
-                textAnchor="middle"
-                fill="#94a3b8"
-                fontSize="24"
-              >
-                ?
-              </text>
+              <rect x="10" y="10" width="60" height="60" rx="12" fill="var(--pres-muted)" fillOpacity="0.1" stroke="var(--pres-muted)" strokeWidth="1.5" />
+              <text x="40" y="46" textAnchor="middle" fill="var(--pres-muted)" fontSize="24">?</text>
             </svg>
-            <span className="text-[#94a3b8] text-sm">Chatbot</span>
+            <span className="text-[var(--pres-muted)] text-sm">Chatbot</span>
           </div>
 
-          <motion.div
-            initial={{ opacity: 0, scale: 0.5 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ delay: 0.6, duration: 0.4 }}
-          >
+          <motion.div initial={{ opacity: 0, scale: 0.5 }} animate={{ opacity: 1, scale: 1 }} transition={{ delay: 0.6, duration: 0.4 }}>
             <svg viewBox="0 0 60 24" className="w-12 md:w-16">
-              <path
-                d="M 5 12 L 45 12 M 38 5 L 48 12 L 38 19"
-                stroke="#a78bfa"
-                strokeWidth="2.5"
-                fill="none"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              />
+              <path d="M 5 12 L 45 12 M 38 5 L 48 12 L 38 19" stroke="var(--pres-accent)" strokeWidth="2.5" fill="none" strokeLinecap="round" strokeLinejoin="round" />
             </svg>
           </motion.div>
 
-          <motion.div
-            className="flex flex-col items-center gap-3"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 0.8, duration: 0.5 }}
-          >
+          <motion.div className="flex flex-col items-center gap-3" initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.8, duration: 0.5 }}>
             <svg viewBox="0 0 120 100" className="w-24 md:w-28 h-16 md:h-20">
-              <circle
-                cx="60"
-                cy="25"
-                r="14"
-                fill="#a78bfa"
-                fillOpacity="0.2"
-                stroke="#a78bfa"
-                strokeWidth="1.5"
-              />
-              <text
-                x="60"
-                y="29"
-                textAnchor="middle"
-                fill="#a78bfa"
-                fontSize="8"
-                fontWeight="bold"
-              >
-                CLI
-              </text>
+              <circle cx="60" cy="25" r="14" fill="var(--pres-accent)" fillOpacity="0.2" stroke="var(--pres-accent)" strokeWidth="1.5" />
+              <text x="60" y="29" textAnchor="middle" fill="var(--pres-accent)" fontSize="8" fontWeight="bold">CLI</text>
               {[
                 { cx: 20, cy: 75, color: MODEL_COLORS.haiku },
                 { cx: 60, cy: 75, color: MODEL_COLORS.sonnet },
                 { cx: 100, cy: 75, color: MODEL_COLORS.gpt4 },
               ].map((agent) => (
                 <g key={`${agent.cx}-${agent.cy}`}>
-                  <line
-                    x1="60"
-                    y1="39"
-                    x2={agent.cx}
-                    y2={agent.cy - 12}
-                    stroke={agent.color}
-                    strokeWidth="1"
-                    strokeDasharray="3 2"
-                  />
-                  <circle
-                    cx={agent.cx}
-                    cy={agent.cy}
-                    r="12"
-                    fill={agent.color}
-                    fillOpacity="0.2"
-                    stroke={agent.color}
-                    strokeWidth="1.5"
-                  />
+                  <line x1="60" y1="39" x2={agent.cx} y2={agent.cy - 12} stroke={agent.color} strokeWidth="1" strokeDasharray="3 2" />
+                  <circle cx={agent.cx} cy={agent.cy} r="12" fill={agent.color} fillOpacity="0.2" stroke={agent.color} strokeWidth="1.5" />
                 </g>
               ))}
             </svg>
-            <span className="text-[#a78bfa] text-sm">Sistema distribuito</span>
+            <span className="text-[var(--pres-accent)] text-sm">Sistema distribuito</span>
           </motion.div>
         </div>
       </FadeIn>
 
       <FadeIn delay={1.2}>
-        <div className="bg-[#a78bfa]/5 mx-auto mt-10 p-6 md:p-8 border border-[#a78bfa]/20 rounded-xl max-w-2xl">
+        <div className="bg-[var(--pres-accent)]/5 mx-auto mt-10 p-6 md:p-8 border border-[var(--pres-accent)]/20 rounded-xl max-w-2xl">
           <p className="text-lg md:text-xl leading-relaxed">
-            Separare <span className="font-bold text-[#60a5fa]">planning</span>,{" "}
-            <span className="font-bold text-[#fbbf24]">esecuzione</span> e{" "}
-            <span className="font-bold text-[#a78bfa]">review</span> non e solo
-            piu veloce.
+            Separare <span className="font-bold text-[var(--pres-blue)]">planning</span>,{" "}
+            <span className="font-bold text-[var(--pres-warning)]">esecuzione</span> e{" "}
+            <span className="font-bold text-[var(--pres-accent)]">review</span> non e solo piu veloce.
           </p>
-          <p className="mt-2 text-[#94a3b8] text-lg md:text-xl leading-relaxed">
+          <p className="mt-2 text-[var(--pres-muted)] text-lg md:text-xl leading-relaxed">
             E strutturalmente piu affidabile.
           </p>
         </div>

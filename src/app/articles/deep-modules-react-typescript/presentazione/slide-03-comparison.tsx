@@ -28,9 +28,9 @@ export function Slide03Comparison() {
           initial={{ opacity: 0, x: -30 }}
           animate={{ opacity: 1, x: 0 }}
           transition={{ duration: 0.45 }}
-          className="bg-[#f87171]/10 p-6 border border-[#f87171]/45 rounded-2xl"
+          className="bg-[var(--pres-danger-dim)] p-6 border border-[var(--pres-danger)]/45 rounded-2xl"
         >
-          <h3 className="font-semibold text-[#f87171] text-xl">Shallow</h3>
+          <h3 className="font-semibold text-[var(--pres-danger)] text-xl">Shallow</h3>
           <div className="space-y-3 mt-4">
             {leftItems.map((item, i) => (
               <motion.p
@@ -38,7 +38,7 @@ export function Slide03Comparison() {
                 initial={{ opacity: 0, x: -12 }}
                 animate={{ opacity: 1, x: 0 }}
                 transition={{ delay: 0.1 + i * 0.09 }}
-                className="bg-[#0f172a]/70 px-3 py-2 border border-[#f87171]/25 rounded-lg text-[#fecaca] text-sm"
+                className="bg-[var(--pres-bg)]/70 px-3 py-2 border border-[var(--pres-danger)]/25 rounded-lg text-[var(--pres-danger-fg)] text-sm"
               >
                 {item}
               </motion.p>
@@ -50,9 +50,9 @@ export function Slide03Comparison() {
           initial={{ opacity: 0, x: 30 }}
           animate={{ opacity: 1, x: 0 }}
           transition={{ duration: 0.45, delay: 0.08 }}
-          className="bg-[#34d399]/10 p-6 border border-[#34d399]/45 rounded-2xl"
+          className="bg-[var(--pres-success-dim)] p-6 border border-[var(--pres-success)]/45 rounded-2xl"
         >
-          <h3 className="font-semibold text-[#34d399] text-xl">Deep Module</h3>
+          <h3 className="font-semibold text-[var(--pres-success)] text-xl">Deep Module</h3>
           <div className="space-y-3 mt-4">
             {rightItems.map((item, i) => (
               <motion.p
@@ -60,7 +60,7 @@ export function Slide03Comparison() {
                 initial={{ opacity: 0, x: 12 }}
                 animate={{ opacity: 1, x: 0 }}
                 transition={{ delay: 0.22 + i * 0.09 }}
-                className="bg-[#0f172a]/70 px-3 py-2 border border-[#34d399]/25 rounded-lg text-[#bbf7d0] text-sm"
+                className="bg-[var(--pres-bg)]/70 px-3 py-2 border border-[var(--pres-success)]/25 rounded-lg text-[var(--pres-success-fg)] text-sm"
               >
                 {item}
               </motion.p>
@@ -73,7 +73,7 @@ export function Slide03Comparison() {
         initial={{ opacity: 0, y: 10 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 0.72 }}
-        className="mx-auto max-w-4xl text-[#94a3b8] text-sm sm:text-base text-center"
+        className="mx-auto max-w-4xl text-[var(--pres-muted)] text-sm sm:text-base text-center"
       >
         Deep Modules = meno conoscenza distribuita nel consumer, piu intenzione
         concentrata nell'interfaccia.

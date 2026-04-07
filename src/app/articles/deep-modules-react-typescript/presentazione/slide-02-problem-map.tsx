@@ -20,7 +20,7 @@ export function Slide02ProblemMap() {
       />
 
       <FadeIn delay={0.14}>
-        <div className="bg-[#0b1222] mx-auto p-4 sm:p-7 border border-[#334155] rounded-2xl w-full max-w-6xl">
+        <div className="bg-[var(--pres-bg-card)] mx-auto p-4 sm:p-7 border border-[var(--pres-border)] rounded-2xl w-full max-w-6xl">
           <div className="mx-auto w-full max-w-5xl">
             <svg viewBox="0 0 700 380" className="w-full">
               <defs>
@@ -33,13 +33,13 @@ export function Slide02ProblemMap() {
                   markerHeight="6"
                   orient="auto-start-reverse"
                 >
-                  <path d="M 0 0 L 10 5 L 0 10 z" fill="#f87171" opacity="0.65" />
+                  <path d="M 0 0 L 10 5 L 0 10 z" fill="var(--pres-danger)" opacity="0.65" />
                 </marker>
               </defs>
               <motion.text
                 x="350"
                 y="34"
-                fill="#94a3b8"
+                fill="var(--pres-muted)"
                 textAnchor="middle"
                 fontSize="16"
                 initial={{ opacity: 0 }}
@@ -62,13 +62,13 @@ export function Slide02ProblemMap() {
                     width="140"
                     height="40"
                     rx="10"
-                    fill="rgba(248,113,113,0.14)"
-                    stroke="#f87171"
+                    fill="var(--pres-danger-dim)"
+                    stroke="var(--pres-danger)"
                   />
                   <text
                     x={node.x}
                     y={node.y + 5}
-                    fill="#fca5a5"
+                    fill="var(--pres-danger)"
                     textAnchor="middle"
                     fontSize="13"
                   >
@@ -97,7 +97,7 @@ export function Slide02ProblemMap() {
                     y1={y1}
                     x2={x2}
                     y2={y2}
-                    stroke="#f87171"
+                    stroke="var(--pres-danger)"
                     strokeWidth="2"
                     strokeDasharray="8 8"
                     markerEnd="url(#arrow-red)"
@@ -114,8 +114,8 @@ export function Slide02ProblemMap() {
                 width="260"
                 height="92"
                 rx="16"
-                fill="rgba(15,23,42,0.95)"
-                stroke="#a78bfa"
+                fill="var(--pres-bg-node)"
+                stroke="var(--pres-accent)"
                 initial={{ opacity: 0, y: 12 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.88, duration: 0.4 }}
@@ -123,7 +123,7 @@ export function Slide02ProblemMap() {
               <motion.text
                 x="350"
                 y="182"
-                fill="#e2e8f0"
+                fill="var(--pres-text)"
                 textAnchor="middle"
                 fontSize="19"
                 fontWeight="700"
@@ -136,7 +136,7 @@ export function Slide02ProblemMap() {
               <motion.text
                 x="350"
                 y="209"
-                fill="#94a3b8"
+                fill="var(--pres-muted)"
                 textAnchor="middle"
                 fontSize="14"
                 initial={{ opacity: 0 }}

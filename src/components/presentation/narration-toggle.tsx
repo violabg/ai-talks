@@ -12,18 +12,18 @@ export function NarrationToggle() {
       <button
         type="button"
         onClick={toggleEnabled}
-        className="flex items-center justify-center size-8 rounded-full transition-colors hover:bg-white/10"
+        className="flex items-center justify-center size-8 rounded-full transition-colors hover:bg-[var(--pres-text)]/10"
         aria-label={enabled ? "Disattiva narrazione" : "Attiva narrazione"}
         title={enabled ? "Disattiva narrazione" : "Attiva narrazione"}
       >
         {enabled ? (
           <Volume2
             className={`size-4 transition-colors ${
-              playing ? "text-[#a78bfa]" : "text-[#94a3b8]"
+              playing ? "text-[var(--pres-accent)]" : "text-[var(--pres-muted)]"
             }`}
           />
         ) : (
-          <VolumeOff className="size-4 text-[#94a3b8]" />
+          <VolumeOff className="size-4 text-[var(--pres-muted)]" />
         )}
       </button>
       {enabled && <VoiceSelector />}

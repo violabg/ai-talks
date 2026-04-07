@@ -5,12 +5,12 @@ export function Slide07Checkpoint() {
   return (
     <div>
       <FadeIn>
-        <h2 className="mb-4 font-bold text-[#a78bfa] text-2xl md:text-4xl text-center">
+        <h2 className="mb-4 font-bold text-[var(--pres-accent)] text-2xl md:text-4xl text-center">
           Checkpoint umano strategico
         </h2>
       </FadeIn>
       <FadeIn delay={0.16}>
-        <p className="mb-8 text-[#94a3b8] text-sm text-center">
+        <p className="mb-8 text-[var(--pres-muted)] text-sm text-center">
           Dopo il planning, una decisione umana evita rework costoso.
         </p>
       </FadeIn>
@@ -20,10 +20,10 @@ export function Slide07Checkpoint() {
           initial={{ opacity: 0, x: -14 }}
           animate={{ opacity: 1, x: 0 }}
           transition={{ delay: 0.25, duration: 0.35 }}
-          className="bg-[#34d399]/15 p-5 border border-[#34d399]/50 rounded-xl"
+          className="bg-[var(--pres-success)]/15 p-5 border border-[var(--pres-success)]/50 rounded-xl"
         >
-          <p className="font-semibold text-[#34d399]">PROCEED</p>
-          <p className="mt-1 text-[#cbd5e1] text-sm">
+          <p className="font-semibold text-[var(--pres-success)]">PROCEED</p>
+          <p className="mt-1 text-[var(--pres-text-sub)] text-sm">
             Piano approvato, avvia implementazione.
           </p>
         </motion.div>
@@ -32,9 +32,9 @@ export function Slide07Checkpoint() {
           initial={{ opacity: 0, scale: 0.8 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ delay: 0.45, duration: 0.35 }}
-          className="bg-[#a78bfa]/15 px-6 py-8 border border-[#a78bfa]/50 rounded-xl text-center"
+          className="bg-[var(--pres-accent)]/15 px-6 py-8 border border-[var(--pres-accent)]/50 rounded-xl text-center"
         >
-          <p className="font-mono text-[#a78bfa] text-xs uppercase tracking-wider">
+          <p className="font-mono text-[var(--pres-accent)] text-xs uppercase tracking-wider">
             Human checkpoint
           </p>
           <p className="mt-2 font-semibold text-lg">Leggi PLAN.md</p>
@@ -44,10 +44,10 @@ export function Slide07Checkpoint() {
           initial={{ opacity: 0, x: 14 }}
           animate={{ opacity: 1, x: 0 }}
           transition={{ delay: 0.25, duration: 0.35 }}
-          className="bg-[#fbbf24]/15 p-5 border border-[#fbbf24]/50 rounded-xl"
+          className="bg-[var(--pres-warning)]/15 p-5 border border-[var(--pres-warning)]/50 rounded-xl"
         >
-          <p className="font-semibold text-[#fbbf24]">CORREGGI</p>
-          <p className="mt-1 text-[#cbd5e1] text-sm">
+          <p className="font-semibold text-[var(--pres-warning)]">CORREGGI</p>
+          <p className="mt-1 text-[var(--pres-text-sub)] text-sm">
             Aggiorna il piano e rilancia lo step di planning.
           </p>
         </motion.div>

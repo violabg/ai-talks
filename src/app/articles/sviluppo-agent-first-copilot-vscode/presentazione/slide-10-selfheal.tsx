@@ -5,13 +5,13 @@ import { motion } from "motion/react";
 // viewBox: 0 0 700 400
 // Left column x=200, Right column x=500, node h=52
 const nodes = [
-  { id: "prompt",  label: "Prompt",          sublabel: "URL shortener con FastAPI + SQLite",           color: "#38bdf8", x: 200, y: 50  },
-  { id: "plan",    label: "Plan Mode",        sublabel: "main.py · database.py · templates/ · req.txt", color: "#a78bfa", x: 200, y: 150 },
-  { id: "act",     label: "Act Mode",         sublabel: "Crea i file, invoca pip install",              color: "#a78bfa", x: 200, y: 250 },
-  { id: "error",   label: "Errore Terminale", sublabel: "ModuleNotFoundError: jinja2",                  color: "#f87171", x: 200, y: 350 },
-  { id: "read",    label: "Legge l'Output",   sublabel: "L'agente analizza il traceback",               color: "#fbbf24", x: 500, y: 350 },
-  { id: "fix",     label: "Auto-Fix",         sublabel: "pip install jinja2 → riavvia uvicorn",         color: "#34d399", x: 500, y: 250 },
-  { id: "success", label: "Server Avviato",   sublabel: "localhost:8000 ✓",                             color: "#34d399", x: 500, y: 150 },
+  { id: "prompt",  label: "Prompt",          sublabel: "URL shortener con FastAPI + SQLite",           color: "var(--pres-blue)", x: 200, y: 50  },
+  { id: "plan",    label: "Plan Mode",        sublabel: "main.py · database.py · templates/ · req.txt", color: "var(--pres-accent)", x: 200, y: 150 },
+  { id: "act",     label: "Act Mode",         sublabel: "Crea i file, invoca pip install",              color: "var(--pres-accent)", x: 200, y: 250 },
+  { id: "error",   label: "Errore Terminale", sublabel: "ModuleNotFoundError: jinja2",                  color: "var(--pres-danger)", x: 200, y: 350 },
+  { id: "read",    label: "Legge l'Output",   sublabel: "L'agente analizza il traceback",               color: "var(--pres-warning)", x: 500, y: 350 },
+  { id: "fix",     label: "Auto-Fix",         sublabel: "pip install jinja2 → riavvia uvicorn",         color: "var(--pres-success)", x: 500, y: 250 },
+  { id: "success", label: "Server Avviato",   sublabel: "localhost:8000 ✓",                             color: "var(--pres-success)", x: 500, y: 150 },
 ];
 
 // Straight edges — vertical for same column, horizontal for cross
@@ -39,10 +39,10 @@ export function Slide10SelfHeal() {
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5 }}
       >
-        L&apos;Agente che si <span className="text-[#34d399]">Auto-Ripara</span>
+        L&apos;Agente che si <span className="text-[var(--pres-success)]">Auto-Ripara</span>
       </motion.h2>
       <motion.p
-        className="text-[#94a3b8] text-sm mb-4 text-center max-w-xl"
+        className="text-[var(--pres-muted)] text-sm mb-4 text-center max-w-xl"
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ delay: 0.3 }}
@@ -54,19 +54,19 @@ export function Slide10SelfHeal() {
         <svg viewBox="0 0 700 420" className="w-full">
           <defs>
             <marker id="arrow10" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto">
-              <polygon points="0 0, 8 3, 0 6" fill="#475569" />
+              <polygon points="0 0, 8 3, 0 6" fill="var(--pres-muted)" />
             </marker>
             <marker id="arrow10green" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto">
-              <polygon points="0 0, 8 3, 0 6" fill="#34d399" />
+              <polygon points="0 0, 8 3, 0 6" fill="var(--pres-success)" />
             </marker>
           </defs>
 
           {/* Column labels */}
-          <motion.text x={200} y={16} textAnchor="middle" fill="#475569" fontSize="11" fontFamily="monospace"
+          <motion.text x={200} y={16} textAnchor="middle" fill="var(--pres-muted)" fontSize="11" fontFamily="monospace"
             initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.2 }}>
             flus normal →
           </motion.text>
-          <motion.text x={500} y={16} textAnchor="middle" fill="#34d399" fontSize="11" fontFamily="monospace" opacity={0.7}
+          <motion.text x={500} y={16} textAnchor="middle" fill="var(--pres-success)" fontSize="11" fontFamily="monospace" opacity={0.7}
             initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.2 }}>
             ← auto-riparazione
           </motion.text>
@@ -79,7 +79,7 @@ export function Slide10SelfHeal() {
 
             const isGreen = edge.from === "read" || edge.from === "fix";
             const marker = isGreen ? "url(#arrow10green)" : "url(#arrow10)";
-            const stroke = isGreen ? "#34d399" : "#475569";
+            const stroke = isGreen ? "var(--pres-success)" : "var(--pres-muted)";
 
             let x1, y1, x2, y2;
             if (edge.type === "v") {
@@ -109,7 +109,7 @@ export function Slide10SelfHeal() {
           <motion.path
             d="M 590 150 Q 640 100 640 50 Q 640 30 590 30 Q 200 30 200 30"
             fill="none"
-            stroke="#34d399"
+            stroke="var(--pres-success)"
             strokeWidth="1.5"
             strokeDasharray="6 3"
             opacity={0}
@@ -120,7 +120,7 @@ export function Slide10SelfHeal() {
           <motion.text
             x={620} y={95}
             textAnchor="middle"
-            fill="#34d399"
+            fill="var(--pres-success)"
             fontSize="9"
             fontStyle="italic"
             initial={{ opacity: 0 }}
@@ -145,7 +145,7 @@ export function Slide10SelfHeal() {
                 width={NODE_W}
                 height={NODE_H}
                 rx={10}
-                fill={`rgba(${hexToRgb(node.color)}, 0.1)`}
+                fill={`color-mix(in srgb, ${node.color} 10%, transparent)`}
                 stroke={node.color}
                 strokeWidth="1.5"
               />
@@ -163,7 +163,7 @@ export function Slide10SelfHeal() {
                 x={node.x}
                 y={node.y + 10}
                 textAnchor="middle"
-                fill="#94a3b8"
+                fill="var(--pres-muted)"
                 fontSize="9.5"
               >
                 {node.sublabel}

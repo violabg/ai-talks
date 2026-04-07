@@ -5,22 +5,22 @@ const patterns = [
   {
     title: "Step-by-step obbligato",
     desc: "Costringe la pianificazione prima del codice",
-    color: "#60a5fa",
+    color: "var(--pres-blue)",
   },
   {
     title: "Riferimento al codice",
     desc: "Replica pattern esistenti, riduce divergenze",
-    color: "#34d399",
+    color: "var(--pres-success)",
   },
   {
     title: "Output format vincolato",
     desc: "Rende l'automazione prevedibile",
-    color: "#fbbf24",
+    color: "var(--pres-warning)",
   },
   {
     title: "Fail-fast esplicito",
     desc: "Blocca assunzioni errate in anticipo",
-    color: "#f87171",
+    color: "var(--pres-danger)",
   },
 ];
 
@@ -28,19 +28,19 @@ export function Slide04Patterns() {
   return (
     <div>
       <FadeIn>
-        <h2 className="mb-4 font-bold text-[#a78bfa] text-2xl md:text-4xl text-center">
+        <h2 className="mb-4 font-bold text-[var(--pres-accent)] text-2xl md:text-4xl text-center">
           Pattern di prompting per l'ingegneria
         </h2>
       </FadeIn>
       <FadeIn delay={0.16}>
-        <p className="mb-8 text-[#94a3b8] text-sm text-center">
+        <p className="mb-8 text-[var(--pres-muted)] text-sm text-center">
           Una timeline operativa da scegliere in base al task.
         </p>
       </FadeIn>
 
       <div className="mx-auto max-w-5xl">
         <div className="relative flex flex-col gap-4">
-          <div className="top-0 left-4 md:left-1/2 absolute bg-[#334155] w-px h-full" />
+          <div className="top-0 left-4 md:left-1/2 absolute bg-[var(--pres-border)] w-px h-full" />
           {patterns.map((pattern, i) => (
             <motion.div
               key={pattern.title}
@@ -55,21 +55,21 @@ export function Slide04Patterns() {
                 <div
                   className="p-4 border rounded-xl"
                   style={{
-                    borderColor: `${pattern.color}50`,
-                    backgroundColor: `${pattern.color}12`,
+                    borderColor: `color-mix(in srgb, ${pattern.color} 31%, transparent)`,
+                    backgroundColor: `color-mix(in srgb, ${pattern.color} 7%, transparent)`,
                   }}
                 >
                   <p className="font-semibold" style={{ color: pattern.color }}>
                     {i + 1}. {pattern.title}
                   </p>
-                  <p className="mt-1 text-[#cbd5e1] text-sm">{pattern.desc}</p>
+                  <p className="mt-1 text-[var(--pres-text-sub)] text-sm">{pattern.desc}</p>
                 </div>
               </div>
               <span
                 className="block top-5 left-4 md:left-1/2 absolute border-2 rounded-full w-2.5 h-2.5 -translate-x-1/2"
                 style={{
                   borderColor: pattern.color,
-                  backgroundColor: "#0f172a",
+                  backgroundColor: "var(--pres-bg)",
                 }}
               />
             </motion.div>

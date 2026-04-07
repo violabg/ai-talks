@@ -2,10 +2,10 @@ import * as motion from "motion/react-client";
 import { SlideTitle } from "./slide-shared";
 
 const steps = [
-  { label: "Login", color: "#60a5fa" },
-  { label: "Refresh Token", color: "#fbbf24" },
-  { label: "Permessi", color: "#34d399" },
-  { label: "API useAuth()", color: "#a78bfa" },
+  { label: "Login", color: "var(--pres-blue)" },
+  { label: "Refresh Token", color: "var(--pres-warning)" },
+  { label: "Permessi", color: "var(--pres-success)" },
+  { label: "API useAuth()", color: "var(--pres-accent)" },
 ];
 
 export function Slide06AuthFlow() {
@@ -16,7 +16,7 @@ export function Slide06AuthFlow() {
         title="La complessita vive dentro il modulo, non nel componente"
       />
 
-      <div className="bg-[#0b1222] mx-auto p-5 sm:p-8 border border-[#334155] rounded-2xl w-full max-w-6xl">
+      <div className="bg-[var(--pres-bg-card)] mx-auto p-5 sm:p-8 border border-[var(--pres-border)] rounded-2xl w-full max-w-6xl">
         <div className="mx-auto w-full max-w-5xl">
           <svg viewBox="0 0 760 360" className="w-full">
             <defs>
@@ -29,7 +29,7 @@ export function Slide06AuthFlow() {
                 markerHeight="5"
                 orient="auto-start-reverse"
               >
-                <path d="M 0 0 L 10 5 L 0 10 z" fill="#94a3b8" />
+                <path d="M 0 0 L 10 5 L 0 10 z" fill="var(--pres-muted)" />
               </marker>
             </defs>
             {steps.map((step, i) => {
@@ -48,7 +48,7 @@ export function Slide06AuthFlow() {
                     width="138"
                     height="56"
                     rx="10"
-                    fill="rgba(15,23,42,0.9)"
+                    fill="var(--pres-bg-node)"
                     stroke={step.color}
                   />
                   <text
@@ -76,7 +76,7 @@ export function Slide06AuthFlow() {
                 >
                   <path
                     d={`M ${x} ${122 + (i % 2) * 86} L ${x + 15} ${122 + (i % 2) * 86} L ${x + 15} ${122 + ((i + 1) % 2) * 86} L ${x + 30} ${122 + ((i + 1) % 2) * 86}`}
-                    stroke="#94a3b8"
+                    stroke="var(--pres-muted)"
                     strokeWidth="3"
                     fill="none"
                     markerEnd="url(#arrow-slate)"
@@ -91,8 +91,8 @@ export function Slide06AuthFlow() {
               width="400"
               height="64"
               rx="12"
-              fill="rgba(167,139,250,0.2)"
-              stroke="#a78bfa"
+              fill="var(--pres-accent-dim)"
+              stroke="var(--pres-accent)"
               initial={{ opacity: 0, scale: 0.95 }}
               animate={{ opacity: 1, scale: 1 }}
               transition={{ delay: 0.8 }}
@@ -100,7 +100,7 @@ export function Slide06AuthFlow() {
             <motion.text
               x="381"
               y="290"
-              fill="#e2e8f0"
+              fill="var(--pres-text)"
               textAnchor="middle"
               fontSize="16"
               fontWeight="700"

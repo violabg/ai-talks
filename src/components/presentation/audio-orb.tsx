@@ -72,22 +72,22 @@ export function AudioOrb() {
             <div
               className="absolute inset-0 rounded-full"
               style={{
-                boxShadow: `0 0 ${glowSize}px rgba(167, 139, 250, ${glowOpacity})`,
+                boxShadow: `0 0 ${glowSize}px color-mix(in srgb, var(--pres-accent) ${Math.round(glowOpacity * 100)}%, transparent)`,
                 transition: "box-shadow 0.08s linear",
               }}
             />
             {/* Base ring */}
-            <div className="absolute inset-0 rounded-full bg-[#a78bfa]/20 backdrop-blur-sm" />
+            <div className="absolute inset-0 rounded-full bg-[var(--pres-accent)]/20 backdrop-blur-sm" />
             {/* Inner fill */}
             <div
-              className="absolute inset-1 rounded-full bg-[#a78bfa]"
+              className="absolute inset-1 rounded-full bg-[var(--pres-accent)]"
               style={{
                 opacity: innerOpacity,
                 transition: "opacity 0.08s linear",
               }}
             />
             {/* Center dot */}
-            <div className="absolute inset-3 rounded-full bg-[#a78bfa]" />
+            <div className="absolute inset-3 rounded-full bg-[var(--pres-accent)]" />
           </motion.div>
         </motion.div>
       )}

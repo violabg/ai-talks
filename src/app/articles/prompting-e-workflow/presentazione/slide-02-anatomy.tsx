@@ -7,10 +7,10 @@ const BOX_CX = BOX.x + BOX.w / 2; // 210
 const BOX_CY = BOX.y + BOX.h / 2; // 150
 
 const nodes = [
-  { title: "Contesto",  x: 100, y: 80,  color: "#60a5fa" },
-  { title: "Obiettivo", x: 320, y: 80,  color: "#34d399" },
-  { title: "Vincoli",   x: 100, y: 220, color: "#fbbf24" },
-  { title: "Successo",  x: 320, y: 220, color: "#f87171" },
+  { title: "Contesto",  x: 100, y: 80,  color: "var(--pres-blue)" },
+  { title: "Obiettivo", x: 320, y: 80,  color: "var(--pres-success)" },
+  { title: "Vincoli",   x: 100, y: 220, color: "var(--pres-warning)" },
+  { title: "Successo",  x: 320, y: 220, color: "var(--pres-danger)" },
 ];
 
 // For each node compute the line start (edge of node rect) and end (edge of center box)
@@ -38,12 +38,12 @@ export function Slide02Anatomy() {
   return (
     <div>
       <FadeIn>
-        <h2 className="mb-4 font-bold text-[#a78bfa] text-2xl md:text-4xl text-center">
+        <h2 className="mb-4 font-bold text-[var(--pres-accent)] text-2xl md:text-4xl text-center">
           Anatomia di un prompt efficace
         </h2>
       </FadeIn>
       <FadeIn delay={0.12}>
-        <p className="mb-8 text-[#94a3b8] text-sm md:text-base text-center">
+        <p className="mb-8 text-[var(--pres-muted)] text-sm md:text-base text-center">
           Quattro elementi convergono verso un output prevedibile.
         </p>
       </FadeIn>
@@ -111,7 +111,7 @@ export function Slide02Anatomy() {
               width={BOX.w}
               height={BOX.h}
               rx="12"
-              fill="#0f172a"
+              fill="var(--pres-bg)"
             />
             {/* Styled overlay */}
             <rect
@@ -120,16 +120,16 @@ export function Slide02Anatomy() {
               width={BOX.w}
               height={BOX.h}
               rx="12"
-              fill="#a78bfa"
+              fill="var(--pres-accent)"
               fillOpacity="0.2"
-              stroke="#a78bfa"
+              stroke="var(--pres-accent)"
               strokeWidth="1.5"
             />
             <text
               x={BOX_CX}
               y={BOX_CY + 5}
               textAnchor="middle"
-              fill="#a78bfa"
+              fill="var(--pres-accent)"
               fontSize="13"
               fontWeight="bold"
             >

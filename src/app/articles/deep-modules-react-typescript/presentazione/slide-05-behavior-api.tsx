@@ -15,12 +15,12 @@ export function Slide05BehaviorApi() {
           initial={{ opacity: 0, y: 18 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.45 }}
-          className="bg-[rgba(30,41,59,0.8)] p-4 border border-[#f87171]/40 rounded-xl"
+          className="bg-[var(--pres-bg-surface)] p-4 border border-[var(--pres-danger)]/40 rounded-xl"
         >
-          <p className="mb-2 font-mono text-[#f87171] text-xs uppercase">
+          <p className="mb-2 font-mono text-[var(--pres-danger)] text-xs uppercase">
             anti-pattern
           </p>
-          <pre className="bg-[#0b1222] p-3 rounded overflow-x-auto text-[#fecaca] text-[12px] leading-relaxed">
+          <pre className="bg-[var(--pres-bg-card)] p-3 rounded overflow-x-auto text-[var(--pres-danger-fg)] text-[12px] leading-relaxed">
             {`const {
   items,
   setItems,
@@ -36,12 +36,12 @@ export function Slide05BehaviorApi() {
           initial={{ opacity: 0, y: 18 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.45, delay: 0.15 }}
-          className="bg-[rgba(30,41,59,0.8)] p-4 border border-[#34d399]/40 rounded-xl"
+          className="bg-[var(--pres-bg-surface)] p-4 border border-[var(--pres-success)]/40 rounded-xl"
         >
-          <p className="mb-2 font-mono text-[#34d399] text-xs uppercase">
+          <p className="mb-2 font-mono text-[var(--pres-success)] text-xs uppercase">
             deep module API
           </p>
-          <pre className="bg-[#0b1222] p-3 rounded overflow-x-auto text-[#bbf7d0] text-[12px] leading-relaxed">
+          <pre className="bg-[var(--pres-bg-card)] p-3 rounded overflow-x-auto text-[var(--pres-success-fg)] text-[12px] leading-relaxed">
             {`const {
   items,
   selectedItem,
@@ -65,10 +65,10 @@ export function Slide05BehaviorApi() {
             initial={{ opacity: 0, scale: 0.96 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ delay: 0.42 + i * 0.1 }}
-            className="bg-[#a78bfa]/15 px-4 py-3 border border-[#334155] rounded-lg text-center"
+            className="bg-[var(--pres-accent-dim)] px-4 py-3 border border-[var(--pres-border)] rounded-lg text-center"
           >
-            <p className="font-mono text-[#e2e8f0] text-sm">{name}</p>
-            <p className="mt-1 text-[#94a3b8] text-xs">{note}</p>
+            <p className="font-mono text-[var(--pres-text)] text-sm">{name}</p>
+            <p className="mt-1 text-[var(--pres-muted)] text-xs">{note}</p>
           </motion.div>
         ))}
       </div>

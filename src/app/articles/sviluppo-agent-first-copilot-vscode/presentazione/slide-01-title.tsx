@@ -15,13 +15,13 @@ export function Slide01Title() {
         transition={{ duration: 1.5 }}
         style={{
           background:
-            "radial-gradient(ellipse 60% 50% at 50% 50%, rgba(167,139,250,0.12) 0%, transparent 70%)",
+            "radial-gradient(ellipse 60% 50% at 50% 50%, color-mix(in srgb, var(--pres-accent) 12%, transparent) 0%, transparent 70%)",
         }}
       />
 
       {/* Eyebrow */}
       <motion.p
-        className="font-mono text-[#a78bfa] text-xs uppercase tracking-[0.2em] mb-6"
+        className="font-mono text-[var(--pres-accent)] text-xs uppercase tracking-[0.2em] mb-6"
         initial={{ opacity: 0, y: -10 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5, delay: 0.2 }}
@@ -37,12 +37,12 @@ export function Slide01Title() {
         transition={{ duration: 0.6, delay: 0.4 }}
       >
         L&apos;Era dello Sviluppo{" "}
-        <span className="text-[#a78bfa]">Agent-First</span>
+        <span className="text-[var(--pres-accent)]">Agent-First</span>
       </motion.h1>
 
       {/* Subtitle */}
       <motion.p
-        className="text-[#94a3b8] text-lg sm:text-xl max-w-xl mb-10"
+        className="text-[var(--pres-muted)] text-lg sm:text-xl max-w-xl mb-10"
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.6, delay: 0.6 }}
@@ -60,7 +60,7 @@ export function Slide01Title() {
         {tags.map((tag, i) => (
           <motion.span
             key={tag}
-            className="px-3 py-1 rounded-full border border-[#334155] bg-[rgba(167,139,250,0.08)] text-[#94a3b8] text-xs font-mono"
+            className="px-3 py-1 rounded-full border border-[var(--pres-border)] bg-[var(--pres-accent)]/8 text-[var(--pres-muted)] text-xs font-mono"
             initial={{ opacity: 0, scale: 0.8 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 0.3, delay: 0.9 + i * 0.08 }}

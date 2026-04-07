@@ -14,9 +14,9 @@ export function Slide08GreyBox() {
           initial={{ opacity: 0, y: 18 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.45 }}
-          className="bg-[rgba(30,41,59,0.8)] p-4 border border-[#334155] rounded-xl"
+          className="bg-[var(--pres-bg-surface)] p-4 border border-[var(--pres-border)] rounded-xl"
         >
-          <pre className="bg-[#0b1222] p-3 rounded overflow-x-auto text-[#cbd5e1] text-[12px] leading-relaxed">
+          <pre className="bg-[var(--pres-bg-card)] p-3 rounded overflow-x-auto text-[var(--pres-text-sub)] text-[12px] leading-relaxed">
             {`describe('useCart', () => {
   it('aggiunge prodotto', () => {
     const { result } = renderHook(() => useCart());
@@ -44,10 +44,10 @@ export function Slide08GreyBox() {
               initial={{ opacity: 0, x: 14 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ delay: 0.18 + i * 0.12 }}
-              className="bg-[#34d399]/10 px-4 py-3 border border-[#34d399]/30 rounded-lg"
+              className="bg-[var(--pres-success-dim)] px-4 py-3 border border-[var(--pres-success)]/30 rounded-lg"
             >
-              <p className="font-mono text-[#34d399] text-xs uppercase">{a}</p>
-              <p className="mt-1 text-[#d1fae5] text-sm">{b}</p>
+              <p className="font-mono text-[var(--pres-success)] text-xs uppercase">{a}</p>
+              <p className="mt-1 text-[var(--pres-success-fg)] text-sm">{b}</p>
             </motion.div>
           ))}
 
@@ -55,7 +55,7 @@ export function Slide08GreyBox() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 0.6 }}
-            className="bg-[#a78bfa]/15 px-4 py-3 border border-[#a78bfa]/35 rounded-lg text-[#e2e8f0] text-sm"
+            className="bg-[var(--pres-accent-dim)] px-4 py-3 border border-[var(--pres-accent)]/35 rounded-lg text-[var(--pres-text)] text-sm"
           >
             L'agente AI puo rifattorizzare _internal senza supervisione
             continua, ma con feedback oggettivo.

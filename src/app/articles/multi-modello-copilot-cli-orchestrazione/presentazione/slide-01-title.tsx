@@ -16,7 +16,7 @@ export function TitleSlide() {
           {tags.map((tag) => (
             <span
               key={tag}
-              className="bg-[#a78bfa]/20 px-3 py-1 rounded-full font-mono text-[#a78bfa] text-xs uppercase tracking-wider"
+              className="bg-[var(--pres-accent-dim)] px-3 py-1 rounded-full font-mono text-[var(--pres-accent)] text-xs uppercase tracking-wider"
             >
               {tag}
             </span>
@@ -29,7 +29,7 @@ export function TitleSlide() {
         </h1>
       </FadeIn>
       <FadeIn delay={0.4}>
-        <p className="mx-auto max-w-2xl text-[#94a3b8] text-xl md:text-2xl leading-relaxed">
+        <p className="mx-auto max-w-2xl text-[var(--pres-muted)] text-xl md:text-2xl leading-relaxed">
           Come costruire un sistema di agenti specializzati
           <br />
           con GitHub Copilot CLI

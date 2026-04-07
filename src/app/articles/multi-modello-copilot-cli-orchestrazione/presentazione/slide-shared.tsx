@@ -2,10 +2,10 @@ import * as motion from "motion/react-client";
 import type { ReactNode } from "react";
 
 export const MODEL_COLORS = {
-  haiku: "#34d399",
-  sonnet: "#60a5fa",
-  gpt4: "#fbbf24",
-  opus: "#a78bfa",
+  haiku: "var(--pres-success)",
+  sonnet: "var(--pres-blue)",
+  gpt4: "var(--pres-warning)",
+  opus: "var(--pres-accent)",
 } as const;
 
 export function FadeIn({
