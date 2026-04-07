@@ -45,7 +45,15 @@
       "Bash(CLAUDE_TOOL_INPUT='{\"file_path\":\"/Users/paolo/Sites/ai/ai-course/src/components/foo.tsx\"}' bash:*)",
       "Bash(npx tsc:*)",
       "Bash(xargs cat:*)",
-      "Bash(xargs ls:*)"
+      "Bash(xargs ls:*)",
+      "Bash(pnpm add:*)",
+      "Bash(npx tsx:*)",
+      "WebFetch(domain:ai-sdk.dev)",
+      "WebFetch(domain:console.groq.com)",
+      "Bash(rm /Users/paolo/Sites/ai/ai-course/src/app/api/tts/route.ts)",
+      "Bash(rmdir /Users/paolo/Sites/ai/ai-course/src/app/api/tts)",
+      "Bash(rmdir /Users/paolo/Sites/ai/ai-course/src/app/api)",
+      "Bash(pnpm remove:*)"
     ]
   }
 }

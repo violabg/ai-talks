@@ -1,5 +1,8 @@
 "use client";
 
+import { AudioOrb } from "@/components/presentation/audio-orb";
+import { NarrationProvider } from "@/components/presentation/narration-provider";
+import { NarrationToggle } from "@/components/presentation/narration-toggle";
 import { AnimatePresence } from "motion/react";
 import * as motion from "motion/react-client";
 import Link from "next/link";
@@ -14,6 +17,7 @@ import { Slide07Checkpoint } from "./slide-07-checkpoint";
 import { Slide08Isolation } from "./slide-08-isolation";
 import { Slide09FeedbackLoop } from "./slide-09-feedback-loop";
 import { Slide10Closing } from "./slide-10-closing";
+import speechData from "./speech.json";
 
 export function PresentationSlides({ slug }: { slug: string }) {
   const slides = useMemo(
@@ -63,6 +67,7 @@ export function PresentationSlides({ slug }: { slug: string }) {
   }, [next, prev]);
 
   return (
+    <NarrationProvider speechData={speechData} currentSlide={current}>
     <div className="z-50 fixed inset-0 flex flex-col bg-[#0f172a] text-[#e2e8f0]">
       <div className="flex justify-between items-center px-6 py-4 text-[#94a3b8] text-sm shrink-0">
         <Link
@@ -71,9 +76,12 @@ export function PresentationSlides({ slug }: { slug: string }) {
         >
           &larr; Torna all&apos;articolo
         </Link>
-        <span className="font-mono tabular-nums">
-          {current + 1} / {totalSlides}
-        </span>
+        <div className="flex items-center gap-3">
+          <NarrationToggle />
+          <span className="font-mono tabular-nums">
+            {current + 1} / {totalSlides}
+          </span>
+        </div>
       </div>
 
       <div
@@ -130,6 +138,8 @@ export function PresentationSlides({ slug }: { slug: string }) {
           ))}
         </div>
       </div>
+      <AudioOrb />
     </div>
+    </NarrationProvider>
   );
 }

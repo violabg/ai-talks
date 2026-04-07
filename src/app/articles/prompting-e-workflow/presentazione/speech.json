@@ -1,0 +1,35 @@
+{
+  "voice": "it-IT",
+  "slides": [
+    {
+      "text": "Prompting e workflow: orchestrare agenti per task di ingegneria. Un agente AI non è migliore del prompt che lo guida. Ma il prompt da solo non basta: il vero salto di qualità avviene quando si progetta un workflow, una sequenza strutturata di passi in cui l'agente sa cosa fare, in che ordine, e come verificare il risultato."
+    },
+    {
+      "text": "Un prompt per un agente di coding non è una richiesta generica. È più simile a una specifica tecnica. Deve definire quattro elementi fondamentali: il contesto, l'obiettivo, i vincoli e i criteri di successo. Senza questi quattro elementi, l'agente riempie i buchi con assunzioni, spesso sbagliate."
+    },
+    {
+      "text": "La trappola più comune: dare per scontato che l'agente sappia cose che non gli hai detto. Un prompt ambiguo come \"aggiungi la validazione\" lascia troppo spazio all'interpretazione. Un prompt contestualizzato specifica il file, la libreria da usare, lo schema di validazione e il formato di errore. Non è prolissità, è precisione."
+    },
+    {
+      "text": "Esistono quattro pattern fondamentali per il prompting nell'ingegneria software. Step-by-step obbligato: forza l'agente a pianificare prima di scrivere codice. Riferimento esplicito al codice esistente: l'agente replica pattern già presenti nella codebase. Output format vincolato: formato prevedibile per l'automazione. Fail-fast esplicito: l'agente si ferma quando mancano informazioni, invece di procedere con assunzioni."
+    },
+    {
+      "text": "Il pattern step-by-step è particolarmente potente. Prima di scrivere qualsiasi codice, l'agente deve elencare i file da modificare, descrivere l'approccio, identificare i casi limite, e poi procedere con l'implementazione. L'agente che pianifica ad alta voce produce output molto più coerenti e riduce drasticamente gli errori sui task complessi."
+    },
+    {
+      "text": "Un singolo prompt non basta per task complessi. Il vero potere emerge quando si costruiscono workflow: sequenze di passi in cui ogni agente ha un ruolo ben definito. Il principio è la singola responsabilità: un Research Agent analizza la codebase, un Planning Agent crea il piano, un Implementation Agent implementa, e un Review Agent verifica. Ogni step produce un artefatto verificabile."
+    },
+    {
+      "text": "Non tutto deve essere automatico. I checkpoint umani nei punti critici migliorano la qualità dell'output finale. Dopo la fase di pianificazione, l'umano legge il piano e decide se procedere o correggere. Questo approccio ibrido, agenti per l'esecuzione e umani per le decisioni architetturali, è più robusto di qualsiasi pipeline completamente automatica."
+    },
+    {
+      "text": "Una trappola comune nell'orchestrazione: passare tutto il contesto accumulato da ogni step al successivo. Il context window si riempie e la qualità degrada. La soluzione: ogni agente riceve solo quello che gli serve. L'Implementation Agent non ha bisogno dell'intera conversazione, gli bastano il piano e il contesto tecnico."
+    },
+    {
+      "text": "Un agente senza feedback opera al buio. Il feedback deve essere deterministico e immediato. I test automatici danno un segnale binario e non ambiguo. Il ciclo modifica, test, correggi è il cuore di qualsiasi workflow di coding con agenti AI. A questo si aggiungono TypeScript come oracolo per i tipi, e lint per la formattazione. Senza feedback, gli errori si accumulano esponenzialmente."
+    },
+    {
+      "text": "In sintesi: contesto esplicito, non dare nulla per scontato. Step verificabili, ogni passo produce un artefatto controllabile. Feedback deterministico con test, type check e lint. Granularità giusta, task piccoli abbastanza da essere corretti al primo tentativo. Il resto è pratica. Ogni workflow che costruisci ti insegna cosa funziona per il tuo stack e il tuo team."
+    }
+  ]
+}

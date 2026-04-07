@@ -145,6 +145,17 @@ The article page at `src/app/articles/[slug]/page.tsx` shows the "Inizia present
 - **Generic visuals**: Every SVG should be designed for that specific content. No placeholder icons or decorative shapes without meaning.
 - **Text-heavy slides**: If a slide has more than ~30 words of body text, it's too much. Rethink the layout.
 
+## Speech Narration
+
+After the presentation is built and verified, ask the user:
+
+> "Vuoi aggiungere la narrazione vocale a questa presentazione?"
+
+If yes, use the **presentation-speech** skill (`.claude/skills/presentation-speech/SKILL.md`) to:
+1. Generate a `speech.json` file from the article text
+2. Refine the narration text for each slide
+3. Integrate the narration components into `slides.tsx`
+
 ## Verify
 
 After building:
