@@ -88,7 +88,7 @@ export function Slide11Closing() {
 
       {/* Central quote */}
       <motion.blockquote
-        className="max-w-xl text-lg sm:text-2xl font-semibold leading-snug mb-6"
+        className="max-w-3xl text-lg sm:text-2xl font-semibold leading-snug mb-6"
         initial={{ opacity: 0, y: 15 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.6, delay: 1.2 }}
@@ -98,7 +98,7 @@ export function Slide11Closing() {
       </motion.blockquote>
 
       <motion.p
-        className="text-[#94a3b8] text-sm max-w-md"
+        className="text-[#94a3b8] text-sm max-w-2xl"
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ delay: 1.6 }}

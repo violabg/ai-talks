@@ -37,7 +37,7 @@ export function OrchestrationFlowSlide() {
         </h2>
       </FadeIn>
       <div className="flex justify-center">
-        <svg viewBox="0 0 500 300" className="w-full max-w-xl">
+        <svg viewBox="0 0 500 300" className="w-full max-w-4xl">
           {[0, 1, 2].map((i) => (
             <motion.line
               key={`arrow-${i}`}

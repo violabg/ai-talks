@@ -37,7 +37,7 @@ export function AdversarialSlide() {
         </p>
       </FadeIn>
       <div className="flex justify-center">
-        <svg viewBox="0 0 500 300" className="w-full max-w-xl">
+        <svg viewBox="0 0 500 300" className="w-full max-w-4xl">
           <motion.g
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}

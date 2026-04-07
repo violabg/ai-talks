@@ -96,7 +96,8 @@ src/app/articles/[slug]/presentazione/
 
 - **Animations**: Use `motion/react` and `motion/react-client` (already installed). Every slide should have entrance animations. Flowcharts and diagrams should build incrementally — elements appearing with staggered delays.
 - **Slide components**: Every slide must live in a separate component file in the same `presentazione/` folder. Avoid monolithic `slides.tsx` files containing all slide JSX.
-- **SVG**: Create inline SVG graphics directly in the JSX. Use the presentation's color palette (see below). SVGs should be responsive (use viewBox, not fixed dimensions).
+- **SVG**: Create inline SVG graphics directly in the JSX. Use the presentation's color palette (see below). SVGs must be responsive — never use fixed `width`/`height` attributes on main diagram SVGs; use `className="w-full"` or `className="w-full max-w-xs sm:max-w-sm"` on the wrapper `<div>` instead, paired with `viewBox`. Icon-only SVGs (small decorative icons inside cards) may keep fixed pixel dimensions.
+- **Visual sizing**: Diagrams, flowcharts, and composed SVGs should fill as much of the slide as possible. Wrap them in containers of at least `max-w-3xl`, preferably `max-w-4xl` or `max-w-5xl`. Never constrain a diagram to `max-w-xl` or smaller — this makes visuals feel cramped on large screens. The SVG `viewBox` should use a generous coordinate space (e.g. `0 0 700 400` for complex flowcharts) so nodes and labels have room to breathe. Overall slide content wrappers should use `max-w-5xl` or `max-w-6xl`, not `max-w-4xl`.
 - **Navigation**: Arrow keys, spacebar (next), click left/right halves. Show slide count. Progress bar at bottom.
 - **Responsive**: Must work on desktop and mobile. Use Tailwind breakpoints.
 - **Back link**: "Torna all'articolo" link in top-left pointing to `/articles/[slug]`.

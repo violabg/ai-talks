@@ -60,7 +60,7 @@ export function Slide04Cycle() {
         <span className="text-[#34d399]">Azione</span>
       </motion.h2>
 
-      <div className="flex flex-col items-center w-full max-w-lg gap-0">
+      <div className="flex flex-col items-center w-full max-w-2xl gap-0">
         {steps.map((step, i) => (
           <motion.div
             key={step.id}

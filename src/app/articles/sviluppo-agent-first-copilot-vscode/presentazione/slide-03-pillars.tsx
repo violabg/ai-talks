@@ -98,10 +98,10 @@ export function Slide03Pillars() {
         I <span className="text-[#a78bfa]">Cinque Pilastri</span> dell&apos;Architettura Agentica
       </motion.h2>
 
-      <div className="flex flex-col lg:flex-row items-center gap-8 w-full max-w-4xl">
+      <div className="flex flex-col lg:flex-row items-center gap-8 w-full max-w-6xl">
         {/* SVG diagram */}
-        <div className="relative flex-shrink-0">
-          <svg viewBox="0 0 300 300" width="280" height="280" className="overflow-visible">
+        <div className="relative flex-shrink-0 w-full max-w-xs sm:max-w-sm lg:max-w-md">
+          <svg viewBox="0 0 300 300" className="w-full overflow-visible">
             {/* Spoke lines */}
             {pillars.map((p, i) => {
               const rad = toRad(p.angle);

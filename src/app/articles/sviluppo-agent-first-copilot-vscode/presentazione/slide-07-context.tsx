@@ -51,10 +51,10 @@ export function Slide07Context() {
         Quando il contesto si esaurisce, l&apos;agente &ldquo;dimentica&rdquo; le istruzioni iniziali
       </motion.p>
 
-      <div className="flex flex-col sm:flex-row items-center gap-10 w-full max-w-3xl">
+      <div className="flex flex-col sm:flex-row items-center gap-10 w-full max-w-5xl">
         {/* Donut chart */}
-        <div className="flex-shrink-0">
-          <svg viewBox="0 0 200 200" width="200" height="200">
+        <div className="flex-shrink-0 w-48 sm:w-64 lg:w-72">
+          <svg viewBox="0 0 200 200" className="w-full">
             {arcs.map((arc, i) => (
               <motion.path
                 key={arc.label}

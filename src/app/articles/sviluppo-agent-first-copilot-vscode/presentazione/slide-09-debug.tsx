@@ -30,7 +30,7 @@ export function Slide09Debug() {
         Panel Output → GitHub Copilot Chat: ogni chiamata agli strumenti è ispezionabile
       </motion.p>
 
-      <div className="flex flex-col sm:flex-row gap-6 w-full max-w-3xl items-start">
+      <div className="flex flex-col sm:flex-row gap-6 w-full max-w-5xl items-start">
         {/* Code block */}
         <motion.div
           className="flex-1 rounded-xl border border-[#334155] overflow-hidden"
