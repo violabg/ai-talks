@@ -2,7 +2,10 @@
 
 import { AudioOrb } from "@/components/presentation/audio-orb";
 import { NarrationDialog } from "@/components/presentation/narration-dialog";
-import { NarrationProvider, useNarrationContext } from "@/components/presentation/narration-provider";
+import {
+  NarrationProvider,
+  useNarrationContext,
+} from "@/components/presentation/narration-provider";
 import { NarrationToggle } from "@/components/presentation/narration-toggle";
 import { AnimatePresence } from "motion/react";
 import * as motion from "motion/react-client";
@@ -93,7 +96,7 @@ export function PresentationShell({
 
   const slideContent = (
     <div
-      className="flex flex-1 justify-center items-center px-6 md:px-16 lg:px-24 overflow-hidden min-h-0"
+      className="flex flex-1 justify-center items-center px-6 md:px-16 lg:px-24 min-h-0 overflow-scroll md:overflow-hidden"
       onClick={(event) => {
         const x = event.clientX;
         const width = window.innerWidth;
@@ -120,7 +123,7 @@ export function PresentationShell({
           animate="center"
           exit="exit"
           transition={{ duration: 0.4, ease: "easeOut" }}
-          className="w-full max-w-6xl h-full"
+          className="w-full max-w-6xl"
         >
           {slides[current].component}
         </motion.div>
