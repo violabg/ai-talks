@@ -16,7 +16,6 @@ export function Slide04Anatomy() {
         transition={{ duration: 0.5, delay: 0.12 }}
         className="bg-[var(--pres-bg-card)] mx-auto p-5 sm:p-8 border border-[var(--pres-border)] rounded-2xl w-full max-w-6xl"
       >
-        <div className="mx-auto w-full max-w-5xl">
           <svg viewBox="0 0 760 430" className="w-full">
             <defs>
               <marker
@@ -146,7 +145,6 @@ export function Slide04Anatomy() {
               <tspan x="390" dy="1.2em">di contatto</tspan>
             </motion.text>
           </svg>
-        </div>
       </motion.div>
     </div>
   );

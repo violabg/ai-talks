@@ -44,7 +44,7 @@ export function ClosingSlide() {
       </FadeIn>
 
       <FadeIn delay={1.2}>
-        <div className="bg-[var(--pres-accent)]/5 mx-auto mt-10 p-6 md:p-8 border border-[var(--pres-accent)]/20 rounded-xl max-w-2xl">
+        <div className="bg-[var(--pres-accent)]/5 mx-auto mt-10 p-6 md:p-8 border border-[var(--pres-accent)]/20 rounded-xl max-w-3xl">
           <p className="text-lg md:text-xl leading-relaxed">
             Separare <span className="font-bold text-[var(--pres-blue)]">planning</span>,{" "}
             <span className="font-bold text-[var(--pres-warning)]">esecuzione</span> e{" "}

@@ -11,7 +11,6 @@ export function Slide07VideoEditor() {
       />
 
       <div className="bg-[var(--pres-bg-card)] mx-auto p-5 sm:p-8 border border-[var(--pres-border)] rounded-2xl w-full max-w-6xl">
-        <div className="mx-auto w-full max-w-5xl">
           <svg viewBox="0 0 760 380" className="w-full">
             <defs>
               <marker
@@ -24,6 +23,17 @@ export function Slide07VideoEditor() {
                 orient="auto-start-reverse"
               >
                 <path d="M 0 0 L 10 5 L 0 10 z" fill="var(--pres-accent)" />
+              </marker>
+              <marker
+                id="arrow-green"
+                viewBox="0 0 10 10"
+                refX="8"
+                refY="5"
+                markerWidth="5"
+                markerHeight="5"
+                orient="auto-start-reverse"
+              >
+                <path d="M 0 0 L 10 5 L 0 10 z" fill="var(--pres-success)" />
               </marker>
             </defs>
             {["Timeline", "Thumbnails", "Playback", "Cache"].map((node, i) => (
@@ -117,7 +127,7 @@ export function Slide07VideoEditor() {
               stroke="var(--pres-success)"
               strokeWidth="2"
               strokeDasharray="6 4"
-              markerEnd="url(#arrow-purple)"
+              markerEnd="url(#arrow-green)"
               initial={{ pathLength: 0, opacity: 0 }}
               animate={{ pathLength: 1, opacity: 1 }}
               transition={{ delay: 0.96, duration: 0.35 }}
@@ -130,7 +140,7 @@ export function Slide07VideoEditor() {
               stroke="var(--pres-success)"
               strokeWidth="2"
               strokeDasharray="6 4"
-              markerEnd="url(#arrow-purple)"
+              markerEnd="url(#arrow-green)"
               initial={{ pathLength: 0, opacity: 0 }}
               animate={{ pathLength: 1, opacity: 1 }}
               transition={{ delay: 1.0, duration: 0.35 }}
@@ -181,7 +191,6 @@ export function Slide07VideoEditor() {
               Preview Component
             </text>
           </svg>
-        </div>
       </div>
     </div>
   );

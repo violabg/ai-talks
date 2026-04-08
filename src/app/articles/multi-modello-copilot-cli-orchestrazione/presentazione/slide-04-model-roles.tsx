@@ -29,7 +29,7 @@ export function ModelRolesSlide() {
                 </svg>
                 <div>
                   <p className="font-bold" style={{ color: role.color }}>{role.model}</p>
-                  <p className="text-[var(--pres-muted)] text-xs">{role.role}</p>
+                  <p className="text-[var(--pres-muted)] text-sm">{role.role}</p>
                 </div>
               </div>
               <p className="text-[var(--pres-muted)] text-sm">{role.desc}</p>

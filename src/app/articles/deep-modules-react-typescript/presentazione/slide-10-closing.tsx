@@ -15,7 +15,7 @@ export function Slide10Closing() {
         initial={{ opacity: 0, y: 12 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.45 }}
-        className="font-mono text-[var(--pres-accent)] text-xs uppercase tracking-[0.28em]"
+        className="font-mono text-[var(--pres-accent)] text-sm uppercase tracking-[0.28em]"
       >
         Closing
       </motion.p>
@@ -31,7 +31,7 @@ export function Slide10Closing() {
         senza perdere controllo architetturale.
       </motion.h2>
 
-      <div className="gap-3 grid sm:grid-cols-2 lg:grid-cols-5 mx-auto w-full max-w-5xl">
+      <div className="gap-3 grid sm:grid-cols-2 lg:grid-cols-5 mx-auto w-full max-w-6xl">
         {principles.map((principle, i) => (
           <motion.div
             key={principle}

@@ -40,9 +40,9 @@ const levels = [
 
 export function Slide05Autonomy() {
   return (
-    <div className="flex flex-col items-center justify-center h-full px-6">
+    <div className="flex flex-col items-center h-full px-6 py-6">
       <motion.h2
-        className="text-2xl sm:text-3xl font-bold text-center mb-2"
+        className="text-3xl sm:text-4xl font-bold text-center mb-2"
         initial={{ opacity: 0, y: -15 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5 }}
@@ -51,7 +51,7 @@ export function Slide05Autonomy() {
       </motion.h2>
 
       <motion.p
-        className="text-[var(--pres-muted)] text-sm mb-8 text-center"
+        className="text-[var(--pres-muted)] text-base mb-6 text-center"
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ delay: 0.3 }}
@@ -61,7 +61,7 @@ export function Slide05Autonomy() {
 
       {/* Spectrum bar */}
       <motion.div
-        className="w-full max-w-2xl h-2 rounded-full mb-8 overflow-hidden"
+        className="w-full h-2.5 rounded-full mb-6 overflow-hidden"
         initial={{ opacity: 0, scaleX: 0 }}
         animate={{ opacity: 1, scaleX: 1 }}
         transition={{ duration: 0.6, delay: 0.4 }}
@@ -71,11 +71,11 @@ export function Slide05Autonomy() {
         }}
       />
 
-      <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 w-full max-w-3xl">
+      <div className="grid grid-cols-1 sm:grid-cols-3 gap-5 w-full flex-1">
         {levels.map((level, i) => (
           <motion.div
             key={level.id}
-            className="flex flex-col rounded-xl border p-5 gap-3"
+            className="flex flex-col rounded-xl border p-6 gap-4"
             style={{
               borderColor: `color-mix(in srgb, ${level.borderColor} 25%, transparent)`,
               background: `color-mix(in srgb, ${level.color} 5%, transparent)`,
@@ -84,18 +84,18 @@ export function Slide05Autonomy() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.4, delay: 0.5 + i * 0.15 }}
           >
-            <div className="flex items-center gap-2">
-              <span className="text-2xl">{level.icon}</span>
+            <div className="flex items-center gap-3">
+              <span className="text-4xl">{level.icon}</span>
               <div>
-                <p className="font-bold text-sm" style={{ color: level.color }}>
+                <p className="font-bold text-lg" style={{ color: level.color }}>
                   {level.label}
                 </p>
-                <p className="text-[var(--pres-muted)] text-xs">{level.control}</p>
+                <p className="text-[var(--pres-muted)] text-sm">{level.control}</p>
               </div>
             </div>
 
             {/* Autonomy bar */}
-            <div className="w-full h-1.5 bg-[var(--pres-bg-surface)] rounded-full overflow-hidden">
+            <div className="w-full h-2 bg-[var(--pres-bg-surface)] rounded-full overflow-hidden">
               <motion.div
                 className="h-full rounded-full"
                 style={{ background: level.color }}
@@ -105,8 +105,8 @@ export function Slide05Autonomy() {
               />
             </div>
 
-            <p className="text-[var(--pres-muted)] text-xs leading-relaxed">{level.desc}</p>
-            <p className="text-[var(--pres-muted)] text-xs font-mono">{level.use}</p>
+            <p className="text-[var(--pres-muted)] text-sm leading-relaxed">{level.desc}</p>
+            <p className="text-[var(--pres-muted)] text-sm font-mono">{level.use}</p>
           </motion.div>
         ))}
       </div>

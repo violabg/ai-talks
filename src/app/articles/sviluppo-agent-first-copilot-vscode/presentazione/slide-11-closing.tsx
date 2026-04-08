@@ -4,7 +4,7 @@ import { motion } from "motion/react";
 
 export function Slide11Closing() {
   return (
-    <div className="flex flex-col items-center justify-center h-full px-8 text-center">
+    <div className="flex flex-col items-center justify-center h-full px-8 py-6 text-center">
       <motion.div
         className="absolute inset-0 pointer-events-none"
         initial={{ opacity: 0 }}
@@ -17,7 +17,7 @@ export function Slide11Closing() {
       />
 
       <motion.p
-        className="font-mono text-[var(--pres-muted)] text-xs uppercase tracking-[0.2em] mb-8"
+        className="font-mono text-[var(--pres-muted)] text-sm uppercase tracking-[0.2em] mb-8"
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ delay: 0.3 }}
@@ -26,25 +26,25 @@ export function Slide11Closing() {
       </motion.p>
 
       {/* Two sides */}
-      <div className="flex items-center gap-4 sm:gap-10 mb-10 w-full max-w-2xl justify-center">
+      <div className="flex items-center gap-4 sm:gap-10 mb-10 w-full justify-center">
         {/* Developer */}
         <motion.div
-          className="flex flex-col items-center gap-3 flex-1"
+          className="flex flex-col items-center gap-4 flex-1"
           initial={{ opacity: 0, x: -30 }}
           animate={{ opacity: 1, x: 0 }}
           transition={{ duration: 0.6, delay: 0.5 }}
         >
-          <div className="w-16 h-16 rounded-full border-2 border-[var(--pres-blue)] bg-[var(--pres-blue-dim)] flex items-center justify-center">
-            <svg viewBox="0 0 32 32" width="32" height="32" fill="none">
+          <div className="w-24 h-24 rounded-full border-2 border-[var(--pres-blue)] bg-[var(--pres-blue-dim)] flex items-center justify-center">
+            <svg viewBox="0 0 32 32" width="44" height="44" fill="none">
               <circle cx="16" cy="10" r="5" stroke="var(--pres-blue)" strokeWidth="1.5" />
               <path d="M6 28c0-5.52 4.48-10 10-10s10 4.48 10 10" stroke="var(--pres-blue)" strokeWidth="1.5" strokeLinecap="round" />
             </svg>
           </div>
-          <p className="font-bold text-[var(--pres-blue)] text-sm">Sviluppatore</p>
-          <div className="flex flex-col gap-1.5 text-center">
-            <p className="text-[var(--pres-text)] text-xs font-semibold">Visione</p>
-            <p className="text-[var(--pres-muted)] text-xs">Qualità</p>
-            <p className="text-[var(--pres-muted)] text-xs">Architettura</p>
+          <p className="font-bold text-[var(--pres-blue)] text-lg">Sviluppatore</p>
+          <div className="flex flex-col gap-2 text-center">
+            <p className="text-[var(--pres-text)] text-sm font-semibold">Visione</p>
+            <p className="text-[var(--pres-muted)] text-sm">Qualità</p>
+            <p className="text-[var(--pres-muted)] text-sm">Architettura</p>
           </div>
         </motion.div>
 
@@ -69,26 +69,26 @@ export function Slide11Closing() {
           animate={{ opacity: 1, x: 0 }}
           transition={{ duration: 0.6, delay: 0.5 }}
         >
-          <div className="w-16 h-16 rounded-full border-2 border-[var(--pres-accent)] bg-[var(--pres-accent)]/10 flex items-center justify-center">
-            <svg viewBox="0 0 32 32" width="32" height="32" fill="none">
+          <div className="w-24 h-24 rounded-full border-2 border-[var(--pres-accent)] bg-[var(--pres-accent)]/10 flex items-center justify-center">
+            <svg viewBox="0 0 32 32" width="44" height="44" fill="none">
               <rect x="6" y="8" width="20" height="16" rx="3" stroke="var(--pres-accent)" strokeWidth="1.5" />
               <circle cx="11" cy="16" r="2" fill="var(--pres-accent)" />
               <circle cx="21" cy="16" r="2" fill="var(--pres-accent)" />
               <path d="M11 24v3M21 24v3" stroke="var(--pres-accent)" strokeWidth="1.5" strokeLinecap="round" />
             </svg>
           </div>
-          <p className="font-bold text-[var(--pres-accent)] text-sm">Agente AI</p>
-          <div className="flex flex-col gap-1.5 text-center">
-            <p className="text-[var(--pres-text)] text-xs font-semibold">Esecuzione</p>
-            <p className="text-[var(--pres-muted)] text-xs">Struttura</p>
-            <p className="text-[var(--pres-muted)] text-xs">Auto-correzione</p>
+          <p className="font-bold text-[var(--pres-accent)] text-lg">Agente AI</p>
+          <div className="flex flex-col gap-2 text-center">
+            <p className="text-[var(--pres-text)] text-sm font-semibold">Esecuzione</p>
+            <p className="text-[var(--pres-muted)] text-sm">Struttura</p>
+            <p className="text-[var(--pres-muted)] text-sm">Auto-correzione</p>
           </div>
         </motion.div>
       </div>
 
       {/* Central quote */}
       <motion.blockquote
-        className="max-w-3xl text-lg sm:text-2xl font-semibold leading-snug mb-6"
+        className="max-w-4xl text-xl sm:text-3xl font-semibold leading-snug mb-6"
         initial={{ opacity: 0, y: 15 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.6, delay: 1.2 }}
@@ -98,7 +98,7 @@ export function Slide11Closing() {
       </motion.blockquote>
 
       <motion.p
-        className="text-[var(--pres-muted)] text-sm max-w-2xl"
+        className="text-[var(--pres-muted)] text-base max-w-3xl"
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ delay: 1.6 }}

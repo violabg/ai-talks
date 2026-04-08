@@ -83,9 +83,9 @@ export function Slide10SelfHeal() {
   });
 
   return (
-    <div className="flex flex-col justify-center items-center px-6 h-full">
+    <div className="flex flex-col items-center px-6 py-6 h-full">
       <motion.h2
-        className="mb-2 font-bold text-2xl sm:text-3xl text-center"
+        className="mb-2 font-bold text-3xl sm:text-4xl text-center"
         initial={{ opacity: 0, y: -15 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5 }}
@@ -94,7 +94,7 @@ export function Slide10SelfHeal() {
         <span className="text-[var(--pres-success)]">Auto-Ripara</span>
       </motion.h2>
       <motion.p
-        className="mb-4 max-w-xl text-[var(--pres-muted)] text-sm text-center"
+        className="mb-4 text-[var(--pres-muted)] text-base text-center"
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ delay: 0.3 }}
@@ -103,7 +103,7 @@ export function Slide10SelfHeal() {
         dall&apos;utente
       </motion.p>
 
-      <div className="w-full max-w-4xl">
+      <div className="w-full flex-1 flex items-center">
         <svg viewBox="0 0 820 430" className="w-full">
           <defs>
             <marker
@@ -281,3 +281,4 @@ export function Slide10SelfHeal() {
     </div>
   );
 }
+

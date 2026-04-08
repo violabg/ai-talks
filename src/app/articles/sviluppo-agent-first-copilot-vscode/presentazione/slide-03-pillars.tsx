@@ -151,13 +151,15 @@ export function Slide03Pillars() {
             {/* Spoke lines */}
             {pillars.map((p, i) => {
               const rad = toRad(p.angle);
-              const x2 = cx + r * Math.cos(rad);
-              const y2 = cy + r * Math.sin(rad);
+              const x1 = cx + 34 * Math.cos(rad);
+              const y1 = cy + 34 * Math.sin(rad);
+              const x2 = cx + (r - 28) * Math.cos(rad);
+              const y2 = cy + (r - 28) * Math.sin(rad);
               return (
                 <motion.line
                   key={p.id + "-line"}
-                  x1={cx}
-                  y1={cy}
+                  x1={x1}
+                  y1={y1}
                   x2={x2}
                   y2={y2}
                   stroke="var(--pres-border)"

@@ -7,6 +7,7 @@ import { NarrationToggle } from "@/components/presentation/narration-toggle";
 import { AnimatePresence } from "motion/react";
 import * as motion from "motion/react-client";
 import Link from "next/link";
+import { useRouter, useSearchParams } from "next/navigation";
 import { useCallback, useEffect, useState, type ReactNode } from "react";
 import type { SpeechData } from "./use-narration";
 
@@ -25,7 +26,14 @@ export function PresentationShell({
   slides: PresentationSlideComponent[];
 }) {
   const totalSlides = slides.length;
-  const [current, setCurrent] = useState(0);
+  const router = useRouter();
+  const searchParams = useSearchParams();
+
+  const initialSlide = Math.min(
+    Math.max(0, Number(searchParams.get("slide") ?? 0) - 1),
+    totalSlides - 1,
+  );
+  const [current, setCurrent] = useState(initialSlide);
   const [dir, setDir] = useState(0);
 
   const goTo = useCallback(
@@ -33,8 +41,11 @@ export function PresentationShell({
       if (index < 0 || index >= totalSlides) return;
       setDir(index > current ? 1 : -1);
       setCurrent(index);
+      const params = new URLSearchParams(window.location.search);
+      params.set("slide", String(index + 1));
+      router.replace(`?${params.toString()}`, { scroll: false });
     },
-    [current, totalSlides],
+    [current, totalSlides, router],
   );
 
   const next = useCallback(() => goTo(current + 1), [current, goTo]);
@@ -82,7 +93,7 @@ export function PresentationShell({
 
   const slideContent = (
     <div
-      className="flex flex-1 justify-center items-center px-6 md:px-16 lg:px-24 overflow-hidden"
+      className="flex flex-1 justify-center items-center px-6 md:px-16 lg:px-24 overflow-hidden min-h-0"
       onClick={(event) => {
         const x = event.clientX;
         const width = window.innerWidth;
@@ -109,7 +120,7 @@ export function PresentationShell({
           animate="center"
           exit="exit"
           transition={{ duration: 0.4, ease: "easeOut" }}
-          className="w-full max-w-6xl"
+          className="w-full max-w-6xl h-full"
         >
           {slides[current].component}
         </motion.div>

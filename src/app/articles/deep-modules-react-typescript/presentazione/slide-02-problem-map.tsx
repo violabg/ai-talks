@@ -21,7 +21,6 @@ export function Slide02ProblemMap() {
 
       <FadeIn delay={0.14}>
         <div className="bg-[var(--pres-bg-card)] mx-auto p-4 sm:p-7 border border-[var(--pres-border)] rounded-2xl w-full max-w-6xl">
-          <div className="mx-auto w-full max-w-5xl">
             <svg viewBox="0 0 700 380" className="w-full">
               <defs>
                 <marker
@@ -146,7 +145,6 @@ export function Slide02ProblemMap() {
                 high coupling, low navigabilita
               </motion.text>
             </svg>
-          </div>
         </div>
       </FadeIn>
     </div>

@@ -46,7 +46,7 @@ export function Slide08GreyBox() {
               transition={{ delay: 0.18 + i * 0.12 }}
               className="bg-[var(--pres-success-dim)] px-4 py-3 border border-[var(--pres-success)]/30 rounded-lg"
             >
-              <p className="font-mono text-[var(--pres-success)] text-xs uppercase">{a}</p>
+              <p className="font-mono text-[var(--pres-success)] text-sm uppercase">{a}</p>
               <p className="mt-1 text-[var(--pres-success-fg)] text-sm">{b}</p>
             </motion.div>
           ))}

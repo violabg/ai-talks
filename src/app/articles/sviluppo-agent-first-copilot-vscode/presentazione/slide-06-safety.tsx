@@ -48,9 +48,9 @@ const layers = [
 
 export function Slide06Safety() {
   return (
-    <div className="flex flex-col items-center justify-center h-full px-6">
+    <div className="flex flex-col items-center h-full px-6 py-6">
       <motion.h2
-        className="text-2xl sm:text-3xl font-bold text-center mb-2"
+        className="text-3xl sm:text-4xl font-bold text-center mb-2"
         initial={{ opacity: 0, y: -15 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5 }}
@@ -58,7 +58,7 @@ export function Slide06Safety() {
         La Rete di <span className="text-[var(--pres-success)]">Sicurezza</span>
       </motion.h2>
       <motion.p
-        className="text-[var(--pres-muted)] text-sm mb-10 text-center"
+        className="text-[var(--pres-muted)] text-base mb-6 text-center"
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ delay: 0.3 }}
@@ -66,7 +66,7 @@ export function Slide06Safety() {
         Tre livelli di protezione per lavorare senza ansia con modifiche multi-file
       </motion.p>
 
-      <div className="relative w-full max-w-3xl">
+      <div className="relative w-full flex-1 flex flex-col">
         {/* SVG shield layers behind cards */}
         <svg
           viewBox="0 0 640 220"
@@ -97,11 +97,11 @@ export function Slide06Safety() {
           ))}
         </svg>
 
-        <div className="relative grid grid-cols-1 sm:grid-cols-3 gap-4">
+        <div className="relative grid grid-cols-1 sm:grid-cols-3 gap-5 flex-1">
           {layers.map((layer, i) => (
             <motion.div
               key={layer.id}
-              className="flex flex-col items-center text-center rounded-xl border p-5 gap-3"
+              className="flex flex-col items-center text-center rounded-xl border p-6 gap-4"
               style={{
                 borderColor: `color-mix(in srgb, ${layer.color} 25%, transparent)`,
                 background: `color-mix(in srgb, ${layer.color} 5%, transparent)`,
@@ -110,14 +110,14 @@ export function Slide06Safety() {
               animate={{ opacity: 1, scale: 1 }}
               transition={{ duration: 0.4, delay: 0.5 + i * 0.15 }}
             >
-              <div style={{ color: layer.color }}>{layer.icon}</div>
+              <div style={{ color: layer.color, transform: "scale(1.4)", transformOrigin: "center" }}>{layer.icon}</div>
               <div>
-                <p className="font-bold text-sm" style={{ color: layer.color }}>
+                <p className="font-bold text-lg" style={{ color: layer.color }}>
                   {layer.label}
                 </p>
-                <p className="text-[var(--pres-muted)] text-xs font-mono">{layer.sublabel}</p>
+                <p className="text-[var(--pres-muted)] text-sm font-mono">{layer.sublabel}</p>
               </div>
-              <p className="text-[var(--pres-muted)] text-xs leading-relaxed">{layer.desc}</p>
+              <p className="text-[var(--pres-muted)] text-sm leading-relaxed">{layer.desc}</p>
             </motion.div>
           ))}
         </div>

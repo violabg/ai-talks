@@ -2,33 +2,34 @@ import { FadeIn, FadeInLeft, MODEL_COLORS } from "./slide-shared";
 
 export function ComparisonSlide() {
   return (
-    <div>
+    <div className="flex flex-col h-full py-6">
       <FadeIn>
-        <h2 className="mb-10 font-bold text-[var(--pres-accent)] text-2xl md:text-4xl text-center">
+        <h2 className="mb-6 font-bold text-[var(--pres-accent)] text-3xl md:text-4xl text-center">
           Agente singolo vs. Sistema distribuito
         </h2>
       </FadeIn>
-      <div className="gap-8 grid md:grid-cols-2">
-        <FadeInLeft delay={0.2}>
-          <div className="bg-[var(--pres-warning)]/5 p-6 border border-[var(--pres-warning)]/30 rounded-xl">
-            <svg viewBox="0 0 300 220" className="mx-auto mb-4 w-full max-w-75">
+      <div className="gap-8 grid md:grid-cols-2 flex-1 min-h-0">
+        <FadeInLeft delay={0.2} className="h-full">
+          <div className="flex flex-col bg-[var(--pres-warning)]/5 p-6 border border-[var(--pres-warning)]/30 rounded-xl h-full">
+            <div className="flex-1 min-h-0">
+            <svg viewBox="0 0 380 420" className="w-full h-full">
               <rect
-                x="75"
-                y="30"
-                width="150"
-                height="160"
-                rx="12"
+                x="60"
+                y="20"
+                width="260"
+                height="380"
+                rx="14"
                 fill="var(--pres-warning)"
                 fillOpacity="0.15"
                 stroke="var(--pres-warning)"
                 strokeWidth="2"
               />
               <text
-                x="150"
-                y="65"
+                x="190"
+                y="72"
                 textAnchor="middle"
                 fill="var(--pres-warning)"
-                fontSize="14"
+                fontSize="22"
                 fontWeight="bold"
               >
                 Un solo modello
@@ -36,126 +37,123 @@ export function ComparisonSlide() {
               {["Plan", "Code", "Review", "Explore"].map((label, i) => (
                 <g key={label}>
                   <rect
-                    x="95"
-                    y={85 + i * 28}
-                    width="110"
-                    height="22"
-                    rx="4"
+                    x="100"
+                    y={110 + i * 66}
+                    width="180"
+                    height="48"
+                    rx="8"
                     fill="var(--pres-warning)"
                     fillOpacity="0.1"
                     stroke="var(--pres-warning)"
-                    strokeWidth="1"
-                    strokeDasharray="4 2"
+                    strokeWidth="1.5"
+                    strokeDasharray="5 3"
                   />
                   <text
-                    x="150"
-                    y={100 + i * 28}
+                    x="190"
+                    y={140 + i * 66}
                     textAnchor="middle"
                     fill="var(--pres-warning)"
-                    fontSize="11"
+                    fontSize="17"
+                    fontWeight="600"
                   >
                     {label}
                   </text>
                 </g>
               ))}
             </svg>
-            <p className="text-[var(--pres-warning)] text-sm text-center">
+            </div>
+            <p className="mt-4 text-[var(--pres-warning)] text-base text-center font-medium">
               Tutto accettabile, niente eccellente
             </p>
           </div>
         </FadeInLeft>
 
-        <FadeInLeft delay={0.5}>
-          <div className="bg-[var(--pres-success)]/5 p-6 border border-[var(--pres-success)]/30 rounded-xl">
-            <svg viewBox="0 0 300 220" className="mx-auto mb-4 w-full max-w-75">
+        <FadeInLeft delay={0.5} className="h-full">
+          <div className="flex flex-col bg-[var(--pres-success)]/5 p-6 border border-[var(--pres-success)]/30 rounded-xl h-full">
+            <div className="flex-1 min-h-0">
+            <svg viewBox="0 0 420 420" className="w-full h-full">
+              {/* Orchestrator center */}
               <circle
-                cx="150"
-                cy="50"
-                r="28"
+                cx="210"
+                cy="80"
+                r="58"
                 fill="var(--pres-accent)"
                 fillOpacity="0.2"
                 stroke="var(--pres-accent)"
                 strokeWidth="2"
               />
               <text
-                x="150"
-                y="54"
+                x="210"
+                y="74"
                 textAnchor="middle"
                 fill="var(--pres-accent)"
-                fontSize="10"
+                fontSize="16"
                 fontWeight="bold"
               >
-                Orchestratore
+                Orche-
               </text>
-              {[
-                { cx: 60, label: "Plan", color: MODEL_COLORS.sonnet },
-                { cx: 150, label: "Code", color: MODEL_COLORS.gpt4 },
-                { cx: 240, label: "Review", color: MODEL_COLORS.opus },
-              ].map((n) => (
-                <g key={n.label}>
-                  <line
-                    x1="150"
-                    y1="78"
-                    x2={n.cx}
-                    y2="130"
-                    stroke={n.color}
-                    strokeWidth="1.5"
-                    strokeDasharray="4 3"
-                  />
-                  <rect
-                    x={n.cx - 40}
-                    y={130}
-                    width="80"
-                    height="36"
-                    rx="8"
-                    fill={n.color}
-                    fillOpacity="0.15"
-                    stroke={n.color}
-                    strokeWidth="1.5"
-                  />
-                  <text
-                    x={n.cx}
-                    y={153}
-                    textAnchor="middle"
-                    fill={n.color}
-                    fontSize="12"
-                    fontWeight="bold"
-                  >
-                    {n.label}
-                  </text>
-                </g>
-              ))}
-              <line
-                x1="80"
-                y1="40"
-                x2="30"
-                y2="25"
-                stroke={MODEL_COLORS.haiku}
-                strokeWidth="1"
-                strokeDasharray="3 2"
-              />
-              <rect
-                x="2"
-                y="10"
-                width="56"
-                height="28"
-                rx="6"
-                fill={MODEL_COLORS.haiku}
-                fillOpacity="0.15"
-                stroke={MODEL_COLORS.haiku}
-                strokeWidth="1"
-              />
               <text
-                x="30"
-                y="28"
+                x="210"
+                y="95"
                 textAnchor="middle"
-                fill={MODEL_COLORS.haiku}
-                fontSize="10"
+                fill="var(--pres-accent)"
+                fontSize="16"
+                fontWeight="bold"
               >
-                Explore
+                stratore
               </text>
+
+              {/* Agent nodes: Explore, Plan, Code, Review */}
+              {[
+                { cx: 52,  label: "Explore", color: MODEL_COLORS.haiku },
+                { cx: 158, label: "Plan",    color: MODEL_COLORS.sonnet },
+                { cx: 262, label: "Code",    color: MODEL_COLORS.gpt4 },
+                { cx: 368, label: "Review",  color: MODEL_COLORS.opus },
+              ].map((n) => {
+                const nodeY = 300;
+                const dx = n.cx - 210;
+                const dy = nodeY - 80;
+                const len = Math.sqrt(dx * dx + dy * dy);
+                const x1 = 210 + (dx / len) * 58;
+                const y1 = 80 + (dy / len) * 58;
+                return (
+                  <g key={n.label}>
+                    <line
+                      x1={x1}
+                      y1={y1}
+                      x2={n.cx}
+                      y2={nodeY - 24}
+                      stroke={n.color}
+                      strokeWidth="1.5"
+                      strokeDasharray="5 3"
+                    />
+                    <rect
+                      x={n.cx - 44}
+                      y={nodeY - 24}
+                      width="88"
+                      height="48"
+                      rx="10"
+                      fill={n.color}
+                      fillOpacity="0.15"
+                      stroke={n.color}
+                      strokeWidth="1.5"
+                    />
+                    <text
+                      x={n.cx}
+                      y={nodeY + 5}
+                      textAnchor="middle"
+                      fill={n.color}
+                      fontSize="17"
+                      fontWeight="bold"
+                    >
+                      {n.label}
+                    </text>
+                  </g>
+                );
+              })}
             </svg>
-            <p className="text-[var(--pres-success)] text-sm text-center">
+            </div>
+            <p className="mt-4 text-[var(--pres-success)] text-base text-center font-medium">
               Ogni agente eccelle nel suo dominio
             </p>
           </div>

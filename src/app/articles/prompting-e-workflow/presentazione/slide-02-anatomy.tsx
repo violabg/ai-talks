@@ -48,7 +48,7 @@ export function Slide02Anatomy() {
         </p>
       </FadeIn>
       <div className="flex justify-center">
-        <svg viewBox="0 0 420 300" className="w-full max-w-3xl">
+        <svg viewBox="0 0 420 300" className="w-full max-w-5xl">
           {/* Lines first — behind everything */}
           {nodes.map((node, i) => {
             const { x1, y1, x2, y2 } = lineEndpoints(node);

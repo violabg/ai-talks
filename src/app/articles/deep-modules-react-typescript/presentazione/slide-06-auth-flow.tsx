@@ -17,7 +17,6 @@ export function Slide06AuthFlow() {
       />
 
       <div className="bg-[var(--pres-bg-card)] mx-auto p-5 sm:p-8 border border-[var(--pres-border)] rounded-2xl w-full max-w-6xl">
-        <div className="mx-auto w-full max-w-5xl">
           <svg viewBox="0 0 760 360" className="w-full">
             <defs>
               <marker
@@ -111,7 +110,6 @@ export function Slide06AuthFlow() {
               Consumer: const {`{ user, can, logout }`} = useAuth()
             </motion.text>
           </svg>
-        </div>
       </div>
     </div>
   );

@@ -51,9 +51,9 @@ const environments = [
 
 export function Slide08Environments() {
   return (
-    <div className="flex flex-col items-center justify-center h-full px-6">
+    <div className="flex flex-col items-center h-full px-6 py-6">
       <motion.h2
-        className="text-2xl sm:text-3xl font-bold text-center mb-2"
+        className="text-3xl sm:text-4xl font-bold text-center mb-2"
         initial={{ opacity: 0, y: -15 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5 }}
@@ -61,7 +61,7 @@ export function Slide08Environments() {
         Locale vs <span className="text-[var(--pres-accent)]">Cloud</span>
       </motion.h2>
       <motion.p
-        className="text-[var(--pres-muted)] text-sm mb-8 text-center"
+        className="text-[var(--pres-muted)] text-base mb-6 text-center"
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ delay: 0.3 }}
@@ -69,11 +69,11 @@ export function Slide08Environments() {
         Scegli dove far girare l&apos;agente in base al tipo di task
       </motion.p>
 
-      <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 w-full max-w-3xl">
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 w-full flex-1">
         {environments.map((env, i) => (
           <motion.div
             key={env.id}
-            className="flex flex-col rounded-xl border p-6 gap-4"
+            className="flex flex-col rounded-xl border p-7 gap-5"
             style={{
               borderColor: `color-mix(in srgb, ${env.color} 25%, transparent)`,
               background: `color-mix(in srgb, ${env.color} 4%, transparent)`,
@@ -82,14 +82,14 @@ export function Slide08Environments() {
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.5, delay: 0.4 + i * 0.15 }}
           >
-            <div className="flex items-center gap-4">
-              {env.icon}
+            <div className="flex items-center gap-5">
+              <div style={{ transform: "scale(1.3)", transformOrigin: "center" }}>{env.icon}</div>
               <div>
-                <p className="font-bold text-base" style={{ color: env.color }}>
+                <p className="font-bold text-xl" style={{ color: env.color }}>
                   {env.label}
                 </p>
                 <span
-                  className="text-xs font-mono px-2 py-0.5 rounded"
+                  className="text-sm font-mono px-2 py-0.5 rounded"
                   style={{
                     color: env.color,
                     background: `color-mix(in srgb, ${env.color} 12%, transparent)`,
@@ -100,17 +100,17 @@ export function Slide08Environments() {
               </div>
             </div>
 
-            <div className="flex flex-col gap-1.5">
+            <div className="flex flex-col gap-2.5">
               {env.pros.map((pro) => (
                 <div key={pro} className="flex items-start gap-2">
-                  <span className="text-[var(--pres-success)] text-xs mt-0.5">✓</span>
-                  <span className="text-[var(--pres-text)] text-xs">{pro}</span>
+                  <span className="text-[var(--pres-success)] text-sm mt-0.5">✓</span>
+                  <span className="text-[var(--pres-text)] text-sm">{pro}</span>
                 </div>
               ))}
               {env.cons.map((con) => (
                 <div key={con} className="flex items-start gap-2">
-                  <span className="text-[var(--pres-muted)] text-xs mt-0.5">–</span>
-                  <span className="text-[var(--pres-muted)] text-xs">{con}</span>
+                  <span className="text-[var(--pres-muted)] text-sm mt-0.5">–</span>
+                  <span className="text-[var(--pres-muted)] text-sm">{con}</span>
                 </div>
               ))}
             </div>

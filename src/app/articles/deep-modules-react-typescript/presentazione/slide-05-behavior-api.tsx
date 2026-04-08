@@ -17,7 +17,7 @@ export function Slide05BehaviorApi() {
           transition={{ duration: 0.45 }}
           className="bg-[var(--pres-bg-surface)] p-4 border border-[var(--pres-danger)]/40 rounded-xl"
         >
-          <p className="mb-2 font-mono text-[var(--pres-danger)] text-xs uppercase">
+          <p className="mb-2 font-mono text-[var(--pres-danger)] text-sm uppercase">
             anti-pattern
           </p>
           <pre className="bg-[var(--pres-bg-card)] p-3 rounded overflow-x-auto text-[var(--pres-danger-fg)] text-[12px] leading-relaxed">
@@ -38,7 +38,7 @@ export function Slide05BehaviorApi() {
           transition={{ duration: 0.45, delay: 0.15 }}
           className="bg-[var(--pres-bg-surface)] p-4 border border-[var(--pres-success)]/40 rounded-xl"
         >
-          <p className="mb-2 font-mono text-[var(--pres-success)] text-xs uppercase">
+          <p className="mb-2 font-mono text-[var(--pres-success)] text-sm uppercase">
             deep module API
           </p>
           <pre className="bg-[var(--pres-bg-card)] p-3 rounded overflow-x-auto text-[var(--pres-success-fg)] text-[12px] leading-relaxed">
@@ -54,7 +54,7 @@ export function Slide05BehaviorApi() {
         </motion.div>
       </div>
 
-      <div className="gap-3 grid sm:grid-cols-3 mx-auto w-full max-w-5xl">
+      <div className="gap-3 grid sm:grid-cols-3 mx-auto w-full max-w-6xl">
         {[
           ["selectItem", "azione semantica"],
           ["removeItem", "intenzione esplicita"],
