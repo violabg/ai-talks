@@ -70,10 +70,13 @@ export function useNarration(
       }
 
       if (savedEnabled !== null) {
-        // User has made a choice before
-        setEnabled(savedEnabled === "true");
+        // Don't auto-start speech on load — require a user gesture to actually start
+        if (savedEnabled === "true") {
+          setShowInitialDialog(true);
+        } else {
+          setEnabled(false);
+        }
       } else if (italianVoices.length > 0) {
-        // First time: show dialog if Italian voices are available
         setShowInitialDialog(true);
       }
 
@@ -122,7 +125,7 @@ export function useNarration(
           setPlaying(false);
           utteranceRef.current = null;
         };
-        utterance.onerror = () => {
+        utterance.onerror = (e) => {
           setPlaying(false);
           utteranceRef.current = null;
         };
@@ -138,7 +141,18 @@ export function useNarration(
   );
 
   const toggleEnabled = useCallback(() => {
+    const primeAudio = () => {
+      try {
+        const p = new SpeechSynthesisUtterance("");
+        window.speechSynthesis.speak(p);
+        setTimeout(() => window.speechSynthesis.cancel(), 80);
+      } catch (e) {
+        // ignore
+      }
+    };
+
     if (!enabled) {
+      primeAudio();
       setEnabled(true);
       localStorage.setItem(STORAGE_KEY, "true");
     } else {
@@ -157,9 +171,24 @@ export function useNarration(
 
   const handleInitialChoice = useCallback((choice: boolean) => {
     setShowInitialDialog(false);
-    setEnabled(choice);
     localStorage.setItem(STORAGE_KEY, String(choice));
-  }, []);
+
+    if (choice) {
+      try {
+        const p = new SpeechSynthesisUtterance("");
+        window.speechSynthesis.speak(p);
+        setTimeout(() => window.speechSynthesis.cancel(), 80);
+      } catch (e) {
+        // ignore
+      }
+      setEnabled(true);
+      setNarrationId(`narration-${Date.now()}`);
+      // Start playing the current slide now that the user granted permission
+      playSlide(currentSlide);
+    } else {
+      setEnabled(false);
+    }
+  }, [playSlide, currentSlide]);
 
   // Auto-play on slide change when enabled
   useEffect(() => {
