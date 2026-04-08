@@ -96,7 +96,7 @@ export function PresentationShell({
 
   const slideContent = (
     <div
-      className="flex flex-1 justify-center items-center px-6 md:px-16 lg:px-24 min-h-0 overflow-scroll md:overflow-hidden"
+      className="flex flex-1 justify-center items-start md:items-center px-6 md:px-16 lg:px-24 min-h-0 overflow-scroll md:overflow-hidden"
       onClick={(event) => {
         const x = event.clientX;
         const width = window.innerWidth;
