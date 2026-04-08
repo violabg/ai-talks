@@ -2,6 +2,17 @@
 
 import { useCallback, useEffect, useRef, useState } from "react";
 
+/** Speaks a silent utterance so iOS unlocks the audio context on user gesture. */
+function primeAudio() {
+  try {
+    const p = new SpeechSynthesisUtterance("");
+    window.speechSynthesis.speak(p);
+    setTimeout(() => window.speechSynthesis.cancel(), 80);
+  } catch {
+    // ignore
+  }
+}
+
 export interface SpeechData {
   voice?: string;
   slides: { text: string }[];
@@ -141,27 +152,16 @@ export function useNarration(
   );
 
   const toggleEnabled = useCallback(() => {
-    const primeAudio = () => {
-      try {
-        const p = new SpeechSynthesisUtterance("");
-        window.speechSynthesis.speak(p);
-        setTimeout(() => window.speechSynthesis.cancel(), 80);
-      } catch (e) {
-        // ignore
-      }
-    };
-
     if (!enabled) {
       primeAudio();
       setEnabled(true);
+      setNarrationId(`narration-${Date.now()}`);
       localStorage.setItem(STORAGE_KEY, "true");
     } else {
       stop();
       setEnabled(false);
       localStorage.setItem(STORAGE_KEY, "false");
     }
-    // Change narration ID on toggle
-    setNarrationId(`narration-${Date.now()}`);
   }, [enabled, stop]);
 
   const handleSelectVoice = useCallback((uri: string) => {
@@ -174,13 +174,7 @@ export function useNarration(
     localStorage.setItem(STORAGE_KEY, String(choice));
 
     if (choice) {
-      try {
-        const p = new SpeechSynthesisUtterance("");
-        window.speechSynthesis.speak(p);
-        setTimeout(() => window.speechSynthesis.cancel(), 80);
-      } catch (e) {
-        // ignore
-      }
+      primeAudio();
       setEnabled(true);
       setNarrationId(`narration-${Date.now()}`);
       // Start playing the current slide now that the user granted permission
@@ -190,15 +184,23 @@ export function useNarration(
     }
   }, [playSlide, currentSlide]);
 
+  // Keep a stable ref to playSlide so the effect below doesn't re-run
+  // when voice/voice-uri changes (intentional: voice takes effect on next slide).
+  const playSlideRef = useRef(playSlide);
+  useEffect(() => {
+    playSlideRef.current = playSlide;
+  }, [playSlide]);
+
   // Auto-play on slide change when enabled
   useEffect(() => {
     if (enabled && speechData) {
-      playSlide(currentSlide);
+      playSlideRef.current(currentSlide);
     } else {
+      // Syncing with external SpeechSynthesis API — setState inside effect is intentional.
+      // eslint-disable-next-line react-hooks/set-state-in-effect
       stop();
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [currentSlide, enabled]);
+  }, [currentSlide, enabled, speechData, stop]);
 
   // Cleanup on unmount
   useEffect(() => {
