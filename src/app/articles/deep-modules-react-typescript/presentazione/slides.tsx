@@ -12,6 +12,8 @@ import { Slide09Enforcement } from "@/app/articles/deep-modules-react-typescript
 import { Slide10Closing } from "@/app/articles/deep-modules-react-typescript/presentazione/slide-10-closing";
 import speechData from "@/app/articles/deep-modules-react-typescript/presentazione/speech.json";
 import { PresentationShell } from "@/components/presentation/presentation-shell";
+import { Loader2 } from "lucide-react";
+import { Suspense } from "react";
 
 export function PresentationSlides({ slug }: { slug: string }) {
   const slides = [
@@ -34,6 +36,14 @@ export function PresentationSlides({ slug }: { slug: string }) {
   ];
 
   return (
-    <PresentationShell slug={slug} speechData={speechData} slides={slides} />
+    <Suspense
+      fallback={
+        <div className="flex justify-center items-center w-full h-screen">
+          <Loader2 className="w-8 h-8 text-[var(--pres-accent)] animate-spin" />
+        </div>
+      }
+    >
+      <PresentationShell slug={slug} speechData={speechData} slides={slides} />
+    </Suspense>
   );
 }

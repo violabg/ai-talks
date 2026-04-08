@@ -1,6 +1,8 @@
 "use client";
 
 import { PresentationShell } from "@/components/presentation/presentation-shell";
+import { Loader2 } from "lucide-react";
+import { Suspense } from "react";
 import { TitleSlide } from "./slide-01-title";
 import { StatementSlide } from "./slide-02-statement";
 import { ComparisonSlide } from "./slide-03-comparison";
@@ -25,5 +27,15 @@ export function PresentationSlides({ slug }: { slug: string }) {
     { key: "closing", component: <ClosingSlide key="closing" /> },
   ];
 
-  return <PresentationShell slug={slug} speechData={speechData} slides={slides} />;
+  return (
+    <Suspense
+      fallback={
+        <div className="flex justify-center items-center w-full h-screen">
+          <Loader2 className="w-8 h-8 text-[var(--pres-accent)] animate-spin" />
+        </div>
+      }
+    >
+      <PresentationShell slug={slug} speechData={speechData} slides={slides} />
+    </Suspense>
+  );
 }
