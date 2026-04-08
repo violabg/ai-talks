@@ -2,12 +2,12 @@
 
 import { AudioOrb } from "@/components/presentation/audio-orb";
 import { NarrationDialog } from "@/components/presentation/narration-dialog";
-import { NarrationProvider } from "@/components/presentation/narration-provider";
+import { NarrationProvider, useNarrationContext } from "@/components/presentation/narration-provider";
 import { NarrationToggle } from "@/components/presentation/narration-toggle";
 import { AnimatePresence } from "motion/react";
 import * as motion from "motion/react-client";
 import Link from "next/link";
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useState, type ReactNode } from "react";
 import type { SpeechData } from "./use-narration";
 
 export interface PresentationSlideComponent {
@@ -142,13 +142,13 @@ export function PresentationShell({
   if (speechData) {
     return (
       <NarrationProvider speechData={speechData} currentSlide={current}>
-        <div className="z-50 fixed inset-0 flex flex-col bg-[var(--pres-bg)] text-[var(--pres-text)]">
+        <PresentationWithNarration>
           {headerContent}
           {slideContent}
           {progressBar}
           <AudioOrb />
           <NarrationDialog />
-        </div>
+        </PresentationWithNarration>
       </NarrationProvider>
     );
   }
@@ -158,6 +158,23 @@ export function PresentationShell({
       {headerContent}
       {slideContent}
       {progressBar}
+    </div>
+  );
+}
+
+/**
+ * Inner component that lives inside NarrationProvider.
+ * Captures any user click on the presentation and forwards it to `onUserGesture`,
+ * which primes the iOS audio context on the first interaction after a silent restore.
+ */
+function PresentationWithNarration({ children }: { children: ReactNode }) {
+  const { onUserGesture } = useNarrationContext();
+  return (
+    <div
+      className="z-50 fixed inset-0 flex flex-col bg-[var(--pres-bg)] text-[var(--pres-text)]"
+      onClick={onUserGesture}
+    >
+      {children}
     </div>
   );
 }

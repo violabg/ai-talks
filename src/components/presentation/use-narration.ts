@@ -2,8 +2,11 @@
 
 import { useCallback, useEffect, useRef, useState } from "react";
 
-/** Speaks a silent utterance so iOS unlocks the audio context on user gesture. */
-function primeAudio() {
+/**
+ * Speaks a silent utterance so iOS unlocks the audio context.
+ * Must be called synchronously inside a user-gesture handler.
+ */
+function primeAudioContext() {
   try {
     const p = new SpeechSynthesisUtterance("");
     window.speechSynthesis.speak(p);
@@ -31,6 +34,10 @@ export interface NarrationState {
   showInitialDialog: boolean;
   setShowInitialDialog: (show: boolean) => void;
   handleInitialChoice: (enabled: boolean) => void;
+  /** Call from any user-gesture handler. On iOS, primes the audio context on first
+   *  interaction so that narration can play when `savedEnabled = true` is restored
+   *  silently (no dialog). No-op once audio is already primed or narration is off. */
+  onUserGesture: () => void;
 }
 
 const STORAGE_KEY = "presentation-narration-enabled";
@@ -43,9 +50,7 @@ export function useNarration(
   const [enabled, setEnabled] = useState(false);
   const [playing, setPlaying] = useState(false);
   const [wordPulse, setWordPulse] = useState(0);
-  const [availableVoices, setAvailableVoices] = useState<
-    SpeechSynthesisVoice[]
-  >([]);
+  const [availableVoices, setAvailableVoices] = useState<SpeechSynthesisVoice[]>([]);
   const [selectedVoiceUri, setSelectedVoiceUri] = useState("");
   const [narrationId, setNarrationId] = useState("");
   const [showInitialDialog, setShowInitialDialog] = useState(false);
@@ -53,53 +58,72 @@ export function useNarration(
 
   const utteranceRef = useRef<SpeechSynthesisUtterance | null>(null);
   const delayTimeoutRef = useRef<NodeJS.Timeout | null>(null);
+  // True once primeAudioContext() has been called inside a user-gesture handler.
+  // iOS silently blocks speak() without this, but desktop browsers don't need it.
+  // Used only by onUserGesture to decide whether to prime + replay on first tap.
+  const audioPrimedRef = useRef(false);
 
-  // Initialize voices and settings
+  // Always-fresh refs for use inside stable callbacks (onUserGesture, playSlideRef).
+  const currentSlideRef = useRef(currentSlide);
   useEffect(() => {
-    if (typeof window === "undefined" || hasInitialized) return;
+    currentSlideRef.current = currentSlide;
+  }, [currentSlide]);
+
+  // ─── Voice loading ───────────────────────────────────────────────────────────
+  // Persistent listener — Chrome and iOS return [] on the first synchronous
+  // getVoices() call; voices arrive only after the voiceschanged event fires.
+  useEffect(() => {
+    if (typeof window === "undefined") return;
 
     const updateVoices = () => {
       const voices = window.speechSynthesis.getVoices();
       const italianVoices = voices.filter((v) => v.lang.startsWith("it"));
+      if (italianVoices.length === 0) return;
+
       setAvailableVoices(italianVoices);
 
-      // Check localStorage for previous preference
-      const savedEnabled = localStorage.getItem(STORAGE_KEY);
       const savedVoice = localStorage.getItem(VOICE_STORAGE_KEY);
-
       if (savedVoice && italianVoices.some((v) => v.voiceURI === savedVoice)) {
         setSelectedVoiceUri(savedVoice);
-      } else if (italianVoices.length > 0) {
-        // Set default voice: prefer Google, then local system voice
-        const googleVoice = italianVoices.find((v) =>
-          v.name.includes("Google"),
-        );
-        const defaultVoice = googleVoice ?? italianVoices.find((v) => v.localService) ?? italianVoices[0];
-        if (defaultVoice) {
-          setSelectedVoiceUri(defaultVoice.voiceURI);
-        }
+      } else {
+        const googleVoice = italianVoices.find((v) => v.name.includes("Google"));
+        const defaultVoice =
+          googleVoice ??
+          italianVoices.find((v) => v.localService) ??
+          italianVoices[0];
+        // Only set if nothing is already selected (don't overwrite on re-fire).
+        if (defaultVoice) setSelectedVoiceUri((prev) => prev || defaultVoice.voiceURI);
       }
-
-      if (savedEnabled !== null) {
-        // Don't auto-start speech on load — require a user gesture to actually start
-        if (savedEnabled === "true") {
-          setShowInitialDialog(true);
-        } else {
-          setEnabled(false);
-        }
-      } else if (italianVoices.length > 0) {
-        setShowInitialDialog(true);
-      }
-
-      setHasInitialized(true);
     };
 
     updateVoices();
     window.speechSynthesis.addEventListener("voiceschanged", updateVoices);
     return () =>
       window.speechSynthesis.removeEventListener("voiceschanged", updateVoices);
-  }, [hasInitialized]);
+  }, []);
 
+  // ─── One-time initialization ─────────────────────────────────────────────────
+  // Runs after voices are available so the dialog is never shown on a blank list.
+  useEffect(() => {
+    if (hasInitialized || availableVoices.length === 0) return;
+
+    const savedEnabled = localStorage.getItem(STORAGE_KEY);
+
+    if (savedEnabled === null) {
+      // First visit: ask the user. Their click IS the iOS gesture gate.
+      setShowInitialDialog(true);
+    } else if (savedEnabled === "true") {
+      // Returning user who said yes: restore silently.
+      // audioPrimedRef stays false — onUserGesture handles iOS on first tap.
+      setEnabled(true);
+      setNarrationId(`narration-${Date.now()}`);
+    }
+    // savedEnabled === "false": leave enabled=false, no dialog.
+
+    setHasInitialized(true);
+  }, [availableVoices, hasInitialized]);
+
+  // ─── Core actions ─────────────────────────────────────────────────────────────
   const stop = useCallback(() => {
     if (typeof window === "undefined") return;
     if (delayTimeoutRef.current) clearTimeout(delayTimeoutRef.current);
@@ -114,20 +138,15 @@ export function useNarration(
       const text = speechData.slides[index]?.text;
 
       stop();
-
       if (!text) return;
 
-      // Delay speech by 1 second
       delayTimeoutRef.current = setTimeout(() => {
         const utterance = new SpeechSynthesisUtterance(text);
         utterance.lang = speechData.voice ?? "it-IT";
         utterance.rate = 1.0;
 
-        // Find and set the selected voice
         if (selectedVoiceUri) {
-          const voice = availableVoices.find(
-            (v) => v.voiceURI === selectedVoiceUri,
-          );
+          const voice = availableVoices.find((v) => v.voiceURI === selectedVoiceUri);
           if (voice) utterance.voice = voice;
         }
 
@@ -136,7 +155,7 @@ export function useNarration(
           setPlaying(false);
           utteranceRef.current = null;
         };
-        utterance.onerror = (e) => {
+        utterance.onerror = () => {
           setPlaying(false);
           utteranceRef.current = null;
         };
@@ -153,7 +172,8 @@ export function useNarration(
 
   const toggleEnabled = useCallback(() => {
     if (!enabled) {
-      primeAudio();
+      primeAudioContext();
+      audioPrimedRef.current = true;
       setEnabled(true);
       setNarrationId(`narration-${Date.now()}`);
       localStorage.setItem(STORAGE_KEY, "true");
@@ -169,40 +189,58 @@ export function useNarration(
     localStorage.setItem(VOICE_STORAGE_KEY, uri);
   }, []);
 
-  const handleInitialChoice = useCallback((choice: boolean) => {
-    setShowInitialDialog(false);
-    localStorage.setItem(STORAGE_KEY, String(choice));
+  const handleInitialChoice = useCallback(
+    (choice: boolean) => {
+      setShowInitialDialog(false);
+      localStorage.setItem(STORAGE_KEY, String(choice));
 
-    if (choice) {
-      primeAudio();
-      setEnabled(true);
-      setNarrationId(`narration-${Date.now()}`);
-      // Start playing the current slide now that the user granted permission
-      playSlide(currentSlide);
-    } else {
-      setEnabled(false);
+      if (choice) {
+        primeAudioContext();
+        audioPrimedRef.current = true;
+        setEnabled(true);
+        setNarrationId(`narration-${Date.now()}`);
+        // Start playing — audio context is already unlocked by the dialog button click.
+        playSlide(currentSlide);
+      } else {
+        setEnabled(false);
+      }
+    },
+    [playSlide, currentSlide],
+  );
+
+  /**
+   * Called from any user-gesture handler in the presentation shell.
+   * On iOS, the first tap primes the audio context so that narration can play
+   * after a silent restore (savedEnabled = "true"). No-op once primed or if
+   * narration is disabled.
+   */
+  const onUserGesture = useCallback(() => {
+    if (enabled && !audioPrimedRef.current) {
+      primeAudioContext();
+      audioPrimedRef.current = true;
+      playSlideRef.current(currentSlideRef.current);
     }
-  }, [playSlide, currentSlide]);
+  }, [enabled]);
 
-  // Keep a stable ref to playSlide so the effect below doesn't re-run
-  // when voice/voice-uri changes (intentional: voice takes effect on next slide).
+  // ─── Stable ref for playSlide ─────────────────────────────────────────────────
+  // Keeps onUserGesture and the auto-play effect stable when voice settings change.
+  // Voice changes take effect on the next slide, which is intentional.
   const playSlideRef = useRef(playSlide);
   useEffect(() => {
+    // eslint-disable-next-line react-hooks/immutability
     playSlideRef.current = playSlide;
   }, [playSlide]);
 
-  // Auto-play on slide change when enabled
+  // ─── Auto-play on slide change ────────────────────────────────────────────────
   useEffect(() => {
     if (enabled && speechData) {
       playSlideRef.current(currentSlide);
     } else {
-      // Syncing with external SpeechSynthesis API — setState inside effect is intentional.
-      // eslint-disable-next-line react-hooks/set-state-in-effect
       stop();
     }
   }, [currentSlide, enabled, speechData, stop]);
 
-  // Cleanup on unmount
+  // ─── Cleanup on unmount ───────────────────────────────────────────────────────
   useEffect(() => {
     return () => {
       if (typeof window !== "undefined") {
@@ -225,5 +263,6 @@ export function useNarration(
     showInitialDialog,
     setShowInitialDialog,
     handleInitialChoice,
+    onUserGesture,
   };
 }
