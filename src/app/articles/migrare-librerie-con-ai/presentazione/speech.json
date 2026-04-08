@@ -1,0 +1,35 @@
+{
+  "voice": "it-IT",
+  "slides": [
+    {
+      "text": "Ogni codebase accumula debito di dipendenze. Le librerie evolvono, cambiano API, correggono vulnerabilità. Farlo manualmente è lento e rischioso. L'AI può accelerare il processo — ma richiede disciplina. Vediamo come combinare strumenti deterministici e intelligenza artificiale per migrare in modo sicuro."
+    },
+    {
+      "text": "Le migrazioni falliscono per tre ragioni. I breaking changes nascosti: non tutto ciò che cambia è documentato. La superficie del problema: una libreria usata in cinquanta file richiede di toccare cinquanta file. E la coerenza: le regressioni invisibili emergono in produzione, settimane dopo, nei casi che nessuno aveva testato."
+    },
+    {
+      "text": "La strategia più affidabile non è affidarsi solo all'AI. È combinarla con strumenti deterministici. I codemods gestiscono le trasformazioni meccaniche — rinominare API, aggiornare import — producendo diff verificabili. L'AI gestisce i casi semanticamente complessi, dove serve giudizio. Questa divisione riduce la superficie di rischio."
+    },
+    {
+      "text": "Prima di coinvolgere l'AI, conosci gli strumenti che automatizzano la parte meccanica. Renovate e Dependabot monitorano le dipendenze in modo continuo. jscodeshift e ast-grep eseguono trasformazioni AST verificabili. OpenRewrite è pensato per il mondo Java. Codemod.com combina tutto in una pipeline deterministico più AI."
+    },
+    {
+      "text": "Il flusso corretto per i codemods è sempre lo stesso. Prima il dry-run: guardi il diff proposto su un campione. Se il pattern è corretto, applichi. Poi typecheck e test. Se tutto passa, committi. Il commit è il punto di ancoraggio: se il passo successivo si rompe, sai esattamente da dove tornare."
+    },
+    {
+      "text": "Un prompt efficace per la migrazione ha quattro componenti. Il contesto: libreria, versione sorgente, versione target. Il breaking change specifico che stai risolvendo. Un esempio concreto del pattern vecchio e di quello nuovo. E i vincoli: cosa non toccare. Un obiettivo per prompt, un diff verificabile."
+    },
+    {
+      "text": "Ogni iterazione con l'AI deve chiudersi con una verifica prima di aprirne un'altra. Applica su un batch di tre, cinque file. Typecheck, test, rivedi il diff. Se passa, committi. Se qualcosa si rompe, diagnostichi prima di continuare. Gli errori TypeScript sono il miglior feedback che puoi dare all'AI: precisi, contestuali, azionabili."
+    },
+    {
+      "text": "Non tutte le migrazioni si prestano allo stesso approccio. Le UI library richiedono verifica visuale: l'AI può migrare il codice correttamente ma il layout risultare diverso. I breaking change semantici nascosti emergono in integrazione, non in unit test. E le sostituzioni di libreria — da Moment a date-fns, da Redux a Zustand — non sono migrazioni: sono riscritture."
+    },
+    {
+      "text": "Sette passi concreti. Leggi il changelog completo. Usa l'AI per mappare gli usi della libreria senza modificare nulla. Applica i codemods ufficiali in dry-run, verifica, committa. Per ogni breaking change rimanente: prompt mirato, batch piccolo, verifica, commit. Typecheck e test dopo ogni batch. Usa gli errori come feedback. Rivedi il diff prima del merge."
+    },
+    {
+      "text": "La formula è semplice: strumenti deterministici per il lavoro meccanico, AI semantica per il giudizio, loop di validazione per la sicurezza. L'AI accelera le migrazioni. La disciplina le rende sicure. Senza struttura, quello che guadagni in velocità lo perdi in regressioni nascoste."
+    }
+  ]
+}

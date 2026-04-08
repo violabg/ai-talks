@@ -55,7 +55,9 @@
       "Bash(rmdir /Users/paolo/Sites/ai/ai-course/src/app/api)",
       "Bash(pnpm remove:*)",
       "Skill(shadcn)",
-      "Bash(pnpm dlx:*)"
+      "Bash(pnpm dlx:*)",
+      "Bash(pnpm exec:*)",
+      "mcp__ide__getDiagnostics"
     ]
   }
 }

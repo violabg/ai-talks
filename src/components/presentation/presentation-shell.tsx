@@ -123,7 +123,7 @@ export function PresentationShell({
           animate="center"
           exit="exit"
           transition={{ duration: 0.4, ease: "easeOut" }}
-          className="w-full max-w-6xl"
+          className="w-full max-w-6xl h-full"
         >
           {slides[current].component}
         </motion.div>
