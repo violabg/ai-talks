@@ -1,13 +1,14 @@
-import { Redis } from "@upstash/redis"
+import { Redis } from "@upstash/redis";
+import { ENV } from "varlock/env";
 
 const kvAvailable = !!(
-  process.env.KV_REST_API_URL && process.env.KV_REST_API_TOKEN
+  ENV.KV_REST_API_URL && ENV.KV_REST_API_TOKEN
 )
 
 const redis = kvAvailable
   ? new Redis({
-      url: process.env.KV_REST_API_URL!,
-      token: process.env.KV_REST_API_TOKEN!,
+      url: ENV.KV_REST_API_URL!,
+      token: ENV.KV_REST_API_TOKEN!,
     })
   : null
 
