@@ -1,0 +1,116 @@
+---
+title: "Rubber Duck: il revisore multi-modello di GitHub Copilot CLI"
+description: "Come Rubber Duck, l'agente sperimentale di GitHub Research, usa la critica incrociata tra modelli di famiglie diverse per ridurre allucinazioni, validare i test e sbloccare loop di errore nella Copilot CLI."
+date: "2026-04-09T10:00:00+02:00"
+author: "AI Talks"
+tags: ["GitHub Copilot", "CLI", "agenti AI", "multi-modello", "code review", "MCP"]
+published: false
+featured: false
+---
+
+# Rubber Duck: il revisore multi-modello di GitHub Copilot CLI
+
+Un singolo modello ha punti ciechi strutturali. Tende a commettere certi tipi di errori in modo sistematico, produce test "compiacenti" che passano solo perché scritti per farlo, e quando entra in un loop di errore fatica a uscirne da solo.
+
+**Rubber Duck** è la risposta di GitHub Research a questo problema. Si tratta di un agente sperimentale integrato nella Copilot CLI che agisce come revisore critico del modello principale, usando una famiglia di modelli diversa per analizzarne le proposte. Non sostituisce il modello operativo: lo controlla.
+
+---
+
+## 1. Architettura: critica incrociata tra famiglie di modelli
+
+Il cuore dell'innovazione è il concetto di **critica incrociata**. Il sistema usa un'architettura a due livelli:
+
+- **Modello Operativo:** genera il codice e pianifica le attività (es. famiglia Claude, come Claude 3.5 Sonnet).
+- **Modello Revisore (Rubber Duck):** analizza le proposte del primo modello usando una famiglia differente (es. famiglia GPT-4).
+
+La scelta di usare famiglie diverse non è casuale. È statisticamente improbabile che due modelli con architetture e dati di addestramento distinti commettano lo stesso identico errore logico o interpretativo. Questo riduce in modo misurabile le allucinazioni e il cosiddetto "AI slop" — output superficialmente plausibile ma strutturalmente sbagliato.
+
+---
+
+## 2. Quando interviene Rubber Duck
+
+L'agente interviene automaticamente in tre momenti critici del workflow, senza bloccare il flusso di esecuzione:
+
+### Revisione della pianificazione
+
+Prima che inizi la scrittura effettiva dei file, Rubber Duck analizza il piano d'azione. Se rileva incoerenze — ad esempio l'uso di API deprecate o nomi di file errati — suggerisce correzioni che il modello principale adotta immediatamente.
+
+### Validazione dei test unitari
+
+Uno dei problemi più insidiosi dell'IA è la scrittura di test compiacenti: test che passano perché sono stati scritti per adattarsi al codice sbagliato, non perché il codice sia corretto. Rubber Duck interviene **dopo la scrittura dei test ma prima della loro esecuzione**, verificando l'integrità logica indipendentemente dal risultato dell'esecuzione.
+
+### Recupero dai loop (Self-Healing)
+
+Se l'agente principale entra in un ciclo di errore o rimane bloccato su un problema complesso, Rubber Duck viene invocato automaticamente per fornire una prospettiva esterna e sbloccare la generazione.
+
+---
+
+## 3. Configurazione e abilitazione
+
+Rubber Duck fa parte della modalità sperimentale della Copilot CLI. Per attivarlo, all'interno della sessione chat esegui:
+
+```bash
+/experimental on
+```
+
+Dopo l'esecuzione, la CLI si riavvia automaticamente per caricare l'agente. Non è necessaria nessuna altra configurazione.
+
+È anche possibile richiedere esplicitamente una revisione durante una sessione interattiva:
+
+```text
+"Can I please get a rubber duck review on this plan?"
+```
+
+---
+
+## 4. Integrazione con MCP
+
+Rubber Duck può sfruttare i server **MCP (Model Context Protocol)** installati localmente. Se è presente un server MCP per la documentazione di un framework — ad esempio Next.js — l'agente consulta la documentazione aggiornata in tempo reale per verificare che le API proposte siano corrette rispetto all'ultima versione disponibile.
+
+Questo è particolarmente utile nei casi di rinomina o deprecazione di metodi. Un modello addestrato su dati più vecchi potrebbe usare una sintassi obsoleta; Rubber Duck, consultando la documentazione via MCP, intercetta l'errore prima che arrivi al codice.
+
+---
+
+## 5. Esempio di interazione CLI
+
+Un caso concreto: chiedere all'agente di aggiungere middleware di autenticazione in un progetto Next.js.
+
+```text
+User: "Aggiungi un middleware di autenticazione al progetto."
+
+Copilot CLI: [Thinking] Inizializzazione piano...
+Rubber Duck: [Critique] Attenzione: nella versione corrente di Next.js,
+             'middleware' è stato rinominato in 'proxy'.
+Copilot CLI: [Update] Piano aggiornato. Implementazione del proxy in corso...
+```
+
+Senza Rubber Duck, l'agente avrebbe scritto il file con il nome sbagliato, generando un errore di runtime non immediatamente evidente. Con Rubber Duck, la correzione avviene prima che il codice venga scritto.
+
+Un log più completo mostra come il sistema si inserisce nel flusso normale:
+
+```text
+> build a complex analytics feature
+...
+[Thinking] Reading files...
+[Rubber Duck] Getting a critique of the implementation...
+[Rubber Duck] Identified error: Next.js 15.2 renamed 'middleware' to 'proxy'.
+[Sonnet] Adopting suggested changes...
+```
+
+---
+
+## 6. Risultati prestazionali
+
+I test condotti da GitHub Research su *SWE-bench Pro* mostrano risultati concreti:
+
+L'accoppiata **Claude 3.5 Sonnet + Rubber Duck (GPT-4)** ha colmato il **74,7% del gap prestazionale** tra Sonnet e Claude 3 Opus (il modello più potente e costoso della famiglia).
+
+Questo significa che modelli più veloci e leggeri, affiancati da un revisore multi-modello, raggiungono tassi di risoluzione vicini a quelli dei modelli top-tier standalone. La revisione incrociata è quasi altrettanto efficace quanto usare un modello massivo, a una frazione del costo per token.
+
+---
+
+## Considerazioni finali
+
+Rubber Duck è un caso concreto del principio già discusso in [Orchestrazione multi-modello con GitHub Copilot CLI](/articles/multi-modello-copilot-cli-orchestrazione): la qualità del codice generato non dipende solo dalla potenza del singolo modello, ma dalla struttura del processo che lo circonda. Separare esplicitamente la fase di generazione dalla fase di review — e affidarle a modelli diversi — introduce una forma di ridondanza che riduce gli errori sistematici in modo strutturale.
+
+Rubber Duck è attualmente disponibile nella versione sperimentale di GitHub Copilot CLI.

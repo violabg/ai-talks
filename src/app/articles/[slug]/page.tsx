@@ -232,14 +232,14 @@ export default async function ArticlePage({
               {showPresentation && (
                 <Link
                   href={`/articles/${slug}/presentazione`}
-                  className="group inline-flex items-center gap-2 mt-6 px-4 py-2 rounded-lg bg-primary/10 border border-primary/20 text-primary hover:bg-primary/20 text-sm font-medium transition-colors"
+                  className="group inline-flex items-center gap-2 bg-primary/10 hover:bg-primary/20 mt-6 px-4 py-2 border border-primary/20 rounded-lg font-medium text-primary text-sm transition-colors"
                 >
                   <svg
                     width="16"
                     height="16"
                     viewBox="0 0 16 16"
                     fill="none"
-                    className="transition-transform group-hover:scale-110"
+                    className="group-hover:scale-110 transition-transform"
                   >
                     <rect
                       x="1"
