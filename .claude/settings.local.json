@@ -57,7 +57,11 @@
       "Skill(shadcn)",
       "Bash(pnpm dlx:*)",
       "Bash(pnpm exec:*)",
-      "mcp__ide__getDiagnostics"
+      "mcp__ide__getDiagnostics",
+      "Bash(ls:*)",
+      "Bash(node:*)",
+      "Bash(pnpm install:*)",
+      "Bash(pnpm config:*)"
     ]
   }
 }

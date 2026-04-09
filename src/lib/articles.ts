@@ -1,3 +1,4 @@
+import { getAllArticlePublishedStates, getArticlePublished } from "@/lib/kv"
 import type { Article, ArticleFrontmatter } from "@/types/article"
 import fs from "fs"
 import matter from "gray-matter"
@@ -26,15 +27,23 @@ function getArticleTimestamp(date: string): number {
   return new Date(date).getTime()
 }
 
-function isArticlePublished(frontmatter: ArticleFrontmatter): boolean {
+function isArticlePublished(
+  frontmatter: ArticleFrontmatter,
+  kvPublished: boolean | null
+): boolean {
+  // KV state takes precedence over frontmatter when present
+  if (kvPublished !== null) return kvPublished
   return frontmatter.published === true
 }
 
-function isArticleVisible(frontmatter: ArticleFrontmatter): boolean {
-  return isDevelopment || isArticlePublished(frontmatter)
+function isArticleVisible(
+  frontmatter: ArticleFrontmatter,
+  kvPublished: boolean | null
+): boolean {
+  return isDevelopment || isArticlePublished(frontmatter, kvPublished)
 }
 
-function getArticleSlugsFromDisk(): string[] {
+export function getArticleSlugsFromDisk(): string[] {
   if (!fs.existsSync(ARTICLES_DIR)) return []
 
   return fs
@@ -43,35 +52,64 @@ function getArticleSlugsFromDisk(): string[] {
     .map((file) => file.replace(/\.mdx$/, ""))
 }
 
-export function getAllArticles(): Article[] {
-  return getArticleSlugsFromDisk()
+function sortArticles<T extends Article>(articles: T[]): T[] {
+  return articles.sort(
+    (a, b) =>
+      getArticleTimestamp(b.frontmatter.date) -
+        getArticleTimestamp(a.frontmatter.date) ||
+      a.slug.localeCompare(b.slug)
+  )
+}
+
+export async function getAllArticles(): Promise<Article[]> {
+  const kvStates = await getAllArticlePublishedStates()
+
+  const articles = getArticleSlugsFromDisk()
     .map(readArticle)
-    .filter(({ frontmatter }) => isArticleVisible(frontmatter))
-    .map(({ source, ...article }) => article)
-    .sort(
-      (a, b) =>
-        getArticleTimestamp(b.frontmatter.date) -
-          getArticleTimestamp(a.frontmatter.date) ||
-        a.slug.localeCompare(b.slug)
+    .filter(({ slug, frontmatter }) =>
+      isArticleVisible(frontmatter, kvStates[slug] ?? null)
     )
+    .map(({ source: _source, ...article }) => ({
+      ...article,
+      kvPublished: kvStates[article.slug] ?? null,
+    }))
+
+  return sortArticles(articles)
 }
 
-export function getAllArticleSlugs(): string[] {
-  return getAllArticles().map(({ slug }) => slug)
+export async function getAllArticlesUnfiltered(): Promise<
+  (Article & { kvPublished: boolean | null })[]
+> {
+  const kvStates = await getAllArticlePublishedStates()
+  console.log("🚀 ~ getAllArticlesUnfiltered ~ kvStates:", kvStates)
+
+  const articles = getArticleSlugsFromDisk()
+    .map(readArticle)
+    .map(({ source: _source, ...article }) => ({
+      ...article,
+      kvPublished: kvStates[article.slug] ?? null,
+    }))
+
+  return sortArticles(articles)
 }
 
-export function getArticleSource(slug: string): string {
+export async function getAllArticleSlugs(): Promise<string[]> {
+  return (await getAllArticles()).map(({ slug }) => slug)
+}
+
+export async function getArticleSource(slug: string): Promise<string> {
   const { source, frontmatter } = readArticle(slug)
+  const kvPublished = await getArticlePublished(slug)
 
-  if (!isArticleVisible(frontmatter)) {
+  if (!isArticleVisible(frontmatter, kvPublished)) {
     throw new Error(`Article not found: ${slug}`)
   }
 
   return source
 }
 
-export function getFeaturedArticles(): Article[] {
-  return getAllArticles().filter((a) => a.frontmatter.featured)
+export async function getFeaturedArticles(): Promise<Article[]> {
+  return (await getAllArticles()).filter((a) => a.frontmatter.featured)
 }
 
 export function formatArticleDateTime(date: string): string {
@@ -85,10 +123,17 @@ export function formatArticleDateTime(date: string): string {
   }).format(new Date(date))
 }
 
-export function isDraftArticle(frontmatter: ArticleFrontmatter): boolean {
-  return !isArticlePublished(frontmatter)
+export function isDraftArticle(
+  frontmatter: ArticleFrontmatter,
+  kvPublished: boolean | null = null
+): boolean {
+  if (kvPublished !== null) return !kvPublished
+  return frontmatter.published !== true
 }
 
-export function shouldShowDraftBadge(frontmatter: ArticleFrontmatter): boolean {
-  return isDevelopment && isDraftArticle(frontmatter)
+export function shouldShowDraftBadge(
+  frontmatter: ArticleFrontmatter,
+  kvPublished: boolean | null = null
+): boolean {
+  return isDevelopment && isDraftArticle(frontmatter, kvPublished)
 }

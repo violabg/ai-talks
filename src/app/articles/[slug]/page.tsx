@@ -8,6 +8,7 @@ import {
   getArticleSource,
   shouldShowDraftBadge,
 } from "@/lib/articles";
+import { getArticlePublished } from "@/lib/kv";
 import { hasPresentation } from "@/lib/presentations";
 import type { ArticleFrontmatter, ArticleSection } from "@/types/article";
 import GithubSlugger from "github-slugger";
@@ -67,10 +68,10 @@ function extractArticleSections(source: string): ArticleSection[] {
 }
 
 export async function generateStaticParams() {
-  return getAllArticleSlugs().map((slug) => ({ slug }));
+  return (await getAllArticleSlugs()).map((slug) => ({ slug }));
 }
 
-export const dynamicParams = false;
+export const dynamicParams = true;
 
 export async function generateMetadata({
   params,
@@ -79,7 +80,7 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   const { slug } = await params;
   try {
-    const source = getArticleSource(slug);
+    const source = await getArticleSource(slug);
     const { frontmatter } = await compileMDX<ArticleFrontmatter>({
       source,
       options: { parseFrontmatter: true },
@@ -102,7 +103,7 @@ export default async function ArticlePage({
 
   let source: string;
   try {
-    source = getArticleSource(slug);
+    source = await getArticleSource(slug);
   } catch {
     notFound();
   }
@@ -132,8 +133,9 @@ export default async function ArticlePage({
     components: mdxComponents,
   });
 
+  const kvPublished = await getArticlePublished(slug);
   const date = formatArticleDateTime(frontmatter.date);
-  const showDraftBadge = shouldShowDraftBadge(frontmatter);
+  const showDraftBadge = shouldShowDraftBadge(frontmatter, kvPublished);
   const sections = extractArticleSections(source);
   const hasSections = sections.length > 0;
   const pageShellClass = hasSections

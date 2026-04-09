@@ -12,6 +12,8 @@ export interface ArticleFrontmatter {
 export interface Article {
   slug: string
   frontmatter: ArticleFrontmatter
+  /** Effective published state from KV (overrides frontmatter when set) */
+  kvPublished?: boolean | null
 }
 
 export interface ArticleSection {

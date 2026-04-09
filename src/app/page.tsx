@@ -5,9 +5,9 @@ import type { LucideIcon } from "lucide-react";
 import { CheckCircle, Layers, Workflow } from "lucide-react";
 import Link from "next/link";
 
-export default function HomePage() {
-  const featuredArticles = getFeaturedArticles();
-  const recentArticles = getAllArticles().slice(0, 6);
+export default async function HomePage() {
+  const featuredArticles = await getFeaturedArticles();
+  const recentArticles = (await getAllArticles()).slice(0, 6);
   const displayArticles =
     featuredArticles.length > 0 ? featuredArticles : recentArticles;
 

@@ -1,0 +1,37 @@
+import { SignOutButton } from "@/components/admin/sign-out-button"
+import { auth } from "@/lib/auth"
+import { headers } from "next/headers"
+import type { ReactNode } from "react"
+
+export default async function AdminLayout({
+  children,
+}: {
+  children: ReactNode
+}) {
+  const session = await auth.api.getSession({ headers: await headers() })
+
+  if (!session?.user) {
+    // Middleware handles the redirect; layout just renders login page without chrome
+    return <>{children}</>
+  }
+
+  return (
+    <div className="flex flex-col min-h-[calc(100vh-var(--header-height,0px))]">
+      {/* Admin toolbar */}
+      <div className="flex justify-between items-center px-6 py-2 border-border border-b bg-muted/50">
+        <span className="font-mono text-muted-foreground text-xs uppercase tracking-widest">
+          Admin
+        </span>
+        <div className="flex items-center gap-4">
+          <span className="text-muted-foreground text-xs">
+            {session.user.email}
+          </span>
+          <SignOutButton />
+        </div>
+      </div>
+      <main className="flex-1 mx-auto px-6 py-10 w-full max-w-4xl">
+        {children}
+      </main>
+    </div>
+  )
+}

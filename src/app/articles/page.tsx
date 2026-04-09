@@ -15,7 +15,7 @@ type Props = {
 
 export default async function ArticlesPage({ searchParams }: Props) {
   const { q } = await searchParams;
-  const allArticles = getAllArticles();
+  const allArticles = await getAllArticles();
 
   const articles = q
     ? allArticles.filter(({ frontmatter }) => {

@@ -12,7 +12,7 @@ interface ArticleCardProps {
 export function ArticleCard({ article }: ArticleCardProps) {
   const { slug, frontmatter } = article;
   const date = formatArticleDateTime(frontmatter.date);
-  const showDraftBadge = shouldShowDraftBadge(frontmatter);
+  const showDraftBadge = shouldShowDraftBadge(frontmatter, article.kvPublished ?? null);
 
   return (
     <Link
