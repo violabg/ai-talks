@@ -1,6 +1,7 @@
 "use client"
 
 import { useState } from "react"
+import { toggleArticleField } from "@/lib/actions/articles"
 
 interface ArticleToggleProps {
   slug: string
@@ -30,12 +31,8 @@ export function ArticleToggle({
     setStatus("idle")
 
     try {
-      const res = await fetch(`/api/admin/articles/${slug}`, {
-        method: "PATCH",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ field, value: next }),
-      })
-      if (!res.ok) throw new Error()
+      const result = await toggleArticleField(slug, field, next)
+      if (result.error) throw new Error(result.error)
       setStatus("ok")
     } catch {
       setValue(!next)

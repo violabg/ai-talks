@@ -1,6 +1,7 @@
 "use client"
 
 import { useState } from "react"
+import { syncArticles } from "@/lib/actions/articles"
 
 export function SyncButton() {
   const [status, setStatus] = useState<"idle" | "loading" | "ok" | "error">(
@@ -12,10 +13,9 @@ export function SyncButton() {
     setStatus("loading")
     setNewCount(null)
     try {
-      const res = await fetch("/api/admin/sync", { method: "POST" })
-      if (!res.ok) throw new Error()
-      const data = (await res.json()) as { initialized: string[] }
-      setNewCount(data.initialized.length)
+      const result = await syncArticles()
+      if (result.error) throw new Error(result.error)
+      setNewCount(result.initialized.length)
       setStatus("ok")
     } catch {
       setStatus("error")
