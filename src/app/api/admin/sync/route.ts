@@ -1,4 +1,4 @@
-import { auth, isAllowedAdmin } from "@/lib/auth"
+import { auth } from "@/lib/auth"
 import { getAllArticlePublishedStates, setArticlePublished } from "@/lib/kv"
 import { getArticleSlugsFromDisk } from "@/lib/articles"
 import { headers } from "next/headers"
@@ -13,10 +13,6 @@ export async function POST() {
 
   if (!session?.user) {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 })
-  }
-
-  if (!isAllowedAdmin(session.user.email)) {
-    return NextResponse.json({ error: "Forbidden" }, { status: 403 })
   }
 
   const slugs = getArticleSlugsFromDisk()

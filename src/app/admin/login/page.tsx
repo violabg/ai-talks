@@ -5,13 +5,7 @@ export const metadata: Metadata = {
   title: "Admin Login",
 }
 
-export default async function LoginPage({
-  searchParams,
-}: {
-  searchParams: Promise<{ error?: string }>
-}) {
-  const { error } = await searchParams
-
+export default function LoginPage() {
   return (
     <div className="flex justify-center items-center py-24">
       <div className="space-y-6 w-full max-w-sm">
@@ -20,16 +14,9 @@ export default async function LoginPage({
             Accesso admin
           </h1>
           <p className="mt-1 text-muted-foreground text-sm">
-            Riservato agli utenti autorizzati.
+            Accedi con il tuo account GitHub.
           </p>
         </div>
-
-        {error === "forbidden" && (
-          <p className="text-destructive text-sm">
-            Il tuo account GitHub non è autorizzato ad accedere.
-          </p>
-        )}
-
         <GithubSignInButton />
       </div>
     </div>

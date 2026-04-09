@@ -1,4 +1,4 @@
-import { auth, isAllowedAdmin } from "@/lib/auth"
+import { auth } from "@/lib/auth"
 import { setArticlePublished } from "@/lib/kv"
 import { headers } from "next/headers"
 import { revalidatePath } from "next/cache"
@@ -12,10 +12,6 @@ export async function PATCH(
 
   if (!session?.user) {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 })
-  }
-
-  if (!isAllowedAdmin(session.user.email)) {
-    return NextResponse.json({ error: "Forbidden" }, { status: 403 })
   }
 
   const { slug } = await params

@@ -13,11 +13,3 @@ export const auth = betterAuth({
   secondaryStorage: kvSecondaryStorage,
 })
 
-export function isAllowedAdmin(email: string | undefined | null): boolean {
-  if (!email) return false
-  const allowed = (process.env.ADMIN_GITHUB_EMAILS ?? "")
-    .split(",")
-    .map((e) => e.trim().toLowerCase())
-    .filter(Boolean)
-  return allowed.includes(email.toLowerCase())
-}

@@ -81,7 +81,6 @@ export async function getAllArticlesUnfiltered(): Promise<
   (Article & { kvPublished: boolean | null })[]
 > {
   const kvStates = await getAllArticlePublishedStates()
-  console.log("🚀 ~ getAllArticlesUnfiltered ~ kvStates:", kvStates)
 
   const articles = getArticleSlugsFromDisk()
     .map(readArticle)

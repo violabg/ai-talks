@@ -12,7 +12,6 @@ export const metadata: Metadata = {
 
 export default async function AdminPage() {
   const articles = await getAllArticlesUnfiltered();
-  console.log("🚀 ~ AdminPage ~ articles:", articles);
 
   return (
     <div>
