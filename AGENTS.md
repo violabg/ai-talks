@@ -38,3 +38,4 @@ MDX is compiled server-side via `next-mdx-remote/rsc`. Custom MDX component over
 - Path alias `@/` maps to `src/`
 - All components are server components by default; use `"use client"` only when needed (currently: `ThemeToggle`, `ThemeProvider`)
 - Theme (light/dark) managed by `next-themes` via [src/components/theme-provider.tsx](src/components/theme-provider.tsx)
+- preffer next.js server action to api routes
