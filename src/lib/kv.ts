@@ -11,12 +11,12 @@ const redis = kvAvailable
     })
   : null
 
-// Store as native boolean — Upstash auto-parses JSON so string "true"
-// would come back as boolean true anyway, breaking === "true" comparisons.
-export async function getArticlePublished(slug: string): Promise<boolean | null> {
+// --- Generic helpers ---
+
+async function getFlag(key: string): Promise<boolean | null> {
   if (!redis) return null
   try {
-    const val = await redis.get<boolean>(`article:published:${slug}`)
+    const val = await redis.get<boolean>(key)
     if (val === null || val === undefined) return null
     return Boolean(val)
   } catch {
@@ -24,25 +24,20 @@ export async function getArticlePublished(slug: string): Promise<boolean | null>
   }
 }
 
-export async function setArticlePublished(
-  slug: string,
-  published: boolean
-): Promise<void> {
+async function setFlag(key: string, value: boolean): Promise<void> {
   if (!redis) throw new Error("KV not configured")
-  await redis.set(`article:published:${slug}`, published)
+  await redis.set(key, value)
 }
 
-export async function getAllArticlePublishedStates(): Promise<
-  Record<string, boolean>
-> {
+async function getAllFlags(prefix: string): Promise<Record<string, boolean>> {
   if (!redis) return {}
   try {
-    const keys = await redis.keys("article:published:*")
+    const keys = await redis.keys(`${prefix}*`)
     if (!keys.length) return {}
     const values = await redis.mget<(boolean | null)[]>(...keys)
     return Object.fromEntries(
       keys
-        .map((k, i) => [k.replace("article:published:", ""), values[i]])
+        .map((k, i) => [k.replace(prefix, ""), values[i]])
         .filter(([, v]) => v !== null && v !== undefined)
         .map(([k, v]) => [k, Boolean(v)])
     )
@@ -51,19 +46,42 @@ export async function getAllArticlePublishedStates(): Promise<
   }
 }
 
-/**
- * SecondaryStorage adapter for better-auth.
- * better-auth stores/retrieves serialized JSON strings.
- * We wrap values in an extra JSON.stringify so Upstash round-trips
- * them back as strings rather than parsed objects.
- */
+// --- Published ---
+
+export async function getArticlePublished(slug: string): Promise<boolean | null> {
+  return getFlag(`article:published:${slug}`)
+}
+
+export async function setArticlePublished(slug: string, published: boolean): Promise<void> {
+  return setFlag(`article:published:${slug}`, published)
+}
+
+export async function getAllArticlePublishedStates(): Promise<Record<string, boolean>> {
+  return getAllFlags("article:published:")
+}
+
+// --- Featured ---
+
+export async function getArticleFeatured(slug: string): Promise<boolean | null> {
+  return getFlag(`article:featured:${slug}`)
+}
+
+export async function setArticleFeatured(slug: string, featured: boolean): Promise<void> {
+  return setFlag(`article:featured:${slug}`, featured)
+}
+
+export async function getAllArticleFeaturedStates(): Promise<Record<string, boolean>> {
+  return getAllFlags("article:featured:")
+}
+
+// --- SecondaryStorage adapter for better-auth ---
+
 export const kvSecondaryStorage = {
   get: async (key: string): Promise<string | null> => {
     if (!redis) return null
     try {
       const val = await redis.get<string>(key)
       if (val === null || val === undefined) return null
-      // Upstash may have parsed the stored JSON — re-serialize if needed
       return typeof val === "string" ? val : JSON.stringify(val)
     } catch {
       return null

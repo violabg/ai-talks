@@ -1,4 +1,8 @@
-import { getAllArticlePublishedStates, getArticlePublished } from "@/lib/kv"
+import {
+  getAllArticleFeaturedStates,
+  getAllArticlePublishedStates,
+  getArticlePublished,
+} from "@/lib/kv"
 import type { Article, ArticleFrontmatter } from "@/types/article"
 import fs from "fs"
 import matter from "gray-matter"
@@ -31,7 +35,6 @@ function isArticlePublished(
   frontmatter: ArticleFrontmatter,
   kvPublished: boolean | null
 ): boolean {
-  // KV state takes precedence over frontmatter when present
   if (kvPublished !== null) return kvPublished
   return frontmatter.published === true
 }
@@ -62,31 +65,37 @@ function sortArticles<T extends Article>(articles: T[]): T[] {
 }
 
 export async function getAllArticles(): Promise<Article[]> {
-  const kvStates = await getAllArticlePublishedStates()
+  const [kvPublished, kvFeatured] = await Promise.all([
+    getAllArticlePublishedStates(),
+    getAllArticleFeaturedStates(),
+  ])
 
   const articles = getArticleSlugsFromDisk()
     .map(readArticle)
     .filter(({ slug, frontmatter }) =>
-      isArticleVisible(frontmatter, kvStates[slug] ?? null)
+      isArticleVisible(frontmatter, kvPublished[slug] ?? null)
     )
     .map(({ source: _source, ...article }) => ({
       ...article,
-      kvPublished: kvStates[article.slug] ?? null,
+      kvPublished: kvPublished[article.slug] ?? null,
+      kvFeatured: kvFeatured[article.slug] ?? null,
     }))
 
   return sortArticles(articles)
 }
 
-export async function getAllArticlesUnfiltered(): Promise<
-  (Article & { kvPublished: boolean | null })[]
-> {
-  const kvStates = await getAllArticlePublishedStates()
+export async function getAllArticlesUnfiltered(): Promise<Article[]> {
+  const [kvPublished, kvFeatured] = await Promise.all([
+    getAllArticlePublishedStates(),
+    getAllArticleFeaturedStates(),
+  ])
 
   const articles = getArticleSlugsFromDisk()
     .map(readArticle)
     .map(({ source: _source, ...article }) => ({
       ...article,
-      kvPublished: kvStates[article.slug] ?? null,
+      kvPublished: kvPublished[article.slug] ?? null,
+      kvFeatured: kvFeatured[article.slug] ?? null,
     }))
 
   return sortArticles(articles)
@@ -108,7 +117,11 @@ export async function getArticleSource(slug: string): Promise<string> {
 }
 
 export async function getFeaturedArticles(): Promise<Article[]> {
-  return (await getAllArticles()).filter((a) => a.frontmatter.featured)
+  return (await getAllArticles()).filter((a) => {
+    // KV featured takes precedence over frontmatter
+    if (a.kvFeatured !== null && a.kvFeatured !== undefined) return a.kvFeatured
+    return a.frontmatter.featured === true
+  })
 }
 
 export function formatArticleDateTime(date: string): string {

@@ -1,17 +1,14 @@
-import { PublishToggle } from "@/components/admin/publish-toggle";
-import { SyncButton } from "@/components/admin/sync-button";
-import {
-  formatArticleDateTime,
-  getAllArticlesUnfiltered,
-} from "@/lib/articles";
-import type { Metadata } from "next";
+import { ArticleToggle } from "@/components/admin/publish-toggle"
+import { SyncButton } from "@/components/admin/sync-button"
+import { formatArticleDateTime, getAllArticlesUnfiltered } from "@/lib/articles"
+import type { Metadata } from "next"
 
 export const metadata: Metadata = {
   title: "Admin — Articoli",
-};
+}
 
 export default async function AdminPage() {
-  const articles = await getAllArticlesUnfiltered();
+  const articles = await getAllArticlesUnfiltered()
 
   return (
     <div>
@@ -27,10 +24,23 @@ export default async function AdminPage() {
         <SyncButton />
       </div>
 
+      {/* Header row */}
+      <div className="flex items-center gap-4 mb-2 px-4">
+        <div className="flex-1" />
+        <span className="w-28 font-mono text-muted-foreground text-xs text-center">
+          pubblicato
+        </span>
+        <span className="w-28 font-mono text-muted-foreground text-xs text-center">
+          in evidenza
+        </span>
+      </div>
+
       <div className="space-y-2">
         {articles.map((article) => {
           const effectivePublished =
-            article.kvPublished ?? article.frontmatter.published ?? false;
+            article.kvPublished ?? article.frontmatter.published ?? false
+          const effectiveFeatured =
+            article.kvFeatured ?? article.frontmatter.featured ?? false
 
           return (
             <div
@@ -50,14 +60,32 @@ export default async function AdminPage() {
                   )}
                 </p>
               </div>
-              <PublishToggle
-                slug={article.slug}
-                initialPublished={effectivePublished}
-              />
+
+              <div className="w-28 flex justify-center">
+                <ArticleToggle
+                  slug={article.slug}
+                  field="published"
+                  initialValue={effectivePublished}
+                  onLabel="live"
+                  offLabel="draft"
+                  onColor="bg-primary"
+                />
+              </div>
+
+              <div className="w-28 flex justify-center">
+                <ArticleToggle
+                  slug={article.slug}
+                  field="featured"
+                  initialValue={effectiveFeatured}
+                  onLabel="★ sì"
+                  offLabel="no"
+                  onColor="bg-amber-500"
+                />
+              </div>
             </div>
-          );
+          )
         })}
       </div>
     </div>
-  );
+  )
 }

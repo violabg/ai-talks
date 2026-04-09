@@ -1,8 +1,12 @@
 import { auth } from "@/lib/auth"
-import { setArticlePublished } from "@/lib/kv"
+import { setArticleFeatured, setArticlePublished } from "@/lib/kv"
 import { headers } from "next/headers"
 import { revalidatePath } from "next/cache"
 import { NextResponse } from "next/server"
+
+type Body =
+  | { field: "published"; value: boolean }
+  | { field: "featured"; value: boolean }
 
 export async function PATCH(
   request: Request,
@@ -15,13 +19,18 @@ export async function PATCH(
   }
 
   const { slug } = await params
-  const { published } = (await request.json()) as { published: boolean }
+  const body = (await request.json()) as Body
 
-  await setArticlePublished(slug, published)
+  if (body.field === "published") {
+    await setArticlePublished(slug, body.value)
+    revalidatePath("/")
+    revalidatePath("/articles")
+    revalidatePath(`/articles/${slug}`)
+  } else if (body.field === "featured") {
+    await setArticleFeatured(slug, body.value)
+    revalidatePath("/")
+    revalidatePath("/articles")
+  }
 
-  revalidatePath("/")
-  revalidatePath("/articles")
-  revalidatePath(`/articles/${slug}`)
-
-  return NextResponse.json({ slug, published })
+  return NextResponse.json({ slug, field: body.field, value: body.value })
 }

@@ -14,6 +14,8 @@ export interface Article {
   frontmatter: ArticleFrontmatter
   /** Effective published state from KV (overrides frontmatter when set) */
   kvPublished?: boolean | null
+  /** Effective featured state from KV (overrides frontmatter when set) */
+  kvFeatured?: boolean | null
 }
 
 export interface ArticleSection {
