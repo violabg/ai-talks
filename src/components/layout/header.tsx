@@ -8,6 +8,7 @@ import {
   SheetTitle,
   SheetTrigger,
 } from "@/components/ui/sheet";
+import { authClient } from "@/lib/auth-client";
 import { cn } from "@/lib/utils";
 import { Menu } from "lucide-react";
 import { motion } from "motion/react";
@@ -25,6 +26,7 @@ export function Header() {
   const pathname = usePathname();
   const [open, setOpen] = useState(false);
   const [hovered, setHovered] = useState<string | null>(null);
+  const { data: session } = authClient.useSession();
 
   const isActive = (href: string) => {
     if (href === "/") {
@@ -123,6 +125,28 @@ export function Header() {
               </Link>
             );
           })}
+          {session?.user && (
+            <Link
+              href="/admin"
+              aria-current={isActive("/admin") ? "page" : undefined}
+              onMouseEnter={() => setHovered("/admin")}
+              className={cn(
+                "relative px-4 py-2 rounded-lg transition-colors duration-150",
+                hovered === "/admin" || isActive("/admin")
+                  ? "text-foreground"
+                  : "text-muted-foreground",
+              )}
+            >
+              {(hovered === "/admin" || isActive("/admin")) && (
+                <motion.div
+                  layoutId="nav-indicator"
+                  className="absolute inset-0 bg-primary/8 shadow-[inset_0_-2px_0_var(--primary)] rounded-lg"
+                  transition={{ type: "spring", bounce: 0.2, duration: 0.35 }}
+                />
+              )}
+              <span className="z-10 relative">Admin</span>
+            </Link>
+          )}
         </nav>
 
         <div className="flex items-center gap-2">
@@ -216,6 +240,21 @@ export function Header() {
                     </Link>
                   );
                 })}
+                {session?.user && (
+                  <Link
+                    href="/admin"
+                    aria-current={isActive("/admin") ? "page" : undefined}
+                    onClick={() => setOpen(false)}
+                    className={cn(
+                      "mx-4 px-4 py-3 rounded-lg text-base transition-all duration-150",
+                      isActive("/admin")
+                        ? "bg-primary/8 text-foreground shadow-[inset_2px_0_0_var(--primary)]"
+                        : "text-muted-foreground hover:bg-primary/8 hover:text-foreground hover:shadow-[inset_2px_0_0_var(--primary)]",
+                    )}
+                  >
+                    Admin
+                  </Link>
+                )}
               </nav>
             </SheetContent>
           </Sheet>

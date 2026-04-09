@@ -37,7 +37,7 @@ function isArticlePublished(
   kvPublished: boolean | null
 ): boolean {
   if (kvPublished !== null) return kvPublished
-  return frontmatter.published === true
+  return !!frontmatter.published 
 }
 
 function isArticleVisible(
