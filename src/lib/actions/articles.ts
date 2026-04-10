@@ -1,6 +1,7 @@
 "use server"
 
 import { auth } from "@/lib/auth"
+import { isAdmin } from "@/lib/admin"
 import {
   setArticlePublished,
   setArticleFeatured,
@@ -16,6 +17,7 @@ import path from "path"
 async function requireAdmin() {
   const session = await auth.api.getSession({ headers: await headers() })
   if (!session?.user) throw new Error("Unauthorized")
+  if (!await isAdmin(session.user.email)) throw new Error("Forbidden")
 }
 
 export async function toggleArticleField(

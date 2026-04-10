@@ -1,4 +1,5 @@
 import { auth } from "@/lib/auth"
+import { isAdmin } from "@/lib/admin"
 import { type NextRequest, NextResponse } from "next/server"
 
 export const config = {
@@ -6,17 +7,26 @@ export const config = {
 }
 
 export async function proxy(request: NextRequest) {
-  const isLoginPage = request.nextUrl.pathname === "/admin/login"
+  const pathname = request.nextUrl.pathname
+  const isLoginPage = pathname === "/admin/login"
+  const isUnauthorizedPage = pathname === "/admin/unauthorized"
 
   const session = await auth.api.getSession({ headers: request.headers })
 
   if (!session?.user) {
-    if (isLoginPage) return NextResponse.next()
+    if (isLoginPage || isUnauthorizedPage) return NextResponse.next()
     return NextResponse.redirect(new URL("/admin/login", request.url))
   }
 
-  // Logged-in user visiting the login page → send to admin panel
-  if (isLoginPage) {
+  const authorized = await isAdmin(session.user.email)
+
+  if (!authorized) {
+    if (isUnauthorizedPage) return NextResponse.next()
+    return NextResponse.redirect(new URL("/admin/unauthorized", request.url))
+  }
+
+  // Authorized admin visiting login or unauthorized page → send to admin panel
+  if (isLoginPage || isUnauthorizedPage) {
     return NextResponse.redirect(new URL("/admin", request.url))
   }
 

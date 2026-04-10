@@ -75,7 +75,70 @@ export async function getAllArticleFeaturedStates(): Promise<Record<string, bool
   return getAllFlags("article:featured:")
 }
 
-// --- SecondaryStorage adapter for better-auth ---
+// --- Admin emails ---
+
+const ADMIN_EMAILS_KEY = "admin:emails"
+const ADMIN_EMAILS_DENIED_KEY = "admin:emails:denied"
+
+export async function isKVAdmin(email: string): Promise<boolean> {
+  if (!redis) return false
+  try {
+    const result = await redis.sismember(ADMIN_EMAILS_KEY, email.toLowerCase())
+    return result === 1
+  } catch {
+    return false
+  }
+}
+
+export async function getKVAdminEmails(): Promise<string[]> {
+  if (!redis) return []
+  try {
+    const members = await redis.smembers(ADMIN_EMAILS_KEY)
+    return members as string[]
+  } catch {
+    return []
+  }
+}
+
+export async function addKVAdminEmail(email: string): Promise<void> {
+  if (!redis) throw new Error("KV not configured")
+  await redis.sadd(ADMIN_EMAILS_KEY, email.toLowerCase())
+}
+
+export async function removeKVAdminEmail(email: string): Promise<void> {
+  if (!redis) throw new Error("KV not configured")
+  await redis.srem(ADMIN_EMAILS_KEY, email.toLowerCase())
+}
+
+export async function isKVDenied(email: string): Promise<boolean> {
+  if (!redis) return false
+  try {
+    const result = await redis.sismember(ADMIN_EMAILS_DENIED_KEY, email.toLowerCase())
+    return result === 1
+  } catch {
+    return false
+  }
+}
+
+export async function getKVDeniedEmails(): Promise<string[]> {
+  if (!redis) return []
+  try {
+    const members = await redis.smembers(ADMIN_EMAILS_DENIED_KEY)
+    return members as string[]
+  } catch {
+    return []
+  }
+}
+
+export async function addKVDeniedEmail(email: string): Promise<void> {
+  if (!redis) throw new Error("KV not configured")
+  await redis.sadd(ADMIN_EMAILS_DENIED_KEY, email.toLowerCase())
+}
+
+export async function removeKVDeniedEmail(email: string): Promise<void> {
+  if (!redis) throw new Error("KV not configured")
+  await redis.srem(ADMIN_EMAILS_DENIED_KEY, email.toLowerCase())
+}
 
 export const kvSecondaryStorage = {
   get: async (key: string): Promise<string | null> => {

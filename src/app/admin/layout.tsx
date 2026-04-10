@@ -1,6 +1,8 @@
 import { SignOutButton } from "@/components/admin/sign-out-button"
 import { auth } from "@/lib/auth"
+import { isAdmin } from "@/lib/admin"
 import { headers } from "next/headers"
+import Link from "next/link"
 import type { ReactNode } from "react"
 
 export default async function AdminLayout({
@@ -11,7 +13,12 @@ export default async function AdminLayout({
   const session = await auth.api.getSession({ headers: await headers() })
 
   if (!session?.user) {
-    // Middleware handles the redirect; layout just renders login page without chrome
+    return <>{children}</>
+  }
+
+  const authorized = await isAdmin(session.user.email)
+
+  if (!authorized) {
     return <>{children}</>
   }
 
@@ -23,6 +30,12 @@ export default async function AdminLayout({
           Admin
         </span>
         <div className="flex items-center gap-4">
+          <Link
+            href="/admin/users"
+            className="text-muted-foreground hover:text-foreground text-xs transition-colors"
+          >
+            Utenti
+          </Link>
           <span className="text-muted-foreground text-xs">
             {session.user.email}
           </span>
