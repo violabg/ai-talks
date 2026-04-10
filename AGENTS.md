@@ -8,9 +8,9 @@ No test runner is configured.
 
 ## Architecture
 
-**AI Talks** is a Next.js App Router site for publishing MDX articles about AI development (Italian language).
+**AI Talks** — Next.js 16 App Router site publishing MDX articles about AI (Italian language).
 
-### Content System
+### Content system
 
 Articles live in [content/articles/](content/articles/) as `.mdx` files with YAML frontmatter:
 
@@ -18,24 +18,51 @@ Articles live in [content/articles/](content/articles/) as `.mdx` files with YAM
 title, description, date, author, tags, published, featured?, coverImage?
 ```
 
-Use `date` as an ISO datetime with explicit time and offset, for example `2026-03-30T16:30:00+02:00`.
+- `date`: ISO datetime with explicit offset — e.g. `2026-03-30T16:30:00+02:00`
+- `published: false` by default for new drafts
+- In production, only `published: true` articles are visible; in dev, drafts show a Draft badge
 
-Set `published: false` by default for new drafts. In production only `published: true` articles are visible; in development drafts are still visible and show a Draft badge.
+`src/lib/articles.ts` handles all MDX file I/O (gray-matter), sorting, and static-params generation. Pages use `generateStaticParams()` + `dynamicParams: false`.
 
-[src/lib/articles.ts](src/lib/articles.ts) handles all file I/O: reading MDX files with `gray-matter`, sorting by full datetime, filtering visible articles by environment, and filtering featured articles. Pages use `generateStaticParams()` + `dynamicParams: false` for full static generation.
+MDX compiled server-side via `next-mdx-remote/rsc`. MDX component overrides: `mdx-components.tsx` (root) and `src/components/mdx-components.tsx`.
 
-MDX is compiled server-side via `next-mdx-remote/rsc`. Custom MDX component overrides are split between [mdx-components.tsx](mdx-components.tsx) (root, required by Next.js) and [src/components/mdx-components.tsx](src/components/mdx-components.tsx).
+### Article published/featured state (KV + frontmatter dual-source)
+
+**Do not treat MDX frontmatter as the sole source of truth for `published`/`featured` in production.**
+
+At runtime, `published` and `featured` flags are stored in **Upstash Redis** via `src/lib/kv.ts`. The KV store is optional — if `KV_REST_API_URL`/`KV_REST_API_TOKEN` are not set, it gracefully returns `null` and the system falls back to frontmatter. When editing article visibility logic, always account for both sources.
+
+### Presentations
+
+Each article can optionally have a presentation at `src/app/articles/[slug]/presentazione/` containing `page.tsx`, `slides.tsx`, individual `slide-XX-*.tsx` files, and optionally `speech.json` for narration.
 
 ### Styling
 
-- **Tailwind CSS v4** — config is done entirely in [src/app/globals.css](src/app/globals.css) via `@theme` blocks (no `tailwind.config.*` file)
-- Colors use **oklch color space** throughout
-- **shadcn/ui** components use the `base-nova` style variant; add new ones with `pnpm dlx shadcn@latest add <component>`
-- Typography for article prose uses `@tailwindcss/typography`
+- **Tailwind CSS v4** — config is entirely in `src/app/globals.css` via `@theme` blocks (no `tailwind.config.*` file)
+- Colors use **oklch** throughout
+- **shadcn/ui** with `base-nova` style; add components with `pnpm dlx shadcn@latest add <component>`
+- Prose typography via `@tailwindcss/typography`
 
-### Key Conventions
+## Key Conventions
 
+### Server actions over API routes
+
+**Always use Next.js server actions instead of API routes.** Do not create files under `src/app/api/` for internal data mutations — use `"use server"` functions in `src/lib/actions/` instead. The existing `src/app/api/auth/` route is a third-party integration (better-auth) and is the only exception.
+
+### Environment variables — use `varlock`
+
+**Never use `process.env` directly.** All environment variables are accessed via `varlock`:
+
+```ts
+import { ENV } from "varlock/env"
+// ENV.MY_VAR
+```
+
+Do not add `.env` files or reach for `process.env.FOO` — use `varlock/env`.
+
+### Component defaults
+
+- All components are **server components** by default
+- Use `"use client"` only when necessary (currently: `ThemeToggle`, `ThemeProvider`)
 - Path alias `@/` maps to `src/`
-- All components are server components by default; use `"use client"` only when needed (currently: `ThemeToggle`, `ThemeProvider`)
-- Theme (light/dark) managed by `next-themes` via [src/components/theme-provider.tsx](src/components/theme-provider.tsx)
-- preffer next.js server action to api routes
+- Theme (light/dark) via `next-themes` → `src/components/theme-provider.tsx`
