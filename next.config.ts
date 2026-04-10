@@ -1,12 +1,8 @@
-import { varlockNextConfigPlugin } from "@varlock/nextjs-integration/plugin";
-import type { NextConfig } from "next";
+  import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
   experimental: {
     viewTransition: true,
-  },
-  outputFileTracingIncludes: {
-    '*': ['./node_modules/varlock/**/*'],
   },
   images: {
     dangerouslyAllowSVG: true,
@@ -15,4 +11,4 @@ const nextConfig: NextConfig = {
   },
 }
 
-export default varlockNextConfigPlugin()(nextConfig);
+export default nextConfig;
