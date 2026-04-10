@@ -5,9 +5,6 @@ const nextConfig: NextConfig = {
   experimental: {
     viewTransition: true,
   },
-  outputFileTracingIncludes: {
-    '*': ['./node_modules/varlock/**/*'],
-  },
   images: {
     dangerouslyAllowSVG: true,
     contentDispositionType: "attachment",
