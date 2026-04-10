@@ -1,7 +1,8 @@
 import { getKVAdminEmails, getKVDeniedEmails, isKVAdmin, isKVDenied } from "@/lib/kv"
+import { ENV } from "varlock/env"
 
 export function getEnvAdminEmails(): string[] {
-  const raw = process.env.ADMIN_EMAILS ?? ""
+  const raw = ENV.ADMIN_EMAILS ?? ""
   return raw
     .split(",")
     .map((e) => e.trim().toLowerCase())

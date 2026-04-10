@@ -1,4 +1,5 @@
-  import type { NextConfig } from "next";
+import { varlockNextConfigPlugin } from "@varlock/nextjs-integration/plugin";
+import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
   experimental: {
@@ -11,4 +12,4 @@ const nextConfig: NextConfig = {
   },
 }
 
-export default nextConfig;
+export default varlockNextConfigPlugin()(nextConfig);
