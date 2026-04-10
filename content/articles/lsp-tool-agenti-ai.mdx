@@ -1,0 +1,235 @@
+---
+title: "LSP tool negli agenti AI: diagnostica, contesto e configurazione"
+description: "Cosa sono i Language Server Protocol tool, come permettono agli agenti AI di capire davvero il codice, e come configurarli in Claude Code e GitHub Copilot CLI."
+date: "2026-04-10T09:00:00+02:00"
+author: "AI Talks"
+tags: ["LSP", "agenti AI", "Claude Code", "GitHub Copilot", "configurazione", "TypeScript"]
+published: false
+featured: false
+---
+
+# LSP tool negli agenti AI: diagnostica, contesto e configurazione
+
+Un agente AI che legge codice senza capirne la struttura tipizzata si comporta come uno sviluppatore che lavora senza IDE: vede i caratteri, non i tipi. Non sa se un metodo esiste davvero, se un parametro è del tipo sbagliato, se c'è un errore di importazione. Lavora su testo, non su semantica.
+
+I **LSP tool** sono il ponte tra questa cecità e una comprensione strutturale del codice. Non sono un'estensione dell'agente: sono la capacità dell'agente di interrogare il linguaggio stesso, in tempo reale, mentre lavora.
+
+---
+
+## 1. Cosa è il Language Server Protocol
+
+Il **Language Server Protocol (LSP)** è uno standard aperto sviluppato da Microsoft nel 2016, originariamente per alimentare le funzionalità di VS Code. L'idea centrale era semplice: invece di reimplementare l'analisi del codice per ogni editor, si separa il motore di analisi (il **language server**) dall'interfaccia grafica (il **client LSP**).
+
+Questo schema client-server funziona tramite JSON-RPC su `stdin`/`stdout` o socket. Il client — che sia VS Code, Neovim o un agente AI — invia richieste; il server risponde con informazioni semantiche sul codice.
+
+### Il protocollo in pratica
+
+Quando apri un file TypeScript in VS Code, il client LSP avvia `typescript-language-server` (o lo riusa se è già in esecuzione) e informa il server dei file aperti. Il server legge il progetto, analizza i tipi, e da quel momento risponde alle richieste del client.
+
+Le richieste principali che un client può fare a un language server:
+
+| Richiesta | Cosa restituisce |
+|-----------|-----------------|
+| `textDocument/diagnostic` | errori e warning del file |
+| `textDocument/completion` | suggerimenti di autocompletamento |
+| `textDocument/definition` | posizione della definizione di un simbolo |
+| `textDocument/references` | tutti i punti di uso di un simbolo |
+| `textDocument/hover` | documentazione e tipo di un simbolo |
+| `textDocument/codeAction` | azioni di refactoring disponibili |
+| `textDocument/rename` | rinomina sicura di un simbolo nel progetto |
+| `workspace/symbol` | ricerca di simboli nell'intero workspace |
+
+La bellezza del protocollo è nell'astrazione: qualunque client che parla LSP ottiene automaticamente tutte queste capacità per tutti i linguaggi che hanno un server LSP disponibile.
+
+---
+
+## 2. Perché gli agenti AI hanno bisogno degli LSP tool
+
+Un agente AI che modifica codice commette un certo tipo di errori sistematici: usa API rinominate, importa moduli con il percorso sbagliato, passa il tipo errato a una funzione. Lo fa perché lavora su testo, non su semantica — e non ha un compilatore che lo corregge in tempo reale.
+
+Gli **LSP tool** cambiano questo equilibrio. Permettono all'agente di:
+
+### Leggere la diagnostica del progetto
+
+Prima di proporre una modifica, l'agente può interrogare il language server per capire se ci sono già errori nel file o nel progetto. Dopo aver applicato una modifica, può richiedere di nuovo la diagnostica per verificare che non abbia introdotto nuovi problemi.
+
+Questo trasforma il ciclo di lavoro: invece di scrivere e sperare, l'agente scrive, verifica, corregge.
+
+### Capire i tipi reali
+
+Quando un agente vede `const result = fetchUser(id)`, senza LSP non sa cosa restituisce `fetchUser`. Con LSP può fare una richiesta di hover o di type inference e ottenere la risposta esatta: `Promise<User | null>`, con tutti i campi della struttura.
+
+Questa informazione è cruciale per scrivere codice corretto, non codice plausibile.
+
+### Navigare il progetto per simboli
+
+Invece di fare ricerche testuali nei file (che possono restituire falsi positivi o essere incomplete), l'agente può usare `workspace/symbol` per trovare una definizione nel progetto in modo preciso, o `textDocument/references` per capire dove viene usato un metodo prima di rinominarlo.
+
+### Rilevare errori prima dell'esecuzione
+
+Un LSP tool restituisce gli errori di compilazione senza dover avviare il compilatore. Per un agente che lavora in autonomia su task lunghi, questo riduce il numero di iterazioni fallite: l'errore emerge dal language server immediatamente, non dopo un ciclo di build.
+
+---
+
+## 3. Language server più comuni
+
+Questi sono i language server più diffusi per i linguaggi più usati:
+
+| Linguaggio | Language Server | Installazione |
+|------------|----------------|---------------|
+| TypeScript / JavaScript | `typescript-language-server` | `npm i -g typescript-language-server` |
+| Python | `pylsp` o `pyright` | `pip install python-lsp-server` |
+| Rust | `rust-analyzer` | `rustup component add rust-analyzer` |
+| Go | `gopls` | `go install golang.org/x/tools/gopls@latest` |
+| C / C++ | `clangd` | incluso in LLVM/Clang |
+| Java | `eclipse.jdt.ls` | via Eclipse o JDT LS |
+| C# | `OmniSharp` | `dotnet tool install -g csharp-ls` |
+| PHP | `intelephense` | `npm i -g intelephense` |
+| Ruby | `solargraph` | `gem install solargraph` |
+| Lua | `lua-language-server` | `brew install lua-language-server` |
+
+Tutti comunicano tramite lo stesso protocollo LSP, ma con capacità diverse a seconda della maturità del linguaggio e dell'investimento della community. `typescript-language-server` e `rust-analyzer` sono tra i più completi; offrono inferenza di tipi accurata, refactoring affidabile e diagnostica in tempo reale.
+
+---
+
+## 4. Configurare LSP in GitHub Copilot CLI
+
+GitHub Copilot CLI supporta la configurazione di language server tramite il file `.github/lsp.json` nella root del repository. Questo file indica alla CLI quale server avviare per ciascuna estensione di file.
+
+### Struttura del file
+
+```json
+{
+  "lspServers": {
+    "typescript": {
+      "command": "typescript-language-server",
+      "args": ["--stdio"],
+      "fileExtensions": {
+        ".ts": "typescript",
+        ".tsx": "typescript"
+      }
+    }
+  }
+}
+```
+
+Ogni voce in `lspServers` ha:
+
+- **`command`** — il comando per avviare il server (deve essere disponibile nel `PATH`);
+- **`args`** — gli argomenti passati al server; `--stdio` è la modalità standard per comunicare via `stdin`/`stdout`;
+- **`fileExtensions`** — mappa le estensioni di file all'identificatore del linguaggio.
+
+### Aggiungere più server
+
+È possibile configurare più language server nello stesso file:
+
+```json
+{
+  "lspServers": {
+    "typescript": {
+      "command": "typescript-language-server",
+      "args": ["--stdio"],
+      "fileExtensions": {
+        ".ts": "typescript",
+        ".tsx": "typescript",
+        ".js": "javascript",
+        ".jsx": "javascript"
+      }
+    },
+    "python": {
+      "command": "pylsp",
+      "args": [],
+      "fileExtensions": {
+        ".py": "python"
+      }
+    }
+  }
+}
+```
+
+Quando Copilot CLI lavora su un file con un'estensione configurata, avvia il server corrispondente e lo usa per ottenere contesto semantico durante l'elaborazione.
+
+### Prerequisiti
+
+Il server deve essere installato globalmente sul sistema prima di essere usabile da Copilot CLI. La verifica è semplice:
+
+```bash
+# TypeScript
+typescript-language-server --version
+
+# Python
+pylsp --version
+
+# Rust
+rust-analyzer --version
+```
+
+Se il comando non è trovato, la CLI ignorerà silenziosamente la configurazione LSP per quel linguaggio, senza errori bloccanti.
+
+---
+
+## 5. Configurare LSP in Claude Code
+
+Claude Code integra il supporto LSP attraverso il tool `getDiagnostics`, che legge la diagnostica dell'IDE aperto. In VS Code, l'integrazione avviene tramite l'estensione Claude Code, che ha accesso diretto ai language server già in esecuzione nell'editor.
+
+### Diagnostica via IDE
+
+Quando Claude Code è attivo all'interno di VS Code, può invocare `getDiagnostics` per leggere gli errori e i warning correnti segnalati dall'IDE — inclusi quelli prodotti dai language server TypeScript, ESLint, Pylance e altri.
+
+Questo significa che non è necessaria una configurazione separata: Claude Code sfrutta i language server già configurati nell'IDE dell'utente. Se TypeScript Language Server è attivo in VS Code, Claude Code può leggerne la diagnostica senza installazione aggiuntiva.
+
+### Configurazione via settings.json
+
+Per progetti con esigenze specifiche, è possibile indicare a Claude Code quali tool sono disponibili nel contesto del workspace tramite `.claude/settings.json`. I tool LSP vengono automaticamente inclusi quando l'integrazione IDE è attiva:
+
+```json
+{
+  "permissions": {
+    "allow": ["mcp__ide__getDiagnostics"]
+  }
+}
+```
+
+### Flusso di lavoro pratico
+
+Un utilizzo tipico con Claude Code in VS Code:
+
+1. L'utente apre il progetto TypeScript in VS Code — `typescript-language-server` si avvia automaticamente;
+2. Claude Code riceve una richiesta di modifica su un componente React;
+3. Prima di scrivere il codice, Claude interroga la diagnostica per capire lo stato corrente del file;
+4. Dopo la modifica, legge di nuovo la diagnostica per verificare che non ci siano nuovi errori di tipo;
+5. Se emergono errori, li corregge prima di restituire il risultato finale.
+
+Questo ciclo — modifica, verifica, correggi — è il valore principale degli LSP tool: rende l'agente autoconsapevole degli errori che introduce.
+
+---
+
+## 6. LSP e MCP: due livelli distinti
+
+È utile distinguere LSP e MCP, che vengono spesso confusi perché entrambi estendono le capacità degli agenti tramite strumenti esterni.
+
+| Aspetto | LSP | MCP |
+|---------|-----|-----|
+| Scopo | analisi semantica del codice | connessione a sistemi e API esterni |
+| Dati | tipi, diagnostica, simboli | database, servizi cloud, API |
+| Protocollo | JSON-RPC via stdio/socket | HTTP + JSON-RPC |
+| Configurazione | `.github/lsp.json` / IDE | `.mcp.json` / `settings.json` |
+| Tipico caso d'uso | capire un tipo, trovare un errore | interrogare un DB, leggere una knowledge base |
+
+LSP risponde alla domanda: *cosa significa questo codice?* MCP risponde alla domanda: *cosa posso fare con il mondo esterno?*
+
+Sono complementari. In un agente ben configurato, LSP garantisce che il codice prodotto sia corretto, MCP garantisce che le informazioni usate per produrlo siano aggiornate.
+
+---
+
+## 7. Cosa cambia in pratica
+
+La differenza tra un agente con LSP e uno senza è visibile nei casi limite: modifiche su file con tipi complessi, refactoring che tocca molti file, codice che usa API di librerie con tipi generici.
+
+Senza LSP, l'agente lavora con euristica e pattern statistici. Con LSP, lavora con l'analisi reale del codice — la stessa che usa il compilatore.
+
+Il risultato non è che l'agente diventa infallibile. È che i suoi errori cambiano natura: da errori sistematici di tipo e semantica a errori logici, che richiedono contesto di business per essere scoperti. Quelli li risolvi tu.
+
+---
+
+Per approfondire come configurare gli altri livelli di personalizzazione degli agenti — istruzioni, skill, MCP, hook — vedi [Strumenti e configurazioni: livelli di personalizzazione degli agenti AI](/articles/strumenti-e-configurazioni).

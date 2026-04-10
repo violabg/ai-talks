@@ -1,0 +1,160 @@
+---
+title: "/chronicle: la memoria persistente di GitHub Copilot CLI"
+description: "Come /chronicle mantiene un database SQLite locale di tutte le sessioni Copilot CLI e usa quella storia per suggerire miglioramenti alle istruzioni e al modo in cui usi lo strumento."
+date: "2026-04-10T10:00:00+02:00"
+author: "AI Talks"
+tags: ["GitHub Copilot", "CLI", "agenti AI", "workflow", "chronicle", "session management"]
+published: false
+featured: false
+---
+
+# /chronicle: la memoria persistente di GitHub Copilot CLI
+
+Copilot CLI diventa più potente ogni settimana. Nuovi comandi, nuovi esperimenti, nuove modalità. Anche chi ci lavora ogni giorno fatica a tenere il passo — e lo stesso PM del team lo ammette apertamente.
+
+Il problema reale non è conoscere tutte le funzionalità. È usare bene quelle che già usi. Capire dove stai perdendo tempo, dove le tue istruzioni sono incomplete, dove stai chiedendo qualcosa a mano che potresti automatizzare.
+
+**/chronicle** è costruito esattamente per questo.
+
+---
+
+## 1. Cos'è /chronicle
+
+`/chronicle` è un comando disponibile in modalità sperimentale di Copilot CLI che mantiene un **database SQLite locale** di ogni sessione che hai mai avuto con lo strumento.
+
+Il database registra:
+
+- ogni prompt che hai scritto;
+- ogni problema che hai debuggato e i percorsi che non hanno funzionato;
+- il modo in cui parli all'agente e gli argomenti ricorrenti che affronti.
+
+Tutto rimane **locale sul tuo computer**, nella directory `~/copilot`. Non viene inviato da nessuna parte, non è visibile a nessun altro.
+
+### Attivazione
+
+`/chronicle` richiede la modalità sperimentale attiva:
+
+```text
+/experimental on
+```
+
+Per verificare quali esperimenti sono in esecuzione:
+
+```text
+/experimental show
+```
+
+---
+
+## 2. chronicle improve
+
+`chronicle improve` analizza la storia di tutte le tue sessioni e individua **miglioramenti alle istruzioni e alla configurazione** del repository.
+
+```text
+/chronicle improve
+```
+
+L'analisi guarda pattern ricorrenti tra le sessioni e produce suggerimenti concreti:
+
+- **Istruzioni mancanti** — se stai ricordando all'agente la stessa cosa a ogni sessione, `chronicle improve` lo rileva e suggerisce di aggiungerla al file di istruzioni permanenti (`.github/copilot-instructions.md`). In questo modo non dovrai ripeterla mai più.
+- **Skill da costruire** — se esegui la stessa sequenza di azioni in modo ripetuto, l'agente suggerisce di creare una skill apposita per automatizzarla.
+- **Formato da standardizzare** — se stai chiedendo ogni volta di seguire lo stesso formato per PR o commit, suggerisce di documentarlo nelle istruzioni in modo che l'agente lo conosca già.
+
+### Un esempio concreto
+
+Se hai l'abitudine di chiedere all'agente di creare PR e di correggerne il formato ogni volta perché non segue il template del repository, `chronicle improve` lo rileva e suggerisce:
+
+```text
+Osservazione: stai aggiornando il formato delle PR in ogni sessione.
+Suggerimento: documenta il formato atteso in .github/copilot-instructions.md.
+Se includi il template, l'agente lo utilizzerà direttamente senza che tu debba specificarlo ogni volta.
+```
+
+Aggiornare le istruzioni una volta sola elimina la ripetizione per tutte le sessioni future.
+
+---
+
+## 3. chronicle tips
+
+`chronicle tips` si focalizza su **come stai usando lo strumento**, non sulle istruzioni. L'analisi è orientata all'utente, non al repository.
+
+```text
+/chronicle tips
+```
+
+Copilot esamina le tue sessioni e suggerisce comandi o funzionalità che potresti non conoscere ma che sarebbero utili per il modo in cui lavori.
+
+### Esempio: /research
+
+Se il log delle sessioni mostra che stai incollando URL di issue GitHub o link a PR e chiedendo all'agente di analizzarli manualmente, `chronicle tips` potrebbe segnalare:
+
+```text
+Osservazione: stai spesso incollando issue URL e PR link chiedendo analisi.
+Suggerimento: esiste il comando /research.
+/research esegue ricerche approfondite su web, GitHub e repository open source in modo automatico.
+```
+
+`/research` fa esattamente questo: naviga web, GitHub e fa ricerche semantiche su repository open source. Se non sai che esiste, lo usi a mano — `chronicle tips` lo identifica e te lo suggerisce.
+
+---
+
+## 4. Il database come memoria di sessione dinamica
+
+Il database SQLite non viene usato solo quando invochi esplicitamente `/chronicle`. Copilot CLI lo interroga **dinamicamente** durante le sessioni normali.
+
+Se dici all'agente "la settimana scorsa stavamo lavorando su questo", l'agente usa il database per ritrovare quella sessione e recuperare il contesto. Non devi ricordare tu i dettagli: la memoria persistente li tiene per te.
+
+Questo cambia il modo in cui si può lavorare su task lunghi che si sviluppano nel tempo: ogni nuova sessione può riprendere da dove si era rimasti, senza dover ricostruire tutto il contesto dall'inizio.
+
+---
+
+## 5. Come usarlo nella pratica
+
+Un pattern efficace, descritto direttamente dal team, è questo:
+
+> *A fine giornata o a fine settimana, esegui `chronicle tips` e incorpora i suggerimenti nel modo in cui lavori la settimana successiva.*
+
+`chronicle improve` e `chronicle tips` lavorano su scale diverse:
+
+| Comando | Focus | Risultato |
+|---------|-------|-----------|
+| `chronicle improve` | repository e istruzioni | migliora la configurazione permanente |
+| `chronicle tips` | utente e comportamento | migliora il modo in cui usi lo strumento |
+
+Usarli insieme crea un ciclo di miglioramento continuo. Il tuo modo di usare Copilot CLI si affina nel tempo, in modo concreto e basato su dati reali — non su intuizioni.
+
+---
+
+## 6. Sicurezza e privacy
+
+Il database SQLite è interamente locale: si trova in `~/copilot` sul tuo computer e non viene mai inviato ai server GitHub o a servizi esterni. I log di sessione su cui lavora `chronicle` erano già presenti in quella directory — chronicle si limita a indicizzarli.
+
+La separazione tra `chronicle improve` (informazioni condivisibili in team, perché riguardano le istruzioni del repository) e `chronicle tips` (informazioni strettamente personali, perché riguardano il comportamento individuale) è intenzionale. `chronicle tips` rimane privato per design.
+
+---
+
+## 7. Il contesto più ampio: /tasks, /fleet e autopilot
+
+`/chronicle` è uno degli strumenti che compongono il sistema di workflow avanzato di Copilot CLI, insieme ad altri comandi della modalità sperimentale:
+
+- **`/tasks`** — mostra lo stato degli agenti in background, con tempi di esecuzione e possibilità di entrare nelle sessioni attive;
+- **`/fleet`** — lancia sub-agenti in parallelo su task indipendenti;
+- **`autopilot`** (shift-tab per bypassare la modalità plan) — fa continuare l'agente in loop finché tutti i task non sono completati, utile per sessioni lunghe da lasciare girare senza supervisione.
+
+`/chronicle` si inserisce in questo ecosistema come lo strato di apprendimento: mentre `/fleet` e `autopilot` eseguono il lavoro, `chronicle` analizza come lo stai eseguendo e suggerisce come farlo meglio.
+
+---
+
+## Considerazioni finali
+
+`/chronicle` è uno strumento che risolve un problema raro nel software: il miglioramento iterativo del proprio processo di lavoro basato su dati reali anziché su impressioni.
+
+La maggior parte degli strumenti ti dice come usarli. `chronicle improve` e `chronicle tips` ti dicono dove stai usando male quello che già sai, e cosa potresti imparare per lavorare meglio. La differenza non è marginale.
+
+Per approfondire la configurazione delle istruzioni e delle skill che `chronicle improve` potrebbe suggerire di creare, vedi [Strumenti e configurazioni: livelli di personalizzazione degli agenti AI](/articles/strumenti-e-configurazioni). Per il sistema di orchestrazione multi-modello con `/fleet` e sub-agenti, vedi [Orchestrazione multi-modello con GitHub Copilot CLI](/articles/multi-modello-copilot-cli-orchestrazione).
+
+---
+
+## Crediti
+
+I concetti e gli esempi descritti in questo articolo sono tratti dal video di **Ryan Blunden** (Product Manager di GitHub Copilot CLI) pubblicato sul canale GitHub. Puoi seguire i suoi aggiornamenti su GitHub e seguire [GitHub Checkout](https://www.youtube.com/@GitHub) per i video più recenti sulle funzionalità di Copilot CLI.
