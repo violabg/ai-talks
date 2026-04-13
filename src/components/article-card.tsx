@@ -1,9 +1,10 @@
+import { covers } from "@/components/covers";
 import { DraftBadge } from "@/components/draft-badge";
 import { Badge } from "@/components/ui/badge";
 import { formatArticleDateTime, shouldShowDraftBadge } from "@/lib/articles";
 import type { Article } from "@/types/article";
 import Link from "next/link";
-import { ViewTransition } from "react";
+import { createElement, Suspense, ViewTransition } from "react";
 
 interface ArticleCardProps {
   article: Article;
@@ -19,6 +20,13 @@ export function ArticleCard({ article }: ArticleCardProps) {
       href={`/articles/${slug}`}
       className="group flex flex-col justify-between bg-card hover:shadow-md dark:hover:shadow-[0_0_12px_color-mix(in_oklch,var(--primary)_15%,transparent)] p-6 border border-border hover:border-primary/40 rounded-xl transition-all duration-200 accent-top-line"
     >
+      {covers[slug] && (
+        <div className="mb-4 -mx-6 -mt-6 overflow-hidden rounded-t-xl">
+          <Suspense fallback={<div className="h-32 bg-muted/30 animate-pulse" />}>
+            {createElement(covers[slug])}
+          </Suspense>
+        </div>
+      )}
       <div>
         {/* Meta row */}
         <div className="flex flex-wrap items-center gap-2 mb-4">

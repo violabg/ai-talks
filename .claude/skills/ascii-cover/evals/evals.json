@@ -1,0 +1,23 @@
+{
+  "skill_name": "ascii-cover",
+  "evals": [
+    {
+      "id": 1,
+      "prompt": "Create an ASCII cover for the testing-feedback-loop-agenti-ai article",
+      "expected_output": "A React component at src/components/covers/testing-feedback-loop-agenti-ai.tsx showing test runner output with pass/fail indicators and a feedback loop visual. Uses text-chart-2 for passes, text-chart-5 for failures, text-primary for structure.",
+      "files": []
+    },
+    {
+      "id": 2,
+      "prompt": "Generate the ASCII art card cover for the article about multi-model orchestration with GitHub Copilot CLI",
+      "expected_output": "A React component at src/components/covers/multi-modello-copilot-cli-orchestrazione.tsx showing connected model nodes or a network/orchestration diagram. Uses multiple chart colors for different model nodes, text-primary for connections.",
+      "files": []
+    },
+    {
+      "id": 3,
+      "prompt": "Make an ascii cover for the cli-vs-ide-agenti-ai article",
+      "expected_output": "A React component at src/components/covers/cli-vs-ide-agenti-ai.tsx showing a side-by-side comparison of a terminal window and an IDE window. Uses contrasting chart colors for each side, text-primary for borders.",
+      "files": []
+    }
+  ]
+}
