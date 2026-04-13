@@ -89,9 +89,9 @@ Key rules:
 - **Server component** — no `"use client"` directive needed
 - **`aria-hidden="true"`** — the art is decorative, not content
 - **`select-none`** — prevent accidental text selection
-- **`font-mono text-xs leading-tight`** — use the project's monospace font at small size
+- **`font-mono text-xs leading-tight`** — use the project's monospace font at small size, this is applyed globally in the card, so no need to repeat here
 - **Centered**: The `<pre>` must have `mx-auto w-fit` so the ASCII art is horizontally centered within the card
-- **Background**: `bg-muted/30 dark:bg-muted/20` gives a subtle tinted panel that works in both themes. Use `py-4` for vertical padding (no horizontal padding — the centering handles it)
+- **Background**: `bg-muted/30 dark:bg-muted/20` gives a subtle tinted panel that works in both themes. Use `py-4` for vertical padding (no horizontal padding — the centering handles it), this is also applied globally in the card so no need to repeat here
 - **No hardcoded colors** — use only Tailwind CSS utility classes that reference CSS custom properties
 
 ### Alignment (critical)
