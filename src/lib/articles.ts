@@ -7,10 +7,9 @@ import type { Article, ArticleFrontmatter } from "@/types/article"
 import fs from "fs"
 import matter from "gray-matter"
 import path from "path"
-import { ENV } from "varlock/env"
 
 const ARTICLES_DIR = path.join(process.cwd(), "content", "articles")
-export const isDevelopment = ENV.APP_ENV === "development";
+export const isDevelopment = process.env.NODE_ENV === "development";
 
 function getArticleFilePath(slug: string): string {
   return path.join(ARTICLES_DIR, `${slug}.mdx`)
