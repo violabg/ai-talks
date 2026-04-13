@@ -5,7 +5,7 @@ export function RubberDuckGithubCopilotCli() {
       <span className="text-amber-500 dark:text-yellow-300">{"__"}</span>
       {"\n"}
       <span>{"    "}</span>
-      <span className="text-orange-500">{"<"}</span>
+      <span className="text-red-500 dark:text-orange-500">{"<"}</span>
       <span className="text-amber-500 dark:text-yellow-300">{"(o )_____"}</span>
       {"\n"}
       <span>{"     "}</span>
@@ -18,7 +18,7 @@ export function RubberDuckGithubCopilotCli() {
       <span className="text-amber-500 dark:text-yellow-300">{"`-----'"}</span>
       <span className="text-cyan-400">{"~~~~"}</span>
       <span>{"  "}</span>
-      <span className="text-orange-500">{"<"}</span>
+      <span className="text-red-500 dark:text-orange-500">{"<"}</span>
       <span className="text-amber-500 dark:text-yellow-300">{"(o )_____"}</span>
       {"\n"}
       <span>{"                    "}</span>
