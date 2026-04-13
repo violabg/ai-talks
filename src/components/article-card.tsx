@@ -13,7 +13,10 @@ interface ArticleCardProps {
 export function ArticleCard({ article }: ArticleCardProps) {
   const { slug, frontmatter } = article;
   const date = formatArticleDateTime(frontmatter.date);
-  const showDraftBadge = shouldShowDraftBadge(frontmatter, article.kvPublished ?? null);
+  const showDraftBadge = shouldShowDraftBadge(
+    frontmatter,
+    article.kvPublished ?? null,
+  );
 
   return (
     <Link
@@ -21,8 +24,13 @@ export function ArticleCard({ article }: ArticleCardProps) {
       className="group flex flex-col justify-between bg-card hover:shadow-md dark:hover:shadow-[0_0_12px_color-mix(in_oklch,var(--primary)_15%,transparent)] p-6 border border-border hover:border-primary/40 rounded-xl transition-all duration-200 accent-top-line"
     >
       {covers[slug] && (
-        <div className="mb-4 -mx-6 -mt-6 overflow-hidden rounded-t-xl">
-          <Suspense fallback={<div className="h-32 bg-muted/30 animate-pulse" />}>
+        <div
+          className="relative flex justify-center items-center bg-muted/30 dark:bg-black/50 -mx-6 -mt-6 mb-4 py-4 rounded-t-xl min-h-50 overflow-hidden font-mono text-xs leading-tight select-none"
+          aria-hidden="true"
+        >
+          <Suspense
+            fallback={<div className="bg-muted/30 h-32 animate-pulse" />}
+          >
             {createElement(covers[slug])}
           </Suspense>
         </div>

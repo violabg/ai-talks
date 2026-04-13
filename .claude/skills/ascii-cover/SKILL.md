@@ -28,12 +28,16 @@ The component is a named export matching the slug in PascalCase. For example, `t
 A barrel file at `src/components/covers/index.ts` maps slugs to lazy-loaded components:
 
 ```ts
-import dynamic from "next/dynamic"
+import dynamic from "next/dynamic";
 
 export const covers: Record<string, React.ComponentType> = {
-  "testing-feedback-loop-agenti-ai": dynamic(() => import("./testing-feedback-loop-agenti-ai").then(m => ({ default: m.TestingFeedbackLoopAgentiAi }))),
+  "testing-feedback-loop-agenti-ai": dynamic(() =>
+    import("./testing-feedback-loop-agenti-ai").then((m) => ({
+      default: m.TestingFeedbackLoopAgentiAi,
+    })),
+  ),
   // ... more entries
-}
+};
 ```
 
 When adding a new cover, add its entry to this registry. Create the file if it doesn't exist yet.
@@ -68,17 +72,15 @@ The component structure:
 ```tsx
 export function MyArticleCover() {
   return (
-    <div className="relative bg-muted/30 dark:bg-muted/20 py-4 font-mono text-xs leading-tight select-none overflow-hidden" aria-hidden="true">
-      <pre className="whitespace-pre mx-auto w-fit">
-        <span className="text-primary">{"╭──────────────────╮"}</span>
-        {"\n"}
-        <span className="text-primary">{"│"}</span>
-        <span className="text-chart-2">{" ▶ running tests "}</span>
-        <span className="text-primary">{"│"}</span>
-        {/* ... more lines ... */}
-      </pre>
-    </div>
-  )
+    <pre className="whitespace-pre mx-auto w-fit">
+      <span className="text-primary">{"╭──────────────────╮"}</span>
+      {"\n"}
+      <span className="text-primary">{"│"}</span>
+      <span className="text-chart-2">{" ▶ running tests "}</span>
+      <span className="text-primary">{"│"}</span>
+      {/* ... more lines ... */}
+    </pre>
+  );
 }
 ```
 
@@ -109,20 +111,20 @@ Vertical lines in box-drawing frames **must** align across all lines. The most c
 
 Use these Tailwind classes that automatically adapt to dark/light theme:
 
-| Class | Use for |
-|---|---|
-| `text-primary` | Main structural elements, borders, key symbols |
-| `text-primary/60` | Secondary structural elements |
-| `text-muted-foreground` | Background detail, less important text |
-| `text-muted-foreground/50` | Faint background elements, dots, shadows |
-| `text-foreground` | High-contrast important text |
-| `text-chart-1` | Accent color 1 (warm amber) |
-| `text-chart-2` | Accent color 2 (green) |
-| `text-chart-3` | Accent color 3 (teal/cyan) |
-| `text-chart-4` | Accent color 4 (pink/magenta) |
-| `text-chart-5` | Accent color 5 (orange/red) |
-| `text-accent-teal` | Teal accent |
-| `text-accent-amber` | Amber accent |
+| Class                      | Use for                                        |
+| -------------------------- | ---------------------------------------------- |
+| `text-primary`             | Main structural elements, borders, key symbols |
+| `text-primary/60`          | Secondary structural elements                  |
+| `text-muted-foreground`    | Background detail, less important text         |
+| `text-muted-foreground/50` | Faint background elements, dots, shadows       |
+| `text-foreground`          | High-contrast important text                   |
+| `text-chart-1`             | Accent color 1 (warm amber)                    |
+| `text-chart-2`             | Accent color 2 (green)                         |
+| `text-chart-3`             | Accent color 3 (teal/cyan)                     |
+| `text-chart-4`             | Accent color 4 (pink/magenta)                  |
+| `text-chart-5`             | Accent color 5 (orange/red)                    |
+| `text-accent-teal`         | Teal accent                                    |
+| `text-accent-amber`        | Amber accent                                   |
 
 Use 3-4 colors per cover — enough for visual interest, not so many it looks chaotic. Reserve `text-primary` for the main structure (borders, frames) and use chart/accent colors for the interesting content inside.
 
@@ -143,6 +145,7 @@ These are starting points — adapt and combine creatively:
 Before saving, verify:
 
 - [ ] Every boxed line has the exact same character width (count them!)
+- [ ] Every vertical line should be perfectly aligned with its counterparts on other lines
 - [ ] The `<pre>` has `mx-auto w-fit` for centering
 - [ ] Art looks good at `text-xs` in a ~300px wide card
 - [ ] All colors use Tailwind classes (no inline `style` with hardcoded hex/oklch)
