@@ -62,7 +62,7 @@ Create ASCII art that:
 
 1. **Is visually recognizable** — someone should glance at it and get a sense of the article topic
 2. **Uses box-drawing and special characters** — `│ ─ ┌ ┐ └ ┘ ├ ┤ ┬ ┴ ┼ ╭ ╮ ╰ ╯ ═ ║ ╔ ╗ ╚ ╝ ▓ ░ ▒ █ ● ○ ◆ ◇ ► ◄ ▲ ▼ ⬡ ⚡ ⟡ ✦ ⊕ ⊗` and similar
-3. **Is compact** — roughly 20-28 columns wide, 8-14 rows tall. It must fit inside a card without overwhelming the text content
+3. **Is compact** — roughly 20-28 columns wide, 8-11 rows tall (max 11 rows). It must fit inside a card without overwhelming the text content
 4. **Has visual weight balance** — not too dense, not too sparse
 
 ### Step 3: Write the component
