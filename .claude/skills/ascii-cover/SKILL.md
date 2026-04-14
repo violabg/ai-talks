@@ -87,7 +87,7 @@ Follow the guidelines for the chosen style below.
       dual-model review
 ```
 
-This is a **drawing of rubber ducks** — it tells a story, has personality, and uses simple ASCII characters (`/`, `\`, `_`, `~`, `<`, `>`, parentheses) to create recognizable shapes. but fill free to get creative with the characters you use, if they improve the illustration!
+This is a **drawing of rubber ducks** — it tells a story, has personality, and uses simple ASCII characters (`/`, `\`, `_`, `~`, `<`, `>`, parentheses) to create recognizable shapes. but fill free to get creative with the characters you use, if you need them to improve the illustration!
 
 **Design principles:**
 
