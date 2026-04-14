@@ -38,7 +38,7 @@ export function PromptingEWorkflow() {
       <span className="text-primary">{"act"}</span>
       <span className="text-muted-foreground/50">{" ──> "}</span>
       <span className="text-chart-2">{"verify"}</span>
-      <span className="text-muted-foreground/50">{" ──╮"}</span>
+      <span className="text-muted-foreground/50">{" ─╮"}</span>
       {"\n"}
       <span className="text-muted-foreground/50">
         {"  ╰────────────────────────╯"}

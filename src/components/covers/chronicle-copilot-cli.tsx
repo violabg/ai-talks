@@ -6,7 +6,9 @@ export function ChronicleCopilotCli() {
     >
       <span className="text-chart-3">{'      .-"""-.      '}</span>
       {"\n"}
-      <span className="text-chart-3">{"     /  .-.  \\     "}</span>
+      <span className="text-chart-3">{"     /  "}</span>
+      <span className="text-primary">{".-."}</span>
+      <span className="text-chart-3">{"  \\     "}</span>
       {"\n"}
       <span className="text-primary">{"    |  (o o)  |    "}</span>
       {"\n"}
@@ -18,9 +20,9 @@ export function ChronicleCopilotCli() {
       {"\n"}
       <span className="text-chart-1">{"   /  SQLite  \\   "}</span>
       {"\n"}
-      <span className="text-chart-1">{"  /___logs_____\\  "}</span>
+      <span className="text-chart-1">{"  /____logs____\\  "}</span>
       {"\n"}
-      <span className="text-muted-foreground">{"   ~ local memory ~ "}</span>
+      <span className="text-muted-foreground">{" ~ local memory ~ "}</span>
     </pre>
   );
 }
