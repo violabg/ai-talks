@@ -1,60 +1,38 @@
 export function SviluppoAgentFirstCopilotVscode() {
-  // Every boxed line = 26 chars
   return (
-    <pre className="mx-auto w-fit whitespace-pre">
-      <span className="text-muted-foreground/50">
-        {"╭─ VS Code ──────────────╮"}
+    <pre
+      aria-hidden="true"
+      className="mx-auto w-fit whitespace-pre select-none"
+    >
+      <span className="text-muted-foreground">{"   .-- VS Code deck -."}</span>
+      {"\n"}
+      <span className="text-primary">{"  /  [plan]    [act]  \\"}</span>
+      {"\n"}
+      <span className="text-primary">{"  |      \\o/          |"}</span>
+      <span className="text-chart-1">{"  *"}</span>
+      {"\n"}
+      <span className="text-primary">{"  |       |      .-.  |"}</span>
+      <span className="text-chart-3">{" .-."}</span>
+      <span className="text-chart-4">{" .-."}</span>
+      {"\n"}
+      <span className="text-primary">{"  |      / \\    (o o) |"}</span>
+      <span className="text-chart-3">{"(o o)"}</span>
+      <span className="text-chart-4">{"(o o)"}</span>
+      {"\n"}
+      <span className="text-primary">{"  |              |_|  |"}</span>
+      <span className="text-chart-3">{" |_| "}</span>
+      <span className="text-chart-4">{" |_|"}</span>
+      {"\n"}
+      <span className="text-primary">{"  \\___________________/ "}</span>
+      <span className="text-muted-foreground">{"M1 M2 M3"}</span>
+      {"\n"}
+      <span className="text-muted-foreground">
+        {"    ~~~ agent-first orchestra ~~~"}
       </span>
       {"\n"}
-      <span className="text-muted-foreground/50">{"│"}</span>
-      <span className="text-muted-foreground">{"  "}</span>
-      <span className="text-chart-3">{"plan"}</span>
-      <span className="text-muted-foreground/50">{" ────────> "}</span>
-      <span className="text-chart-1">{"act"}</span>
-      <span className="text-muted-foreground">{"    "}</span>
-      <span className="text-muted-foreground/50">{"│"}</span>
-      {"\n"}
-      <span className="text-muted-foreground/50">{"│"}</span>
-      <span className="text-muted-foreground">{"   "}</span>
-      <span className="text-primary">{"^"}</span>
-      <span className="text-muted-foreground">{"              "}</span>
-      <span className="text-primary">{"│"}</span>
-      <span className="text-muted-foreground">{"     "}</span>
-      <span className="text-muted-foreground/50">{"│"}</span>
-      {"\n"}
-      <span className="text-muted-foreground/50">{"│"}</span>
-      <span className="text-muted-foreground">{"   "}</span>
-      <span className="text-primary">{"│"}</span>
-      <span className="text-muted-foreground">{"   "}</span>
-      <span className="text-muted-foreground">{"steering"}</span>
-      <span className="text-muted-foreground">{"   "}</span>
-      <span className="text-primary">{"│"}</span>
-      <span className="text-muted-foreground">{"     "}</span>
-      <span className="text-muted-foreground/50">{"│"}</span>
-      {"\n"}
-      <span className="text-muted-foreground/50">{"│"}</span>
-      <span className="text-muted-foreground">{"   "}</span>
-      <span className="text-primary">{"│"}</span>
-      <span className="text-muted-foreground">{"              "}</span>
-      <span className="text-primary">{"v"}</span>
-      <span className="text-muted-foreground">{"     "}</span>
-      <span className="text-muted-foreground/50">{"│"}</span>
-      {"\n"}
-      <span className="text-muted-foreground/50">{"│"}</span>
-      <span className="text-muted-foreground">{"  "}</span>
-      <span className="text-chart-2">{"review"}</span>
-      <span className="text-muted-foreground/50">{" <───── "}</span>
-      <span className="text-chart-4">{"tools"}</span>
-      <span className="text-muted-foreground">{"   "}</span>
-      <span className="text-muted-foreground/50">{"│"}</span>
-      {"\n"}
-      <span className="text-muted-foreground/50">
-        {"├────────────────────────┤"}
+      <span className="text-muted-foreground">
+        {"       humans steer, agents run"}
       </span>
-      {"\n"}
-      <span className="text-muted-foreground/50">{"│ "}</span>
-      <span className="text-muted-foreground">{"harness · model · ctx "}</span>
-      <span className="text-muted-foreground/50">{" │"}</span>
     </pre>
   );
 }
