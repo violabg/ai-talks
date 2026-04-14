@@ -23,24 +23,26 @@ export function MultiModelloCopilotCliOrchestrazione() {
         {"   =========/ | \\=========   "}
       </span>
       {"\n"}
-      <span className="text-primary/60">{"        .-.   |   .-.        "}</span>
+      <span className="text-chart-3">{"     ╭--╮"}</span>
+      <span className="text-chart-4">{"   ╭--╮   "}</span>
+      <span className="text-chart-2">{"╭--╮        "}</span>
       {"\n"}
-      <span className="text-chart-3">{"       (M1)  "}</span>
+      <span className="text-chart-3">{"     (M1)   "}</span>
       <span className="text-chart-4">{"(M2)"}</span>
-      <span className="text-chart-2">{"  (M3)      "}</span>
+      <span className="text-chart-2">{"   (M3)      "}</span>
       {"\n"}
-      <span className="text-chart-3">{"        '-'   "}</span>
-      <span className="text-primary">{"|"}</span>
-      <span className="text-chart-2">{"   '-'        "}</span>
+      <span className="text-chart-3">{"     ╰--╯   "}</span>
+      <span className="text-chart-4">{"╰--╯"}</span>
+      <span className="text-chart-2">{"   ╰--╯"}</span>
       {"\n"}
       <span className="text-primary/60">
-        {"           \\  |  /           "}
+        {"          \\  ||  /           "}
       </span>
       {"\n"}
-      <span className="text-primary/60">{"            `-+-'            "}</span>
+      <span className="text-primary/60">{"           `-++-'            "}</span>
       {"\n"}
       <span className="text-muted-foreground">
-        {"      multi-model maestro    "}
+        {"     multi-model maestro    "}
       </span>
     </pre>
   );
