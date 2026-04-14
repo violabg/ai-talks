@@ -1,48 +1,30 @@
 export function SviluppoConAgentiAiGuidaRiferimento() {
-  // Every boxed line = 22 chars
   return (
-    <pre className="mx-auto w-fit whitespace-pre">
-      <span className="text-muted-foreground/50">
-        {"╭─ agent ────────────╮"}
-      </span>
+    <pre className="mx-auto w-fit whitespace-pre" aria-hidden="true">
+      <span>{"  "}</span>
+      <span className="text-chart-4">{"? ? ? ? ?"}</span>
       {"\n"}
-      <span className="text-muted-foreground/50">{"│ "}</span>
-      <span className="text-chart-3">{"ctx:"}</span>
-      <span className="text-muted-foreground">{" ░░░░░"}</span>
-      <span className="text-chart-5">{"████████"}</span>
-      <span className="text-muted-foreground/50">{" │"}</span>
+      <span className="text-primary">{"  .-------."}</span>
       {"\n"}
-      <span className="text-muted-foreground/50">{"│ "}</span>
-      <span className="text-chart-3">{"mem:"}</span>
-      <span className="text-muted-foreground/40">{" - "}</span>
-      <span className="text-muted-foreground">{"(stateless)"}</span>
-      <span className="text-muted-foreground/50">{" │"}</span>
+      <span className="text-primary">{"  | "}</span>
+      <span className="text-foreground">{"o   o"}</span>
+      <span className="text-primary">{" |"}</span>
       {"\n"}
-      <span className="text-muted-foreground/50">
-        {"╰─────────┬──────────╯"}
-      </span>
+      <span className="text-primary">{"  |"}</span>
+      <span className="text-muted-foreground/50">{"  ~~~  "}</span>
+      <span className="text-primary">{"|"}</span>
       {"\n"}
-      <span className="text-primary/60">{"     ┌────┴────┐"}</span>
+      <span className="text-primary">{"  |"}</span>
+      <span className="text-chart-1">{"  [?]  "}</span>
+      <span className="text-primary">{"|"}</span>
       {"\n"}
-      <span className="text-primary/60">{"     v    v    v"}</span>
+      <span className="text-primary">{"  '---+---'"}</span>
       {"\n"}
-      <span className="text-primary">{"   ┌───┐"}</span>
-      <span className="text-muted-foreground"> </span>
-      <span className="text-chart-2">{"┌───┐"}</span>
-      <span className="text-muted-foreground"> </span>
-      <span className="text-chart-1">{"┌───┐"}</span>
+      <span className="text-primary/60">{"    /|\\"}</span>
       {"\n"}
-      <span className="text-primary">{"   │ R │"}</span>
-      <span className="text-muted-foreground"> </span>
-      <span className="text-chart-2">{"│ E │"}</span>
-      <span className="text-muted-foreground"> </span>
-      <span className="text-chart-1">{"│ W │"}</span>
+      <span className="text-primary/60">{"   / | \\"}</span>
       {"\n"}
-      <span className="text-primary">{"   └───┘"}</span>
-      <span className="text-muted-foreground"> </span>
-      <span className="text-chart-2">{"└───┘"}</span>
-      <span className="text-muted-foreground"> </span>
-      <span className="text-chart-1">{"└───┘"}</span>
+      <span className="text-muted-foreground/70">{"  no memory"}</span>
     </pre>
   );
 }

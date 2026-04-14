@@ -53,17 +53,87 @@ The `ArticleCard` component in `src/components/article-card.tsx` already renders
 Read the article's MDX file from `content/articles/{slug}.mdx`. Identify:
 
 - The main topic (e.g., testing, refactoring, CLI tools, multi-model orchestration)
-- 2-3 key visual concepts that could be represented as ASCII art (e.g., terminal windows, flowcharts, network diagrams, code blocks, gear/cog shapes, robot faces)
-- The general mood (technical, playful, architectural, etc.)
+- 2-3 key visual concepts that could be represented visually
+- The general mood (technical, playful, architectural, whimsical, etc.)
+
+### Step 1.5: Ask the user which style they want
+
+Before designing the art, **ask the user** which style they prefer for this specific article. Present the two options:
+
+1. **Illustrative** — a hand-drawn-looking picture of an object, character, or scene (e.g., rubber ducks, a robot, a caterpillar). More artistic and playful.
+2. **Technical** — a structured diagram with box-drawing characters (e.g., terminal windows, flowcharts, module diagrams). More precise and schematic.
+
+If the user already specified a style in their original request, skip this question.
 
 ### Step 2: Design the ASCII art
 
-Create ASCII art that:
+Follow the guidelines for the chosen style below.
+
+---
+
+#### Style A: Illustrative
+
+**Think illustration, not diagram.** The goal is to draw a small picture — a character, an object, a scene — not a technical schematic with boxes and arrows. The best covers look like tiny hand-drawn illustrations made of text characters.
+
+**Good example** (the rubber duck cover):
+
+```
+      __
+    <(o )____A
+     (  ._>  /       __
+  ~~~~`-----'~~~~  <(o )____A
+          ~~~~~~    (  ._>  /
+                 ~~~~`-----'~~~~
+      dual-model review
+```
+
+This is a **drawing of rubber ducks** — it tells a story, has personality, and uses simple ASCII characters (`/`, `\`, `_`, `~`, `<`, `>`, parentheses) to create recognizable shapes.
+
+**Design principles:**
+
+1. **Draw objects and characters, not diagrams** — a robot face, an animal, a tool, a scene with depth. Think "tiny illustration" not "flowchart"
+2. **Use basic ASCII characters creatively** — `/  \  _  |  (  )  <  >  ~  .  *  '  ^  =  -  o  O` are often enough to draw recognizable shapes. Box-drawing chars (`╭ ╮ │ ─`) are fine as accents but should not be the main visual
+3. **Tell a visual story** — the art should have a subject (a character, object, or scene) that relates to the article topic. A duck reviewing code is more engaging than a box labeled "review"
+4. **Add environmental details** — water ripples (`~~~~`), ground lines, shadows, motion lines, small decorative elements that give the scene life
+5. **Include a short caption** — a 1-3 word label in muted color at the bottom to anchor the meaning
+6. **Is compact** — roughly 20-30 columns wide, 7-11 rows tall (max 11 rows). It must fit inside a card without overwhelming the text content
+7. **Has visual weight balance** — not too dense, not too sparse. Leave breathing room around the subject
+
+**Topic inspiration (illustrative):**
+
+- **Testing / feedback loops**: A bug under a magnifying glass, a lab flask bubbling, a cat batting at a failing test
+- **CLI tools**: A rubber duck at a terminal, a wizard casting commands, a toolbox with tools spilling out
+- **Architecture / patterns**: A tower of building blocks, a bridge between islands, a tree with branching roots
+- **Refactoring / migration**: A caterpillar becoming a butterfly, a house being renovated, before/after sketches
+- **Orchestration / multi-model**: A conductor with a baton, birds flying in formation, a puppet master with strings
+- **Configuration / setup**: A control panel with levers, a key fitting a lock, a compass pointing north
+- **AI agents**: A robot with a thought bubble, a brain with lightning, an octopus juggling tools
+- **General**: Animals, space scenes, weather, landscapes, everyday objects — anything that creates a visual metaphor for the topic
+
+---
+
+#### Style B: Technical
+
+**Think structured schematic.** The goal is a clean, precise diagram using box-drawing characters — terminal windows, flowcharts, module layouts. These covers feel informational and developer-oriented.
+
+**Design principles:**
 
 1. **Is visually recognizable** — someone should glance at it and get a sense of the article topic
 2. **Uses box-drawing and special characters** — `│ ─ ┌ ┐ └ ┘ ├ ┤ ┬ ┴ ┼ ╭ ╮ ╰ ╯ ═ ║ ╔ ╗ ╚ ╝ ▓ ░ ▒ █ ● ○ ◆ ◇ ► ◄ ▲ ▼ ⬡ ⚡ ⟡ ✦ ⊕ ⊗` and similar
 3. **Is compact** — roughly 20-28 columns wide, 8-11 rows tall (max 11 rows). It must fit inside a card without overwhelming the text content
 4. **Has visual weight balance** — not too dense, not too sparse
+
+**Topic inspiration (technical):**
+
+- **Testing / feedback loops**: Terminal output with checkmarks/crosses, test runner UI, circular arrows
+- **CLI tools**: Terminal window frame with prompt and output, command pipeline
+- **Architecture / patterns**: Module boxes connected by arrows, layered stack diagram
+- **Refactoring / migration**: Before→after diff view, transformation arrows
+- **Orchestration / multi-model**: Network of connected nodes, message passing diagram
+- **Configuration / setup**: Config file snippet, toggle switches, slider bars
+- **AI agents**: Robot/brain icon, thought bubbles, tool invocation chains
+
+---
 
 ### Step 3: Write the component
 
@@ -128,23 +198,12 @@ Use these Tailwind classes that automatically adapt to dark/light theme:
 
 Use 3-4 colors per cover — enough for visual interest, not so many it looks chaotic. Reserve `text-primary` for the main structure (borders, frames) and use chart/accent colors for the interesting content inside.
 
-### Design patterns by topic
-
-These are starting points — adapt and combine creatively:
-
-- **Testing / feedback loops**: Terminal output with checkmarks/crosses, test runner UI, circular arrows
-- **CLI tools**: Terminal window frame with prompt and output, command pipeline
-- **Architecture / patterns**: Module boxes connected by arrows, layered stack diagram
-- **Refactoring / migration**: Before→after diff view, transformation arrows
-- **Orchestration / multi-model**: Network of connected nodes, message passing diagram
-- **Configuration / setup**: Config file snippet, toggle switches, slider bars
-- **AI agents**: Robot/brain icon, thought bubbles, tool invocation chains
-
 ### Quality checklist
 
 Before saving, verify:
 
-- [ ] Every boxed line has the exact same character width (count them!)
+- [ ] The art matches the **style the user chose** (illustrative or technical)
+- [ ] If using framed/boxed lines, every line has the exact same character width (count them!)
 - [ ] Every vertical line should be perfectly aligned with its counterparts on other lines
 - [ ] The `<pre>` has `mx-auto w-fit` for centering
 - [ ] Art looks good at `text-xs` in a ~300px wide card
@@ -153,3 +212,18 @@ Before saving, verify:
 - [ ] `aria-hidden="true"` is set on the wrapper
 - [ ] The slug entry is added to `src/components/covers/index.ts`
 - [ ] The art is topically relevant to the article
+
+### Step 4: Verify in browser (mandatory)
+
+After writing the component and adding the registry entry, **always check the result in the browser**:
+
+1. Make sure the dev server is running (`pnpm dev`)
+2. Open the homepage or articles page in Chrome using the browser automation tools
+3. Find the article card with the new cover and visually verify:
+   - The ASCII art renders correctly with proper alignment
+   - Colors look good in both light and dark themes (toggle the theme to check)
+   - The illustration is recognizable and conveys the article topic
+   - The art fits well within the card without overflow or awkward spacing
+4. If anything looks off, fix the component and re-check in the browser
+
+**Do not consider the cover done until it has been visually verified in the browser.**
