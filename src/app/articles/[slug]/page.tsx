@@ -1,4 +1,5 @@
 import { ArticleToc } from "@/components/article-toc";
+import { covers } from "@/components/covers";
 import { DraftBadge } from "@/components/draft-badge";
 import { mdxComponents } from "@/components/mdx-components";
 import { Badge } from "@/components/ui/badge";
@@ -17,7 +18,7 @@ import type { Metadata } from "next";
 import { compileMDX } from "next-mdx-remote/rsc";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { ViewTransition } from "react";
+import { Suspense, ViewTransition } from "react";
 import rehypeAutolinkHeadings from "rehype-autolink-headings";
 import rehypePrettyCode from "rehype-pretty-code";
 import rehypeSlug from "rehype-slug";
@@ -147,6 +148,7 @@ export default async function ArticlePage({
 
   const readingTime = Math.max(1, Math.ceil(source.split(/\s+/).length / 200));
   const showPresentation = hasPresentation(slug);
+  const CoverComponent = covers[slug];
 
   return (
     <div className="relative">
@@ -276,6 +278,22 @@ export default async function ArticlePage({
                 </Link>
               )}
             </div>
+
+            {/* ASCII cover — visible only at xl+ where the grid has room */}
+            {hasSections && CoverComponent && (
+              <div className="hidden lg:flex justify-center items-center self-center">
+                <ViewTransition name={`article-cover-${slug}`}>
+                  <div
+                    className="font-mono text-xs leading-tight select-none"
+                    aria-hidden="true"
+                  >
+                    <Suspense>
+                      <CoverComponent />
+                    </Suspense>
+                  </div>
+                </ViewTransition>
+              </div>
+            )}
           </div>
         </div>
       </div>
