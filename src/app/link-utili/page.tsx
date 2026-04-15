@@ -181,6 +181,13 @@ const resourceCategories: ResourceCategory[] = [
         url: "https://github.com/Piebald-AI/claude-code-system-prompts",
         kind: "Community",
       },
+      {
+        title: "awesome-design-md",
+        description:
+          "Raccolta di risorse, pattern ed esempi legati a design e contenuti in markdown, utile per chi vuole curare meglio la qualita visiva e strutturale dei materiali tecnici.",
+        url: "https://github.com/VoltAgent/awesome-design-md",
+        kind: "Community",
+      },
     ],
   },
   {

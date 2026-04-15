@@ -189,6 +189,14 @@ If yes, use the **presentation-speech** skill (`.claude/skills/presentation-spee
 2. Refine the narration text for each slide
 3. Integrate the narration components into `slides.tsx`
 
+## ASCII Cover Art
+
+After the presentation (and optionally narration) is complete, check if this article already has an ASCII cover in `src/components/covers/{slug}.tsx`. If not, ask the user:
+
+> "Vuoi generare anche la cover ASCII per la card di questo articolo?"
+
+If yes, use the **ascii-cover** skill (`.claude/skills/ascii-cover/SKILL.md`) to generate a colored ASCII art component for the article card.
+
 ## Verify
 
 After building:

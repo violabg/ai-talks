@@ -61,7 +61,10 @@
       "Bash(ls:*)",
       "Bash(node:*)",
       "Bash(pnpm install:*)",
-      "Bash(pnpm config:*)"
+      "Bash(pnpm config:*)",
+      "Bash(grep -n \"──\\\\|──\\\\|═══\\\\|───\\\\|>>>\" /Users/paolo.bernardini/Sites/ai-course/content/articles/*.mdx)",
+      "Bash(xargs -I{} basename {} .mdx)",
+      "Bash(pnpm next:*)"
     ]
   }
 }
