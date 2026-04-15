@@ -20,7 +20,7 @@ Un singolo modello ha punti ciechi strutturali. Tende a commettere certi tipi di
 
 Il cuore dell'innovazione è il concetto di **critica incrociata**. Il sistema usa un'architettura a due livelli:
 
-- **Modello Operativo:** genera il codice e pianifica le attività (es. famiglia Claude, come Claude 3.5 Sonnet).
+- **Modello Operativo:** genera il codice e pianifica le attività (es. famiglia Claude, come Claude 4.6 Sonnet).
 - **Modello Revisore (Rubber Duck):** analizza le proposte del primo modello usando una famiglia differente (es. famiglia GPT-4).
 
 La scelta di usare famiglie diverse non è casuale. È statisticamente improbabile che due modelli con architetture e dati di addestramento distinti commettano lo stesso identico errore logico o interpretativo. Questo riduce in modo misurabile le allucinazioni e il cosiddetto "AI slop" — output superficialmente plausibile ma strutturalmente sbagliato.
@@ -103,7 +103,7 @@ Un log più completo mostra come il sistema si inserisce nel flusso normale:
 
 I test condotti da GitHub Research su *SWE-bench Pro* mostrano risultati concreti:
 
-L'accoppiata **Claude 3.5 Sonnet + Rubber Duck (GPT-4)** ha colmato il **74,7% del gap prestazionale** tra Sonnet e Claude 3 Opus (il modello più potente e costoso della famiglia).
+L'accoppiata **Claude 4.6 Sonnet + Rubber Duck (GPT-4)** ha colmato il **74,7% del gap prestazionale** tra Sonnet e Claude 3 Opus (il modello più potente e costoso della famiglia).
 
 Questo significa che modelli più veloci e leggeri, affiancati da un revisore multi-modello, raggiungono tassi di risoluzione vicini a quelli dei modelli top-tier standalone. La revisione incrociata è quasi altrettanto efficace quanto usare un modello massivo, a una frazione del costo per token.
 

@@ -1,0 +1,47 @@
+{
+  "voice": "it-IT",
+  "slides": [
+    {
+      "text": ""
+    },
+    {
+      "text": "Un singolo modello ha punti ciechi strutturali. Tende a commettere errori sistematici, produce test compiacenti che passano solo perché adattati al codice sbagliato, e quando entra in loop di errore fatica a uscirne."
+    },
+    {
+      "text": "È statisticamente improbabile che due modelli diversi commettano lo stesso errore. Dual-model architecture riduce allucinazioni in modo misurabile."
+    },
+    {
+      "text": "Architettura a due livelli: Claude 4.6 Sonnet genera il codice, GPT-4 lo analizza criticamente. Il feedback del revisore torna al modello operativo per correzioni immediate."
+    },
+    {
+      "text": "Rubber Duck interviene in tre momenti critici: prima della pianificazione per rilevare API deprecate, prima dell'esecuzione per validare test, e quando l'agente è bloccato per sbloccare loop."
+    },
+    {
+      "text": "Esempio: il modello propone middleware per autenticazione. Rubber Duck consulta la documentazione MCP e scopre che Next.js ha rinominato middleware in proxy. Correzione applicata prima che il codice venga scritto."
+    },
+    {
+      "text": "Test compiacenti: scritti per adattarsi al codice errato. Rubber Duck verifica l'integrità logica indipendentemente dall'esecuzione, intercettando questi test prima che passino."
+    },
+    {
+      "text": "Quando l'agente è in loop di errore, Rubber Duck fornisce una prospettiva esterna completamente diversa. Questo sblocca nuove direzioni da esplorare."
+    },
+    {
+      "text": "Attiva Rubber Duck nella Copilot CLI con /experimental on. Oppure richiedi una revisione esplicita durante una sessione scrivendo: can I get a rubber duck review?"
+    },
+    {
+      "text": "Rubber Duck integra server MCP locali per consultare documentazione aggiornata in tempo reale. Questo intercetta errori di API deprecate prima che raggiungano il codice."
+    },
+    {
+      "text": "Caso concreto: aggiungere middleware di autenticazione in Next.js. Il modello propone il vecchio nome. Rubber Duck controlla, scopre che è stato rinominato in proxy, e suggerisce la correzione prima che il codice venga scritto."
+    },
+    {
+      "text": "Su SWE-bench Pro, Claude Sonnet più Rubber Duck ha colmato il 74,7% del gap con Claude Opus. Modelli veloci affiancati da un revisore raggiungono tassi di risoluzione quasi identici ai top-tier, a frazione del costo."
+    },
+    {
+      "text": "La qualità del codice non dipende solo dalla potenza del singolo modello, ma dalla struttura del processo. Separare generazione da review e affidarle a modelli diversi riduce errori sistematici."
+    },
+    {
+      "text": "Prova Rubber Duck subito. Nella Copilot CLI: /experimental on. Disponibile nella versione sperimentale di GitHub Copilot CLI."
+    }
+  ]
+}

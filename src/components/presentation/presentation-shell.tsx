@@ -83,7 +83,7 @@ export function PresentationShell({
         href={`/articles/${slug}`}
         className="hover:text-[var(--pres-text)] transition-colors"
       >
-        &larr; Torna all&apos;articolo
+        &larr; <span className="hidden md:inline">Torna all&apos;articolo</span>
       </Link>
       <div className="flex items-center gap-3">
         {speechData && <NarrationToggle />}
@@ -123,7 +123,7 @@ export function PresentationShell({
           animate="center"
           exit="exit"
           transition={{ duration: 0.4, ease: "easeOut" }}
-          className="w-full max-w-6xl h-full"
+          className="w-full max-w-6xl h-auto md:h-full"
         >
           {slides[current].component}
         </motion.div>
