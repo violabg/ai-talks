@@ -11,7 +11,7 @@ export function TitleSlide() {
   ];
 
   return (
-    <div className="text-center">
+    <div className="flex flex-col justify-center items-center gap-8 h-full text-center">
       <FadeIn delay={0.1}>
         <div className="flex flex-wrap justify-center gap-2 mb-8">
           {tags.map((tag) => (
