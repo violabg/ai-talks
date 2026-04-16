@@ -1,93 +1,93 @@
 import * as motion from "motion/react-client";
 import type { ReactNode } from "react";
 
-export const MODEL_COLORS = {
-  claude: "var(--pres-accent)",
-  gpt4: "var(--pres-warning)",
+export const RUBBER_DUCK_TAGS = [
+  "GitHub Copilot",
+  "CLI",
+  "multi-modello",
+  "review",
+  "MCP",
+];
+
+export const palette = {
+  operator: "var(--pres-accent)",
+  reviewer: "var(--pres-blue)",
   success: "var(--pres-success)",
   danger: "var(--pres-danger)",
-} as const;
+  warning: "var(--pres-warning)",
+  muted: "var(--pres-muted)",
+  border: "var(--pres-border)",
+  text: "var(--pres-text)",
+  textSub: "var(--pres-text-sub)",
+};
 
-export function FadeIn({
-  delay = 0,
-  children,
-  className,
+export function SlideFrame({ children }: { children: ReactNode }) {
+  return (
+    <div className="flex flex-col h-full py-4 sm:py-5 mx-auto w-full max-w-6xl text-(--pres-text)">
+      {children}
+    </div>
+  );
+}
+
+export function SlideHeading({
+  eyebrow,
+  title,
+  description,
+  titleClassName = "",
+  descriptionClassName = "",
 }: {
-  delay?: number;
-  children: ReactNode;
-  className?: string;
+  eyebrow: string;
+  title: string;
+  description?: string;
+  titleClassName?: string;
+  descriptionClassName?: string;
 }) {
   return (
     <motion.div
-      initial={{ opacity: 0, y: 14 }}
+      initial={{ opacity: 0, y: 18 }}
       animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.5, delay }}
-      className={className}
+      transition={{ duration: 0.45 }}
+      className="mb-6"
     >
-      {children}
+      <div className="mb-3 font-mono text-(--pres-muted) text-sm uppercase tracking-[0.24em]">
+        {eyebrow}
+      </div>
+      <h2
+        className={`max-w-4xl font-display text-3xl sm:text-4xl lg:text-5xl tracking-tight text-balance ${titleClassName}`}
+      >
+        {title}
+      </h2>
+      {description ? (
+        <p
+          className={`mt-3 max-w-3xl text-(--pres-text-sub) text-base sm:text-lg leading-relaxed ${descriptionClassName}`}
+        >
+          {description}
+        </p>
+      ) : null}
     </motion.div>
   );
 }
 
-export function FadeInLeft({
-  delay = 0,
+export function GlowCard({
   children,
-  className,
+  className = "",
 }: {
-  delay?: number;
   children: ReactNode;
   className?: string;
 }) {
   return (
-    <motion.div
-      initial={{ opacity: 0, x: -20 }}
-      animate={{ opacity: 1, x: 0 }}
-      transition={{ duration: 0.45, delay }}
-      className={className}
+    <div
+      className={`rounded-3xl border border-(--pres-border) bg-[color:var(--pres-bg-card)] shadow-[0_20px_60px_color-mix(in_srgb,var(--pres-accent)_8%,transparent)] ${className}`}
     >
       {children}
-    </motion.div>
+    </div>
   );
 }
 
-export function FadeInRight({
-  delay = 0,
-  children,
-  className,
-}: {
-  delay?: number;
-  children: ReactNode;
-  className?: string;
-}) {
-  return (
-    <motion.div
-      initial={{ opacity: 0, x: 20 }}
-      animate={{ opacity: 1, x: 0 }}
-      transition={{ duration: 0.45, delay }}
-      className={className}
-    >
-      {children}
-    </motion.div>
-  );
-}
-
-export function ScaleIn({
-  delay = 0,
-  children,
-  className,
-}: {
-  delay?: number;
-  children: ReactNode;
-  className?: string;
-}) {
-  return (
-    <motion.div
-      initial={{ opacity: 0, scale: 0.95 }}
-      animate={{ opacity: 1, scale: 1 }}
-      transition={{ duration: 0.5, delay }}
-      className={className}
-    >
-      {children}
-    </motion.div>
-  );
+export function fadeIn(delay = 0) {
+  return {
+    initial: { opacity: 0, y: 18 },
+    animate: { opacity: 1, y: 0 },
+    transition: { duration: 0.45, delay },
+  } as const;
 }

@@ -2,46 +2,31 @@
   "voice": "it-IT",
   "slides": [
     {
-      "text": ""
+      "text": "Rubber Duck non e' un secondo autore del codice. E' un revisore che osserva il lavoro del modello operativo e interviene quando il processo prende una direzione sbagliata. L'idea centrale e' semplice: per migliorare il risultato, spesso conviene migliorare prima il controllo." 
     },
     {
-      "text": "Un singolo modello ha punti ciechi strutturali. Tende a commettere errori sistematici, produce test compiacenti che passano solo perché adattati al codice sbagliato, e quando entra in loop di errore fatica a uscirne."
+      "text": "Il problema non e' il bug occasionale. Il problema e' che un singolo modello tende a ripetere i propri punti ciechi: allucinazioni plausibili, test troppo accomodanti, loop di correzione che non sbloccano davvero la situazione. Rubber Duck nasce per rompere proprio questa ripetizione sistematica." 
     },
     {
-      "text": "È statisticamente improbabile che due modelli diversi commettano lo stesso errore. Dual-model architecture riduce allucinazioni in modo misurabile."
+      "text": "Qui si vede la separazione dei ruoli. Il modello operativo pianifica, scrive file e propone test. Rubber Duck legge quel materiale da una famiglia diversa di modelli e prova a smontarlo: controlla coerenza, ipotesi, segnali di errore condiviso. Non sostituisce il flusso, lo rende piu' affidabile." 
     },
     {
-      "text": "Architettura a due livelli: Claude 4.6 Sonnet genera il codice, GPT-4 lo analizza criticamente. Il feedback del revisore torna al modello operativo per correzioni immediate."
+      "text": "Il punto decisivo e' questo: non basta aggiungere un secondo modello. Serve una famiglia diversa. Se due modelli condividono troppi bias, rischiano di confermarsi a vicenda. Se invece arrivano da architetture e dati differenti, cresce la probabilita' che uno intercetti l'errore che l'altro non vede." 
     },
     {
-      "text": "Rubber Duck interviene in tre momenti critici: prima della pianificazione per rilevare API deprecate, prima dell'esecuzione per validare test, e quando l'agente è bloccato per sbloccare loop."
+      "text": "Rubber Duck entra in tre momenti chiave. Prima rilegge il piano, quando gli errori costano ancora poco. Poi valida la logica dei test, per evitare test che passano solo perche' costruiti sul comportamento sbagliato. Infine aiuta il self-healing, cioe' lo sblocco dei loop in cui il modello operativo resta incastrato." 
     },
     {
-      "text": "Esempio: il modello propone middleware per autenticazione. Rubber Duck consulta la documentazione MCP e scopre che Next.js ha rinominato middleware in proxy. Correzione applicata prima che il codice venga scritto."
+      "text": "Nel flusso CLI, la critica compare dentro la sessione di lavoro. Non aspetta la fine. Il revisore segnala un rischio, il modello operativo aggiorna il piano e prosegue. Questo timing e' importante: correggere una decisione quando e' ancora nel piano costa molto meno che correggere file, test e debugging a valle." 
     },
     {
-      "text": "Test compiacenti: scritti per adattarsi al codice errato. Rubber Duck verifica l'integrità logica indipendentemente dall'esecuzione, intercettando questi test prima che passino."
+      "text": "Con MCP, Rubber Duck non si limita a ragionare per analogia. Può anche interrogare documentazione aggiornata. Questo e' il passaggio che trasforma una review statistica in un controllo ancorato ai fatti: se il framework ha rinominato un file o deprecato un'API, il revisore puo' saperlo prima del runtime." 
     },
     {
-      "text": "Quando l'agente è in loop di errore, Rubber Duck fornisce una prospettiva esterna completamente diversa. Questo sblocca nuove direzioni da esplorare."
+      "text": "L'esempio di Next.js lo rende molto concreto. Senza Rubber Duck, il modello operativo potrebbe scrivere ancora middleware invece di proxy e scoprire il problema troppo tardi. Con Rubber Duck, la correzione arriva prima che il file venga creato. Il guadagno vero non e' solo accuratezza: e' prevenzione del rework." 
     },
     {
-      "text": "Attiva Rubber Duck nella Copilot CLI con /experimental on. Oppure richiedi una revisione esplicita durante una sessione scrivendo: can I get a rubber duck review?"
-    },
-    {
-      "text": "Rubber Duck integra server MCP locali per consultare documentazione aggiornata in tempo reale. Questo intercetta errori di API deprecate prima che raggiungano il codice."
-    },
-    {
-      "text": "Caso concreto: aggiungere middleware di autenticazione in Next.js. Il modello propone il vecchio nome. Rubber Duck controlla, scopre che è stato rinominato in proxy, e suggerisce la correzione prima che il codice venga scritto."
-    },
-    {
-      "text": "Su SWE-bench Pro, Claude Sonnet più Rubber Duck ha colmato il 74,7% del gap con Claude Opus. Modelli veloci affiancati da un revisore raggiungono tassi di risoluzione quasi identici ai top-tier, a frazione del costo."
-    },
-    {
-      "text": "La qualità del codice non dipende solo dalla potenza del singolo modello, ma dalla struttura del processo. Separare generazione da review e affidarle a modelli diversi riduce errori sistematici."
-    },
-    {
-      "text": "Prova Rubber Duck subito. Nella Copilot CLI: /experimental on. Disponibile nella versione sperimentale di GitHub Copilot CLI."
+      "text": "Il risultato citato nell'articolo e' forte: Sonnet affiancato da Rubber Duck colma il settantaquattro virgola sette per cento del gap verso Opus. La lezione e' che la qualita' non dipende solo dal modello piu' potente. Dipende da come progetti generazione, verifica e controllo incrociato." 
     }
   ]
 }
