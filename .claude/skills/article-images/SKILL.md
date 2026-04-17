@@ -13,7 +13,7 @@ Generate SVG visuals for MDX articles in this Next.js project: cover images for 
 - Images go in `public/images/articles/` and are referenced as `/images/articles/filename.svg`
 - The `coverImage` field in frontmatter accepts a string (slug-style name, e.g. `"prompting"`)
 - Images in MDX are standard markdown: `![alt text](/images/articles/filename.svg)`
-- The article card (`src/components/article-card.tsx`) currently doesn't display `coverImage` — it shows text-only cards. You can update the card to show the cover image if asked, or just generate and save the image for future use.
+- **Where covers actually show up:** The article card (`src/components/article-card.tsx`) renders an **ASCII-art cover** when one is registered in `src/components/covers/index.ts` (see the `ascii-cover` skill) — it does **not** render the `coverImage` SVG. The `coverImage` field is stored in frontmatter and is available for future use (e.g. OG images, article header hero art) but isn't displayed automatically today. Generate SVG cover art when the user wants a proper SVG asset tied to the article; point them at the `ascii-cover` skill if what they actually want is card art.
 
 ## Design Tokens
 

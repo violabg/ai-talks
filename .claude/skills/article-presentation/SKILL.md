@@ -85,8 +85,13 @@ Slides only need to define their visual content — all UI chrome is handled by 
 
 The page should:
 
-- Be a server component that renders the slideshow (typically just calling `<PresentationSlides slug={SLUG} />` or `<Slideshow slug={SLUG} />`)
-- Import a client component in `slides.tsx` that uses `PresentationShell` for the interactive slideshow
+- Be a server component that renders the slideshow — typically a one-liner `<PresentationSlides slug={SLUG} />`
+- Export `generateStaticParams` and `dynamicParams = false` so the route is fully static
+- Delegate to a `"use client"` component in `slides.tsx` that:
+  - Imports each slide component and `speech.json` (if narration exists)
+  - Builds a `slides` array of `{ key, component }` entries in narrative order
+  - Renders `<PresentationShell slug={slug} speechData={speechData} slides={slides} />`
+  - Passes `speechData={null}` (or omits the import) when there is no narration
 - Keep slide content in local component files in the same `presentazione/` folder (one slide component per file)
 - Include inline SVG graphics directly in the JSX
 
