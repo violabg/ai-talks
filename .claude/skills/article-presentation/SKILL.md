@@ -130,7 +130,7 @@ The shell handles all presentation UI chrome — slides only need to define thei
 
 ### Color Palette
 
-Use the theme-aware CSS variables defined in globals.css (`--pres-*`). Do not use hardcoded hex colors or Tailwind generic colors for presentation elements, especially inside SVGs, to ensure proper light/dark mode support. 
+Use the theme-aware CSS variables defined in globals.css (`--pres-*`). Do not use hardcoded hex colors or Tailwind generic colors for presentation elements, especially inside SVGs, to ensure proper light/dark mode support.
 
 ```css
 var(--pres-bg)           /* Main background */
@@ -185,6 +185,7 @@ After the presentation is built and verified, ask the user:
 > "Vuoi aggiungere la narrazione vocale a questa presentazione?"
 
 If yes, use the **presentation-speech** skill (`.claude/skills/presentation-speech/SKILL.md`) to:
+
 1. Generate a `speech.json` file from the article text
 2. Refine the narration text for each slide
 3. Integrate the narration components into `slides.tsx`
@@ -207,3 +208,4 @@ After building:
 4. Check that animations use staggered delays so content reveals progressively
 5. Ensure "Torna all'articolo" link points to the correct slug
 6. Verify the "Inizia presentazione" button appears on the article page
+7. Open the presentation in a browser and do a quick walkthrough to check for any glaring issues with layout, navigation, or content flow, especially look for layout issues like text overflow, cramped diagrams, lines not fitting, or anything that looks off on mobile.
