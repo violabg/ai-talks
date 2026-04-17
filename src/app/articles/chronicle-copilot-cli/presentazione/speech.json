@@ -1,0 +1,35 @@
+{
+  "voice": "it-IT",
+  "slides": [
+    {
+      "text": "Copilot CLI diventa più potente ogni settimana, e tenere il passo con tutte le novità è difficile. Chronicle è un comando sperimentale che archivia ogni sessione in un database SQLite locale e ti aiuta a usare meglio quello che già hai."
+    },
+    {
+      "text": "Il problema non è conoscere tutte le funzionalità. È usare bene quelle che già usi. Dove stai perdendo tempo, dove le tue istruzioni sono incomplete, dove stai chiedendo a mano qualcosa che potresti automatizzare: è qui che chronicle interviene."
+    },
+    {
+      "text": "Il database registra ogni prompt che hai scritto, ogni percorso di debug che hai tentato, e i pattern ricorrenti del tuo modo di parlare all'agente. Tutto resta nella directory copilot sul tuo computer: non viene mai inviato a nessuno."
+    },
+    {
+      "text": "Dai stessi dati partono due analisi diverse. Chronicle improve guarda il repository, e propone istruzioni permanenti, skill da costruire, formati da standardizzare. Chronicle tips guarda te, il tuo comportamento, e resta privato per design."
+    },
+    {
+      "text": "Un esempio: se ogni sessione correggi il formato delle PR, improve se ne accorge e ti suggerisce di documentare il template in copilot-instructions. Aggiorni le istruzioni una volta sola, e nessuna sessione futura dovrà ripetertelo."
+    },
+    {
+      "text": "Tips invece scopre i comandi che stai facendo a mano senza saperlo. Se incolli di continuo link di issue o di PR, ti segnala il comando research, che fa ricerche automatiche su web, GitHub e repository open source. Prima manuale, dopo un comando."
+    },
+    {
+      "text": "Il database non serve solo quando lo invochi. Copilot lo interroga anche durante le sessioni normali: se dici, la settimana scorsa stavamo lavorando su questo, l'agente ritrova da solo la sessione giusta e recupera il contesto per te."
+    },
+    {
+      "text": "Il pattern consigliato dal team è semplice: a fine giornata o fine settimana, lanci chronicle tips e incorpori i suggerimenti nella settimana successiva. È un ciclo di miglioramento continuo, basato sulle tue sessioni reali e non su intuizioni."
+    },
+    {
+      "text": "Chronicle fa parte di un ecosistema più ampio. Tasks, fleet e autopilot sono gli strumenti di esecuzione: eseguono il lavoro, orchestrano sub-agenti, lavorano in autonomia. Chronicle è lo strato di apprendimento: osserva come lavori e propone come migliorare."
+    },
+    {
+      "text": "La maggior parte degli strumenti ti dice come usarli. Chronicle ti dice dove stai usando male quello che già sai, e cosa potresti imparare per lavorare meglio. Resta locale, lavora in modo incrementale, si basa sui dati reali delle tue sessioni. La differenza non è marginale."
+    }
+  ]
+}
