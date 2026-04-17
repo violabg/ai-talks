@@ -1,6 +1,0 @@
-{
-  "eval_id": 0,
-  "eval_name": "basic-scroll-fade",
-  "prompt": "Add scroll animations to the article at content/articles/prompting-e-workflow.mdx. Headings, paragraphs, blockquotes, and code blocks should fade/rise in as the reader scrolls.",
-  "assertions": []
-}
