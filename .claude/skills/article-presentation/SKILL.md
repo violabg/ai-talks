@@ -102,25 +102,14 @@ src/app/articles/[slug]/presentazione/
 └── ...                    # Continue with one file per slide in this folder
 ```
 
-### Consistent Layout
-
-All presentations use the `PresentationShell` component at `src/components/presentation/presentation-shell.tsx`. This ensures:
-
-- Consistent navigation (keyboard arrows, click-to-advance, progress bar)
-- Consistent header (back link, narration toggle, slide counter)
-- Consistent animations and slide transitions
-- Built-in speech narration support
-- Audio orb visualization for narration
-- Dialog for first-time narration consent
-
-The shell handles all presentation UI chrome — slides only need to define their visual content.
-
 ### Technical Requirements
 
 - **Animations**: Use `motion/react` and `motion/react-client` (already installed). Every slide should have entrance animations. Flowcharts and diagrams should build incrementally — elements appearing with staggered delays.
 - **Slide components**: Every slide must live in a separate component file in the same `presentazione/` folder. Avoid monolithic `slides.tsx` files containing all slide JSX.
 - **SVG**: Create inline SVG graphics directly in the JSX. Use the presentation's color palette (see below). SVGs must be responsive — never use fixed `width`/`height` attributes on main diagram SVGs; use `className="w-full"` or `className="w-full max-w-xs sm:max-w-sm"` on the wrapper `<div>` instead, paired with `viewBox`. Icon-only SVGs (small decorative icons inside cards) may keep fixed pixel dimensions.
 - **Visual sizing**: Diagrams, flowcharts, and composed SVGs should fill as much of the slide as possible. Wrap them in containers of at least `max-w-3xl`, preferably `max-w-4xl` or `max-w-5xl`. Never constrain a diagram to `max-w-xl` or smaller — this makes visuals feel cramped on large screens. The SVG `viewBox` should use a generous coordinate space (e.g. `0 0 700 400` for complex flowcharts) so nodes and labels have room to breathe. Overall slide content wrappers should use `max-w-5xl` or `max-w-6xl`, not `max-w-4xl`.
+- **Boxes and text fit**: Text inside cards, nodes, and labeled boxes must always remain inside the box at every supported viewport size. Do not accept overflow, clipping, or text sitting on top of headers. If content does not fit, first enlarge the box or reorganize the layout; then shorten copy only if needed. Do not solve overflow by shrinking text below readable sizes.
+- **Grid-first box layouts**: When a slide contains multiple peer boxes, default to a clean grid with uniform horizontal and vertical gaps. Use irregular placement only when the content truly needs a special composition. A tidy grid makes connectors easier to draw, spacing easier to maintain, and overflow easier to spot.
 - **Fill available height**: Slides with card grids or lists should use `flex flex-col h-full py-6` on the outer container (not `justify-center`) so content fills the full slide height. Add `flex-1` to the content grid/list so it expands to fill remaining space after the title. This prevents content from clustering in the vertical center of large screens.
 - **Text sizes**: Slide titles use `text-3xl sm:text-4xl` minimum. Subtitles/descriptions use `text-base` minimum. Card labels use `text-sm` minimum — never `text-xs` for primary labels. Eyebrow/tag labels (`font-mono uppercase`) use `text-sm`. Inner `max-w-5xl` wrappers inside an outer `max-w-6xl` container are redundant — remove them.
 - **Navigation**: Arrow keys, spacebar (next), click left/right halves. Show slide count. Progress bar at bottom.
@@ -156,6 +145,8 @@ For translucent background colors, use tailwind opacity modifiers like `bg-[var(
 ### Flowcharts, Diagrams, and Connecting Lines
 
 Connectors between boxes (arrows, flow lines) are the most bug-prone part of any SVG diagram. These pitfalls come up every time — internalize them before writing a single path.
+
+Before drawing connectors, make the box layout stable: boxes should sit on a predictable grid, have enough width/height for their labels, and preserve the same gap rhythm horizontally and vertically whenever possible. Clean spacing is not cosmetic here; it is what keeps arrows legible and pointing in an unambiguous direction.
 
 #### Pitfall 1 — `linearGradient` on horizontal or vertical paths
 
@@ -195,11 +186,20 @@ When you animate `pathLength` from 0 to 1 on a `motion.path`, Motion internally 
 Arrowheads via `<marker>` only show if the marker's `<path>` has a solid `fill` (not inherited from the stroke) and the marker's `refX/refY` positions the tip at the path endpoint. Define one marker per color you need — markers do not inherit the stroke color.
 
 ```tsx
-<marker id="arrow-accent" viewBox="0 0 10 10" refX="9" refY="5"
-        markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+<marker
+  id="arrow-accent"
+  viewBox="0 0 10 10"
+  refX="9"
+  refY="5"
+  markerWidth="6"
+  markerHeight="6"
+  orient="auto-start-reverse"
+>
   <path d="M 0 0 L 10 5 L 0 10 z" fill="var(--pres-accent)" />
 </marker>
 ```
+
+The line itself must stay clearly visible, not just the arrowhead. A connector is broken if the marker shows but the stroke is faint, collapsed, hidden behind other shapes, or points in the wrong direction.
 
 #### Pitfall 4 — Endpoints must sit outside the box, not on the edge
 
@@ -222,7 +222,9 @@ A diagram that compiles is not a diagram that works. Always:
 1. Open the slide in the browser preview.
 2. **Take a screenshot and look at it.** Do not trust DOM inspection alone — gradients, markers, and dasharrays can all report "correct" values while rendering as invisible.
 3. For every connector, confirm you can see both the line **and** the arrowhead, and that the arrowhead points at the intended box.
-4. If something is missing, check in this order: (a) gradient/bbox issue, (b) `pathLength` vs `strokeDasharray` conflict, (c) marker fill color, (d) endpoint hidden under a box edge.
+4. For every labeled box, confirm the title and body text stay fully inside the box with comfortable padding, and that no child text overlaps headings or borders.
+5. If the slide uses multiple peer boxes, confirm the layout still reads as a deliberate grid with uniform gaps unless there is a strong content reason not to.
+6. If something is missing, check in this order: (a) gradient/bbox issue, (b) `pathLength` vs `strokeDasharray` conflict, (c) marker fill color, (d) endpoint hidden under a box edge.
 
 ### Static Generation
 
@@ -241,6 +243,7 @@ The article page at `src/app/articles/[slug]/page.tsx` shows the "Inizia present
 - **Restraint**: 8-15 slides. Cut ruthlessly. If a slide doesn't add visual value beyond what reading the text provides, remove it.
 - **Animation with purpose**: Staggered reveals to control the narrative flow. Flowchart nodes appearing in sequence to show a process. Not animation for decoration.
 - **Standalone coherence**: Someone watching the presentation without reading the article should understand the core ideas.
+- **Spatial discipline**: Box layouts feel intentional. Text fits comfortably inside cards and nodes. Gaps are even. Connectors are easy to follow at a glance.
 
 ### What to avoid
 
@@ -248,6 +251,7 @@ The article page at `src/app/articles/[slug]/page.tsx` shows the "Inizia present
 - **Article summary**: The presentation is not a summary. It's a **visual companion** that adds a new dimension.
 - **Generic visuals**: Every SVG should be designed for that specific content. No placeholder icons or decorative shapes without meaning.
 - **Text-heavy slides**: If a slide has more than ~30 words of body text, it's too much. Rethink the layout.
+- **Layout debt**: Do not leave a slide with text escaping boxes, titles colliding with child content, uneven box spacing, or connector lines that are faint, truncated, or pointing ambiguously.
 
 ## Speech Narration
 
@@ -280,3 +284,4 @@ After building:
 5. Ensure "Torna all'articolo" link points to the correct slug
 6. Verify the "Inizia presentazione" button appears on the article page
 7. Open the presentation in a browser and do a quick walkthrough to check for any glaring issues with layout, navigation, or content flow, especially look for layout issues like text overflow, cramped diagrams, lines not fitting, or anything that looks off on mobile.
+8. Treat browser-found layout defects as blocking issues, not polish: if text exits a box, peer boxes lose a clear grid rhythm, or arrow lines are not clearly visible and directional, the presentation is not done yet.
