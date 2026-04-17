@@ -153,6 +153,77 @@ var(--pres-danger)       /* Rose red */
 
 For translucent background colors, use tailwind opacity modifiers like `bg-[var(--pres-accent)]/10` or use the CSS `color-mix` function, such as `color-mix(in srgb, var(--pres-success) 10%, transparent)`.
 
+### Flowcharts, Diagrams, and Connecting Lines
+
+Connectors between boxes (arrows, flow lines) are the most bug-prone part of any SVG diagram. These pitfalls come up every time — internalize them before writing a single path.
+
+#### Pitfall 1 — `linearGradient` on horizontal or vertical paths
+
+SVG `<linearGradient>` defaults to `gradientUnits="objectBoundingBox"`. For a path like `M 302 110 L 496 110` the bounding box has **zero height**, so the gradient collapses and the stroke renders as **completely invisible** (even though arrowhead markers still render correctly — which misleads you into thinking the connector works).
+
+**Rule:** do not use gradient strokes for horizontal/vertical connector lines. Use solid colors:
+
+```tsx
+// ❌ Invisible — bbox collapses to 0 height
+<motion.path d="M302 110 L 496 110" stroke="url(#my-gradient)" strokeDasharray="8 8" />
+
+// ✅ Visible
+<motion.path d="M302 110 L 496 110" stroke="var(--pres-accent)" strokeDasharray="8 8" />
+```
+
+If you truly need a gradient on a straight line, set `gradientUnits="userSpaceOnUse"` with explicit `x1/y1/x2/y2` in viewBox coordinates.
+
+#### Pitfall 2 — Motion's `pathLength` animation destroys `strokeDasharray`
+
+When you animate `pathLength` from 0 to 1 on a `motion.path`, Motion internally sets `stroke-dasharray="1 1"` and `pathLength="1"` to drive the draw-in effect. Any `strokeDasharray` prop you set is **overwritten**, so the path renders as a continuous solid line or — worse — invisible dashes.
+
+**Rule:** pick one:
+
+- Draw-in effect, solid line → animate `pathLength`, omit `strokeDasharray`.
+- Dashed line, fade-in → animate `opacity` only, keep `strokeDasharray`.
+
+```tsx
+// ❌ Dashes disappear — pathLength wins
+<motion.path strokeDasharray="8 8" initial={{ pathLength: 0 }} animate={{ pathLength: 1 }} />
+
+// ✅ Dashes preserved
+<motion.path strokeDasharray="8 8" initial={{ opacity: 0 }} animate={{ opacity: 1 }} />
+```
+
+#### Pitfall 3 — Arrow markers need explicit `fill` and a matching `refX`
+
+Arrowheads via `<marker>` only show if the marker's `<path>` has a solid `fill` (not inherited from the stroke) and the marker's `refX/refY` positions the tip at the path endpoint. Define one marker per color you need — markers do not inherit the stroke color.
+
+```tsx
+<marker id="arrow-accent" viewBox="0 0 10 10" refX="9" refY="5"
+        markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+  <path d="M 0 0 L 10 5 L 0 10 z" fill="var(--pres-accent)" />
+</marker>
+```
+
+#### Pitfall 4 — Endpoints must sit outside the box, not on the edge
+
+If a connector starts/ends exactly on a box's border coordinate, the arrowhead tip is hidden under the rectangle stroke. Leave a 4–8px gap so the arrow visibly enters the next box. For a box at `x=500, width=280` (right edge at 780), an incoming arrow should end at `x=496`, not `x=500`.
+
+#### Pitfall 5 — Plan the layout on a grid before drawing paths
+
+Do not improvise connector coordinates. Before writing paths:
+
+1. Lay the boxes out on a simple grid (e.g. 2×2 at `x=40/500`, `y=50/220`).
+2. Compute each box's four anchor points (top/right/bottom/left midpoints).
+3. Draw connectors as straight horizontal or vertical segments between those anchors, or as L-shapes with a single bend.
+
+Diagonal connectors between misaligned boxes look messy and are hard to read. Align the boxes first, then the lines are trivial.
+
+#### Verification workflow for any diagram slide
+
+A diagram that compiles is not a diagram that works. Always:
+
+1. Open the slide in the browser preview.
+2. **Take a screenshot and look at it.** Do not trust DOM inspection alone — gradients, markers, and dasharrays can all report "correct" values while rendering as invisible.
+3. For every connector, confirm you can see both the line **and** the arrowhead, and that the arrowhead points at the intended box.
+4. If something is missing, check in this order: (a) gradient/bbox issue, (b) `pathLength` vs `strokeDasharray` conflict, (c) marker fill color, (d) endpoint hidden under a box edge.
+
 ### Static Generation
 
 The page must work with Next.js static generation. Add `generateStaticParams` that returns the slug, and set `dynamicParams = false`. Look at how the article page does it in `src/app/articles/[slug]/page.tsx` for the pattern.
