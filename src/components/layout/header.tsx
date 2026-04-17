@@ -1,5 +1,6 @@
 "use client";
 
+import { BrandMark } from "@/components/layout/brand-mark";
 import { ThemeToggle } from "@/components/theme-toggle";
 import { Button } from "@/components/ui/button";
 import {
@@ -44,49 +45,7 @@ export function Header() {
           href="/"
           className="flex items-center gap-2 hover:opacity-80 transition-opacity"
         >
-          {/* Neural-node SVG icon */}
-          <svg
-            width="16"
-            height="16"
-            viewBox="0 0 16 16"
-            fill="none"
-            xmlns="http://www.w3.org/2000/svg"
-            aria-hidden="true"
-            className="text-primary shrink-0"
-          >
-            {/* Connecting lines */}
-            <line
-              x1="3"
-              y1="13"
-              x2="8"
-              y2="3"
-              stroke="currentColor"
-              strokeWidth="1"
-              strokeLinecap="round"
-            />
-            <line
-              x1="8"
-              y1="3"
-              x2="13"
-              y2="13"
-              stroke="currentColor"
-              strokeWidth="1"
-              strokeLinecap="round"
-            />
-            <line
-              x1="3"
-              y1="13"
-              x2="13"
-              y2="13"
-              stroke="currentColor"
-              strokeWidth="1"
-              strokeLinecap="round"
-            />
-            {/* Nodes */}
-            <circle cx="8" cy="3" r="1.75" fill="currentColor" />
-            <circle cx="3" cy="13" r="1.75" fill="currentColor" />
-            <circle cx="13" cy="13" r="1.75" fill="currentColor" />
-          </svg>
+          <BrandMark />
           {/* Wordmark */}
           <span className="font-display font-medium text-xl tracking-tight">
             <span className="text-primary">AI</span>{" "}
@@ -173,46 +132,7 @@ export function Header() {
 
               {/* Mobile sheet branding */}
               <div className="flex items-center gap-1.5 px-4 pb-4 border-border border-b">
-                <svg
-                  width="14"
-                  height="14"
-                  viewBox="0 0 16 16"
-                  fill="none"
-                  xmlns="http://www.w3.org/2000/svg"
-                  aria-hidden="true"
-                  className="text-primary shrink-0"
-                >
-                  <line
-                    x1="3"
-                    y1="13"
-                    x2="8"
-                    y2="3"
-                    stroke="currentColor"
-                    strokeWidth="1"
-                    strokeLinecap="round"
-                  />
-                  <line
-                    x1="8"
-                    y1="3"
-                    x2="13"
-                    y2="13"
-                    stroke="currentColor"
-                    strokeWidth="1"
-                    strokeLinecap="round"
-                  />
-                  <line
-                    x1="3"
-                    y1="13"
-                    x2="13"
-                    y2="13"
-                    stroke="currentColor"
-                    strokeWidth="1"
-                    strokeLinecap="round"
-                  />
-                  <circle cx="8" cy="3" r="1.75" fill="currentColor" />
-                  <circle cx="3" cy="13" r="1.75" fill="currentColor" />
-                  <circle cx="13" cy="13" r="1.75" fill="currentColor" />
-                </svg>
+                <BrandMark size={14} />
                 <span className="font-display font-medium text-lg tracking-tight">
                   <span className="text-primary">AI</span>{" "}
                   <span className="text-foreground">Talks</span>

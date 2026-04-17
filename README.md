@@ -1,35 +1,66 @@
+<!-- prettier-ignore -->
+<div align="center">
+
+<img src="./src/app/icon.svg" alt="AI Talks icon" width="72" height="72" />
+
 # AI Talks
 
-AI Talks is a Next.js 16 App Router site for publishing Italian-language articles about AI, developer workflows, and code architecture. The site renders MDX articles, supports optional presentation pages for selected articles, and includes an admin area for managing publication and featured state.
+Italian-language Next.js site about AI-assisted software development, with MDX articles, companion presentations, and a small admin area for publication management.
 
-## Stack
+[![Next.js](https://img.shields.io/badge/Next.js-16-black?style=flat-square&logo=next.js)](https://nextjs.org/)
+[![React](https://img.shields.io/badge/React-19-149eca?style=flat-square&logo=react&logoColor=white)](https://react.dev/)
+[![TypeScript](https://img.shields.io/badge/TypeScript-5B6BFF?style=flat-square&logo=typescript&logoColor=white)](https://www.typescriptlang.org/)
+[![MDX](https://img.shields.io/badge/MDX-content-0f766e?style=flat-square)](https://mdxjs.com/)
+[![pnpm](https://img.shields.io/badge/pnpm-workspace-f69220?style=flat-square&logo=pnpm&logoColor=white)](https://pnpm.io/)
 
-- Next.js 16 with App Router
-- React 19
-- TypeScript
-- Tailwind CSS v4
-- MDX via `next-mdx-remote/rsc`
-- better-auth for admin authentication
-- Upstash Redis for runtime article/admin state
+[Overview](#overview) • [Features](#features) • [Getting Started](#getting-started) • [Configuration](#configuration) • [Content Authoring](#content-authoring)
 
-## What The App Does
+</div>
 
-- Lists and renders MDX articles from `content/articles/`
-- Shows featured articles on the homepage when present
-- Supports draft articles in development
-- Supports optional article presentations under `src/app/articles/[slug]/presentazione/`
-- Lets admins toggle `published` and `featured` state from the admin UI
-- Uses Redis KV as an optional runtime override layer for article visibility and admin allow/deny lists
+## Overview
+
+AI Talks is a content-driven App Router project built to publish articles about developer workflows, architecture, prompting, refactoring, and practical use of AI in software engineering.
+
+The site reads articles from `content/articles/*.mdx`, renders them server-side, and can optionally attach a dedicated slide deck under each article route. Runtime publication state can come from either MDX frontmatter or Upstash Redis, so the public site and the admin area stay aligned.
+
+> [!NOTE]
+> In development, draft articles are visible and show a draft badge. In production, visibility depends on the effective `published` state, with Redis overrides taking precedence when configured.
+
+## Features
+
+- MDX-based article publishing with typed frontmatter.
+- Next.js 16 App Router with server-rendered content pages.
+- Optional article presentations under `src/app/articles/[slug]/presentazione/`.
+- Admin area with GitHub sign-in via `better-auth`.
+- Runtime `published` and `featured` overrides through Upstash Redis.
+- Tailwind CSS v4 styling with custom typography and shadcn/ui components.
+- Narration support for presentations via generated `speech.json` files.
+
+## Architecture
+
+The project is intentionally simple:
+
+- `content/articles/`: source of truth for article bodies and default frontmatter.
+- `src/lib/articles.ts`: MDX loading, sorting, filtering, draft visibility, static params.
+- `src/lib/kv.ts`: optional Redis-backed override layer for `published`, `featured`, and admin lists.
+- `src/app/articles/[slug]/`: article pages and optional presentation routes.
+- `src/app/admin/`: content management UI.
+- `src/components/presentation/`: shared presentation shell, controls, and narration UI.
 
 ## Getting Started
 
-Install dependencies:
+### Prerequisites
+
+- Node.js 20+
+- `pnpm`
+
+### Install dependencies
 
 ```bash
 pnpm install
 ```
 
-Run the development server:
+### Start the development server
 
 ```bash
 pnpm dev
@@ -37,7 +68,7 @@ pnpm dev
 
 Open `http://localhost:3000`.
 
-Other useful commands:
+### Useful commands
 
 ```bash
 pnpm lint
@@ -45,35 +76,52 @@ pnpm build
 pnpm start
 ```
 
-There is currently no test runner configured.
+> [!IMPORTANT]
+> No automated test runner is configured in this repository at the moment.
 
-## Environment Variables
+## Configuration
 
-The app can run in a reduced local mode without every integration configured, but admin auth and KV-backed state require environment variables.
+The site can run locally with only article content, but admin login and runtime state management require environment variables.
 
-### Required for GitHub admin login
+### Authentication
 
-- `BETTER_AUTH_SECRET`
-- `BETTER_AUTH_URL`
-- `GITHUB_CLIENT_ID`
-- `GITHUB_CLIENT_SECRET`
+Required for GitHub admin sign-in:
 
-### Optional for KV-backed runtime state
+| Variable | Purpose |
+| --- | --- |
+| `BETTER_AUTH_SECRET` | Secret used by `better-auth` |
+| `BETTER_AUTH_URL` | Base URL for auth callbacks, defaults to `http://localhost:3000` |
+| `GITHUB_CLIENT_ID` | GitHub OAuth app client ID |
+| `GITHUB_CLIENT_SECRET` | GitHub OAuth app client secret |
 
-- `KV_REST_API_URL`
-- `KV_REST_API_TOKEN`
+### Runtime article state
 
-When KV is not configured, the app falls back to article frontmatter for `published` and `featured` state.
+Optional for Redis-backed publication and featured overrides:
 
-### Optional for bootstrap admin access
+| Variable | Purpose |
+| --- | --- |
+| `KV_REST_API_URL` | Upstash Redis REST endpoint |
+| `KV_REST_API_TOKEN` | Upstash Redis REST token |
 
-- `ADMIN_EMAILS`
+If Redis is not configured, the app falls back to MDX frontmatter for article visibility and featured state.
 
-`ADMIN_EMAILS` is a comma-separated list of email addresses that should be treated as admins. KV can also maintain allow and deny lists, with deny taking precedence.
+### Admin bootstrap
 
-## Content Model
+| Variable | Purpose |
+| --- | --- |
+| `ADMIN_EMAILS` | Comma-separated list of admin emails allowed by environment configuration |
 
-Articles live in `content/articles/` as `.mdx` files with YAML frontmatter:
+Admin authorization order is:
+
+1. Denied emails in Redis always win.
+2. `ADMIN_EMAILS` grants access if the email is not denied.
+3. Redis admin allow-list is checked last.
+
+## Content Authoring
+
+Articles live in `content/articles/` as `.mdx` files. The file name is the route slug.
+
+Example frontmatter:
 
 ```yaml
 title: ""
@@ -86,83 +134,61 @@ featured: false
 coverImage: "optional-slug"
 ```
 
-Notes:
+Authoring rules worth keeping in mind:
 
-- Use ISO datetime strings with an explicit offset.
-- In production, article visibility can be overridden by Redis KV.
-- In development, draft articles are still visible and show a draft badge.
-- The article filename slug drives the route.
+- Use an ISO datetime with explicit offset.
+- Keep the filename slug aligned with the article route.
+- `published: false` is the safe default for drafts.
+- Do not assume frontmatter is the only production source of truth for `published` or `featured`.
 
-## Presentation Support
+## Presentations And Narration
 
-Some articles have a companion presentation at:
+An article can have a companion presentation under:
 
 ```text
 src/app/articles/[slug]/presentazione/
 ```
 
-Typical files:
+Typical files in that folder:
 
 - `page.tsx`
 - `slides.tsx`
 - `slide-XX-*.tsx`
-- `speech.json` for narration
+- `speech.json`
 
-Narration can be generated with:
+To draft narration JSON for an existing presentation:
 
 ```bash
-npx tsx scripts/generate-speech-json.ts <slug>
+pnpm exec tsx scripts/generate-speech-json.ts <slug>
 ```
 
-Presentation UI primitives are shared from `src/components/presentation/`.
-
-## Publication State
-
-`published` and `featured` are a dual-source system:
-
-- MDX frontmatter provides the default state
-- Upstash Redis can override that state at runtime
-
-This matters in both the public site and the admin UI. Do not assume frontmatter is the only source of truth when KV is configured.
-
-## Admin Area
-
-The admin interface lives under `src/app/admin/`.
-
-It provides:
-
-- article list and metadata overview
-- published toggle
-- featured toggle
-- sync actions for KV-backed state
-- user/admin management support
-
-Authentication is handled with `better-auth` and GitHub sign-in.
+The shared presentation UI and narration controls live in `src/components/presentation/`.
 
 ## Project Structure
 
 ```text
 content/articles/             MDX articles
-public/images/articles/      Static article images and diagrams
-scripts/                     Utility scripts such as speech generation
-src/app/                     App Router pages and layouts
+public/images/articles/      Article images and diagrams
+scripts/                     Utility scripts
+src/app/                     App Router routes and layouts
 src/app/admin/               Admin interface
 src/components/              Shared UI, MDX, layout, and presentation components
-src/lib/articles.ts          Article loading, sorting, filtering, draft logic
+src/lib/articles.ts          Article loading and visibility rules
 src/lib/kv.ts                Redis-backed runtime state
 src/lib/auth.ts              better-auth configuration
-src/lib/admin.ts             Admin resolution logic
+src/lib/actions/             Server actions
 ```
 
 ## Development Notes
 
-- Use `pnpm`, not npm or yarn, for project commands.
-- Tailwind configuration lives in `src/app/globals.css` via Tailwind v4 `@theme` blocks.
-- MDX rendering is configured server-side via `next-mdx-remote/rsc`.
-- The project uses server components by default; only opt into client components when needed.
-- Internal mutations should use server actions in `src/lib/actions/` rather than new API routes.
+- Use `pnpm` for package and project commands.
+- Tailwind CSS v4 configuration lives in `src/app/globals.css` via `@theme` blocks.
+- MDX is compiled server-side with `next-mdx-remote/rsc`.
+- Components are server components by default; add `"use client"` only when needed.
+- For internal mutations, prefer server actions in `src/lib/actions/` over adding new API routes.
 
 ## Related Files
 
-- `AGENTS.md` contains repo-specific instructions for coding agents.
-- `.claude/skills/` contains reusable project workflows for articles, presentations, images, and related tasks.
+- `AGENTS.md`: repository-specific guidance for coding agents.
+- `CLAUDE.md`: agent bootstrap reference.
+- `components.json`: shadcn/ui configuration.
