@@ -12,7 +12,12 @@ export const metadata: Metadata = {
     "Una selezione curata di documentazione, tool, raccolte e riferimenti utili per lavorare con agenti AI e coding assistant.",
 };
 
-type ResourceKind = "Ufficiale" | "Tool" | "Community" | "Esperimento";
+type ResourceKind =
+  | "Ufficiale"
+  | "Tool"
+  | "Community"
+  | "Esperimento"
+  | "Design";
 
 type Resource = {
   title: string;
@@ -34,6 +39,7 @@ const kindVariant: Record<ResourceKind, "default" | "secondary" | "outline"> = {
   Tool: "secondary",
   Community: "outline",
   Esperimento: "secondary",
+  Design: "default",
 };
 
 const resourceCategories: ResourceCategory[] = [
@@ -181,12 +187,70 @@ const resourceCategories: ResourceCategory[] = [
         url: "https://github.com/Piebald-AI/claude-code-system-prompts",
         kind: "Community",
       },
+    ],
+  },
+  {
+    id: "design",
+    eyebrow: "Per curare il gusto visivo",
+    title: "Design",
+    description:
+      "Riferimenti, skill e strumenti per alzare la qualita visiva dei prompt, delle interfacce e delle esperienze generate dagli agenti.",
+    resources: [
       {
-        title: "awesome-design-md",
+        title: "Impeccable",
         description:
-          "Raccolta di risorse, pattern ed esempi legati a design e contenuti in markdown, utile per chi vuole curare meglio la qualita visiva e strutturale dei materiali tecnici.",
+          "Il design language di pbakaus per rendere gli agenti AI piu forti sul piano visivo e compositivo.",
+        url: "https://github.com/pbakaus/impeccable",
+        kind: "Design",
+      },
+      {
+        title: "SkillUI",
+        description:
+          "Uno skill hub dedicato alla generazione e gestione di interfacce, utile per esplorare workflow UI-centrici con gli agenti.",
+        url: "https://github.com/amaancoderx/skillui",
+        kind: "Design",
+      },
+      {
+        title: "WebGPU",
+        description:
+          "Skill per sviluppare applicazioni WebGPU con Three.js, utile quando il design passa anche da effetti e visualizzazioni avanzate.",
+        url: "https://github.com/dgreenheck/webgpu-claude-skill",
+        kind: "Design",
+      },
+      {
+        title: "Awesome Design",
+        description:
+          "Raccolta di DESIGN.md ispirati a brand e design system noti, pensata per aiutare gli agenti a generare UI coerenti.",
         url: "https://github.com/VoltAgent/awesome-design-md",
-        kind: "Community",
+        kind: "Design",
+      },
+      {
+        title: "Stitch",
+        description:
+          "Lo strumento di Google per esplorare e generare interfacce a partire da prompt e riferimenti visivi.",
+        url: "https://stitch.withgoogle.com/",
+        kind: "Design",
+      },
+      {
+        title: "UI/UX Pro Max",
+        description:
+          "Skill orientato a UI e UX di alto livello, utile per ottenere interfacce meno generiche e piu curate.",
+        url: "https://github.com/nextlevelbuilder/ui-ux-pro-max-skill",
+        kind: "Design",
+      },
+      {
+        title: "21st.dev",
+        description:
+          "Homepage della community 21st.dev, ricca di risorse e riferimenti per componenti, gusto visivo e ispirazione UI.",
+        url: "https://21st.dev/home",
+        kind: "Design",
+      },
+      {
+        title: "Taste",
+        description:
+          "Skill pensato per dare piu gusto alle interfacce e allontanare l'output AI dai pattern banali e generici.",
+        url: "https://github.com/Leonxlnx/taste-skill",
+        kind: "Design",
       },
     ],
   },
