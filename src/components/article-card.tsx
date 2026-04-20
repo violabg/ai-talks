@@ -10,8 +10,27 @@ interface ArticleCardProps {
   article: Article;
 }
 
+function DefaultArticleCardCover() {
+  return (
+    <pre className="mx-auto w-fit text-muted-foreground/70 whitespace-pre">
+      <span className="text-primary/70">{"╭──────────────────╮"}</span>
+      {"\n"}
+      <span className="text-primary/70">{"│"}</span>
+      <span>{"   ASCII cover    "}</span>
+      <span className="text-primary/70">{"│"}</span>
+      {"\n"}
+      <span className="text-primary/70">{"│"}</span>
+      <span>{"  coming soon...  "}</span>
+      <span className="text-primary/70">{"│"}</span>
+      {"\n"}
+      <span className="text-primary/70">{"╰──────────────────╯"}</span>
+    </pre>
+  );
+}
+
 export function ArticleCard({ article }: ArticleCardProps) {
   const { slug, frontmatter } = article;
+  const CoverComponent = covers[slug] ?? DefaultArticleCardCover;
   const date = formatArticleDateTime(frontmatter.date);
   const showDraftBadge = shouldShowDraftBadge(
     frontmatter,
@@ -23,20 +42,18 @@ export function ArticleCard({ article }: ArticleCardProps) {
       href={`/articles/${slug}`}
       className="group flex flex-col justify-between bg-card hover:shadow-md dark:hover:shadow-[0_0_12px_color-mix(in_oklch,var(--primary)_15%,transparent)] p-6 border border-border hover:border-primary/40 rounded-xl transition-all duration-200 accent-top-line"
     >
-      {covers[slug] && (
-        <ViewTransition name={`article-cover-${slug}`}>
-          <div
-            className="relative flex justify-center items-center bg-muted/30 dark:bg-black/50 -mx-6 -mt-6 mb-4 py-4 rounded-t-xl min-h-50 overflow-hidden font-mono text-xs leading-tight select-none"
-            aria-hidden="true"
+      <ViewTransition name={`article-cover-${slug}`}>
+        <div
+          className="relative flex justify-center items-center bg-muted/30 dark:bg-black/50 -mx-6 -mt-6 mb-4 py-4 rounded-t-xl min-h-50 overflow-hidden font-mono text-xs leading-tight select-none"
+          aria-hidden="true"
+        >
+          <Suspense
+            fallback={<div className="bg-muted/30 h-32 animate-pulse" />}
           >
-            <Suspense
-              fallback={<div className="bg-muted/30 h-32 animate-pulse" />}
-            >
-              {createElement(covers[slug])}
-            </Suspense>
-          </div>
-        </ViewTransition>
-      )}
+            {createElement(CoverComponent)}
+          </Suspense>
+        </div>
+      </ViewTransition>
       <div>
         {/* Meta row */}
         <div className="flex flex-wrap items-center gap-2 mb-4">
