@@ -1,4 +1,5 @@
 import * as motion from "motion/react-client";
+import { ArrowTip } from "@/components/presentation/arrow-tip";
 import { SlideTitle } from "./slide-shared";
 
 export function Slide07VideoEditor() {
@@ -12,30 +13,6 @@ export function Slide07VideoEditor() {
 
       <div className="bg-[var(--pres-bg-card)] mx-auto p-5 sm:p-8 border border-[var(--pres-border)] rounded-2xl w-full max-w-6xl">
           <svg viewBox="0 0 760 380" className="w-full">
-            <defs>
-              <marker
-                id="arrow-purple"
-                viewBox="0 0 10 10"
-                refX="8"
-                refY="5"
-                markerWidth="5"
-                markerHeight="5"
-                orient="auto-start-reverse"
-              >
-                <path d="M 0 0 L 10 5 L 0 10 z" fill="var(--pres-accent)" />
-              </marker>
-              <marker
-                id="arrow-green"
-                viewBox="0 0 10 10"
-                refX="8"
-                refY="5"
-                markerWidth="5"
-                markerHeight="5"
-                orient="auto-start-reverse"
-              >
-                <path d="M 0 0 L 10 5 L 0 10 z" fill="var(--pres-success)" />
-              </marker>
-            </defs>
             {["Timeline", "Thumbnails", "Playback", "Cache"].map((node, i) => (
               <motion.g
                 key={node}
@@ -102,21 +79,31 @@ export function Slide07VideoEditor() {
               [230, 158, 286, 176],
               [230, 230, 286, 206],
               [230, 302, 286, 236],
-            ].map(([x1, y1, x2, y2], i) => (
-              <motion.line
-                key={i}
-                x1={x1}
-                y1={y1}
-                x2={x2}
-                y2={y2}
-                stroke="var(--pres-accent)"
-                strokeWidth="3"
-                markerEnd="url(#arrow-purple)"
-                initial={{ pathLength: 0, opacity: 0 }}
-                animate={{ pathLength: 1, opacity: 1 }}
-                transition={{ delay: 0.68 + i * 0.1, duration: 0.4 }}
-              />
-            ))}
+            ].map(([x1, y1, x2, y2], i) => {
+              const angle = (Math.atan2(y2 - y1, x2 - x1) * 180) / Math.PI;
+              return (
+                <g key={i}>
+                  <motion.line
+                    x1={x1}
+                    y1={y1}
+                    x2={x2}
+                    y2={y2}
+                    stroke="var(--pres-accent)"
+                    strokeWidth="3"
+                    initial={{ pathLength: 0, opacity: 0 }}
+                    animate={{ pathLength: 1, opacity: 1 }}
+                    transition={{ delay: 0.68 + i * 0.1, duration: 0.4 }}
+                  />
+                  <ArrowTip
+                    x={x2}
+                    y={y2}
+                    angle={angle}
+                    color="var(--pres-accent)"
+                    delay={1.08 + i * 0.1}
+                  />
+                </g>
+              );
+            })}
 
             {/* Dashed arrows from provider to consumer components */}
             <motion.line
@@ -127,10 +114,16 @@ export function Slide07VideoEditor() {
               stroke="var(--pres-success)"
               strokeWidth="2"
               strokeDasharray="6 4"
-              markerEnd="url(#arrow-green)"
               initial={{ pathLength: 0, opacity: 0 }}
               animate={{ pathLength: 1, opacity: 1 }}
               transition={{ delay: 0.96, duration: 0.35 }}
+            />
+            <ArrowTip
+              x={546}
+              y={123}
+              angle={-33}
+              color="var(--pres-success)"
+              delay={1.31}
             />
             <motion.line
               x1="490"
@@ -140,10 +133,16 @@ export function Slide07VideoEditor() {
               stroke="var(--pres-success)"
               strokeWidth="2"
               strokeDasharray="6 4"
-              markerEnd="url(#arrow-green)"
               initial={{ pathLength: 0, opacity: 0 }}
               animate={{ pathLength: 1, opacity: 1 }}
               transition={{ delay: 1.0, duration: 0.35 }}
+            />
+            <ArrowTip
+              x={546}
+              y={213}
+              angle={3}
+              color="var(--pres-success)"
+              delay={1.35}
             />
 
             <motion.rect

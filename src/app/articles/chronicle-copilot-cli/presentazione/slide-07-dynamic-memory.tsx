@@ -1,6 +1,7 @@
 "use client";
 
 import * as motion from "motion/react-client";
+import { ArrowTip } from "@/components/presentation/arrow-tip";
 import { GlowCard, SlideFrame, SlideHeading } from "./slide-shared";
 
 export function Slide07DynamicMemory() {
@@ -15,38 +16,6 @@ export function Slide07DynamicMemory() {
         <GlowCard className="p-4 sm:p-6 w-full">
           <div className="mx-auto w-full max-w-5xl">
             <svg viewBox="0 0 820 360" className="w-full">
-              <defs>
-                <linearGradient id="memory-flow" x1="0" x2="1">
-                  <stop offset="0%" stopColor="var(--pres-blue)" />
-                  <stop offset="100%" stopColor="var(--pres-accent)" />
-                </linearGradient>
-                <linearGradient id="memory-return" x1="0" x2="1" y1="0" y2="1">
-                  <stop offset="0%" stopColor="var(--pres-accent)" />
-                  <stop offset="100%" stopColor="var(--pres-success)" />
-                </linearGradient>
-                <marker
-                  id="memory-arrow-in"
-                  viewBox="0 0 10 10"
-                  refX="9"
-                  refY="5"
-                  markerWidth="6"
-                  markerHeight="6"
-                  orient="auto-start-reverse"
-                >
-                  <path d="M 0 0 L 10 5 L 0 10 z" fill="var(--pres-accent)" />
-                </marker>
-                <marker
-                  id="memory-arrow-out"
-                  viewBox="0 0 10 10"
-                  refX="9"
-                  refY="5"
-                  markerWidth="6"
-                  markerHeight="6"
-                  orient="auto-start-reverse"
-                >
-                  <path d="M 0 0 L 10 5 L 0 10 z" fill="var(--pres-success)" />
-                </marker>
-              </defs>
 
               <motion.g
                 initial={{ opacity: 0, x: -18 }}
@@ -101,11 +70,11 @@ export function Slide07DynamicMemory() {
                 stroke="var(--pres-accent)"
                 strokeWidth="3"
                 strokeDasharray="8 8"
-                markerEnd="url(#memory-arrow-in)"
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 transition={{ duration: 0.5, delay: 0.5 }}
               />
+              <ArrowTip x={496} y={110} color="var(--pres-accent)" delay={1.0} />
 
               <motion.g
                 initial={{ opacity: 0, scale: 0.9 }}
@@ -160,10 +129,16 @@ export function Slide07DynamicMemory() {
                 stroke="var(--pres-success)"
                 strokeWidth="3"
                 strokeDasharray="8 8"
-                markerEnd="url(#memory-arrow-out)"
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 transition={{ duration: 0.5, delay: 1.0 }}
+              />
+              <ArrowTip
+                x={640}
+                y={218}
+                angle={90}
+                color="var(--pres-success)"
+                delay={1.5}
               />
 
               <motion.g

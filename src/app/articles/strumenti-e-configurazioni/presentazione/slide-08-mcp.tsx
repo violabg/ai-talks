@@ -1,4 +1,5 @@
 import * as motion from "motion/react-client";
+import { ArrowTip } from "@/components/presentation/arrow-tip";
 import { GlassCard, SectionTitle, SlideFrame } from "./slide-shared";
 
 export function Slide08Mcp() {
@@ -42,19 +43,6 @@ export function Slide08Mcp() {
             className="w-full"
           >
             <svg viewBox="0 0 720 320" className="w-full">
-              <defs>
-                <marker
-                  id="arrow-blue-mcp"
-                  viewBox="0 0 10 10"
-                  refX="9"
-                  refY="5"
-                  markerWidth="7"
-                  markerHeight="7"
-                  orient="auto-start-reverse"
-                >
-                  <path d="M 0 0 L 10 5 L 0 10 z" fill="var(--pres-blue)" />
-                </marker>
-              </defs>
 
               <motion.rect
                 x="222"
@@ -103,20 +91,20 @@ export function Slide08Mcp() {
                 d="M58 160 L216 160"
                 stroke="var(--pres-blue)"
                 strokeWidth="5"
-                markerEnd="url(#arrow-blue-mcp)"
                 initial={{ pathLength: 0, opacity: 0 }}
                 animate={{ pathLength: 1, opacity: 1 }}
                 transition={{ duration: 0.45, delay: 0.5 }}
               />
+              <ArrowTip x={216} y={160} color="var(--pres-blue)" delay={0.95} />
               <motion.path
                 d="M504 160 L662 160"
                 stroke="var(--pres-blue)"
                 strokeWidth="5"
-                markerEnd="url(#arrow-blue-mcp)"
                 initial={{ pathLength: 0, opacity: 0 }}
                 animate={{ pathLength: 1, opacity: 1 }}
                 transition={{ duration: 0.45, delay: 0.66 }}
               />
+              <ArrowTip x={662} y={160} color="var(--pres-blue)" delay={1.11} />
             </svg>
           </motion.div>
 

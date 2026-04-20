@@ -1,6 +1,7 @@
 "use client";
 
 import * as motion from "motion/react-client";
+import { ArrowTip } from "@/components/presentation/arrow-tip";
 import { GlowCard, SlideFrame, SlideHeading } from "./slide-shared";
 
 const nodes = [
@@ -43,10 +44,10 @@ const nodes = [
 ];
 
 const arcs = [
-  { d: "M220 170C290 170 320 100 330 85", delay: 0.35 },
-  { d: "M470 85C490 100 520 170 580 170", delay: 0.6 },
-  { d: "M625 235C600 260 520 270 470 270", delay: 0.85 },
-  { d: "M330 270C280 270 200 260 175 240", delay: 1.1 },
+  { d: "M220 170C290 170 320 100 330 85", delay: 0.35, tipX: 330, tipY: 85, angle: -56 },
+  { d: "M470 85C490 100 520 170 580 170", delay: 0.6, tipX: 580, tipY: 170, angle: 0 },
+  { d: "M625 235C600 260 520 270 470 270", delay: 0.85, tipX: 470, tipY: 270, angle: 180 },
+  { d: "M330 270C280 270 200 260 175 240", delay: 1.1, tipX: 175, tipY: 240, angle: -141 },
 ];
 
 export function Slide08WeeklyCycle() {
@@ -61,33 +62,26 @@ export function Slide08WeeklyCycle() {
         <GlowCard className="p-4 sm:p-6 w-full">
           <div className="mx-auto w-full max-w-5xl">
             <svg viewBox="0 0 820 360" className="w-full">
-              <defs>
-                <marker
-                  id="cycle-arrow"
-                  viewBox="0 0 10 10"
-                  refX="8"
-                  refY="5"
-                  markerWidth="6"
-                  markerHeight="6"
-                  orient="auto-start-reverse"
-                >
-                  <path d="M 0 0 L 10 5 L 0 10 z" fill="var(--pres-muted)" />
-                </marker>
-              </defs>
-
               {arcs.map((arc, i) => (
-                <motion.path
-                  key={i}
-                  d={arc.d}
-                  fill="none"
-                  stroke="var(--pres-muted)"
-                  strokeWidth="2.5"
-                  strokeDasharray="8 6"
-                  markerEnd="url(#cycle-arrow)"
-                  initial={{ pathLength: 0, opacity: 0 }}
-                  animate={{ pathLength: 1, opacity: 0.7 }}
-                  transition={{ duration: 0.55, delay: arc.delay }}
-                />
+                <g key={i}>
+                  <motion.path
+                    d={arc.d}
+                    fill="none"
+                    stroke="var(--pres-muted)"
+                    strokeWidth="2.5"
+                    strokeDasharray="8 6"
+                    initial={{ pathLength: 0, opacity: 0 }}
+                    animate={{ pathLength: 1, opacity: 0.7 }}
+                    transition={{ duration: 0.55, delay: arc.delay }}
+                  />
+                  <ArrowTip
+                    x={arc.tipX}
+                    y={arc.tipY}
+                    angle={arc.angle}
+                    color="var(--pres-muted)"
+                    delay={arc.delay + 0.55}
+                  />
+                </g>
               ))}
 
               {nodes.map((n) => (

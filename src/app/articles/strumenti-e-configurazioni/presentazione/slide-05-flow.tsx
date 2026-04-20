@@ -1,4 +1,5 @@
 import * as motion from "motion/react-client";
+import { ArrowTip } from "@/components/presentation/arrow-tip";
 import { SectionTitle, SlideFrame } from "./slide-shared";
 
 const steps = [
@@ -60,52 +61,6 @@ export function Slide05Flow() {
             transition={{ duration: 0.45 }}
           >
             <svg viewBox="0 0 760 394" className="w-full">
-              <defs>
-                <marker
-                  id="arrow-accent-flow"
-                  viewBox="0 0 10 10"
-                  refX="9"
-                  refY="5"
-                  markerWidth="7"
-                  markerHeight="7"
-                  orient="auto-start-reverse"
-                >
-                  <path d="M 0 0 L 10 5 L 0 10 z" fill="var(--pres-accent)" />
-                </marker>
-                <marker
-                  id="arrow-blue-flow"
-                  viewBox="0 0 10 10"
-                  refX="9"
-                  refY="5"
-                  markerWidth="7"
-                  markerHeight="7"
-                  orient="auto-start-reverse"
-                >
-                  <path d="M 0 0 L 10 5 L 0 10 z" fill="var(--pres-blue)" />
-                </marker>
-                <marker
-                  id="arrow-warning-flow"
-                  viewBox="0 0 10 10"
-                  refX="9"
-                  refY="5"
-                  markerWidth="7"
-                  markerHeight="7"
-                  orient="auto-start-reverse"
-                >
-                  <path d="M 0 0 L 10 5 L 0 10 z" fill="var(--pres-warning)" />
-                </marker>
-                <marker
-                  id="arrow-success-flow"
-                  viewBox="0 0 10 10"
-                  refX="9"
-                  refY="5"
-                  markerWidth="7"
-                  markerHeight="7"
-                  orient="auto-start-reverse"
-                >
-                  <path d="M 0 0 L 10 5 L 0 10 z" fill="var(--pres-success)" />
-                </marker>
-              </defs>
 
               {steps.map((step, index) => (
                 <motion.g
@@ -157,40 +112,40 @@ export function Slide05Flow() {
                 d="M232 106 L232 148"
                 stroke="var(--pres-accent)"
                 strokeWidth="3"
-                markerEnd="url(#arrow-accent-flow)"
                 initial={{ pathLength: 0, opacity: 0 }}
                 animate={{ pathLength: 1, opacity: 1 }}
                 transition={{ duration: 0.35, delay: 0.55 }}
               />
+              <ArrowTip x={232} y={148} angle={90} color="var(--pres-accent)" delay={0.9} />
               <motion.path
                 d="M360 197 L400 197"
                 stroke="var(--pres-warning)"
                 strokeWidth="3"
-                markerEnd="url(#arrow-warning-flow)"
                 initial={{ pathLength: 0, opacity: 0 }}
                 animate={{ pathLength: 1, opacity: 1 }}
                 transition={{ duration: 0.35, delay: 0.72 }}
               />
+              <ArrowTip x={400} y={197} color="var(--pres-warning)" delay={1.07} />
               <motion.path
                 d="M232 240 L232 282"
                 stroke="var(--pres-warning)"
                 strokeWidth="3"
                 fill="none"
-                markerEnd="url(#arrow-warning-flow)"
                 initial={{ pathLength: 0, opacity: 0 }}
                 animate={{ pathLength: 1, opacity: 1 }}
                 transition={{ duration: 0.45, delay: 0.96 }}
               />
+              <ArrowTip x={232} y={282} angle={90} color="var(--pres-warning)" delay={1.41} />
               <motion.path
                 d="M528 240 L528 282"
                 stroke="var(--pres-blue)"
                 strokeWidth="3"
                 fill="none"
-                markerEnd="url(#arrow-blue-flow)"
                 initial={{ pathLength: 0, opacity: 0 }}
                 animate={{ pathLength: 1, opacity: 1 }}
                 transition={{ duration: 0.45, delay: 1.1 }}
               />
+              <ArrowTip x={528} y={282} angle={90} color="var(--pres-blue)" delay={1.55} />
             </svg>
           </motion.div>
         </div>

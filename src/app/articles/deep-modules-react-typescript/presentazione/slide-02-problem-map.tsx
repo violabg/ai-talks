@@ -1,4 +1,5 @@
 import * as motion from "motion/react-client";
+import { ArrowTip } from "@/components/presentation/arrow-tip";
 import { FadeIn, SlideTitle } from "./slide-shared";
 
 const nodes = [
@@ -22,19 +23,6 @@ export function Slide02ProblemMap() {
       <FadeIn delay={0.14}>
         <div className="bg-[var(--pres-bg-card)] mx-auto p-4 sm:p-7 border border-[var(--pres-border)] rounded-2xl w-full max-w-6xl">
             <svg viewBox="0 0 700 380" className="w-full">
-              <defs>
-                <marker
-                  id="arrow-red"
-                  viewBox="0 0 10 10"
-                  refX="6"
-                  refY="5"
-                  markerWidth="6"
-                  markerHeight="6"
-                  orient="auto-start-reverse"
-                >
-                  <path d="M 0 0 L 10 5 L 0 10 z" fill="var(--pres-danger)" opacity="0.65" />
-                </marker>
-              </defs>
               <motion.text
                 x="350"
                 y="34"
@@ -89,21 +77,30 @@ export function Slide02ProblemMap() {
                 const x2 = b.x - dx * t;
                 const y2 = b.y - dy * t;
 
+                const angle = (Math.atan2(dy, dx) * 180) / Math.PI;
+                const tipDelay = 0.42 + i * 0.06 + 0.45;
                 return (
-                  <motion.line
-                    key={`${a.label}-${b.label}`}
-                    x1={x1}
-                    y1={y1}
-                    x2={x2}
-                    y2={y2}
-                    stroke="var(--pres-danger)"
-                    strokeWidth="2"
-                    strokeDasharray="8 8"
-                    markerEnd="url(#arrow-red)"
-                    initial={{ pathLength: 0, opacity: 0 }}
-                    animate={{ pathLength: 1, opacity: 0.65 }}
-                    transition={{ delay: 0.42 + i * 0.06, duration: 0.45 }}
-                  />
+                  <g key={`${a.label}-${b.label}`}>
+                    <motion.line
+                      x1={x1}
+                      y1={y1}
+                      x2={x2}
+                      y2={y2}
+                      stroke="var(--pres-danger)"
+                      strokeWidth="2"
+                      strokeDasharray="8 8"
+                      initial={{ pathLength: 0, opacity: 0 }}
+                      animate={{ pathLength: 1, opacity: 0.65 }}
+                      transition={{ delay: 0.42 + i * 0.06, duration: 0.45 }}
+                    />
+                    <ArrowTip
+                      x={x2}
+                      y={y2}
+                      angle={angle}
+                      color="var(--pres-danger)"
+                      delay={tipDelay}
+                    />
+                  </g>
                 );
               })}
 

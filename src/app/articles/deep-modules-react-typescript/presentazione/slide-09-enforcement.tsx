@@ -1,4 +1,5 @@
 import * as motion from "motion/react-client";
+import { ArrowTip } from "@/components/presentation/arrow-tip";
 import { SlideTitle } from "./slide-shared";
 
 export function Slide09Enforcement() {
@@ -33,30 +34,6 @@ export function Slide09Enforcement() {
 
         <div className="bg-[var(--pres-bg-card)] p-4 border border-[var(--pres-border)] rounded-xl">
           <svg viewBox="0 0 520 310" className="w-full">
-            <defs>
-              <marker
-                id="arrow-green"
-                viewBox="0 0 10 10"
-                refX="8"
-                refY="5"
-                markerWidth="5"
-                markerHeight="5"
-                orient="auto-start-reverse"
-              >
-                <path d="M 0 0 L 10 5 L 0 10 z" fill="var(--pres-success)" />
-              </marker>
-              <marker
-                id="arrow-red"
-                viewBox="0 0 10 10"
-                refX="8"
-                refY="5"
-                markerWidth="5"
-                markerHeight="5"
-                orient="auto-start-reverse"
-              >
-                <path d="M 0 0 L 10 5 L 0 10 z" fill="var(--pres-danger)" />
-              </marker>
-            </defs>
             <motion.rect
               x="30"
               y="38"
@@ -110,10 +87,16 @@ export function Slide09Enforcement() {
               y2="122"
               stroke="var(--pres-success)"
               strokeWidth="4"
-              markerEnd="url(#arrow-green)"
               initial={{ pathLength: 0, opacity: 0 }}
               animate={{ pathLength: 1, opacity: 1 }}
               transition={{ delay: 0.38, duration: 0.35 }}
+            />
+            <ArrowTip
+              x={360}
+              y={122}
+              angle={23}
+              color="var(--pres-success)"
+              delay={0.73}
             />
             <motion.text
               x="371"
@@ -134,10 +117,16 @@ export function Slide09Enforcement() {
               y2="110"
               stroke="var(--pres-danger)"
               strokeWidth="4"
-              markerEnd="url(#arrow-red)"
               initial={{ pathLength: 0, opacity: 0 }}
               animate={{ pathLength: 1, opacity: 1 }}
               transition={{ delay: 0.52, duration: 0.35 }}
+            />
+            <ArrowTip
+              x={170}
+              y={110}
+              angle={-140}
+              color="var(--pres-danger)"
+              delay={0.87}
             />
             <motion.text
               x="200"

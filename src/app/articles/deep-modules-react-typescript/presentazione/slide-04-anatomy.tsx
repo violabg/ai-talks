@@ -1,4 +1,5 @@
 import * as motion from "motion/react-client";
+import { ArrowTip } from "@/components/presentation/arrow-tip";
 import { SlideTitle } from "./slide-shared";
 
 export function Slide04Anatomy() {
@@ -17,19 +18,6 @@ export function Slide04Anatomy() {
         className="bg-[var(--pres-bg-card)] mx-auto p-5 sm:p-8 border border-[var(--pres-border)] rounded-2xl w-full max-w-6xl"
       >
           <svg viewBox="0 0 760 430" className="w-full">
-            <defs>
-              <marker
-                id="arrow-purple"
-                viewBox="0 0 10 10"
-                refX="8"
-                refY="5"
-                markerWidth="5"
-                markerHeight="5"
-                orient="auto-start-reverse"
-              >
-                <path d="M 0 0 L 10 5 L 0 10 z" fill="var(--pres-accent)" />
-              </marker>
-            </defs>
             <motion.rect
               x="0"
               y="30"
@@ -126,11 +114,11 @@ export function Slide04Anatomy() {
               stroke="var(--pres-accent)"
               strokeWidth="4"
               strokeDasharray="9 8"
-              markerEnd="url(#arrow-purple)"
               initial={{ pathLength: 0, opacity: 0 }}
               animate={{ pathLength: 1, opacity: 1 }}
               transition={{ delay: 0.64, duration: 0.5 }}
             />
+            <ArrowTip x={460} y={134} color="var(--pres-accent)" delay={1.14} />
             <motion.text
               x="390"
               y="114"
