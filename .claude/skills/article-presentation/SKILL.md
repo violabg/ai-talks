@@ -83,6 +83,36 @@ Each presentation is a **static page** at `src/app/articles/[slug]/presentazione
 
 Slides only need to define their visual content — all UI chrome is handled by the shell.
 
+#### Shared slide primitives
+
+Common low-level slide components live in `src/components/presentation/slide-primitives.tsx`. **Always import from there instead of re-implementing them.** Each presentation's `slide-shared.tsx` should re-export whichever primitives it uses, keeping article-specific data (tag lists, palette constants) alongside. Available primitives:
+
+| Export | What it does |
+|---|---|
+| `SlideFrame` | Flex-column slide wrapper (`max-w-6xl`, full height, `--pres-text` colour) |
+| `SlideHeading` | Animated eyebrow + h2 title + optional description |
+| `GlowCard` | Rounded card with accent glow shadow |
+| `fadeIn(delay?)` | Returns spread-able motion props for fade-in-up on a `motion.*` element |
+| `FadeIn` | Motion wrapper component — fade in from below |
+| `FadeInLeft` | Motion wrapper component — fade in from the left |
+
+A minimal `slide-shared.tsx` that uses primitives:
+
+```tsx
+// Re-export shared primitives
+export { SlideFrame, SlideHeading, GlowCard, fadeIn } from "@/components/presentation/slide-primitives";
+
+// Article-specific data
+export const MY_TAGS = ["tag-a", "tag-b"];
+```
+
+If a primitive is also used locally inside `slide-shared.tsx` (e.g. `FadeIn` inside `SlideTitle`), import it explicitly before re-exporting:
+
+```tsx
+import { FadeIn } from "@/components/presentation/slide-primitives";
+export { FadeIn };
+```
+
 The page should:
 
 - Be a server component that renders the slideshow — typically a one-liner `<PresentationSlides slug={SLUG} />`
@@ -101,6 +131,7 @@ The page should:
 src/app/articles/[slug]/presentazione/
 ├── page.tsx               # Server component — metadata, static params, simple render
 ├── slides.tsx             # "use client" — imports PresentationShell from shared components
+├── slide-shared.tsx       # Re-exports from slide-primitives + article-specific data/constants
 ├── slide-01-*.tsx         # Slide 1 component
 ├── slide-02-*.tsx         # Slide 2 component
 ├── speech.json            # Narration text for each slide (optional, required for voice)

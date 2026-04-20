@@ -1,26 +1,5 @@
-import * as motion from "motion/react-client";
-import type { ReactNode } from "react";
-
-export function FadeIn({
-  children,
-  delay = 0,
-  className,
-}: {
-  children: ReactNode;
-  delay?: number;
-  className?: string;
-}) {
-  return (
-    <motion.div
-      initial={{ opacity: 0, y: 18 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.5, delay }}
-      className={className}
-    >
-      {children}
-    </motion.div>
-  );
-}
+import { FadeIn } from "@/components/presentation/slide-primitives";
+export { FadeIn };
 
 export function SlideTitle({
   eyebrow,
