@@ -1,6 +1,5 @@
 import * as motion from "motion/react-client";
-import { ArrowTip } from "@/components/presentation/arrow-tip";
-import { SlideTitle } from "./slide-shared";
+import { ArrowTip, SlideTitle } from "./slide-shared";
 
 export function Slide09Enforcement() {
   return (
@@ -21,7 +20,7 @@ export function Slide09Enforcement() {
           <p className="mb-2 font-mono text-[var(--pres-accent)] text-sm uppercase">
             eslint rule
           </p>
-          <pre className="bg-[var(--pres-bg-card)] p-3 rounded overflow-x-auto text-[var(--pres-text-sub)] text-[12px] leading-relaxed">
+          <pre className="bg-[var(--pres-bg-card)] p-3 rounded overflow-x-auto text-[12px] text-[var(--pres-text-sub)] leading-relaxed">
             {`{
   "rules": {
     "no-restricted-imports": ["error", {

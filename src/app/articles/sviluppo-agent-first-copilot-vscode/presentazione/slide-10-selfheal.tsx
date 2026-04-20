@@ -1,7 +1,7 @@
 "use client";
 
+import { ArrowTip } from "@/components/presentation/slide-primitives";
 import { motion } from "motion/react";
-import { ArrowTip } from "@/components/presentation/arrow-tip";
 
 // viewBox: 0 0 820 430
 // Left column x=195, Right column x=625, node w=240 h=62
@@ -104,9 +104,8 @@ export function Slide10SelfHeal() {
         dall&apos;utente
       </motion.p>
 
-      <div className="w-full flex-1 flex items-center">
+      <div className="flex flex-1 items-center w-full">
         <svg viewBox="0 0 820 430" className="w-full">
-
           {/* Column labels */}
           <motion.text
             x={195}
@@ -272,4 +271,3 @@ export function Slide10SelfHeal() {
     </div>
   );
 }
-

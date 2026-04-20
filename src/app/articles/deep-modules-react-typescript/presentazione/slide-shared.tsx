@@ -32,3 +32,5 @@ export function SlideTitle({
     </div>
   );
 }
+
+export { ArrowTip } from "@/components/presentation/slide-primitives";

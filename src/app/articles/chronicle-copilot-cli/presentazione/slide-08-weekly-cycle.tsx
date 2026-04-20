@@ -1,8 +1,7 @@
 "use client";
 
 import * as motion from "motion/react-client";
-import { ArrowTip } from "@/components/presentation/arrow-tip";
-import { GlowCard, SlideFrame, SlideHeading } from "./slide-shared";
+import { ArrowTip, GlowCard, SlideFrame, SlideHeading } from "./slide-shared";
 
 const nodes = [
   {
@@ -44,10 +43,34 @@ const nodes = [
 ];
 
 const arcs = [
-  { d: "M220 170C290 170 320 100 330 85", delay: 0.35, tipX: 330, tipY: 85, angle: -56 },
-  { d: "M470 85C490 100 520 170 580 170", delay: 0.6, tipX: 580, tipY: 170, angle: 0 },
-  { d: "M625 235C600 260 520 270 470 270", delay: 0.85, tipX: 470, tipY: 270, angle: 180 },
-  { d: "M330 270C280 270 200 260 175 240", delay: 1.1, tipX: 175, tipY: 240, angle: -141 },
+  {
+    d: "M220 170C290 170 320 100 330 85",
+    delay: 0.35,
+    tipX: 330,
+    tipY: 85,
+    angle: -56,
+  },
+  {
+    d: "M470 85C490 100 520 170 580 170",
+    delay: 0.6,
+    tipX: 580,
+    tipY: 170,
+    angle: 0,
+  },
+  {
+    d: "M625 235C600 260 520 270 470 270",
+    delay: 0.85,
+    tipX: 470,
+    tipY: 270,
+    angle: 180,
+  },
+  {
+    d: "M330 270C280 270 200 260 175 240",
+    delay: 1.1,
+    tipX: 175,
+    tipY: 240,
+    angle: -141,
+  },
 ];
 
 export function Slide08WeeklyCycle() {

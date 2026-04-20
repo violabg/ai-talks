@@ -1,8 +1,9 @@
 export {
+  ArrowTip,
+  fadeIn,
+  GlowCard,
   SlideFrame,
   SlideHeading,
-  GlowCard,
-  fadeIn,
 } from "@/components/presentation/slide-primitives";
 
 export const CHRONICLE_TAGS = [

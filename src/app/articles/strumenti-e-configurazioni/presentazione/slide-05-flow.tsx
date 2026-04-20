@@ -1,6 +1,5 @@
 import * as motion from "motion/react-client";
-import { ArrowTip } from "@/components/presentation/arrow-tip";
-import { SectionTitle, SlideFrame } from "./slide-shared";
+import { ArrowTip, SectionTitle, SlideFrame } from "./slide-shared";
 
 const steps = [
   {
@@ -61,7 +60,6 @@ export function Slide05Flow() {
             transition={{ duration: 0.45 }}
           >
             <svg viewBox="0 0 760 394" className="w-full">
-
               {steps.map((step, index) => (
                 <motion.g
                   key={step.title}
@@ -116,7 +114,13 @@ export function Slide05Flow() {
                 animate={{ pathLength: 1, opacity: 1 }}
                 transition={{ duration: 0.35, delay: 0.55 }}
               />
-              <ArrowTip x={232} y={148} angle={90} color="var(--pres-accent)" delay={0.9} />
+              <ArrowTip
+                x={232}
+                y={148}
+                angle={90}
+                color="var(--pres-accent)"
+                delay={0.9}
+              />
               <motion.path
                 d="M360 197 L400 197"
                 stroke="var(--pres-warning)"
@@ -125,7 +129,12 @@ export function Slide05Flow() {
                 animate={{ pathLength: 1, opacity: 1 }}
                 transition={{ duration: 0.35, delay: 0.72 }}
               />
-              <ArrowTip x={400} y={197} color="var(--pres-warning)" delay={1.07} />
+              <ArrowTip
+                x={400}
+                y={197}
+                color="var(--pres-warning)"
+                delay={1.07}
+              />
               <motion.path
                 d="M232 240 L232 282"
                 stroke="var(--pres-warning)"
@@ -135,7 +144,13 @@ export function Slide05Flow() {
                 animate={{ pathLength: 1, opacity: 1 }}
                 transition={{ duration: 0.45, delay: 0.96 }}
               />
-              <ArrowTip x={232} y={282} angle={90} color="var(--pres-warning)" delay={1.41} />
+              <ArrowTip
+                x={232}
+                y={282}
+                angle={90}
+                color="var(--pres-warning)"
+                delay={1.41}
+              />
               <motion.path
                 d="M528 240 L528 282"
                 stroke="var(--pres-blue)"
@@ -145,7 +160,13 @@ export function Slide05Flow() {
                 animate={{ pathLength: 1, opacity: 1 }}
                 transition={{ duration: 0.45, delay: 1.1 }}
               />
-              <ArrowTip x={528} y={282} angle={90} color="var(--pres-blue)" delay={1.55} />
+              <ArrowTip
+                x={528}
+                y={282}
+                angle={90}
+                color="var(--pres-blue)"
+                delay={1.55}
+              />
             </svg>
           </motion.div>
         </div>

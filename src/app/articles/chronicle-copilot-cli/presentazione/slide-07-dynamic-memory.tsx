@@ -1,8 +1,7 @@
 "use client";
 
 import * as motion from "motion/react-client";
-import { ArrowTip } from "@/components/presentation/arrow-tip";
-import { GlowCard, SlideFrame, SlideHeading } from "./slide-shared";
+import { ArrowTip, GlowCard, SlideFrame, SlideHeading } from "./slide-shared";
 
 export function Slide07DynamicMemory() {
   return (
@@ -16,7 +15,6 @@ export function Slide07DynamicMemory() {
         <GlowCard className="p-4 sm:p-6 w-full">
           <div className="mx-auto w-full max-w-5xl">
             <svg viewBox="0 0 820 360" className="w-full">
-
               <motion.g
                 initial={{ opacity: 0, x: -18 }}
                 animate={{ opacity: 1, x: 0 }}
@@ -74,7 +72,12 @@ export function Slide07DynamicMemory() {
                 animate={{ opacity: 1 }}
                 transition={{ duration: 0.5, delay: 0.5 }}
               />
-              <ArrowTip x={496} y={110} color="var(--pres-accent)" delay={1.0} />
+              <ArrowTip
+                x={496}
+                y={110}
+                color="var(--pres-accent)"
+                delay={1.0}
+              />
 
               <motion.g
                 initial={{ opacity: 0, scale: 0.9 }}

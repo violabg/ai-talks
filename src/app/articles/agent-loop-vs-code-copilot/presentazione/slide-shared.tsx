@@ -1,10 +1,10 @@
 export {
+  ArrowTip,
+  fadeIn,
+  GlowCard,
   SlideFrame,
   SlideHeading,
-  GlowCard,
-  fadeIn,
 } from "@/components/presentation/slide-primitives";
-export { ArrowTip } from "@/components/presentation/arrow-tip";
 
 export const AGENT_LOOP_TAGS = [
   "VS Code",

@@ -1,5 +1,5 @@
+import { ArrowTip } from "@/components/presentation/slide-primitives";
 import * as motion from "motion/react-client";
-import { ArrowTip } from "@/components/presentation/arrow-tip";
 import { GlassCard, SectionTitle, SlideFrame } from "./slide-shared";
 
 export function Slide08Mcp() {
@@ -43,7 +43,6 @@ export function Slide08Mcp() {
             className="w-full"
           >
             <svg viewBox="0 0 720 320" className="w-full">
-
               <motion.rect
                 x="222"
                 y="88"
