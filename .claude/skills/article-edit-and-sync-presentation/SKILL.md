@@ -33,13 +33,14 @@ If a presentation exists, continue to Step 4.
 
 ## Step 4: Read the Presentation
 
-Read all slide files in `src/app/articles/[slug]/presentazione/` — including `slide-shared.tsx`, `slides.tsx`, and every `slide-NN-*.tsx`.
+Read all slide files in `src/app/articles/[slug]/presentazione/` — including `slide-shared.tsx` (per-article helpers — varies, commonly exports things like `SlideFrame`, `SlideHeading`, `GlowCard`, a `fadeIn()` variant builder, and a tags array), `slides.tsx`, every `slide-NN-*.tsx`, and `speech.json` if present.
 
 Build a mental map of:
 
 - **Article structure after edits**: sections, key concepts, narrative arc, what changed
 - **Current slides**: one-line summary of each slide's topic and what visual it contains
 - **Mapping**: which slide corresponds to which part of the article
+- **Shared helpers available**: which helpers this presentation's `slide-shared.tsx` exposes, so you reuse them instead of reinventing layout/animation primitives
 
 ## Step 5: Diff and Plan
 
@@ -69,9 +70,10 @@ Make the changes directly. Do not ask the user whether to proceed.
 
 **Keep the visual identity intact:**
 
-- Use the same `COLORS` palette from `slide-shared.tsx` for all new or updated slides
-- Match the animation style: `FadeIn`/`FadeInLeft` from `slide-shared.tsx`, Framer Motion staggered reveals
-- Keep the same overall dark theme and layout density as the existing slides
+- Use the theme-aware `var(--pres-*)` CSS variables from `src/app/globals.css` (e.g. `var(--pres-accent)`, `var(--pres-text)`, `var(--pres-bg-card)`) — these are the single source of truth for presentation colors. Do not hardcode hex values or introduce a parallel palette.
+- Reuse whatever helpers this presentation's `slide-shared.tsx` already exports (layout frames, headings, cards, `fadeIn()`-style motion variants). Don't introduce new primitives if an existing one fits.
+- Animations are built on `motion/react` and `motion/react-client` with staggered delays — match the existing rhythm rather than inventing new easing/timing.
+- The navigation, progress bar, header, narration toggle, and slide transitions all come from `PresentationShell` (`src/components/presentation/presentation-shell.tsx`). Slide components are **only responsible for their own visual content** — never try to re-implement chrome inside a slide.
 
 **When updating a slide:**
 
@@ -82,14 +84,18 @@ Make the changes directly. Do not ask the user whether to proceed.
 **When adding a slide:**
 
 - Create a new file: `slide-NN-[concept].tsx` with the appropriate number in sequence
-- Follow the same component structure as existing slides (default export, `FadeIn` wrapper, Tailwind layout)
-- Add it to the `slides` array in `slides.tsx` in the right position (matching article order)
+- Follow the same component structure as existing slides (named export, reuses `slide-shared.tsx` helpers where they fit, Tailwind layout, `motion/react-client` for entrance animations)
+- Add it to the `slides` array in `slides.tsx` in the right position (matching article order), importing its named export and giving the entry a stable `key`
 
 **When removing a slide:**
 
 - Delete the file
-- Remove it from the `slides` array in `slides.tsx`
+- Remove its import and array entry from `slides.tsx`
 - Renumber remaining slide files if gaps would be confusing (optional, use judgment)
+
+**When narration exists (`speech.json` present):**
+
+- Keep the `speech.json` array length in sync with the slides array. Add an entry (even `{ "text": "" }`) when you add a slide; remove the corresponding entry when you delete one; rewrite the entry when a slide's meaning changes materially.
 
 ### Slide numbering after removals/additions
 

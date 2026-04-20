@@ -1,0 +1,32 @@
+{
+  "voice": "it-IT",
+  "slides": [
+    {
+      "text": "Rubber Duck non e' un secondo autore del codice. E' un revisore che osserva il lavoro del modello operativo e interviene quando il processo prende una direzione sbagliata. L'idea centrale e' semplice: per migliorare il risultato, spesso conviene migliorare prima il controllo." 
+    },
+    {
+      "text": "Il problema non e' il bug occasionale. Il problema e' che un singolo modello tende a ripetere i propri punti ciechi: allucinazioni plausibili, test troppo accomodanti, loop di correzione che non sbloccano davvero la situazione. Rubber Duck nasce per rompere proprio questa ripetizione sistematica." 
+    },
+    {
+      "text": "Qui si vede la separazione dei ruoli. Il modello operativo pianifica, scrive file e propone test. Rubber Duck legge quel materiale da una famiglia diversa di modelli e prova a smontarlo: controlla coerenza, ipotesi, segnali di errore condiviso. Non sostituisce il flusso, lo rende piu' affidabile." 
+    },
+    {
+      "text": "Il punto decisivo e' questo: non basta aggiungere un secondo modello. Serve una famiglia diversa. Se due modelli condividono troppi bias, rischiano di confermarsi a vicenda. Se invece arrivano da architetture e dati differenti, cresce la probabilita' che uno intercetti l'errore che l'altro non vede." 
+    },
+    {
+      "text": "Rubber Duck entra in tre momenti chiave. Prima rilegge il piano, quando gli errori costano ancora poco. Poi valida la logica dei test, per evitare test che passano solo perche' costruiti sul comportamento sbagliato. Infine aiuta il self-healing, cioe' lo sblocco dei loop in cui il modello operativo resta incastrato." 
+    },
+    {
+      "text": "Nel flusso CLI, la critica compare dentro la sessione di lavoro. Non aspetta la fine. Il revisore segnala un rischio, il modello operativo aggiorna il piano e prosegue. Questo timing e' importante: correggere una decisione quando e' ancora nel piano costa molto meno che correggere file, test e debugging a valle." 
+    },
+    {
+      "text": "Con MCP, Rubber Duck non si limita a ragionare per analogia. Può anche interrogare documentazione aggiornata. Questo e' il passaggio che trasforma una review statistica in un controllo ancorato ai fatti: se il framework ha rinominato un file o deprecato un'API, il revisore puo' saperlo prima del runtime." 
+    },
+    {
+      "text": "L'esempio di Next.js lo rende molto concreto. Senza Rubber Duck, il modello operativo potrebbe scrivere ancora middleware invece di proxy e scoprire il problema troppo tardi. Con Rubber Duck, la correzione arriva prima che il file venga creato. Il guadagno vero non e' solo accuratezza: e' prevenzione del rework." 
+    },
+    {
+      "text": "Il risultato citato nell'articolo e' forte: Sonnet affiancato da Rubber Duck colma il settantaquattro virgola sette per cento del gap verso Opus. La lezione e' che la qualita' non dipende solo dal modello piu' potente. Dipende da come progetti generazione, verifica e controllo incrociato." 
+    }
+  ]
+}

@@ -40,6 +40,9 @@ export const metadata: Metadata = {
   },
   description:
     "Idee e best practice per sviluppare con l'intelligenza artificiale.",
+  icons: {
+    icon: "/icon.svg",
+  },
 };
 
 export default function RootLayout({

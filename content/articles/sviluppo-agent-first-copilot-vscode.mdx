@@ -23,7 +23,7 @@ Perché un agente sia efficace, deve operare all'interno di un ecosistema ben de
 | Componente | Definizione | Ruolo nello Sviluppo Agent-First |
 | :--- | :--- | :--- |
 | **Harness (Imbracatura)** | VS Code e l'estensione Copilot. | È il "corpo" dell'agente. Fornisce l'interfaccia utente (Chat, Terminale) e le API necessarie per leggere e scrivere sul filesystem locale. |
-| **Model (Motore)** | Il LLM sottostante (es. Claude 3.5 Sonnet, GPT-4o). | È il "cervello". Permette di impostare il *Thinking Effort* (basso, medio, alto) per bilanciare velocità di risposta e profondità di ragionamento logico. |
+| **Model (Motore)** | Il LLM sottostante (es. Claude 4.6 Sonnet, GPT-4o). | È il "cervello". Permette di impostare il *Thinking Effort* (basso, medio, alto) per bilanciare velocità di risposta e profondità di ragionamento logico. |
 | **Context (Contesto)** | File aperti, workspace, riferimenti espliciti (`@`). | È la "memoria a lungo termine". Fornisce all'agente le regole di business del tuo specifico progetto (Grounding). |
 | **Tools (Strumenti)** | Capacità operative (es. `read_file`, `run_command`). | Sono le "mani" dell'agente. Permettono di superare i limiti della generazione di testo per compiere azioni reali sul computer. |
 | **Prompt (Direttiva)** | L'istruzione in linguaggio naturale. | È la "bussola". Definisce l'obiettivo finale, i vincoli tecnici e il formato desiderato. |

@@ -272,7 +272,7 @@ h6,
   position: relative;
   overflow: hidden;
 
-  &::before {
+  &::after {
     content: "";
     position: absolute;
     top: 0;
@@ -286,7 +286,7 @@ h6,
     transition: transform 0.25s ease;
   }
 
-  &:hover::before {
+  &:hover::after {
     transform: scaleY(1);
   }
 }

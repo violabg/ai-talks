@@ -78,12 +78,12 @@ export function PresentationShell({
   }, []);
 
   const headerContent = (
-    <div className="flex justify-between items-center px-6 py-4 text-[var(--pres-muted)] text-sm shrink-0">
+    <div className="flex justify-between items-center px-6 py-4 text-(--pres-muted) text-sm shrink-0">
       <Link
         href={`/articles/${slug}`}
-        className="hover:text-[var(--pres-text)] transition-colors"
+        className="hover:text-(--pres-text) transition-colors"
       >
-        &larr; Torna all&apos;articolo
+        &larr; <span className="hidden md:inline">Torna all&apos;articolo</span>
       </Link>
       <div className="flex items-center gap-3">
         {speechData && <NarrationToggle />}
@@ -123,7 +123,7 @@ export function PresentationShell({
           animate="center"
           exit="exit"
           transition={{ duration: 0.4, ease: "easeOut" }}
-          className="w-full max-w-6xl h-full"
+          className="w-full max-w-6xl h-auto md:h-full"
         >
           {slides[current].component}
         </motion.div>
@@ -141,10 +141,10 @@ export function PresentationShell({
             onClick={() => goTo(i)}
             className={`h-1 flex-1 rounded-full transition-colors ${
               i === current
-                ? "bg-[var(--pres-accent)]"
+                ? "bg-(--pres-accent)"
                 : i < current
-                  ? "bg-[var(--pres-accent)]/35"
-                  : "bg-[var(--pres-border)]"
+                  ? "bg-(--pres-accent)/35"
+                  : "bg-(--pres-border)"
             }`}
             aria-label={`Vai alla slide ${i + 1}`}
           />
@@ -168,7 +168,7 @@ export function PresentationShell({
   }
 
   return (
-    <div className="z-50 fixed inset-0 flex flex-col bg-[var(--pres-bg)] text-[var(--pres-text)]">
+    <div className="z-50 fixed inset-0 flex flex-col bg-(--pres-bg) text-(--pres-text)">
       {headerContent}
       {slideContent}
       {progressBar}
@@ -185,7 +185,7 @@ function PresentationWithNarration({ children }: { children: ReactNode }) {
   const { onUserGesture } = useNarrationContext();
   return (
     <div
-      className="z-50 fixed inset-0 flex flex-col bg-[var(--pres-bg)] text-[var(--pres-text)]"
+      className="z-50 fixed inset-0 flex flex-col bg-(--pres-bg) text-(--pres-text)"
       onClick={onUserGesture}
     >
       {children}

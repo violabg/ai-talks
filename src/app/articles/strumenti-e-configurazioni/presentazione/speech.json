@@ -1,0 +1,38 @@
+{
+  "voice": "it-IT",
+  "slides": [
+    {
+      "text": "Questa presentazione non mette in fila feature sparse. Ti propone una mappa mentale per capire a cosa serve davvero ogni livello di configurazione di un agente AI: memoria, metodo, capacità esterne e automazione."
+    },
+    {
+      "text": "La domanda utile non è quale prodotto abbia più funzioni. La domanda utile è molto più operativa: questa configurazione mi serve per ricordare regole stabili, specializzare il comportamento, collegare sistemi esterni o automatizzare passaggi ripetitivi?"
+    },
+    {
+      "text": "Qui la tabella dell'articolo diventa un atlante. Gli otto livelli sono distribuiti per famiglia funzionale, così smettono di sembrare equivalenti. Vedi subito quali leve lavorano sulla memoria, quali sul metodo, quali sul ruolo e quali sull'automazione."
+    },
+    {
+      "text": "La tassonomia centrale è questa. Instructions e file di prompt non fanno la stessa cosa di skill, custom agent o MCP. Il valore di una configurazione nasce dalla funzione precisa che copre, non dal numero di opzioni che riesci ad accumulare."
+    },
+    {
+      "text": "I livelli più utili si concatenano. Parti da regole permanenti, poi introduci task ripetibili, workflow strutturati, ruoli dedicati e infine capacità esterne. Non è una pila obbligatoria, ma una sequenza pratica per aggiungere controllo nel punto giusto."
+    },
+    {
+      "text": "Always-on instructions e file-based instructions sembrano parenti strette, ma lavorano su due scale diverse. Le prime definiscono il perimetro comune del progetto. Le seconde portano conoscenza locale vicino al codice che la richiede davvero."
+    },
+    {
+      "text": "Skill e custom agents non vanno confusi. Una skill codifica un metodo ripetibile, con passaggi e checkpoint. Un custom agent separa invece il mandato: planner, reviewer e implementatore non dovrebbero comportarsi nello stesso modo."
+    },
+    {
+      "text": "MCP segna il passaggio tra sapere e poter agire. Finché l'agente resta dentro il repository, lavora su file e comandi locali. Con un bridge operativo verso sistemi esterni può interrogare database, cloud, knowledge base e API reali."
+    },
+    {
+      "text": "Hook e plugin hanno senso quando il workflow è già chiaro. Un buon hook elimina un passaggio meccanico senza creare rumore. Un buon plugin accelera un setup compreso. Usati troppo presto, aggiungono opacità invece di ridurre attrito."
+    },
+    {
+      "text": "Se devi scegliere da dove partire, l'ordine che rende di più è questo: prima separa i ruoli con custom agents, poi stabilizza il processo con le skill, poi estendi la portata operativa con MCP. Il resto viene dopo, come ottimizzazione."
+    },
+    {
+      "text": "Il punto finale è semplice. Il confronto serio non è tra nomi di tool, ma tra tipi di lavoro. Prima definisci chi deve fare cosa, poi come vuoi che lo faccia, e solo alla fine con quali capacità esterne deve operare."
+    }
+  ]
+}

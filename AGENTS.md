@@ -2,9 +2,13 @@
 
 ## Commands
 
-This project uses **pnpm** as the package manager.
+Use `pnpm` for all package-management and script commands.
 
-No test runner is configured.
+- `pnpm dev` starts the Next.js dev server
+- `pnpm build` runs the production build
+- `pnpm lint` runs ESLint
+- No test runner is configured
+- `npx tsx scripts/generate-speech-json.ts <slug>` drafts narration for an existing presentation
 
 ## Architecture
 
@@ -26,6 +30,8 @@ title, description, date, author, tags, published, featured?, coverImage?
 
 MDX compiled server-side via `next-mdx-remote/rsc`. MDX component overrides: `mdx-components.tsx` (root) and `src/components/mdx-components.tsx`.
 
+When adding a new article, keep the filename slug in sync with the article route and any optional presentation folder under `src/app/articles/[slug]/`.
+
 ### Article published/featured state (KV + frontmatter dual-source)
 
 **Do not treat MDX frontmatter as the sole source of truth for `published`/`featured` in production.**
@@ -35,6 +41,8 @@ At runtime, `published` and `featured` flags are stored in **Upstash Redis** via
 ### Presentations
 
 Each article can optionally have a presentation at `src/app/articles/[slug]/presentazione/` containing `page.tsx`, `slides.tsx`, individual `slide-XX-*.tsx` files, and optionally `speech.json` for narration.
+
+Presentation shell and narration UI are shared from `src/components/presentation/`; avoid rebuilding navigation, progress, or narration controls inside article-specific slides.
 
 ### Styling
 
@@ -49,16 +57,17 @@ Each article can optionally have a presentation at `src/app/articles/[slug]/pres
 
 **Always use Next.js server actions instead of API routes.** Do not create files under `src/app/api/` for internal data mutations — use `"use server"` functions in `src/lib/actions/` instead. The existing `src/app/api/auth/` route is a third-party integration (better-auth) and is the only exception.
 
-### Environment variables — use `varlock`
+### Environment variables
 
-**Never use `process.env` directly.** All environment variables are accessed via `varlock`:
+Environment access currently lives directly in `src/lib/auth.ts`, `src/lib/admin.ts`, and `src/lib/kv.ts`. Follow the existing pattern unless the user explicitly asks for an env-management refactor.
 
-```ts
-import { ENV } from "varlock/env"
-// ENV.MY_VAR
-```
+For article visibility and featured state, remember that Redis KV can override frontmatter in production.
 
-Do not add `.env` files or reach for `process.env.FOO` — use `varlock/env`.
+### Article and admin boundaries
+
+- `src/lib/articles.ts` is the source for MDX loading, sorting, filtering, and draft visibility rules
+- `src/lib/kv.ts` is the runtime override layer for `published` and `featured`
+- `src/app/admin/` is the content-management UI; preserve its assumptions when changing publication behavior
 
 ### Component defaults
 
@@ -66,3 +75,9 @@ Do not add `.env` files or reach for `process.env.FOO` — use `varlock/env`.
 - Use `"use client"` only when necessary (currently: `ThemeToggle`, `ThemeProvider`)
 - Path alias `@/` maps to `src/`
 - Theme (light/dark) via `next-themes` → `src/components/theme-provider.tsx`
+
+### Styling and content patterns
+
+- Tailwind config lives entirely in `src/app/globals.css`; do not look for `tailwind.config.*`
+- Use the existing prose/article components instead of hand-rolling MDX HTML wrappers
+- Keep article and presentation copy in Italian unless the user asks for another language

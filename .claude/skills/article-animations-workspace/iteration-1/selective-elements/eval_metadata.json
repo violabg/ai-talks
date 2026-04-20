@@ -1,6 +1,0 @@
-{
-  "eval_id": 1,
-  "eval_name": "selective-elements",
-  "prompt": "I want subtle entrance animations on content/articles/deep-modules-react-typescript.mdx, but only on headings (h2, h3), images, and code blocks — not every paragraph.",
-  "assertions": []
-}

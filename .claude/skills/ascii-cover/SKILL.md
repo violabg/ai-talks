@@ -157,12 +157,9 @@ export function MyArticleCover() {
 Key rules:
 
 - **Server component** — no `"use client"` directive needed
-- **`aria-hidden="true"`** — the art is decorative, not content
-- **`select-none`** — prevent accidental text selection
-- **`font-mono text-xs leading-tight`** — use the project's monospace font at small size, this is applyed globally in the card, so no need to repeat here
-- **Centered**: The `<pre>` must have `mx-auto w-fit` so the ASCII art is horizontally centered within the card
-- **Background**: `bg-muted/30 dark:bg-muted/20` gives a subtle tinted panel that works in both themes. Use `py-4` for vertical padding (no horizontal padding — the centering handles it), this is also applied globally in the card so no need to repeat here
-- **No hardcoded colors** — use only Tailwind CSS utility classes that reference CSS custom properties
+- **`aria-hidden`, `select-none`, `font-mono text-xs leading-tight`, tinted background, vertical padding, and horizontal centering** are all applied by the cover wrapper in `ArticleCard` (`src/components/article-card.tsx`). Your component only needs to return the `<pre>` with the art — do **not** duplicate those wrapper styles. At time of writing the wrapper uses `bg-muted/30 dark:bg-black/50 -mx-6 -mt-6 mb-4 py-4 rounded-t-xl min-h-50 overflow-hidden font-mono text-xs leading-tight select-none` with `aria-hidden="true"`; if you need to sanity-check, open that file.
+- **Centered**: The `<pre>` must still carry `mx-auto w-fit` so the ASCII art is horizontally centered inside the wrapper.
+- **No hardcoded colors** — use only Tailwind utility classes that map to the project's CSS custom properties (see Color palette below). Never inline hex or oklch values.
 
 ### Alignment (critical)
 

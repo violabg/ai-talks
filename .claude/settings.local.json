@@ -64,7 +64,14 @@
       "Bash(pnpm config:*)",
       "Bash(grep -n \"──\\\\|──\\\\|═══\\\\|───\\\\|>>>\" /Users/paolo.bernardini/Sites/ai-course/content/articles/*.mdx)",
       "Bash(xargs -I{} basename {} .mdx)",
-      "Bash(pnpm next:*)"
+      "Bash(pnpm next:*)",
+      "mcp__Claude_Preview__preview_start",
+      "Bash(git checkout *)",
+      "Bash(git add *)",
+      "Bash(git commit -m ' *)",
+      "Bash(git push *)",
+      "Bash(gh pr create --repo violabg/ai-talks --title 'feat: add presentation for /chronicle article' --body ' *)",
+      "Bash(lsof -ti:3000)"
     ]
   }
 }
