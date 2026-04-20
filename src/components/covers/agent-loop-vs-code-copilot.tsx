@@ -5,17 +5,17 @@ export function AgentLoopVsCodeCopilot() {
       <span className="text-primary">{'  .-""""-.'}</span>
       {"\n"}
       <span>{"         "}</span>
-      <span className="text-primary">{".'  .--.  `."}</span>
+      <span className="text-primary">{".'   .-.  `."}</span>
       {"\n"}
       <span>{"        "}</span>
-      <span className="text-primary">{"/   "}</span>
-      <span className="text-foreground">{"(o  o)"}</span>
+      <span className="text-primary">{"/    "}</span>
+      <span className="text-foreground">{"(o o)"}</span>
       <span className="text-primary">{"   \\"}</span>
       {"\n"}
       <span>{"       "}</span>
       <span className="text-primary">{"; "}</span>
-      <span className="text-chart-4">{"loop"}</span>
-      <span className="text-primary">{"\\__/     ;"}</span>
+      <span className="text-chart-4">{"loop "}</span>
+      <span className="text-primary">{"\\_/     ;"}</span>
       {"\n"}
       <span>{"        "}</span>
       <span className="text-primary">{"\\   "}</span>
