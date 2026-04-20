@@ -87,20 +87,26 @@ Slides only need to define their visual content — all UI chrome is handled by 
 
 Common low-level slide components live in `src/components/presentation/slide-primitives.tsx`. **Always import from there instead of re-implementing them.** Each presentation's `slide-shared.tsx` should re-export whichever primitives it uses, keeping article-specific data (tag lists, palette constants) alongside. Available primitives:
 
-| Export | What it does |
-|---|---|
-| `SlideFrame` | Flex-column slide wrapper (`max-w-6xl`, full height, `--pres-text` colour) |
-| `SlideHeading` | Animated eyebrow + h2 title + optional description |
-| `GlowCard` | Rounded card with accent glow shadow |
-| `fadeIn(delay?)` | Returns spread-able motion props for fade-in-up on a `motion.*` element |
-| `FadeIn` | Motion wrapper component — fade in from below |
-| `FadeInLeft` | Motion wrapper component — fade in from the left |
+| Export           | What it does                                                               |
+| ---------------- | -------------------------------------------------------------------------- |
+| `SlideFrame`     | Flex-column slide wrapper (`max-w-6xl`, full height, `--pres-text` colour) |
+| `SlideHeading`   | Animated eyebrow + h2 title + optional description                         |
+| `GlowCard`       | Rounded card with accent glow shadow                                       |
+| `fadeIn(delay?)` | Returns spread-able motion props for fade-in-up on a `motion.*` element    |
+| `FadeIn`         | Motion wrapper component — fade in from below                              |
+| `FadeInLeft`     | Motion wrapper component — fade in from the left                           |
+| `ArrowTip`       | Animated SVG arrowhead helper for flow/diagram connectors                  |
 
 A minimal `slide-shared.tsx` that uses primitives:
 
 ```tsx
 // Re-export shared primitives
-export { SlideFrame, SlideHeading, GlowCard, fadeIn } from "@/components/presentation/slide-primitives";
+export {
+  SlideFrame,
+  SlideHeading,
+  GlowCard,
+  fadeIn,
+} from "@/components/presentation/slide-primitives";
 
 // Article-specific data
 export const MY_TAGS = ["tag-a", "tag-b"];
