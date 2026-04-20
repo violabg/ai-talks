@@ -1,0 +1,41 @@
+{
+  "voice": "it-IT",
+  "slides": [
+    {
+      "text": "Dentro l'agent loop. Quando premi invio in VS Code Copilot non parte una risposta singola: parte un ciclo. Prompt in ingresso, risposta in uscita, e in mezzo una sequenza di decisioni, tool e nuovi turni."
+    },
+    {
+      "text": "Il modello mentale giusto e semplice: un grande while loop. Ogni iterazione corrisponde a una chiamata al modello. Il ciclo continua finché il modello non decide di fermarsi e restituire un messaggio finale."
+    },
+    {
+      "text": "Ogni richiesta impila sempre quattro ingredienti. System prompt, contesto, lista dei tool e user prompt. Cambiano i dettagli, ma la struttura resta questa. Se capisci questi quattro strati, capisci quasi tutto il comportamento dell'agente."
+    },
+    {
+      "text": "Qui vedi il turno elementare. Il modello riceve il prompt, decide se rispondere con testo oppure chiamare un tool. Se chiama un tool, l'output torna dentro il contesto e alimenta l'iterazione successiva. Poi il loop riparte."
+    },
+    {
+      "text": "Istruzioni globali, skill, prompt file, server MCP: sembrano concetti diversi, ma atterrano tutti nello stesso posto. O appendono testo al contesto, oppure aggiungono strumenti alla tool list che il modello può invocare."
+    },
+    {
+      "text": "Più tool non significa automaticamente meglio. Con poche opzioni il modello sceglie in fretta e sbaglia meno. Quando la lista esplode, aumentano esitazioni, iterazioni inutili e rumore nel contesto. Anche i modelli soffrono il paradosso della scelta."
+    },
+    {
+      "text": "Il sub-agent, in pratica, è un tool che apre un nuovo loop. L'agente principale delega un compito, di solito esplorazione o raccolta contesto, il sub-agent lavora con contesto fresco e poi restituisce un risultato sintetico."
+    },
+    {
+      "text": "Ecco perché a volte compare Haiku dove ti aspetteresti Opus. La raccolta contesto richiede velocità, non grande reasoning. Se Haiku fa grep e letture file, e Opus ragiona sul materiale raccolto, il turno accelera senza perdere qualità."
+    },
+    {
+      "text": "Harness significa tutto ciò che circonda il modello: prompt, tool, contesto e modelli specializzati dietro le quinte. È questo strato che spiega perché la stessa famiglia di modelli si comporta in modo diverso tra prodotti diversi."
+    },
+    {
+      "text": "Per valutare un agente non basta chiedersi se ha risolto il task. Conta anche la traiettoria: quali passi ha fatto, in che ordine, con quante iterazioni. L'obiettivo è arrivare allo stesso risultato in meno mosse."
+    },
+    {
+      "text": "Qui il tradeoff è concreto. Metto la conoscenza direttamente nel prompt, oppure costruisco un tool che la interroga quando serve? La prima opzione pesa su ogni turno. La seconda alleggerisce il contesto, ma chiede una scelta corretta del modello."
+    },
+    {
+      "text": "Il takeaway è questo: quattro ingredienti, molti cicli, nessuna magia. Se vuoi vedere davvero cosa accade, apri i debug log di chat e agente. Lì il loop smette di sembrare misterioso e diventa osservabile."
+    }
+  ]
+}

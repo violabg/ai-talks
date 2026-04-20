@@ -15,6 +15,7 @@ import { Slide09Harness } from "./slide-09-harness";
 import { Slide10Trajectory } from "./slide-10-trajectory";
 import { Slide11RuleVsTool } from "./slide-11-rule-vs-tool";
 import { Slide12Closing } from "./slide-12-closing";
+import speechData from "./speech.json";
 
 export function PresentationSlides({ slug }: { slug: string }) {
   const slides = [
@@ -52,7 +53,7 @@ export function PresentationSlides({ slug }: { slug: string }) {
         </div>
       }
     >
-      <PresentationShell slug={slug} speechData={null} slides={slides} />
+      <PresentationShell slug={slug} speechData={speechData} slides={slides} />
     </Suspense>
   );
 }
