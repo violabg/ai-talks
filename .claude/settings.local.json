@@ -71,7 +71,28 @@
       "Bash(git commit -m ' *)",
       "Bash(git push *)",
       "Bash(gh pr create --repo violabg/ai-talks --title 'feat: add presentation for /chronicle article' --body ' *)",
-      "Bash(lsof -ti:3000)"
+      "Bash(lsof -ti:3000)",
+      "WebFetch(domain:youtu.be)",
+      "WebFetch(domain:www.youtube.com)",
+      "WebFetch(domain:youtubetranscript.com)",
+      "WebFetch(domain:tactiq.io)",
+      "Bash(curl -sL \"https://www.youtube.com/watch?v=ENxVTtLW_Bc\" -H \"User-Agent: Mozilla/5.0\")",
+      "Bash(curl -sL \"https://www.youtube.com/api/timedtext?v=ENxVTtLW_Bc&ei=tRXmaa_EGper6dsP99XfyAc&caps=asr&opi=112496729&exp=xpe&xoaf=5&xowf=1&xospf=1&hl=it&ip=0.0.0.0&ipbits=0&expire=1776711717&sparams=ip,ipbits,expire,v,ei,caps,opi,exp,xoaf&signature=5634C1A62531C2D26EC37FDDED33695092BB02D5.DC88AB46D4FC499714AFC45707058990B96EDC63&key=yt8&lang=en-US\" -H \"User-Agent: Mozilla/5.0\" -o /tmp/transcript_en.xml)",
+      "Read(//tmp/**)",
+      "Bash(curl -sL \"https://www.youtube.com/api/timedtext?v=ENxVTtLW_Bc&ei=tRXmaa_EGper6dsP99XfyAc&caps=asr&opi=112496729&exp=xpe&xoaf=5&xowf=1&xospf=1&hl=it&ip=0.0.0.0&ipbits=0&expire=1776711717&sparams=ip,ipbits,expire,v,ei,caps,opi,exp,xoaf&signature=5634C1A62531C2D26EC37FDDED33695092BB02D5.DC88AB46D4FC499714AFC45707058990B96EDC63&key=yt8&lang=en-US&fmt=json3\" -H \"User-Agent: Mozilla/5.0\" -o /tmp/t.json)",
+      "Bash(curl -sL \"https://www.youtube.com/api/timedtext?v=ENxVTtLW_Bc&ei=tRXmaa_EGper6dsP99XfyAc&caps=asr&opi=112496729&exp=xpe&xoaf=5&xowf=1&xospf=1&hl=it&ip=0.0.0.0&ipbits=0&expire=1776711717&sparams=ip,ipbits,expire,v,ei,caps,opi,exp,xoaf&signature=5634C1A62531C2D26EC37FDDED33695092BB02D5.DC88AB46D4FC499714AFC45707058990B96EDC63&key=yt8&kind=asr&lang=en&variant=gemini&fmt=json3\" -H \"User-Agent: Mozilla/5.0\" -o /tmp/t_asr.json)",
+      "Bash(pip3 install *)",
+      "Bash(brew list *)",
+      "Bash(brew install *)",
+      "Read(//private/tmp/**)",
+      "Bash(yt-dlp --write-auto-subs --skip-download --sub-langs en --sub-format vtt \"https://youtu.be/ENxVTtLW_Bc\" -o \"yt_%\\(id\\)s\")",
+      "Bash(yt-dlp --write-auto-subs --skip-download --sub-langs en --sub-format vtt \"https://youtu.be/ENxVTtLW_Bc\" -o \"yt_%\\(id\\)s.%\\(ext\\)s\" -v)",
+      "Bash(yt-dlp --write-auto-subs --skip-download --sub-langs en --sub-format vtt \"https://youtu.be/ENxVTtLW_Bc\" -o \"yt_%\\(id\\)s.%\\(ext\\)s\")",
+      "Bash(echo \"---EXIT $?---\")",
+      "Bash(yt-dlp --write-auto-subs --skip-download --sub-langs en --sub-format vtt \"https://youtu.be/ENxVTtLW_Bc\" -o \"/tmp/yt_%\\(id\\)s.%\\(ext\\)s\")",
+      "Bash(echo \"exit:$?\")",
+      "Bash(curl -s http://localhost:3000/articles/agent-loop-vs-code-copilot/presentazione)",
+      "Bash(kill 22217)"
     ]
   }
 }

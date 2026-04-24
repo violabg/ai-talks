@@ -1,5 +1,6 @@
 "use client";
 
+import { ArrowTip } from "@/components/presentation/slide-primitives";
 import { motion } from "motion/react";
 
 // viewBox: 0 0 820 430
@@ -103,31 +104,8 @@ export function Slide10SelfHeal() {
         dall&apos;utente
       </motion.p>
 
-      <div className="w-full flex-1 flex items-center">
+      <div className="flex flex-1 items-center w-full">
         <svg viewBox="0 0 820 430" className="w-full">
-          <defs>
-            <marker
-              id="arrow10"
-              markerWidth="8"
-              markerHeight="6"
-              refX="7"
-              refY="3"
-              orient="auto"
-            >
-              <polygon points="0 0, 8 3, 0 6" fill="var(--pres-muted)" />
-            </marker>
-            <marker
-              id="arrow10green"
-              markerWidth="8"
-              markerHeight="6"
-              refX="7"
-              refY="3"
-              orient="auto"
-            >
-              <polygon points="0 0, 8 3, 0 6" fill="var(--pres-success)" />
-            </marker>
-          </defs>
-
           {/* Column labels */}
           <motion.text
             x={195}
@@ -164,48 +142,54 @@ export function Slide10SelfHeal() {
             if (!from || !to) return null;
 
             const isGreen = edge.from === "read" || edge.from === "fix";
-            const marker = isGreen ? "url(#arrow10green)" : "url(#arrow10)";
             const stroke = isGreen
               ? "var(--pres-success)"
               : "var(--pres-muted)";
 
-            let x1, y1, x2, y2;
+            let x1, y1, x2, y2, angle;
             if (edge.type === "v") {
               if (to.y > from.y) {
-                // going down: exit bottom, enter top
                 x1 = from.x;
                 y1 = from.y + NODE_H / 2 + 2;
                 x2 = to.x;
                 y2 = to.y - NODE_H / 2 - 2;
+                angle = 90;
               } else {
-                // going up: exit top, enter bottom
                 x1 = from.x;
                 y1 = from.y - NODE_H / 2 - 2;
                 x2 = to.x;
                 y2 = to.y + NODE_H / 2 + 2;
+                angle = -90;
               }
             } else {
-              // horizontal: error → read
               x1 = from.x + NODE_W / 2 + 2;
               y1 = from.y;
               x2 = to.x - NODE_W / 2 - 2;
               y2 = to.y;
+              angle = 0;
             }
 
             return (
-              <motion.line
-                key={`${edge.from}-${edge.to}`}
-                x1={x1}
-                y1={y1}
-                x2={x2}
-                y2={y2}
-                stroke={stroke}
-                strokeWidth="1.5"
-                markerEnd={marker}
-                initial={{ pathLength: 0, opacity: 0 }}
-                animate={{ pathLength: 1, opacity: 1 }}
-                transition={{ duration: 0.3, delay: 0.6 + i * 0.18 }}
-              />
+              <g key={`${edge.from}-${edge.to}`}>
+                <motion.line
+                  x1={x1}
+                  y1={y1}
+                  x2={x2}
+                  y2={y2}
+                  stroke={stroke}
+                  strokeWidth="1.5"
+                  initial={{ pathLength: 0, opacity: 0 }}
+                  animate={{ pathLength: 1, opacity: 1 }}
+                  transition={{ duration: 0.3, delay: 0.6 + i * 0.18 }}
+                />
+                <ArrowTip
+                  x={x2}
+                  y={y2}
+                  angle={angle}
+                  color={stroke}
+                  delay={0.9 + i * 0.18}
+                />
+              </g>
             );
           })}
 
@@ -217,10 +201,16 @@ export function Slide10SelfHeal() {
             strokeWidth="1.5"
             strokeDasharray="6 3"
             strokeLinejoin="round"
-            markerEnd="url(#arrow10green)"
             initial={{ pathLength: 0, opacity: 0 }}
             animate={{ pathLength: 1, opacity: 0.4 }}
             transition={{ duration: 0.8, delay: 2.0 }}
+          />
+          <ArrowTip
+            x={195 + NODE_W / 2}
+            y={55}
+            angle={180}
+            color="var(--pres-success)"
+            delay={2.8}
           />
           <motion.text
             x={643}
@@ -281,4 +271,3 @@ export function Slide10SelfHeal() {
     </div>
   );
 }
-

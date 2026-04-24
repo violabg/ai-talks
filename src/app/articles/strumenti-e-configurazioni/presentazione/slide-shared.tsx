@@ -147,3 +147,5 @@ export function SectionTitle({
     </div>
   );
 }
+
+export { ArrowTip } from "@/components/presentation/slide-primitives";

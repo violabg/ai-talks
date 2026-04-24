@@ -6,10 +6,10 @@ export {
   SlideHeading,
 } from "@/components/presentation/slide-primitives";
 
-export const CHRONICLE_TAGS = [
+export const AGENT_LOOP_TAGS = [
+  "VS Code",
   "GitHub Copilot",
-  "CLI",
-  "chronicle",
-  "SQLite",
-  "session memory",
+  "agent loop",
+  "sub-agent",
+  "harness",
 ];

@@ -2,6 +2,7 @@ import dynamic from "next/dynamic"
 import type { ComponentType } from "react"
 
 export const covers: Record<string, ComponentType> = {
+  "agent-loop-vs-code-copilot": dynamic(() => import("./agent-loop-vs-code-copilot").then(m => ({ default: m.AgentLoopVsCodeCopilot }))),
   "chronicle-copilot-cli": dynamic(() => import("./chronicle-copilot-cli").then(m => ({ default: m.ChronicleCopilotCli }))),
   "cli-vs-ide-agenti-ai": dynamic(() => import("./cli-vs-ide-agenti-ai").then(m => ({ default: m.CliVsIdeAgentiAi }))),
   "deep-modules-react-typescript": dynamic(() => import("./deep-modules-react-typescript").then(m => ({ default: m.DeepModulesReactTypescript }))),

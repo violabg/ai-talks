@@ -1,0 +1,147 @@
+---
+title: "Dentro l'agent loop: come VS Code Copilot costruisce ogni turno"
+description: "Cosa succede davvero quando premi invio su un prompt in VS Code: il ciclo system prompt, contesto, tool e modello, perché alcuni sub-agent usano Haiku al posto di Opus e come l'harness modella il comportamento dell'agente."
+date: "2026-04-20T10:00:00+02:00"
+author: "AI Talks"
+tags: ["VS Code", "GitHub Copilot", "agent loop", "sub-agent", "harness", "modelli AI"]
+published: false
+featured: false
+---
+
+# Dentro l'agent loop: come VS Code Copilot costruisce ogni turno
+
+Quando scrivi un prompt in VS Code e premi invio, non parte una singola chiamata al modello. Parte un ciclo. L'agente itera, chiama tool, legge output, decide il passo successivo, si ferma. Questo ciclo — l'**agent loop** — è il cuore di Copilot, e capirlo cambia il modo in cui scrivi prompt, configuri istruzioni e interpreti ciò che vedi accadere nella chat.
+
+Pierce Boggan (GitHub Copilot, VS Code team) e James Montemagno ne hanno parlato in dettaglio nel podcast *VS Code Insiders*. Questo articolo ne riorganizza i concetti chiave in forma scritta.
+
+---
+
+## 1. Il loop in una frase
+
+Immagina un grande `while` loop che parte quando premi invio. Ogni iterazione è una chiamata API al modello. Il modello riceve un contesto, risponde con **testo** o con una **tool call**, il risultato del tool viene appeso al contesto, il loop rigira. Finisce quando il modello emette un messaggio di stop.
+
+Tutto il resto — sub-agent, skill, modalità plan, ask, autopilot — è una variazione su questo schema di base.
+
+---
+
+## 2. Cosa c'è dentro una singola richiesta
+
+Ogni chiamata al modello contiene quattro blocchi:
+
+- **System prompt** — costruito dinamicamente per la combinazione specifica di modello e famiglia scelti. Non esiste un prompt unico per Copilot: ogni modello ha la sua versione tarata. Ci sono poche istruzioni comuni di responsabilità/sicurezza, il resto è ottimizzato caso per caso.
+- **Contesto esplicito e implicito** — file citati con `#`, file aperti nell'editor (considerati segnale ad alta priorità), terminali attivi, data, configurazione d'ambiente.
+- **Tool** — la lista di strumenti che il modello può invocare: search, edit, read, run in terminal, tool MCP, server aggiuntivi. Ogni tool ha uno schema con parametri e descrizione.
+- **User prompt** — il testo che hai scritto tu.
+
+Il modello, per ogni iterazione, sceglie: uso un tool oppure restituisco testo? Se sceglie un tool, compila i parametri e l'harness lo esegue. L'output rientra come input del turno successivo.
+
+---
+
+## 3. Cos'è l'harness
+
+"Harness" è il nome che il team usa per l'insieme di tutto ciò che circonda il modello: prompt, tool, contesto, modelli custom dietro le quinte. È il motivo per cui la stessa famiglia di modelli si comporta in modo diverso tra VS Code, Copilot CLI e altri coding agent: **prompt diversi, tool diversi, harness diverso**.
+
+Un dato concreto citato nel podcast: con Opus 4.6 l'harness di VS Code arriva circa al 90% di codice generato che viene poi committato. Con GPT-4.1, un anno prima, la cifra era intorno al 52–53%. Il delta non è dovuto solo al modello, ma all'integrazione fra modello e harness.
+
+---
+
+## 4. Istruzioni, skill, MCP: tutto è testo appeso al contesto
+
+Le molte forme di personalizzazione che VS Code espone sembrano concetti diversi, ma collassano tutte sul meccanismo di base descritto sopra:
+
+- **Istruzione globale** → testo sempre appeso al prompt.
+- **Istruzione con glob (applyTo)** → testo appeso solo quando i file matchano.
+- **Skill** → voce in una lista che il modello può scegliere di leggere; se la sceglie, il contenuto viene appeso al contesto.
+- **Prompt file** → come un prompt utente preconfezionato.
+- **Server MCP** → aggiunge tool alla lista di strumenti disponibili.
+
+Capito questo, diventa ovvio perché non ha senso riempire istruzioni e tool all'infinito: ogni aggiunta consuma contesto e aumenta le scelte che il modello deve fare a ogni turno.
+
+---
+
+## 5. Il paradosso delle troppe scelte
+
+Un errore diffuso è pensare "più tool = meglio". Non funziona così: i modelli, come le persone, peggiorano nella scelta quando le opzioni crescono.
+
+Il team VS Code lavora esattamente su questo tradeoff. Esistono modelli custom interni che, partendo da una lista potenzialmente grande di tool, la restringono ai tool rilevanti per la sessione corrente prima di mandarla al modello principale. Altri sotto-componenti (per esempio l'agentic code retrieval) sono essi stessi piccoli modelli specializzati, invisibili all'utente.
+
+Anche operazioni apparentemente banali — generare il titolo di una chat, scrivere un commit message, proporre una PR description — sono chiamate al modello. Di solito modelli piccoli ed economici, perché non serve Opus per titolare una conversazione.
+
+---
+
+## 6. Sub-agent: cos'è e come viene invocato
+
+Un sub-agent è, nella pratica, un agent loop separato lanciato dall'agente principale. Ha **contesto fresco**, un **obiettivo passato come prompt**, gira il suo ciclo e restituisce un risultato al chiamante. Visto dall'esterno funziona come una funzione.
+
+Meccanicamente: il sub-agent è esposto al modello principale come un **tool**. Il modello decide di invocarlo come deciderebbe di invocare una grep. L'harness riceve la tool call, istanzia un nuovo loop, raccoglie l'output e lo inserisce nel contesto del loop principale.
+
+Perché usarlo? Perché consente di tenere il contesto principale "pulito". Se tutto il lavoro di esplorazione e grep finisce nel loop principale, il contesto si riempie, l'agente si confonde, a un certo punto scatta il compaction con perdita di fedeltà. Delegare l'esplorazione a un sub-agent risolve il problema alla radice.
+
+---
+
+## 7. Il caso Explore: perché Haiku dove ti aspetteresti Opus
+
+La domanda arrivata su Twitter: *ho scelto Opus, ma vedo che i sub-agent usano Haiku o un modello mini. Mi state facendo la truffa?*
+
+La risposta è no, ed è istruttiva.
+
+Il lavoro di raccolta contesto — lanciare grep, leggere file, interrogare l'endpoint di ricerca semantica — è operativamente semplice. Non richiede grande reasoning. Richiede però **bassa latenza** e **time-to-first-token rapido**, perché altrimenti ogni turno rallenta in modo percepibile.
+
+Opus è un reasoner potente ma relativamente lento. Haiku è velocissimo. Il team ha misurato che, sostituendo Opus con Haiku dentro il sub-agent Explore, **la qualità finale del turno non degradava** (resolution rate invariato nelle eval offline), mentre **il turno diventava 30–40% più veloce**.
+
+Il principio è chiaro: la qualità del turno dipende molto più da **come il modello principale ragiona sul contesto raccolto** che da **chi ha materialmente raccolto il contesto**. Quindi: Haiku per la raccolta, Opus per il ragionamento. Stessa analogia del podcast: non serve un coltello svizzero per mangiare i cereali, serve un cucchiaio.
+
+---
+
+## 8. Agent trajectory: l'asse di valutazione vero
+
+Per misurare la qualità dell'harness, il team non guarda solo "ha risolto sì/no" (resolution rate). Guarda la **traiettoria**: quali passi ha fatto l'agente, in che ordine, con quante iterazioni. È un benchmark costruito internamente (chiamato VS SWE-bench) su problemi custom, proprio per evitare le contaminazioni di training che ormai rendono SWE-bench pubblico poco affidabile.
+
+Gli obiettivi di ottimizzazione sono due e vivono in tensione:
+
+- **Stessa resolution rate in meno passi** → meno tempo di attesa.
+- **Resolution rate più alta a parità di passi** → più qualità.
+
+Le modalità preimpostate di VS Code (plan, agent, ask) sono scelte di prodotto che bilanciano questi assi per la P50 dell'utenza. Se il tuo caso è atipico, puoi copiare la modalità built-in e riconfigurarla.
+
+---
+
+## 9. Istruzione vs tool: un esempio di tradeoff concreto
+
+Un cliente con documentazione interna su Confluence si chiede: la carico come rule file o la espongo come tool di ricerca?
+
+Due percorsi, due tradeoff:
+
+| Strategia | Pro | Contro |
+|-----------|-----|--------|
+| **Rule file con contenuto Confluence** | Sempre presente, nessun tool extra da invocare | Gonfia ogni prompt, serve manutenzione manuale del contenuto |
+| **Tool che interroga Confluence** | Contenuto sempre aggiornato, contesto leggero | Il modello deve decidere quando invocarlo, serve prompting forte, più latenza nel turno |
+
+Non c'è una risposta universale. Capire i meccanismi del loop serve esattamente a questo: scegliere consapevolmente, o costruire un ibrido.
+
+---
+
+## 10. Ispezionare il loop dall'interno
+
+VS Code espone due comandi di debug che mostrano tutta l'attività dell'agente:
+
+- `Developer: Show Chat Debug Log`
+- `Developer: Show Agent Debug Log`
+
+Si trova la sequenza completa di tool call, payload passati al modello, output ricevuti. È il modo più diretto per capire perché un agente ha preso una certa strada — e per verificare sul campo le descrizioni teoriche di questo articolo.
+
+---
+
+## Considerazioni finali
+
+L'agent loop sembra una scatola nera quando la guardi dall'esterno. In realtà è una serie di scelte piuttosto semplici ripetute molte volte: costruisci un contesto, chiedi al modello "testo o tool?", esegui, rimetti l'output nel contesto, ripeti.
+
+La complessità apparente — sub-agent, skill, modalità, modelli piccoli invisibili, custom agentic retrieval — sono ottimizzazioni sopra questo nucleo. Tutte modificano gli stessi quattro ingredienti (system prompt, contesto, tool, user prompt). Quando questo schema diventa familiare, ogni decisione di configurazione smette di essere magia e diventa un tradeoff leggibile.
+
+Per approfondire la personalizzazione con skill e istruzioni, vedi [Strumenti e configurazioni: livelli di personalizzazione degli agenti AI](/articles/strumenti-e-configurazioni). Per l'orchestrazione multi-modello, vedi [Orchestrazione multi-modello con GitHub Copilot CLI](/articles/multi-modello-copilot-cli-orchestrazione).
+
+---
+
+## Crediti
+
+Contenuti basati sull'episodio *Inside The Agent Loop with Pierce Boggan* del podcast **VS Code Insiders**, condotto da James Montemagno con Pierce Boggan (GitHub Copilot, VS Code team). Video originale: [youtu.be/ENxVTtLW_Bc](https://youtu.be/ENxVTtLW_Bc).
