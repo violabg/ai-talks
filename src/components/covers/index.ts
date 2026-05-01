@@ -12,6 +12,7 @@ export const covers: Record<string, ComponentType> = {
   "prompting-e-workflow": dynamic(() => import("./prompting-e-workflow").then(m => ({ default: m.PromptingEWorkflow }))),
   "refactoring-codice-legacy": dynamic(() => import("./refactoring-codice-legacy").then(m => ({ default: m.RefactoringCodiceLegacy }))),
   "rubber-duck-github-copilot-cli": dynamic(() => import("./rubber-duck-github-copilot-cli").then(m => ({ default: m.RubberDuckGithubCopilotCli }))),
+  "skill-system-orchestrare-skill-ai-modulari": dynamic(() => import("./skill-system-orchestrare-skill-ai-modulari").then(m => ({ default: m.SkillSystemOrchestrareSkillAiModulari }))),
   "strumenti-e-configurazioni": dynamic(() => import("./strumenti-e-configurazioni").then(m => ({ default: m.StrumentiEConfigurazioni }))),
   "sviluppo-agent-first-copilot-vscode": dynamic(() => import("./sviluppo-agent-first-copilot-vscode").then(m => ({ default: m.SviluppoAgentFirstCopilotVscode }))),
   "sviluppo-con-agenti-ai-guida-riferimento": dynamic(() => import("./sviluppo-con-agenti-ai-guida-riferimento").then(m => ({ default: m.SviluppoConAgentiAiGuidaRiferimento }))),

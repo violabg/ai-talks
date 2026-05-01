@@ -20,6 +20,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { Suspense, ViewTransition } from "react";
 import rehypeAutolinkHeadings from "rehype-autolink-headings";
+import rehypeMermaid from "rehype-mermaid";
 import rehypePrettyCode from "rehype-pretty-code";
 import rehypeSlug from "rehype-slug";
 import remarkGfm from "remark-gfm";
@@ -127,6 +128,7 @@ export default async function ArticlePage({
               },
             },
           ],
+          [rehypeMermaid, { strategy: "pre-mermaid" }],
           [rehypePrettyCode, prettyCodeOptions],
         ],
       },
