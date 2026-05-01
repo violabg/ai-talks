@@ -204,6 +204,7 @@ Key rules:
 - **`aria-hidden`, `select-none`, `font-mono text-xs leading-tight`, tinted background, vertical padding, and horizontal centering** are all applied by the cover wrapper in `ArticleCard` (`src/components/article-card.tsx`). Your component only needs to return the `<pre>` with the art — do **not** duplicate those wrapper styles. At time of writing the wrapper uses `bg-muted/30 dark:bg-black/50 -mx-6 -mt-6 mb-4 py-4 rounded-t-xl min-h-50 overflow-hidden font-mono text-xs leading-tight select-none` with `aria-hidden="true"`; if you need to sanity-check, open that file.
 - **Centered**: The `<pre>` must still carry `mx-auto w-fit` so the ASCII art is horizontally centered inside the wrapper.
 - **Height limit**: The ASCII art must be **max 11 rows total** (count every rendered line, including optional caption lines).
+- **Border color consistency**: If you draw a box or connected structural lines that contain text/content, keep the entire border/connector path in one consistent border color class (for example `text-primary`) across all connected rows. Inner content can use different colors, but the border color must not change along the same box/line network.
 - **No hardcoded colors** — use only Tailwind utility classes that map to the project's CSS custom properties (see Color palette below). Never inline hex or oklch values.
 
 ### Alignment (critical)
@@ -266,6 +267,7 @@ Before saving, verify:
 - [ ] The art matches the **style the user chose** (illustrative or technical)
 - [ ] If using framed/boxed lines, every line has the exact same character width (count them!)
 - [ ] Every vertical line should be perfectly aligned with its counterparts on other lines
+- [ ] Borders/connected structural lines keep a consistent border color across the whole shape/path
 - [ ] Symmetric subjects are truly symmetric around the intended axis
 - [ ] Horizontal boundaries and baselines are consistent across related rows
 - [ ] Spacing is intentional (no accidental shifts caused by extra/missing spaces)
@@ -293,6 +295,20 @@ After writing the component and adding the registry entry, **always check the re
 - The illustration is recognizable and conveys the article topic
 - The art fits well within the card without overflow or awkward spacing
 
+### Step 4.5: Mandatory geometry QA gate (new, required)
+
+Before considering the cover approved, run this strict gate:
+
+1. **Flat-line extraction**: rewrite each rendered row as a single flat string (after span splitting).
+2. **Column map check**: for every structural column (`│`, `||`, box corners, connector trunks), record its character index and verify the same index is used on every row where that structure continues.
+3. **Mirror check for illustrative symmetry**: when the subject is intended to be symmetric, compare left and right halves around the center axis row-by-row.
+4. **Uneven-width check**: ensure all rows in the same structural block share intended width; no accidental trim/extra spaces.
+5. **Theme parity check**: verify geometry in both light and dark themes (color can change perception; geometry must remain unchanged).
+6. **First-review fail rule**: if any single geometry check above fails, the review is **failed** and must not be marked complete. Fix, reload, and re-run the full gate.
+
+This gate is mandatory for every new or updated cover, including quick edits.
+
 4. If anything looks off, fix the component and re-check in the browser
 
 **Do not consider the cover done until it has been visually verified in the browser.**
+**Do not consider the cover done until Step 4.5 passes in full.**
