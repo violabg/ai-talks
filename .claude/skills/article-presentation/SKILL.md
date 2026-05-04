@@ -1,6 +1,6 @@
 ---
 name: article-presentation
-description: "Create a rich, custom-built presentation page for an MDX article. Each presentation is a unique static React page with bespoke slides, inline SVG visuals, animated flowcharts, diagrams, and varied layouts — NOT a generic bullet-point template. Use this skill whenever the user wants to create a presentation for an article, add slides to an article, make a slideshow, or mentions 'presentazione' in the context of articles. If no specific article is referenced, ask the user which article they want."
+description: "Create a rich, custom-built presentation page for an MDX article. Each presentation is a unique static React page with bespoke slides, inline SVG visuals, animated flowcharts, diagrams, and varied layouts — NOT a generic bullet-point template. Use this skill whenever the user wants to create a presentation for an article, add slides to an article, make a slideshow, or mentions 'presentazione' in the context of articles. If no specific article is referenced, immediately ask the user to specify the article before proceeding."
 ---
 
 # Article Presentation Generator
@@ -49,7 +49,7 @@ This is a **specialist module** inside the article workflow.
 
 ### Boundaries
 
-- Do not generate narration text directly in this skill.
+- Do not generate narration text directly in this skill; only ask whether narration is desired and delegate generation to the presentation-speech skill.
 - Do not generate ASCII cover components directly in this skill.
 - Do not rewrite the article body except tiny alignment edits requested by the user.
 
@@ -127,7 +127,7 @@ Each presentation is a **static page** at `src/app/articles/[slug]/presentazione
 - Audio orb visualization
 - First-time narration consent dialog
 
-Slides only need to define their visual content — all UI chrome is handled by the shell.
+Slides only define visual content; the shell handles all UI chrome. Prioritize in this order: 1) narrative coherence, 2) required architecture/file structure, 3) visual/layout quality, 4) polish and optional enhancements.
 
 #### Shared slide primitives
 

@@ -129,7 +129,7 @@ Follow the guidelines for the chosen style below.
       dual-model review
 ```
 
-This is a **drawing of rubber ducks** — it tells a story, has personality, and uses simple ASCII characters (`/`, `\`, `_`, `~`, `<`, `>`, parentheses) to create recognizable shapes. but fill free to get creative with the characters you use, if you need them to improve the illustration!
+This is a **drawing of rubber ducks** — it tells a story, has personality, and uses simple ASCII characters (`/`, `\`, `_`, `~`, `<`, `>`, parentheses) to create recognizable shapes. Feel free to get creative with the characters you use if they improve the illustration.
 
 Character selection is intentionally model-driven: choose the symbols that best express the topic and the chosen style. You are not restricted to a fixed character set when a different set improves clarity or aesthetics.
 
@@ -276,7 +276,7 @@ Before saving, verify:
 - [ ] Art looks good at `text-xs` in a ~300px wide card
 - [ ] All colors use Tailwind classes (no inline `style` with hardcoded hex/oklch)
 - [ ] The component has no `"use client"` directive
-- [ ] `aria-hidden="true"` is set on the wrapper
+- [ ] `aria-hidden="true"` remains set on the wrapper in `ArticleCard` (no changes needed in the cover component)
 - [ ] The slug entry is added to `src/components/covers/index.ts`
 - [ ] The art is topically relevant to the article
 

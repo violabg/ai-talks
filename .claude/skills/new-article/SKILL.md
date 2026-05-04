@@ -1,6 +1,6 @@
 ---
 name: new-article
-description: Scaffold a new MDX article in content/articles/ with correct frontmatter and route-safe metadata. Use this whenever the user wants to create a new article, start a draft, add a post skeleton, or prepare a new MDX article before writing or generating related assets.
+description: Scaffold a new MDX article in content/articles/ with correct frontmatter. Use this for creating a new article or draft. Collect metadata first, then handle optional downstream asset intents.
 disable-model-invocation: true
 ---
 
@@ -87,10 +87,10 @@ Ask the user for:
 
 Guidelines:
 
-- If description is not provided, derive it from the title or use the first 160 characters of the article content as a fallback.
+- If description is not provided, derive it from the title. If the title is missing or not descriptive, use the first 160 characters of the article content as fallback.
 - Use today's date and include an explicit local time in ISO format for the `date` field.
 - Keep the date template timezone-neutral in examples (`YYYY-MM-DDTHH:mm:ss+HH:MM`) and write the real value with the current local offset.
-- Set `published: false` by default unless the user explicitly wants the article visible in production.
+- Use the user's explicit publication choice when provided. If publication intent is unclear or unanswered, default to `published: false`.
 - In development, articles with `published: false` are still visible and show a Draft badge.
 - `published` and `featured` frontmatter are defaults for new content, but production visibility can later be overridden by Redis KV.
 - Keep the article slug aligned with any future route folders under `src/app/articles/[slug]/`.
