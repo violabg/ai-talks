@@ -9,3 +9,5 @@ ignoredBuiltDependencies:
 allowBuilds:
   sharp: true
   unrs-resolver: true
+minimumReleaseAgeExclude:
+  - '@types/node@25.9.3'
