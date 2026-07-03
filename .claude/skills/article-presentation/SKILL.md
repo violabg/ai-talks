@@ -13,7 +13,7 @@ Create a unique, high-value presentation page for an MDX article. Each presentat
 - **TRIGGER:** Run only when the user explicitly invokes this skill for a presentation page.
 - **CHECKPOINT:** Always propose concept and slide plan before implementation.
 - **BOUNDARY:** Build slides and presentation structure only; narration belongs to presentation-speech.
-- **VERIFY:** Every slide must add visual value beyond article summary.
+- **VERIFY:** Every slide must add visual value beyond article summary, and every created or updated presentation must be opened in the integrated browser for quality review.
 
 ## Skill System Contract
 
@@ -379,5 +379,6 @@ After building:
 4. Check that animations use staggered delays so content reveals progressively
 5. Ensure "Torna all'articolo" link points to the correct slug
 6. Verify the "Inizia presentazione" button appears on the article page
-7. Open the presentation in a browser and do a quick walkthrough to check for any glaring issues with layout, navigation, or content flow, especially look for layout issues like text overflow, cramped diagrams, lines not fitting, or anything that looks off on mobile.
+7. Open the presentation in the integrated browser using the browser automation tools and do a walkthrough. Check layout, navigation, content flow, desktop and mobile framing, text overflow, cramped diagrams, missing/invisible SVG lines, and anything visually off.
 8. Treat browser-found layout defects as blocking issues, not polish: if text exits a box, peer boxes lose a clear grid rhythm, or arrow lines are not clearly visible and directional, the presentation is not done yet.
+9. Do not report the presentation as complete until the integrated-browser quality check has passed. If it fails, fix, reload, and re-check.

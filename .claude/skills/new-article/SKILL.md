@@ -33,6 +33,7 @@ This is a **specialist module** inside the article workflow.
 
 - Scaffold one new MDX article with valid frontmatter
 - Collect required metadata and optional downstream intents
+- Normalize article source material: enrich thin input, condense overlong input, preserve the central thesis and context
 
 ### Required input
 
@@ -95,6 +96,9 @@ Ask the user for:
 Guidelines:
 
 - If description is not provided, derive it from the title. If the title is missing or not descriptive, use the first 160 characters of the article content as fallback.
+- If the user provides article information that is too thin to make a useful article, enrich it with your own explanatory text, examples, connective tissue, and structure while preserving the user's intended topic and point of view.
+- If the user provides article information that is too long, condense it into a clear article draft that keeps the central point, narrative context, and important nuance. Remove repetition and low-value detail, not the argument's core.
+- When expanding or condensing, do not drift into a different topic, add unsupported claims as facts, or lose the user's original center of gravity.
 - Use today's date and include an explicit local time in ISO format for the `date` field.
 - Keep the date template timezone-neutral in examples (`YYYY-MM-DDTHH:mm:ss+HH:MM`) and write the real value with the current local offset.
 - Use the user's explicit publication choice when provided. If publication intent is unclear or unanswered, default to `published: false`.

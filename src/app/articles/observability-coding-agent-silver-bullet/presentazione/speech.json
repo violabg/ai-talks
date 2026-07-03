@@ -1,0 +1,15 @@
+{
+  "voice": "it-IT",
+  "slides": [
+    { "text": "" },
+    { "text": "Se cerchi il silver bullet per far scrivere codice migliore agli agenti AI, non è nel prompt. È nel dare loro gli occhi per osservare lo stato reale di quello che stanno facendo." },
+    { "text": "Ci sono consigli che funzionano: specifica chiara, intuizioni progettuali condivise ma non vincolanti, codebase pulita, commenti che descrivono le tensioni del sistema. Sono tutti validi. Ma nessuno di questi spiega perché lo stesso agente, sullo stesso task, a volte riesce brillantemente e a volte gira a vuoto per ore." },
+    { "text": "Un agente ha due qualità enormi: caparbietà e velocità. Non si stanca e itera in una frazione del tempo umano. Ma se non può osservare lo stato interno del sistema che modifica, tutta questa persistenza si annulla. Ogni tentativo diventa casuale." },
+    { "text": "Immagina uno scultore instancabile. Ha scalpelli grezzi, ma può tornare indietro nel tempo e riprovare all'infinito. Se però è cieco, non finirà mai la statua. La caparbietà da sola non basta. Serve vedere il marmo." },
+    { "text": "Primo caso: un emulatore di un vecchio microprocessore. Prima di ottimizzarne la performance, chiedi all'agente di costruire una probe TCP che esponga dump della memoria, dei registri, dello stack, e permetta breakpoint sul program counter. Ora ogni modifica sbagliata è diagnosticabile in tempo reale." },
+    { "text": "Qualcuno obietta: bastano i test. No. I test dicono se il risultato è quello atteso; non dicono perché non lo è. Un agente che ripiega su printf ovunque non è pigro. È cieco. La stampa è il sintomo, non la soluzione." },
+    { "text": "Secondo caso: un decoder radio con correzione di fase. Prima di scrivere una rete neurale, esigi una baseline: la performance misurata degli algoritmi che già ci sono. E dai all'agente accesso ai pacchetti che falliscono. Ora ha un metro oggettivo per valutare ogni suo tentativo." },
+    { "text": "Terzo caso: il front-end. L'agente sbaglia i layout perché non li vede. Dai gli occhi: screenshot presi con Chrome, alberi di box semplificati, stili computati sugli elementi chiave. Qualsiasi rappresentazione osservabile del risultato reso sblocca autonomia che senza non esisteva." },
+    { "text": "Ogni volta che aumenti la capacità dell'agente di osservare e valutare il proprio lavoro, sblocchi un livello nuovo di qualità. L'investimento in observability va fatto prima del task, non dopo. Dai loro gli occhi. Il resto, con il giusto grado di autonomia, lo fanno da soli." }
+  ]
+}

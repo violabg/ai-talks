@@ -164,5 +164,6 @@ After making changes, do a quick sanity check:
 - Do new or updated slides reuse shared helpers/palette exported by `slide-shared.tsx` when available?
 - Does the slide order in `slides.tsx` match the article's narrative flow?
 - Are there any orphaned imports or missing imports in `slides.tsx`?
+- If any presentation slide changed, open the presentation in the integrated browser using browser automation tools and verify layout, navigation, text fit, diagram spacing, visible connector lines, and overall visual quality. Browser-found defects are blocking: fix, reload, and re-check before reporting completion.
 
 Report back to the user with a brief summary: what was changed in the article, and which slides were updated, removed, or added in the presentation.

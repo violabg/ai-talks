@@ -13,7 +13,7 @@ Generate a React server component that renders colored ASCII art as a cover imag
 - **TRIGGER:** Run only when the user explicitly invokes this skill for an ASCII article-card cover.
 - **CHECKPOINT:** Ask for style selection unless the user already chose illustrative or technical.
 - **BOUNDARY:** Create/update one cover component and registry entry; do not generate SVG assets or presentation slides.
-- **VERIFY:** Geometry and alignment matter before style.
+- **VERIFY:** Geometry and alignment matter before style, and every created or updated ASCII cover must be opened in the integrated browser for quality review.
 
 ## Skill System Contract
 
@@ -290,10 +290,10 @@ Before saving, verify:
 
 ### Step 4: Verify in browser (mandatory)
 
-After writing the component and adding the registry entry, **always check the result in the browser**:
+After writing the component and adding the registry entry, **always check the result in the integrated browser using browser automation tools**:
 
 1. Make sure the dev server is running (`pnpm dev`)
-2. Open the homepage or articles page in Chrome using the browser automation tools
+2. Open the homepage or articles page in the integrated browser using the browser automation tools
 3. Find the article card with the new cover and visually verify:
    - The ASCII art renders correctly with proper alignment
 
@@ -318,5 +318,5 @@ This gate is mandatory for every new or updated cover, including quick edits.
 
 4. If anything looks off, fix the component and re-check in the browser
 
-**Do not consider the cover done until it has been visually verified in the browser.**
+**Do not consider the cover done until it has been visually verified in the integrated browser.**
 **Do not consider the cover done until Step 4.5 passes in full.**

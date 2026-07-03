@@ -10,6 +10,7 @@ export const covers: Record<string, ComponentType> = {
   "lsp-tool-agenti-ai": dynamic(() => import("./lsp-tool-agenti-ai").then(m => ({ default: m.LspToolAgentiAi }))),
   "migrare-librerie-con-ai": dynamic(() => import("./migrare-librerie-con-ai").then(m => ({ default: m.MigrareLibrerieConAi }))),
   "multi-modello-copilot-cli-orchestrazione": dynamic(() => import("./multi-modello-copilot-cli-orchestrazione").then(m => ({ default: m.MultiModelloCopilotCliOrchestrazione }))),
+  "observability-coding-agent-silver-bullet": dynamic(() => import("./observability-coding-agent-silver-bullet").then(m => ({ default: m.ObservabilityCodingAgentSilverBullet }))),
   "prompting-e-workflow": dynamic(() => import("./prompting-e-workflow").then(m => ({ default: m.PromptingEWorkflow }))),
   "refactoring-codice-legacy": dynamic(() => import("./refactoring-codice-legacy").then(m => ({ default: m.RefactoringCodiceLegacy }))),
   "rubber-duck-github-copilot-cli": dynamic(() => import("./rubber-duck-github-copilot-cli").then(m => ({ default: m.RubberDuckGithubCopilotCli }))),

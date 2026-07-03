@@ -1,0 +1,133 @@
+---
+title: "Observability per coding agent: il vero silver bullet"
+description: "Perché la vera chiave per far scrivere codice migliore agli agenti AI non è il prompt perfetto, ma dare loro gli strumenti per osservare — e valutare — il proprio lavoro."
+date: "2026-07-03T10:00:00+02:00"
+author: "AI Talks"
+tags: ["agenti AI", "observability", "coding agent", "debugging", "workflow"]
+published: false
+featured: false
+---
+
+# Observability per coding agent: il vero silver bullet
+
+Se cerchi consigli su come sfruttare bene i coding agent, trovi sempre le stesse voci: scrivi specifiche chiare, tieni la codebase pulita, condividi le tue intuizioni progettuali. Sono tutti consigli veri, e ci torneremo. Ma c'è una cosa che quasi nessuno mette al centro, e che nella pratica sposta l'ago della bilancia più di tutte le altre: **rendere l'agente capace di vedere lo stato reale di quello che sta facendo**.
+
+Questo articolo è dedicato a quella cosa: l'_observability_ come precondizione per il lavoro autonomo di un agente AI sul codice.
+
+---
+
+## 1. Quello che già sappiamo funzionare
+
+Prima di arrivare al punto, mettiamo in fila i suggerimenti che effettivamente aiutano, così ne capiamo il limite.
+
+- **Specifica chiara e non ambigua.** L'agente deve sapere con precisione cosa deve fare, quali vincoli non può violare, quali comportamenti considerare parte del contratto.
+- **Intuizioni progettuali condivise, ma non vincolanti.** Se hai già un'idea dello spazio delle soluzioni in cui pensi che il problema viva, dagliela — usando un linguaggio che _suggerisce_, non che _impone_. In questo modo pre-costruisci per l'agente una piccola _chain of thought_ curata, senza inchiodarlo a un'intuizione che magari non è del tutto corretta.
+- **Codebase pulita in partenza.** Se il nucleo su cui l'agente andrà a innestarsi è già ben modellato, la crescita organica del codice resta bilanciata. Se invece parti da una forma irregolare, ogni innesto successivo ne eredita la distorsione.
+- **Commenti che descrivono le tensioni del sistema.** Non commenti che ripetono ciò che il codice già dice: commenti che spiegano perché una scelta è stata fatta, quali vincoli l'hanno prodotta, quali invarianti vanno preservate. Serve sia agli umani, sia agli agenti che rileggeranno quel codice.
+
+Tutto questo funziona. Ma nessuna di queste leve, da sola, spiega perché in certi task lo stesso agente riesce brillantemente e in altri gira a vuoto per ore.
+
+---
+
+## 2. Il vantaggio (e il limite) degli agenti AI
+
+Un agente ha due qualità che nessun essere umano possiede allo stesso livello: **caparbietà** e **velocità di iterazione**. Non si stanca, non si annoia, non abbandona. E ogni tentativo costa una frazione del tempo che costerebbe a una persona.
+
+Immagina un lavoratore instancabile davanti a un blocco di marmo. I suoi scalpelli sono meno raffinati di quelli di Michelangelo: non ha lime, non ha frese sottili, ha strumenti più grezzi. Ma può tentare all'infinito, e ha un privilegio in più — può tornare indietro nel tempo. Ogni colpo sbagliato può essere annullato e riprovato.
+
+In teoria, con abbastanza tempo, dovrebbe riuscire a produrre qualsiasi statua.
+
+C'è però una condizione: **deve vedere il marmo**.
+
+Se questo lavoratore è cieco, o se ci vede male, tutta la sua caparbietà non serve. I suoi tentativi non sono informati dagli esiti. Correggere richiede osservare, e senza osservazione ogni iterazione è sostanzialmente casuale.
+
+> Un sacco di compiti in cui gli agenti AI falliscono nel coding non falliscono per mancanza di intelligenza. Falliscono per cecità.
+
+---
+
+## 3. Strumentare prima di modificare
+
+Il caso più chiaro in cui questo diventa evidente è quando devi mettere mano a un sistema di cui l'agente non può osservare lo stato interno.
+
+Prendi un emulatore di un vecchio microprocessore — mettiamo un 6502 dentro un emulatore Commodore 64 — che vuoi ottimizzare per farlo girare più veloce. La tentazione è dire subito all'agente: "modifica questa funzione, ora è troppo lenta". Ed è esattamente la strada per un fallimento lungo e frustrante.
+
+L'approccio che cambia il risultato è un altro:
+
+> Prima di toccare la performance, costruisci gli strumenti che ti permetteranno di sapere, in qualunque momento, cosa sta succedendo dentro l'emulatore.
+
+Concretamente, questo può voler dire chiedere all'agente di:
+
+- aprire una socket TCP sul processo dell'emulatore, a cui collegarsi mentre gira;
+- esporre attraverso quella socket il dump dello stack, della zero page, di qualsiasi altra pagina di memoria;
+- esporre il dump dei registri del microprocessore;
+- esporre il dump testuale della memoria video, sia in modalità testo sia in modalità grafica ad alta risoluzione;
+- implementare fin da subito i **breakpoint**: la possibilità di fermare l'emulatore a un dato frame o quando il program counter raggiunge un certo indirizzo, e ispezionare lo stato in quel momento preciso.
+
+Sembra un investimento sproporzionato per un task che, sulla carta, riguarda solo "far andare più veloce" un pezzo di codice. Non lo è. Nel momento in cui l'agente inizia davvero le modifiche di ottimizzazione, ogni volta che rompe qualcosa può guardare cosa è successo, non solo _constatare che qualcosa non funziona_. Ha una diagnostica reale, non un ping-pong di ipotesi.
+
+Il risultato pratico è che l'agente smette di dichiarare "ora funziona tutto" quando non funziona niente, e inizia a convergere per approssimazioni successive.
+
+---
+
+## 4. Perché i test da soli non bastano
+
+Qualcuno a questo punto obietta: ma allora basta scrivere test più accurati.
+
+I test aiutano, e vanno scritti. Ma su problemi complicati non sostituiscono la capacità di _vedere lo stato interno_ del sistema. Un test ti dice se il risultato finale è quello atteso; non ti dice perché non lo è.
+
+Senza strumentazione, l'unico ripiego che rimane all'agente è quello che tutti abbiamo visto mille volte: piazzare `printf` ovunque. È il sintomo, non la soluzione. È quello che fa un debugger cieco che cerca a tentoni la posizione del problema, allungando il codice con impalcature che dovrà poi rimuovere.
+
+Un agente ben strumentato non ha bisogno di quel ripiego. Ha già un canale strutturato per interrogare il sistema.
+
+---
+
+## 5. Baseline oggettiva: dai all'agente un metro
+
+Il secondo scenario in cui l'observability è decisiva è quando l'agente deve _migliorare_ qualcosa che già funziona in parte. Qui il rischio non è la cecità sullo stato interno, ma la cecità sul progresso.
+
+Pensa a un decoder radio — per esempio un decoder di pacchetti ADS-B da chiavetta RTL-SDR — in cui vuoi introdurre una rete neurale per fare correzione di fase migliore di quella algoritmica esistente. Se chiedi direttamente "scrivi la rete neurale", l'agente non ha modo di sapere se sta effettivamente migliorando la situazione o se sta solo aggiungendo complessità inutile.
+
+L'ordine giusto è un altro:
+
+1. **Definisci la baseline.** Chiedi all'agente di misurare, con metriche precise, la performance degli algoritmi che già ci sono — dalla semplice comparazione dei sample fino agli algoritmi di correzione di fase più avanzati. Questa diventa la soglia sotto cui il nuovo lavoro è un peggioramento, non un miglioramento.
+2. **Dai accesso ai casi di fallimento.** Quando il sistema non riesce a decodificare un pacchetto, l'agente deve poter scaricare quel pacchetto, esaminarlo, e capire se il problema era un errore vero o soltanto una fase mal compensata che uno degli algoritmi noti sarebbe riuscito a recuperare.
+3. **Solo a questo punto**, chiedigli di lavorare sulla rete neurale.
+
+Con queste tre condizioni in mano, l'agente ha un metro. Può valutare in modo franco e oggettivo se ogni sua modifica migliora o peggiora il risultato. E, di nuovo, smette di girare a vuoto: converge per approssimazioni successive verso una soluzione che davvero batte la baseline.
+
+Senza quel metro, saresti tu a dover fare ogni singolo giudizio di merito. Con quel metro, il giudizio è dentro il loop dell'agente.
+
+---
+
+## 6. Front-end: quando "non vedere" significa non vedere davvero
+
+Il tema torna, in forma quasi letterale, in un ambito molto diverso: il front-end.
+
+Gli agenti spesso lavorano bene su HTML e CSS, finché il compito è generico. Quando invece devi specificare un layout preciso — allineamenti, spaziature, comportamento responsive, gerarchia visiva — il loro lavoro può crollare. Non perché non capiscano la richiesta, ma perché non vedono il risultato.
+
+Anche qui la leva è la stessa: dai loro gli occhi.
+
+- Fai catturare screenshot con un browser reale, per esempio via una sessione Chrome controllata.
+- Chiedi di ridurre la pagina renderizzata a una **rappresentazione semplificata** — una descrizione testuale del layout, un albero di box con dimensioni e posizioni, un dump degli stili computati sugli elementi chiave. Qualcosa su cui si possa ragionare senza costringere l'agente a inferire tutto dal codice sorgente.
+- Metti nel loop un modo per confrontare due screenshot: la versione prima della modifica e quella dopo.
+
+Ogni volta che gli fornisci una rappresentazione osservabile del risultato, sblocchi un pezzo di autonomia che senza quella rappresentazione non esisteva.
+
+---
+
+## 7. Il principio generale
+
+Se raccogliamo i tre casi — emulatore, decoder radio, layout front-end — emerge un principio che è più generale del dominio in cui lo applichi:
+
+> Ogni volta che aumenti la capacità dell'agente di osservare il proprio risultato e di valutarlo con onestà, sblocchi un livello nuovo nella qualità del codice che riesce a produrre.
+
+Questo principio ha alcune conseguenze pratiche:
+
+- **L'investimento in observability va fatto prima del task, non dopo.** Costruisci strumenti, socket di debug, dump, baseline, screenshot pipeline _prima_ di chiedere il lavoro vero. Sembra un costo iniziale; è quello che rende il resto convergente.
+- **La caparbietà dell'agente diventa una risorsa solo se ha su cosa esercitarsi.** Un agente instancabile ma cieco spreca la propria persistenza. Un agente instancabile e strumentato itera fino a trovare la soluzione.
+- **I test rimangono importanti, ma sono un pezzo dell'observability, non l'observability stessa.** Coprono il _cosa_: risultato atteso vs. ottenuto. L'observability estesa copre anche il _perché_: stato interno, metriche di progresso, evidenze visive.
+- **La regola vale a prescindere dal linguaggio, dal dominio e dal modello.** Non è una scorciatoia di prompt engineering. È un cambio nel modo in cui prepari il terreno.
+
+I consigli classici — specifica chiara, intuizioni condivise, codebase pulita, buoni commenti — restano validi. Ma se ne aggiungi uno solo alla tua pratica quotidiana con i coding agent, che sia questo: dai loro gli occhi prima di dare loro il compito.
+
+Il resto, con il giusto grado di autonomia, lo fanno da soli.

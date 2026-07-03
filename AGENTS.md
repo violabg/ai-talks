@@ -15,3 +15,5 @@
 ## Manual skills
 
 - Attached article workflow skills under [.claude/skills/](.claude/skills/) are user-invoked only; do not rely on model auto-invocation for them.
+
+always use caveman
