@@ -8,6 +8,11 @@ disable-model-invocation: true
 
 When an MDX article needs editing, this skill handles both steps: apply the requested changes to the article, then update the presentation slides to stay in sync. The two steps are always done together — never edit the article without also updating the presentation (if one exists).
 
+## Leading words
+
+- **lockstep** — article and presentation move together. Any editorial change that alters meaning, scope, or emphasis of a section forces a sync of the matching slide(s), narration entry, and `slides.tsx` order.
+- **evidence-gated** — if any slide changed, the presentation is not "done" until it's opened in the integrated browser and the walkthrough passes.
+
 ## Manual Invocation
 
 - **TRIGGER:** Run only when the user explicitly invokes this skill for an existing article edit.
@@ -156,14 +161,20 @@ Make the changes directly. Do not ask the user whether to proceed.
 
 After any add or remove, update `slides.tsx` to reflect the new array. You don't need to rename files for minor gaps (e.g. slide-03 deleted, slide-04 stays as is), but if the total count changes significantly, renaming for clarity is fine.
 
-## Step 7: Verify
+## Step 7: Verify — evidence-gated
 
-After making changes, do a quick sanity check:
+Static checks:
 
-- Does every slide in `slides.tsx` have a corresponding file?
-- Do new or updated slides reuse shared helpers/palette exported by `slide-shared.tsx` when available?
-- Does the slide order in `slides.tsx` match the article's narrative flow?
-- Are there any orphaned imports or missing imports in `slides.tsx`?
-- If any presentation slide changed, open the presentation in the integrated browser using browser automation tools and verify layout, navigation, text fit, diagram spacing, visible connector lines, and overall visual quality. Browser-found defects are blocking: fix, reload, and re-check before reporting completion.
+- Every slide in `slides.tsx` has a corresponding file.
+- New/updated slides reuse shared helpers/palette exported by `slide-shared.tsx` when available.
+- Slide order in `slides.tsx` matches the article's narrative flow.
+- No orphaned or missing imports in `slides.tsx`.
+- If `speech.json` exists: entry count == slide count; entries for changed slides rewritten.
 
-Report back to the user with a brief summary: what was changed in the article, and which slides were updated, removed, or added in the presentation.
+Browser evidence gate (mandatory when any slide changed):
+
+- Open the presentation in the integrated browser.
+- Screenshot-verify: layout, navigation, text fit, diagram spacing, visible connector lines, overall visual quality.
+- Browser-found defects are **blocking**: fix, reload, re-check before reporting completion.
+
+Report back with a brief summary: what changed in the article, which slides were updated/removed/added, whether narration was resynced.

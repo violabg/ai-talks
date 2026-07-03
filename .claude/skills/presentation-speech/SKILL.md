@@ -6,7 +6,12 @@ disable-model-invocation: true
 
 # Presentation Speech Narration
 
-Add TTS (text-to-speech) narration to an existing presentation. Narration text lives in a `speech.json` alongside the slides; the presentation shell handles all of the UI (toggle, orb, first-time dialog, voice selector) automatically.
+Add TTS (text-to-speech) narration to an existing presentation. Narration text lives in a `speech.json` alongside the slides; the presentation shell handles all UI (toggle, orb, first-time dialog, voice selector) automatically.
+
+## Leading words
+
+- **match visuals not paragraphs** — narration describes what the viewer is seeing on the slide, not what the article paragraph says. Article prose is the source; slide visuals are the target.
+- **length-locked** — `speech.json` slides array length must equal the slides array in `slides.tsx`. Mismatch is a blocking failure, not a warning.
 
 ## Manual Invocation
 

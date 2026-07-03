@@ -6,6 +6,11 @@ disable-model-invocation: true
 
 Create a new MDX article at `content/articles/<slug>.mdx` with this frontmatter template:
 
+## Leading words
+
+- **thesis-preserving** — when enriching thin input or condensing overlong input, the article's central thesis, point of view, and center of gravity are preserved. Never drift topic or invent unsupported claims as facts.
+- **metadata-first** — never scaffold until required metadata (title, slug, author, publication intent) is confirmed.
+
 ## Manual Invocation
 
 - **TRIGGER:** Run only when the user explicitly invokes this skill to create a new article or draft.
