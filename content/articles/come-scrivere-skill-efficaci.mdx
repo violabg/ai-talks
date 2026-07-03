@@ -1,0 +1,218 @@
+---
+title: "Come scrivere skill efficaci"
+description: "Una guida pratica per progettare skill AI migliori: trigger, struttura, leading words e pruning."
+date: "2026-07-03T11:40:56+02:00"
+author: "Paolo"
+tags: ["AI", "skill", "workflow", "agenti AI"]
+published: true
+featured: false
+---
+
+# Come scrivere skill efficaci
+
+Le skill promettono una cosa molto attraente: trasformare una procedura ripetibile in qualcosa che un agente può eseguire con più precisione, meno spiegazioni e meno attrito. Il problema è che, quando iniziano a moltiplicarsi, diventano presto difficili da valutare.
+
+È una nuova forma di confusione operativa. Dopo il tutorial hell e il framework hell, arriva lo **skill hell**: decine di skill disponibili, descrizioni simili, workflow sovrapposti, nessun criterio condiviso per capire cosa è buono, cosa è rumoroso e cosa peggiora il comportamento dell'agente.
+
+Una skill efficace non è solo un prompt lungo. È un piccolo sistema operativo: decide quando entrare in gioco, separa procedura e reference, usa parole-guida che orientano il modello e rimuove tutto ciò che non cambia davvero il risultato.
+
+Questa guida propone una checklist in quattro parti:
+
+1. **Trigger**: come la skill viene invocata.
+2. **Struttura**: come separa step e reference.
+3. **Steering**: come guida il comportamento dell'agente.
+4. **Pruning**: come resta piccola, leggibile e utile.
+
+---
+
+## 1. Trigger: decidere chi invoca la skill
+
+La prima scelta è anche la più sottovalutata: la skill deve essere **user-invoked** o **model-invoked**?
+
+Una skill user-invoked viene richiamata manualmente dall'utente. Non deve competere per l'attenzione del modello e non aggiunge descrizioni al contesto di ogni richiesta. È più prevedibile, ma richiede che l'utente sappia quando usarla.
+
+Una skill model-invoked, invece, espone una descrizione che il modello può leggere e decidere di seguire. Questo riduce il carico cognitivo sull'utente, ma aumenta il carico di contesto sull'agente e introduce una nuova fonte di imprevedibilità: il modello può non invocare una skill anche quando sarebbe perfetta.
+
+| Tipo          | Vantaggio                                            | Costo                                            |
+| ------------- | ---------------------------------------------------- | ------------------------------------------------ |
+| User-invoked  | Massimo controllo e meno contesto caricato sempre    | L'utente deve conoscere la skill e invocarla     |
+| Model-invoked | Il modello può scegliere autonomamente quando usarla | Più contesto, più ambiguità, più bisogno di eval |
+
+La scelta non è ideologica. Dipende da cosa vuoi ottimizzare.
+
+Se una skill è rara, specialistica, rischiosa o richiede un checkpoint deliberato, conviene renderla manuale. Se invece rappresenta una regola sempre utile e a basso rischio, può avere senso renderla visibile al modello.
+
+La domanda pratica è:
+
+> Preferisco pagare contesto e imprevedibilità, o preferisco pagare carico cognitivo umano?
+
+Non esiste risposta universale, ma la decisione deve essere esplicita. Una skill senza una strategia di trigger diventa presto rumore.
+
+---
+
+## 2. Struttura: step e reference
+
+Una skill leggibile separa due materiali diversi:
+
+- **Step**: la procedura che l'agente deve seguire.
+- **Reference**: informazioni di supporto che servono solo per eseguire bene gli step.
+
+Questa distinzione sembra banale, ma cambia il modo in cui progetti la skill.
+
+Gli step dicono cosa fare, in quale ordine e con quali checkpoint. La reference contiene template, definizioni, esempi, vincoli tecnici, checklist e dettagli che non sono sempre necessari per capire il flusso principale.
+
+Un esempio semplice:
+
+```md
+## Steps
+
+1. Leggi il contesto rilevante.
+2. Conferma il punto di test con l'utente.
+3. Scrivi il documento finale.
+
+## Reference
+
+- Cos'è un punto di test.
+- Template del documento finale.
+```
+
+Il vantaggio è che puoi ragionare sulle branch della skill. Se una reference serve sempre, può stare nel file principale. Se serve solo in un caso specifico, dovrebbe stare dietro un puntatore.
+
+Per esempio, una skill di domain modeling può avere due branch: aggiornare un glossario o scrivere un ADR. Il template dell'ADR non serve quando aggiorni solo il glossario. Caricarlo sempre è costo inutile.
+
+La regola pratica:
+
+> Se un'informazione serve solo in una branch, spostala fuori dal `SKILL.md` principale e linkala come reference esterna.
+
+Questo rende la skill più corta, più facile da auditare e meno rumorosa nel momento dell'esecuzione.
+
+---
+
+## 3. Steering: usare leading words
+
+Molte skill falliscono perché descrivono un comportamento, ma non lo condensano in una parola-guida abbastanza forte.
+
+Una **leading word** è un termine breve che porta con sé un modello operativo. Funziona perché l'agente tende a ripeterla nel proprio piano, nei ragionamenti intermedi e nell'output. Quando la parola è scelta bene, diventa un piccolo gancio comportamentale.
+
+Un esempio classico è **vertical slice**.
+
+Se dici solo "non lavorare layer by layer", stai descrivendo cosa evitare. Se dici "lavora per vertical slice", dai al modello un concetto compatto: un incremento piccolo, end-to-end, verificabile presto.
+
+La differenza è sottile ma potente:
+
+| Istruzione debole                                         | Leading word   |
+| --------------------------------------------------------- | -------------- |
+| Non implementare tutto il database prima dell'interfaccia | Vertical slice |
+| Chiedi chiarimenti prima di pianificare                   | Grill phase    |
+| Controlla che lo step successivo riceva input pulito      | Handoff        |
+| Rimuovi testo che non cambia il comportamento             | Deletion test  |
+
+Le leading words migliori sono:
+
+- brevi;
+- ripetibili;
+- specifiche del comportamento desiderato;
+- abbastanza note da attivare conoscenza pregressa del modello;
+- presenti nei punti chiave della skill, non nominate una sola volta.
+
+Quando una skill non produce il comportamento voluto, spesso non serve allungarla. Serve trovare una parola-guida più precisa e usarla con coerenza.
+
+### Leg work: nascondere il futuro quando serve più profondità
+
+Un altro problema frequente è che l'agente fa troppo poco lavoro nello step corrente perché vede già l'obiettivo finale.
+
+Succede spesso nelle modalità di planning: il modello dovrebbe fare molte domande, ma vuole arrivare presto al piano. Il risultato è una fase di chiarimento superficiale.
+
+Una soluzione è separare le fasi in skill diverse. Una skill può occuparsi solo di fare domande e raccogliere vincoli. Un'altra, dopo, può produrre il piano.
+
+Questo aumenta il focus perché l'agente non cerca di correre verso il passaggio finale.
+
+La regola:
+
+> Se uno step richiede molto leg work, considera di isolarlo in una skill dedicata.
+
+Non tutte le procedure vanno spezzate. Ma quando un passaggio è critico e tende a essere saltato, nascondere il futuro è spesso più efficace che aggiungere altre frasi di avvertimento.
+
+---
+
+## 4. Pruning: togliere ciò che non guida
+
+Una skill grande non è automaticamente una skill completa. Spesso è solo una skill con sediment.
+
+Il pruning serve a rimuovere tre failure mode.
+
+### DRY: una sola fonte di verità
+
+Se un template, una definizione o una regola compare in più punti, prima o poi divergerà.
+
+La duplicazione rende la skill più difficile da mantenere e aumenta le contraddizioni. Ogni pezzo di reference dovrebbe avere una sola casa.
+
+### Sediment: materiale accumulato senza struttura
+
+Il sediment nasce quando più persone aggiungono istruzioni senza riorganizzare il file. Ogni aggiunta sembra utile nel momento in cui viene scritta, ma il risultato è un `SKILL.md` pieno di eccezioni, note storiche, spiegazioni stale e regole che non appartengono alla branch principale.
+
+La cura non è solo tagliare. Prima bisogna chiedere:
+
+- questa parte serve a tutti gli usi della skill?
+- serve solo a una branch?
+- è reference o procedura?
+- è ancora vera?
+- cambia davvero il comportamento dell'agente?
+
+### No-op: testo che sembra utile ma non cambia output
+
+I no-op sono istruzioni che suonano ragionevoli ma non influenzano davvero il comportamento nel contesto della skill.
+
+Il test più semplice è il **deletion test**:
+
+> Se cancello questo paragrafo, l'agente continua a fare la cosa giusta?
+
+Se sì, quel paragrafo probabilmente non serve. Può diventare una leading word, una reference esterna, o sparire.
+
+Il punto non è rendere le skill minimaliste per estetica. Il punto è ridurre il rumore che compete con le istruzioni davvero importanti.
+
+---
+
+## Checklist per valutare una skill
+
+Una buona review di skill può partire da quattro domande.
+
+### Trigger
+
+- La skill deve essere user-invoked o model-invoked?
+- Il costo è nel contesto dell'agente o nella memoria dell'utente?
+- La descrizione è precisa o troppo ampia?
+- Ci sono casi in cui la skill verrebbe invocata per errore?
+
+### Struttura
+
+- Gli step sono separati dalla reference?
+- Le branch sono chiare?
+- I template stanno nel file principale solo se servono sempre?
+- Gli handoff hanno input e output prevedibili?
+
+### Steering
+
+- Esistono leading words coerenti?
+- Le parole-guida descrivono comportamenti concreti?
+- L'agente fa abbastanza leg work nello step corrente?
+- Una fase critica andrebbe separata in una skill dedicata?
+
+### Pruning
+
+- Ci sono duplicazioni?
+- Ci sono note sedimentate e stale?
+- Quali paragrafi falliscono il deletion test?
+- Il file principale è piccolo abbastanza da essere auditabile?
+
+---
+
+## Conclusione
+
+Scrivere skill efficaci significa progettare piccoli strumenti operativi, non accumulare prompt.
+
+Il lavoro importante è decidere il trigger, separare procedura e reference, usare leading words che orientano davvero il modello e rimuovere tutto ciò che non cambia il comportamento.
+
+Quando una skill è fatta bene, non sembra magica. Sembra ovvia: entra in gioco al momento giusto, chiede ciò che manca, produce handoff puliti e resta abbastanza piccola da poter essere mantenuta senza paura.
+
+Quella è la differenza tra una skill che promette produttività e una skill che la rende ripetibile.

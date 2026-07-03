@@ -1,11 +1,19 @@
 ---
 name: presentation-speech
-description: "Add speech narration to an existing presentation. Drafts a `speech.json` file from the article text and wires it into the presentation by passing it to `PresentationShell`. Use when the user wants to add voice/narration/speech to a presentation, or when prompted by the article-presentation skill after building a presentation."
+description: "Manual skill for adding speech narration to an existing presentation. Invoke explicitly after slides exist; this drafts `speech.json` and wires it into `PresentationShell`."
+disable-model-invocation: true
 ---
 
 # Presentation Speech Narration
 
 Add TTS (text-to-speech) narration to an existing presentation. Narration text lives in a `speech.json` alongside the slides; the presentation shell handles all of the UI (toggle, orb, first-time dialog, voice selector) automatically.
+
+## Manual Invocation
+
+- **TRIGGER:** Run only when the user explicitly invokes this skill for an existing presentation.
+- **CHECKPOINT:** Stop if slide count and speech entry count differ; fix alignment before completion.
+- **BOUNDARY:** Write narration data and tiny wiring changes only; do not redesign slides.
+- **VERIFY:** Narration must match actual slide visuals, not just article section order.
 
 ## Skill System Contract
 
@@ -52,7 +60,7 @@ This is a **specialist module** inside the article workflow.
 - Do not create a presentation from scratch.
 - Do not modify unrelated article content.
 
-Uses the **Browser Web Speech API** (`window.speechSynthesis`) — no API key, no network call, no latency, works offline.
+Runtime: Browser Web Speech API (`window.speechSynthesis`). No API key, package, network call, or environment variable.
 
 ## Prerequisites
 
@@ -127,33 +135,17 @@ That's it. **Do not** import `NarrationProvider`, `NarrationToggle`, `AudioOrb`,
 
 If narration should be optional (e.g. you want to ship the presentation first and add narration later), pass `speechData={null}` until the `speech.json` is ready.
 
-## Architecture (for reference)
+## Runtime Reference
 
-All narration pieces live in `src/components/presentation/`:
+`PresentationShell` owns narration UI and state: dialog, toggle, voice selector, speech cancellation, and audio orb. `slides.tsx` only passes `speechData`.
 
-- `presentation-shell.tsx` — the shell that conditionally wires up narration when `speechData` is provided
-- `narration-provider.tsx` — React context powered by the `useNarration` hook
-- `use-narration.ts` — hook managing `speechSynthesis`, voice selection, and word-boundary pulse events
-- `narration-toggle.tsx` — mute/unmute button (Volume2 / VolumeOff from lucide-react)
-- `audio-orb.tsx` — pulsing orb driven by word-boundary events plus a smooth sine oscillation
-- `narration-dialog.tsx` — first-visit shadcn/ui Dialog that asks whether to enable narration
-- `voice-selector.tsx` — dropdown of available Italian voices, shown when narration is on
+Keep these invariants:
 
-### How the runtime flow works
-
-1. On first visit the shell shows `NarrationDialog`: "Sì, attiva" vs "No, grazie" — the choice is persisted in `localStorage`.
-2. When narration is enabled, the `NarrationToggle` appears in the header (next to the slide counter).
-3. Slide changes trigger `speechSynthesis.cancel()` and then speak the new slide's text with a ~1s delay so the slide animation can complete first.
-4. `onboundary` (word-boundary) events drive the `AudioOrb` pulse; between events the orb eases down, so it breathes with the speech.
-5. The shell auto-selects the best Italian voice: Google voice first (highest quality when installed), then any local system voice, then any Italian voice. Users can switch via the voice selector; choice is persisted.
-6. Leaving the presentation page cancels any in-flight utterance via an effect cleanup — no audio bleeds into other pages.
-
-### Browser compatibility
-
-- **Chrome**: full support, Google TTS voices available for Italian
-- **Safari**: full support, uses macOS system voices (high quality)
-- **Firefox**: `onboundary` may not fire reliably — the orb falls back to its smooth oscillation, audio still works
-- **Mobile**: works on iOS/Android; voice quality depends on the device's installed voices
+- Do not import narration providers or controls into `slides.tsx`; this creates duplicate UI.
+- Slide changes cancel current speech before speaking the next entry.
+- Voice preference and first-visit consent are persisted by the shell.
+- Firefox may miss word-boundary events; audio still works and orb falls back to idle motion.
+- Mobile voice quality depends on installed system voices.
 
 ## Verify
 

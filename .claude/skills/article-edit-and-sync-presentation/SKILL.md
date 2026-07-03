@@ -1,11 +1,19 @@
 ---
 name: article-edit-and-sync-presentation
-description: "Edit an MDX article and then keep its presentation in sync. Use this skill whenever the user wants to edit, rewrite, condense, restructure, or add sections to an article in content/articles/ — the skill handles both the article edits AND the presentation update in one pass. Also triggers when an article was just edited and the presentation needs catching up. If the article slug isn't clear from context, ask before proceeding. Do NOT ask for confirmation before syncing the presentation after editing — just do it."
+description: "Manual skill for editing an existing MDX article and syncing its existing presentation when one is present. Invoke explicitly when an article edit and presentation sync should be handled together."
+disable-model-invocation: true
 ---
 
 # Article Edit and Sync Presentation
 
 When an MDX article needs editing, this skill handles both steps: apply the requested changes to the article, then update the presentation slides to stay in sync. The two steps are always done together — never edit the article without also updating the presentation (if one exists).
+
+## Manual Invocation
+
+- **TRIGGER:** Run only when the user explicitly invokes this skill for an existing article edit.
+- **CHECKPOINT:** Ask only when slug or requested edit is ambiguous.
+- **BOUNDARY:** Sync an existing presentation if present; do not create a new presentation from scratch.
+- **HANDOFF:** If the user wants a new presentation, use the presentation skill separately after article edits are complete.
 
 ## Skill System Contract
 

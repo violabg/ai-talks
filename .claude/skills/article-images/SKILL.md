@@ -1,11 +1,19 @@
 ---
 name: article-images
-description: "Generate SVG images, diagrams, flowcharts, and cover art assets for MDX articles to improve reader comprehension and visual appeal. Use this skill whenever the user wants to add images to an article, generate a cover/poster SVG asset, create diagrams or flowcharts to explain concepts, improve visual presentation of content, or says things like 'add images', 'illustrate this article', 'make a diagram for', 'create a cover image'. Always use this skill when working with articles that have technical concepts that could benefit from visual explanation."
+description: "Manual skill for generating SVG cover assets and inline diagrams for MDX articles. Invoke explicitly for article SVGs, not ASCII article-card covers."
+disable-model-invocation: true
 ---
 
 # Article Image Generator
 
 Generate SVG visuals for MDX articles in this Next.js project: cover images for article cards, and inline diagrams/flowcharts where they genuinely help readers understand the content.
+
+## Manual Invocation
+
+- **TRIGGER:** Run only when the user explicitly invokes this skill for SVG article assets.
+- **CHECKPOINT:** If scope is broad, propose the image list before generating files.
+- **BOUNDARY:** Generate SVG files and MDX image references only; ASCII article-card covers belong to the ascii-cover skill.
+- **VERIFY:** Keep only visuals that make the article easier to understand.
 
 ## Skill System Contract
 
@@ -45,6 +53,7 @@ This is a **specialist module** inside the article workflow.
 
 ### Human checkpoint
 
+- If the user asks broadly for article visuals, propose the cover plus inline diagram candidates before writing files.
 - If more than 3 inline diagrams are proposed, ask the user to approve the diagram list before generating all of them.
 - If the article is short and diagrams add little value, propose skipping inline assets.
 

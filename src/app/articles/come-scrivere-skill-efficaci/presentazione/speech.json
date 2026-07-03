@@ -1,0 +1,32 @@
+{
+  "voice": "it-IT",
+  "slides": [
+    {
+      "text": "Questa presentazione trasforma il missing manual sulle skill in una rubric operativa. L'obiettivo non e scrivere prompt piu lunghi, ma progettare strumenti piccoli, invocabili e mantenibili."
+    },
+    {
+      "text": "Skill hell nasce quando abbiamo tante skill ma nessun criterio per valutarle. Il problema non e la disponibilita degli strumenti, ma la mancanza di una mappa condivisa."
+    },
+    {
+      "text": "Il primo snodo e il trigger. Una skill manuale sposta il costo sull'utente, una skill automatica lo sposta nel contesto dell'agente. La scelta va fatta esplicitamente."
+    },
+    {
+      "text": "La struttura separa cio che guida l'azione da cio che supporta l'azione. Gli step indicano ordine e checkpoint; la reference contiene template, definizioni e vincoli."
+    },
+    {
+      "text": "Quando una reference serve solo in una branch, non deve stare nel file principale. Un puntatore esterno mantiene piccola la skill e carica dettagli solo quando servono."
+    },
+    {
+      "text": "Le leading words sono piccoli ganci comportamentali. Termini come vertical slice, handoff o deletion test condensano un modo di lavorare che il modello puo ripetere e seguire."
+    },
+    {
+      "text": "Se una fase richiede piu leg work, puo essere utile isolarla. Una skill che fa solo domande fara domande migliori di una skill che vede gia il piano finale."
+    },
+    {
+      "text": "Il pruning elimina duplicazioni, sediment e no-op. La domanda decisiva e semplice: se cancello questo paragrafo, la skill continua a produrre lo stesso comportamento?"
+    },
+    {
+      "text": "La checklist finale e compatta: trigger, structure, steering e pruning. Se questi quattro punti sono chiari, la skill diventa piu prevedibile, piu piccola e piu facile da mantenere."
+    }
+  ]
+}

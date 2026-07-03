@@ -5,6 +5,7 @@ export const covers: Record<string, ComponentType> = {
   "agent-loop-vs-code-copilot": dynamic(() => import("./agent-loop-vs-code-copilot").then(m => ({ default: m.AgentLoopVsCodeCopilot }))),
   "chronicle-copilot-cli": dynamic(() => import("./chronicle-copilot-cli").then(m => ({ default: m.ChronicleCopilotCli }))),
   "cli-vs-ide-agenti-ai": dynamic(() => import("./cli-vs-ide-agenti-ai").then(m => ({ default: m.CliVsIdeAgentiAi }))),
+  "come-scrivere-skill-efficaci": dynamic(() => import("./come-scrivere-skill-efficaci").then(m => ({ default: m.ComeScrivereSkillEfficaci }))),
   "deep-modules-react-typescript": dynamic(() => import("./deep-modules-react-typescript").then(m => ({ default: m.DeepModulesReactTypescript }))),
   "lsp-tool-agenti-ai": dynamic(() => import("./lsp-tool-agenti-ai").then(m => ({ default: m.LspToolAgentiAi }))),
   "migrare-librerie-con-ai": dynamic(() => import("./migrare-librerie-con-ai").then(m => ({ default: m.MigrareLibrerieConAi }))),

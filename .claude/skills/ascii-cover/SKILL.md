@@ -1,11 +1,19 @@
 ---
 name: ascii-cover
-description: Generate a colored ASCII art React component as cover art for an article card. Use this skill whenever the user asks for an ASCII cover, ASCII art card image, text-art cover, or wants to create/update a cover component for an article. Also use when the user says "create a cover for [article]" or "generate card art for [article]".
+description: "Manual skill for generating a colored ASCII art React component for an article card. Invoke explicitly for ASCII card art; SVG article assets belong to article-images."
+disable-model-invocation: true
 ---
 
 # ASCII Cover Generator
 
 Generate a React server component that renders colored ASCII art as a cover image for an article card. The art is topic-aware — it visually represents the article's subject using text characters, box-drawing glyphs, and color.
+
+## Manual Invocation
+
+- **TRIGGER:** Run only when the user explicitly invokes this skill for an ASCII article-card cover.
+- **CHECKPOINT:** Ask for style selection unless the user already chose illustrative or technical.
+- **BOUNDARY:** Create/update one cover component and registry entry; do not generate SVG assets or presentation slides.
+- **VERIFY:** Geometry and alignment matter before style.
 
 ## Skill System Contract
 

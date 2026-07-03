@@ -1,11 +1,19 @@
 ---
 name: article-presentation
-description: "Create a rich, custom-built presentation page for an MDX article. Each presentation is a unique static React page with bespoke slides, inline SVG visuals, animated flowcharts, diagrams, and varied layouts — NOT a generic bullet-point template. Use this skill whenever the user wants to create a presentation for an article, add slides to an article, make a slideshow, or mentions 'presentazione' in the context of articles. If no specific article is referenced, immediately ask the user to specify the article before proceeding."
+description: "Manual skill for creating or updating a custom presentation page for one MDX article. Invoke explicitly for slide work; narration belongs to presentation-speech."
+disable-model-invocation: true
 ---
 
 # Article Presentation Generator
 
 Create a unique, high-value presentation page for an MDX article. Each presentation is a **custom static page** with its own React components, inline SVG graphics, animated flowcharts, and slide layouts designed specifically for that article's content.
+
+## Manual Invocation
+
+- **TRIGGER:** Run only when the user explicitly invokes this skill for a presentation page.
+- **CHECKPOINT:** Always propose concept and slide plan before implementation.
+- **BOUNDARY:** Build slides and presentation structure only; narration belongs to presentation-speech.
+- **VERIFY:** Every slide must add visual value beyond article summary.
 
 ## Skill System Contract
 

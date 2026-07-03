@@ -1,10 +1,17 @@
 ---
 name: new-article
-description: Scaffold a new MDX article in content/articles/ with correct frontmatter. Use this for creating a new article or draft. Collect metadata first, then handle optional downstream asset intents.
+description: "Manual skill for scaffolding a new MDX article in content/articles/ with correct frontmatter. User-invoked because article creation needs deliberate metadata collection before writing."
 disable-model-invocation: true
 ---
 
 Create a new MDX article at `content/articles/<slug>.mdx` with this frontmatter template:
+
+## Manual Invocation
+
+- **TRIGGER:** Run only when the user explicitly invokes this skill to create a new article or draft.
+- **CHECKPOINT:** Confirm required metadata before writing when title, slug, author, or publication intent is missing.
+- **BOUNDARY:** Scaffold the MDX file only; downstream images, presentation, and narration are separate handoffs.
+- **HANDOFF:** Record which downstream modules the user requested, then invoke them explicitly after the article exists.
 
 ```mdx
 ---
