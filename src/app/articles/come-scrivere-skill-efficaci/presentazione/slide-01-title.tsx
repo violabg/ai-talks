@@ -1,29 +1,28 @@
-import { FadeIn, SlideFrame } from "./slide-shared";
-
-const pillars = ["Trigger", "Struttura", "Steering", "Pruning"];
+import { FadeIn, PILLARS, SlideFrame } from "./slide-shared";
 
 export function Slide01Title() {
   return (
     <SlideFrame>
       <div className="flex flex-1 flex-col items-center justify-center text-center">
         <FadeIn>
-          <p className="mb-4 font-mono text-sm uppercase tracking-[0.24em] text-[var(--pres-muted)]">
-            Missing manual
+          <p className="mb-4 font-mono text-sm uppercase tracking-[0.28em] text-[var(--pres-muted)]">
+            skill design · rubric
           </p>
           <h1 className="mx-auto max-w-5xl text-balance font-display text-5xl tracking-tight text-[var(--pres-text)] sm:text-7xl">
-            Come scrivere skill efficaci
+            Skill che funzionano
           </h1>
         </FadeIn>
-        <FadeIn delay={0.2}>
+        <FadeIn delay={0.18}>
           <p className="mt-5 max-w-3xl text-lg leading-relaxed text-[var(--pres-text-sub)]">
-            Una rubric pratica per uscire dallo skill hell e progettare skill
-            piccole, invocabili, guidate e mantenibili.
+            Una skill non è un prompt più lungo. È un piccolo{" "}
+            <span className="text-[var(--pres-accent)]">sistema operativo</span>
+            : decide quando entrare, cosa caricare e cosa tacere.
           </p>
         </FadeIn>
-        <div className="mt-10 grid w-full max-w-4xl grid-cols-2 gap-3 sm:grid-cols-4">
-          {pillars.map((pillar, index) => (
-            <FadeIn key={pillar} delay={0.35 + index * 0.1}>
-              <div className="rounded-2xl border border-[var(--pres-border)] bg-[var(--pres-bg-card)] px-4 py-4 font-mono text-sm text-[var(--pres-accent)]">
+        <div className="mt-10 flex flex-wrap items-center justify-center gap-3">
+          {PILLARS.map((pillar, index) => (
+            <FadeIn key={pillar} delay={0.32 + index * 0.08}>
+              <div className="rounded-full border border-[var(--pres-border)] bg-[var(--pres-bg-card)] px-5 py-2 font-mono text-sm uppercase tracking-[0.18em] text-[var(--pres-accent)]">
                 {pillar}
               </div>
             </FadeIn>
