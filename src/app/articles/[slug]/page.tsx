@@ -11,6 +11,7 @@ import {
 } from "@/lib/articles";
 import { getArticlePublished } from "@/lib/kv";
 import { hasPresentation } from "@/lib/presentations";
+import { rehypeMermaidPre } from "@/lib/rehype-mermaid-pre";
 import type { ArticleFrontmatter, ArticleSection } from "@/types/article";
 import GithubSlugger from "github-slugger";
 import matter from "gray-matter";
@@ -20,7 +21,6 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { Suspense, ViewTransition } from "react";
 import rehypeAutolinkHeadings from "rehype-autolink-headings";
-import rehypeMermaid from "rehype-mermaid";
 import rehypePrettyCode from "rehype-pretty-code";
 import rehypeSlug from "rehype-slug";
 import remarkGfm from "remark-gfm";
@@ -128,7 +128,7 @@ export default async function ArticlePage({
               },
             },
           ],
-          [rehypeMermaid, { strategy: "pre-mermaid" }],
+          [rehypeMermaidPre],
           [rehypePrettyCode, prettyCodeOptions],
         ],
       },

@@ -1,11 +1,15 @@
 "use client";
 
+import { usePathname } from "next/navigation";
 import { useEffect } from "react";
 
 type MermaidApi = {
   initialize: (config: Record<string, unknown>) => void;
   contentLoaded: () => void;
-  run?: (config?: { querySelector?: string }) => Promise<void> | void;
+  run?: (config?: {
+    querySelector?: string;
+    nodes?: ArrayLike<Element>;
+  }) => Promise<void> | void;
 };
 
 declare global {
@@ -15,6 +19,8 @@ declare global {
 }
 
 export function MermaidInit() {
+  const pathname = usePathname();
+
   useEffect(() => {
     let attempts = 0;
     let timer: ReturnType<typeof setInterval> | undefined;
@@ -22,10 +28,15 @@ export function MermaidInit() {
     const renderMermaid = () => {
       if (!window.mermaid) return false;
 
+      const nodes = document.querySelectorAll<HTMLElement>(
+        "pre.mermaid:not([data-processed])",
+      );
+      if (nodes.length === 0) return true;
+
       window.mermaid.initialize({ startOnLoad: false });
 
       if (typeof window.mermaid.run === "function") {
-        void window.mermaid.run({ querySelector: "pre.mermaid" });
+        void window.mermaid.run({ nodes });
       } else {
         window.mermaid.contentLoaded();
       }
@@ -45,7 +56,7 @@ export function MermaidInit() {
     return () => {
       if (timer) clearInterval(timer);
     };
-  }, []);
+  }, [pathname]);
 
   return null;
 }
